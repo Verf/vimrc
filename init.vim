@@ -1,0 +1,1 @@
+/home/verf/.dotfile/nvim/init.vim
