@@ -16,6 +16,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'w0rp/ale'
 Plug 'dikiaap/minimalist'
 Plug 'jiangmiao/auto-pairs'
+Plug 'majutsushi/tagbar'
 call plug#end()
 
 " Basic
@@ -115,3 +116,6 @@ let g:ale_sign_error = '•'
 let g:ale_sign_warning = '•'
 let g:ale_echo_msg_error_str = '✹ Error'
 let g:ale_echo_msg_warning_str = '⚠ Warning'
+
+" tagbar
+nmap <F3> :TagbarToggle<CR>
