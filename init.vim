@@ -15,6 +15,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'scrooloose/nerdcommenter'
 Plug 'w0rp/ale'
 Plug 'dikiaap/minimalist'
+Plug 'jiangmiao/auto-pairs'
 call plug#end()
 
 " Basic
