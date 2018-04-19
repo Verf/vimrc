@@ -14,6 +14,7 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'scrooloose/nerdcommenter'
 Plug 'w0rp/ale'
+Plug 'dikiaap/minimalist'
 call plug#end()
 
 " Basic
@@ -24,6 +25,9 @@ set tabstop=4 shiftwidth=4 expandtab
 set hidden
 set scrolloff=999
 set relativenumber
+set t_Co=256
+syntax on
+colorscheme minimalist
 
 " Key Map
 map <C-a> <Home>
@@ -44,7 +48,7 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " vim-airline
-let g:airline_theme='term'
+let g:airline_theme='minimalist'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
