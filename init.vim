@@ -30,6 +30,9 @@ set relativenumber
 set t_Co=256
 syntax on
 colorscheme minimalist
+if has("gui_running")
+  let g:Guifont="DejaVu Sans Mono for Powerline:h16"
+endif
 
 " Key Map
 map <C-a> <Home>
