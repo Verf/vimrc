@@ -19,6 +19,22 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'majutsushi/tagbar'
 call plug#end()
 
+" OS
+let g:iswindows = 0
+let g:islinux = 0
+if(has("win32") || has("win64") || has("win95") || has("win16"))
+    let g:isWindows = 1
+else
+    let g:isLinux = 1
+endif
+
+" GUI
+if has("gui_running")
+    let g:isGUI = 1
+else
+    let g:isGUI = 0
+endif
+
 " Basic
 let mapleader = " "
 set clipboard=unnamedplus
@@ -30,7 +46,7 @@ set relativenumber
 set t_Co=256
 syntax on
 colorscheme minimalist
-if has("gui_running")
+if (g:isGUI)
   let g:Guifont="DejaVu Sans Mono for Powerline:h16"
 endif
 
@@ -61,7 +77,11 @@ let g:airline_powerline_fonts = 1
 let g:deoplete#enable_at_startup = 1
 
 " deoplete-jedi
-let g:python3_host_prog = '/home/verf/.pyenv/versions/SnifferQT5/bin/python'
+if (g:isLinux)
+    let g:python3_host_prog = '/home/verf/.pyenv/versions/SnifferQT5/bin/python'
+else
+    let g:python3_host_prog = 'C:\Programes\Python3\python'
+endif
 let g:deoplete#sources#jedi#show_docstring = 0
 
 " deoplete-ternjs
