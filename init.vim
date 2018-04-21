@@ -20,8 +20,8 @@ Plug 'majutsushi/tagbar'
 call plug#end()
 
 " OS
-let g:iswindows = 0
-let g:islinux = 0
+let g:isWindows = 0
+let g:isLinux = 0
 if(has("win32") || has("win64") || has("win95") || has("win16"))
     let g:isWindows = 1
 else
