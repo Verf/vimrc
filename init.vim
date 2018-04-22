@@ -43,6 +43,7 @@ set tabstop=4 shiftwidth=4 expandtab
 set hidden
 set scrolloff=999
 set relativenumber
+set autochdir
 set t_Co=256
 syntax on
 colorscheme minimalist
@@ -89,7 +90,7 @@ let g:deoplete#sources#ternjs#tern_bin = '/home/verf/.nvm/versions/node/v9.10.1/
 let g:deoplete#sources#ternjs#timeout = 1
 
 " ctrlp
-let g:ctrlp_working_path_mode = 0
+let g:ctrlp_working_path_mode = 'ra'
 
 " Emmet
 let g:user_emmet_install_global = 0
