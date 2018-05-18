@@ -40,6 +40,7 @@ set autochdir
 set t_Co=256
 syntax on
 colorscheme minimalist
+let g:Guifont="DejaVu Sans Mono for Powerline:h16"
 
 " Key Map
 map <C-a> <Home>
