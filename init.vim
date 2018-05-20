@@ -17,6 +17,7 @@ Plug 'w0rp/ale'
 Plug 'dikiaap/minimalist'
 Plug 'jiangmiao/auto-pairs'
 Plug 'majutsushi/tagbar'
+Plug 'vim-python/python-syntax'
 call plug#end()
 
 " OS
@@ -40,6 +41,7 @@ set autochdir
 set t_Co=256
 syntax on
 colorscheme minimalist
+let g:Guifont="DejaVu Sans Mono for Powerline:h16"
 
 " Key Map
 map <C-a> <Home>
@@ -133,3 +135,6 @@ let g:ale_echo_msg_warning_str = '⚠ Warning'
 
 " tagbar
 nmap <F3> :TagbarToggle<CR>
+
+" python-syntax enhance
+let g:python_highlight_all = 1
