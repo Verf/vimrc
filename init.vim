@@ -71,7 +71,7 @@ let g:deoplete#enable_at_startup = 1
 
 " deoplete-jedi
 if (g:isLinux)
-    let g:python3_host_prog = '/home/verf/.pyenv/versions/SnifferQT5/bin/python'
+    let g:python3_host_prog = '/usr/bin/python3'
 else
     let g:python3_host_prog = 'C:\Programes\Python3\python'
 endif
