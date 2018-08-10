@@ -73,11 +73,11 @@ let g:airline_powerline_fonts = 1
 let g:deoplete#enable_at_startup = 1
 
 " deoplete-jedi
-if (g:isLinux)
-    let g:python3_host_prog = '/home/verf/.pyvenv/dl/bin/python'
-else
-    let g:python3_host_prog = 'C:\Programes\Python3\python'
-endif
+"if (g:isLinux)
+"    let g:python3_host_prog = '/home/verf/.pyvenv/dl/bin/python'
+"else
+"    let g:python3_host_prog = 'C:\Programes\Python3\python'
+"endif
 let g:deoplete#sources#jedi#show_docstring = 0
 
 " deoplete-ternjs
