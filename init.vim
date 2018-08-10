@@ -9,6 +9,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mattn/emmet-vim'
+Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'terryma/vim-multiple-cursors'
@@ -58,6 +59,8 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 
 " nvim-completion-manger
+" disable scratch menu
+set completeopt-=preview
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
@@ -71,7 +74,7 @@ let g:deoplete#enable_at_startup = 1
 
 " deoplete-jedi
 if (g:isLinux)
-    let g:python3_host_prog = '/usr/bin/python3'
+    let g:python3_host_prog = '/home/verf/.pyvenv/dl/bin/python'
 else
     let g:python3_host_prog = 'C:\Programes\Python3\python'
 endif
