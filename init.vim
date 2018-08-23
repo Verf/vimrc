@@ -74,6 +74,10 @@ map <leader>p :bprevious<CR>
 " terminal
 tnoremap ,<ESC> <C-\><C-n>
 
+" supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabClosePreviewOnPopupClose = 1
+
 " Easymotion
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
@@ -103,9 +107,6 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 let g:deoplete#enable_at_startup = 1
 
 " deoplete-jedi
-if (g:isWindows)
-    let g:python3_host_prog = 'C:\Programes\Python3\python'
-endif
 let g:deoplete#sources#jedi#show_docstring = 0
 
 " snip
@@ -115,11 +116,6 @@ let g:deoplete#sources#jedi#show_docstring = 0
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>     <Plug>(neosnippet_expand_target)
-
-" For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
 
 " ctrlp
 let g:ctrlp_working_path_mode = 'ra'
