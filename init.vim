@@ -1,23 +1,47 @@
 " vim-plug init
 call plug#begin('~/.nvim/plugged')
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+" The default config for everyone
 Plug 'tpope/vim-sensible'
+" supertab
+Plug 'ervandew/supertab'
+" LSP support
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" Completion framework for neovim
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" python completion plugin for deoplete
+Plug 'zchee/deoplete-jedi'
+" snip
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+" quick way to move cursor
 Plug 'easymotion/vim-easymotion'
+" statue line
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+" file fzf search
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'mattn/emmet-vim'
+Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
+" add punctuation easy
 Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdtree'
+" display file tree; bind on F2
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeFind', 'NERDTreeToggle'] }
 Plug 'Xuyuanp/nerdtree-git-plugin'
+" multiple line editor
 Plug 'terryma/vim-multiple-cursors'
-Plug 'scrooloose/nerdcommenter'
-Plug 'w0rp/ale'
+" material color style
 Plug 'dikiaap/minimalist'
+" auto pair punctuation
 Plug 'jiangmiao/auto-pairs'
+" Commenting support (gc)
+Plug 'tpope/vim-commentary'
+" display func and variable defination
 Plug 'majutsushi/tagbar'
+" python syntax highlight enhance
 Plug 'vim-python/python-syntax'
 call plug#end()
 
@@ -42,13 +66,13 @@ set autochdir
 set t_Co=256
 syntax on
 colorscheme minimalist
-let g:Guifont="DejaVu Sans Mono for Powerline:h16"
+let g:Guifont="FuraCode Nerd Font 13"
 
 " Key Map
-map <C-a> <Home>
-map <C-e> <End>
 map <leader>n :bnext<CR>
 map <leader>p :bprevious<CR>
+" terminal
+tnoremap ,<ESC> <C-\><C-n>
 
 " Easymotion
 map  / <Plug>(easymotion-sn)
@@ -58,38 +82,47 @@ map  N <Plug>(easymotion-prev)
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 
-" nvim-completion-manger
-" disable scratch menu
-set completeopt-=preview
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 " vim-airline
 let g:airline_theme='minimalist'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 
+" LSP
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['/home/verf/.local/bin/pyls'],
+    \ }
+
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
 " deoplete
 let g:deoplete#enable_at_startup = 1
 
 " deoplete-jedi
-"if (g:isLinux)
-"    let g:python3_host_prog = '/home/verf/.pyvenv/dl/bin/python'
-"else
-"    let g:python3_host_prog = 'C:\Programes\Python3\python'
-"endif
+if (g:isWindows)
+    let g:python3_host_prog = 'C:\Programes\Python3\python'
+endif
 let g:deoplete#sources#jedi#show_docstring = 0
 
-" deoplete-ternjs
-let g:deoplete#sources#ternjs#tern_bin = '/home/verf/.nvm/versions/node/v9.10.1/bin/node'
-let g:deoplete#sources#ternjs#timeout = 1
+" snip
+" Plugin key-mappings.
+"inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+"inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
 
 " ctrlp
 let g:ctrlp_working_path_mode = 'ra'
-
-" Emmet
-let g:user_emmet_install_global = 0
-autocmd FileType html,css EmmetInstall
 
 " nerdtree
 map <F2> :NERDTreeToggle<CR>
@@ -128,13 +161,6 @@ let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
-
-" ale
-let g:ale_sign_column_always = 1
-let g:ale_sign_error = '•'
-let g:ale_sign_warning = '•'
-let g:ale_echo_msg_error_str = '✹ Error'
-let g:ale_echo_msg_warning_str = '⚠ Warning'
 
 " tagbar
 nmap <F3> :TagbarToggle<CR>
