@@ -1,3 +1,7 @@
+" vim-plug package manager
+call plug#begin('~/.local/share/nvim/plugged')
+call plug#end()
+
 " The key map for norman key board layout
 noremap q q
 noremap w w
@@ -51,9 +55,6 @@ noremap V V
 noremap B B
 noremap P N
 noremap M M
-" vim-plug
-call plug#begin('~/.nvim/plugged')
-call plug#end()
 
 " Basic
 let mapleader = " "
