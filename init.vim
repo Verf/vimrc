@@ -1,3 +1,7 @@
+" vim-plug
+call plug#begin('~/.nvim/plugged')
+call plug#end()
+
 " The key map for norman key board layout
 noremap q q
 noremap w w
@@ -51,19 +55,38 @@ noremap V V
 noremap B B
 noremap P N
 noremap M M
-" vim-plug
-call plug#begin('~/.nvim/plugged')
-call plug#end()
 
 " Basic
 let mapleader = " "
-set clipboard=unnamedplus
-set nohlsearch
-set tabstop=4 shiftwidth=4 expandtab
-set hidden
-set scrolloff=999
-set relativenumber
-set autochdir
-set t_Co=256
-syntax on
 
+set scrolloff=999
+set linebreak
+set showbreak=+++
+set textwidth=80
+set showmatch
+set visualbell
+ 
+set smartcase
+set incsearch
+set nohlsearch
+
+set autoindent
+set expandtab
+set shiftwidth=4
+set smartindent
+set smarttab
+set softtabstop=4
+ 
+set clipboard=unnamedplus
+set nobackup
+set autochdir
+set autowriteall
+ 
+set undolevels=1000
+set backspace=indent,eol,start
+
+" UI
+set termguicolors
+colorscheme desert
+set ruler
+set relativenumber
