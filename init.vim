@@ -1,5 +1,11 @@
 " vim-plug
 call plug#begin('~/.nvim/plugged')
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-vinegar'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'easymotion/vim-easymotion'
+Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 
 " The key map for norman key board layout
@@ -70,12 +76,13 @@ set smartcase
 set incsearch
 set nohlsearch
 
+set smartindent
 set autoindent
+set smarttab
 set expandtab
 set shiftwidth=4
-set smartindent
-set smarttab
 set softtabstop=4
+set pastetoggle=<f5>
  
 set clipboard=unnamedplus
 set nobackup
@@ -90,3 +97,13 @@ set termguicolors
 colorscheme desert
 set ruler
 set relativenumber
+set wildmenu
+
+" airline
+let g:airline#extensions#tabline#enabled = 1
+
+" easy motion
+let g:EasyMotion_do_mapping = 0
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+nmap s <Plug>(easymotion-overwin-f)
