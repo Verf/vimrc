@@ -93,8 +93,9 @@ set undolevels=1000
 set backspace=indent,eol,start
 
 " UI
-set termguicolors
 colorscheme desert
+set termguicolors
+set cursorline
 set ruler
 set relativenumber
 set wildmenu
