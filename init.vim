@@ -45,6 +45,7 @@ set autowriteall
  
 set undolevels=1000
 set backspace=indent,eol,start
+set completeopt-=preview
 
 " The key map for norman key board layout
 noremap q q
