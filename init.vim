@@ -8,6 +8,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
+Plug 'chriskempson/base16-vim'
 call plug#end()
 
 " Basic
@@ -108,7 +109,7 @@ noremap <leader>wy <C-w>h
 noremap <leader>wo <C-w>l
 
 " UI
-colorscheme desert
+colorscheme base16-tomorrow-night
 set termguicolors
 set cursorline
 set ruler
