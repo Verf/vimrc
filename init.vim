@@ -8,7 +8,9 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
-Plug 'chriskempson/base16-vim'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 " Basic
@@ -109,7 +111,7 @@ noremap <leader>wy <C-w>h
 noremap <leader>wo <C-w>l
 
 " UI
-colorscheme base16-tomorrow-night
+colorscheme onedark   
 set termguicolors
 set cursorline
 set ruler
@@ -120,10 +122,11 @@ set noshowmode
 if !has('gui_running')
   set t_Co=256
 endif
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " lightline
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'onedark',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
@@ -158,3 +161,8 @@ let g:Lf_NormalMap = {
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" neosnippet
+imap <C-r>     <Plug>(neosnippet_expand_or_jump)
+smap <C-r>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-r>     <Plug>(neosnippet_expand_target)
