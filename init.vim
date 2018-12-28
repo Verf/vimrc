@@ -164,6 +164,6 @@ let g:Lf_NormalMap = {
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 " neosnippet
-imap <C-r>     <Plug>(neosnippet_expand_or_jump)
-smap <C-r>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-r>     <Plug>(neosnippet_expand_target)
+imap <C-r>  <Plug>(neosnippet_expand_or_jump)
+smap <C-r>  <Plug>(neosnippet_expand_or_jump)
+xmap <C-r>  <Plug>(neosnippet_expand_target)
