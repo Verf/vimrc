@@ -5,47 +5,34 @@ Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
 Plug 'joshdick/onedark.vim'
 call plug#end()
 
 " Basic
 let mapleader = " "
 
-set scrolloff=999
-set linebreak
-set showbreak=+++
-set textwidth=80
-set showmatch
-set visualbell
+set scrolloff=999                                          " keep line in center of screen
+set linebreak                                              " wrap long line
+set showbreak=>>>                                          " label of line break
+set textwidth=80                                           " maxium line length
  
-set smartcase
-set incsearch
-set nohlsearch
+set smartcase                                              " case sensitive only if pattern contains upper letter
+set incsearch                                              " incrementally highlights all pattern matches
+set nohlsearch                                             " don't highlight search pattern
 
-set smartindent
-set autoindent
-set smarttab
-set expandtab
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set textwidth=80
-set pastetoggle=<f5>
+set autoindent                                             " automatically indent when starting a new line
+set smartindent                                            " automatically inserts one extra level of indentation in some cases
+set expandtab                                              " replace tab to blanks
+set smarttab                                               " <Tab> insert blanks according to 'shiftwidth', 'tabstop' or 'softabstop'
+set tabstop=4                                              " number of spaces that a <Tab> in the file count for
+set softtabstop=4                                          " number of spaces that a <Tab> is inserted
+set shiftwidth=4                                           " number of spaces to use for (auto)indent
  
-set mouse=a
-set clipboard=unnamedplus
-set nobackup
-set autochdir
-set autowriteall
- 
-set undolevels=1000
-set backspace=indent,eol,start
-set completeopt-=preview
+set mouse=a                                                " enable mouse in all mode
+set clipboard=unnamedplus                                  " use system clip board
+set pastetoggle=<f5>                                       " toggle paste mode by <F5>
+set nobackup                                               " close auto backup
+set autowriteall                                           " auto save
 
 " The key map for norman key board layout
 noremap q q
@@ -103,27 +90,33 @@ noremap M M
 
 " The leader based key binding
 " windows operate
-noremap <leader>ws :sp<cr>
-noremap <leader>wv :vs<cr>
-noremap <leader>wq :q<cr>
-noremap <leader>wn <C-w>j
-noremap <leader>wi <C-w>k
-noremap <leader>wy <C-w>h
-noremap <leader>wo <C-w>l
+noremap <leader>ws <C-w>s                                  " split window vertical
+noremap <leader>wv <C-w>v                                  " split window horizontal
+noremap <leader>wq <C-w>c                                  " close current window
+noremap <leader>wy <C-w>h                                  " jump to the left window
+noremap <leader>wn <C-w>j                                  " jump to the below window
+noremap <leader>wi <C-w>k                                  " jump to the above window
+noremap <leader>wo <C-w>l                                  " jump to the right window
+" tab operate
+noremap <silent><leader>tn :tabnew<cr>                     " create new tab
+noremap <silent><leader>tc :tabclose<cr>                   " close current tab
+noremap <silent><leader>1 :tabn 1<cr>                      " switch to tab1
+noremap <silent><leader>2 :tabn 2<cr>                      " switch to tab2
+noremap <silent><leader>3 :tabn 3<cr>                      " switch to tab3
+noremap <silent><leader>4 :tabn 4<cr>                      " switch to tab4
+noremap <silent><leader><tab> :tabnext<CR>                 " switch to next tab
 
 " UI
 colorscheme onedark   
-set termguicolors
-set cursorline
-set ruler
-set relativenumber
-set wildmenu
-set laststatus=2
-set noshowmode
-if !has('gui_running')
-  set t_Co=256
-endif
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+set termguicolors                                          " true color support in terminal
+set cursorline                                             " highlight current line
+set showmatch                                              " highlight matching parenthesis
+set novisualbell                                           " no beep and screen flash
+
+set ruler                                                  " show cursor position on status line
+set relativenumber                                         " show relative line number
+set switchbuf=useopen,usetab,newtab                        " better buffer switch
+set noshowmode                                             " don't show insert status (use lightline instead)
 
 " lightline
 let g:lightline = {
@@ -143,27 +136,3 @@ let g:EasyMotion_do_mapping = 0
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 nmap s <Plug>(easymotion-overwin-f)
-
-" leader F
-noremap <F2> :LeaderfFunction!<cr>
-let g:Lf_StlColorscheme = 'one'
-let g:Lf_ShowRelativePath = 0
-let g:Lf_HideHelp = 1
-let g:Lf_PreviewResult = {'Function':0, 'Colorscheme':1}
-let g:Lf_ShortcutF = '<leader>p'
-let g:Lf_NormalMap = {
-	\ "File":   [["<ESC>", ':exec g:Lf_py "fileExplManager.quit()"<CR>']],
-	\ "Buffer": [["<ESC>", ':exec g:Lf_py "bufExplManager.quit()"<CR>']],
-	\ "Mru":    [["<ESC>", ':exec g:Lf_py "mruExplManager.quit()"<CR>']],
-	\ "Tag":    [["<ESC>", ':exec g:Lf_py "tagExplManager.quit()"<CR>']],
-	\ "Function":    [["<ESC>", ':exec g:Lf_py "functionExplManager.quit()"<CR>']],
-	\ "Colorscheme":    [["<ESC>", ':exec g:Lf_py "colorschemeExplManager.quit()"<CR>']],
-	\ }
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" neosnippet
-imap <C-r>  <Plug>(neosnippet_expand_or_jump)
-smap <C-r>  <Plug>(neosnippet_expand_or_jump)
-xmap <C-r>  <Plug>(neosnippet_expand_target)
