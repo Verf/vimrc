@@ -1,10 +1,9 @@
 " vim-plug
 call plug#begin('~/.nvim/plugged')
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
+Plug 'itchyny/vim-gitbranch'
 Plug 'easymotion/vim-easymotion'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'joshdick/onedark.vim'
 call plug#end()
 
@@ -27,6 +26,9 @@ set smarttab                                               " <Tab> insert blanks
 set tabstop=4                                              " number of spaces that a <Tab> in the file count for
 set softtabstop=4                                          " number of spaces that a <Tab> is inserted
 set shiftwidth=4                                           " number of spaces to use for (auto)indent
+set report=0                                               " always report changed lines
+set synmaxcol=200                                          " maxium column for search syntax items
+set updatecount=100                                        " after type this many characters the swap file will be written to disk
  
 set mouse=a                                                " enable mouse in all mode
 set clipboard=unnamedplus                                  " use system clip board
@@ -126,7 +128,7 @@ let g:lightline = {
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
+      \   'gitbranch': 'gitbranch#name'
       \ },
       \ }
 
