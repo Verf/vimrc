@@ -6,11 +6,8 @@ Plug 'itchyny/vim-gitbranch'
 Plug 'easymotion/vim-easymotion'
 Plug 'joshdick/onedark.vim'
 Plug 'lambdalisue/vim-pyenv'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-Plug 'junegunn/fzf'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+Plug 'junegunn/fzf.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
@@ -107,13 +104,13 @@ noremap <leader>wn <C-w>j                                  " jump to the below w
 noremap <leader>wi <C-w>k                                  " jump to the above window
 noremap <leader>wo <C-w>l                                  " jump to the right window
 " tab operate
-noremap <silent><leader>tn :tabnew<cr>                     " create new tab
-noremap <silent><leader>tc :tabclose<cr>                   " close current tab
-noremap <silent><leader>1 :tabn 1<cr>                      " switch to tab1
-noremap <silent><leader>2 :tabn 2<cr>                      " switch to tab2
-noremap <silent><leader>3 :tabn 3<cr>                      " switch to tab3
-noremap <silent><leader>4 :tabn 4<cr>                      " switch to tab4
-noremap <silent><leader><tab> :tabnext<CR>                 " switch to next tab
+noremap <silent> <leader>tn :tabnew<cr>                     " create new tab
+noremap <silent> <leader>tc :tabclose<cr>                   " close current tab
+noremap <silent> <leader>1 :tabn 1<cr>                      " switch to tab1
+noremap <silent> <leader>2 :tabn 2<cr>                      " switch to tab2
+noremap <silent> <leader>3 :tabn 3<cr>                      " switch to tab3
+noremap <silent> <leader>4 :tabn 4<cr>                      " switch to tab4
+noremap <silent> <leader><tab> :tabnext<CR>                 " switch to next tab
 
 " UI
 colorscheme onedark   
@@ -155,21 +152,8 @@ nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"<Paste>
 
 " fzf
-let g:fzf_layout = { 'down': '~40%' }
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-
+nnoremap <silent> <leader>ff :Files<CR>
+nnoremap <silent> <leader>fb :Buffers<CR>
