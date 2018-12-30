@@ -6,6 +6,12 @@ Plug 'itchyny/vim-gitbranch'
 Plug 'easymotion/vim-easymotion'
 Plug 'joshdick/onedark.vim'
 Plug 'lambdalisue/vim-pyenv'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+Plug 'junegunn/fzf'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 call plug#end()
 
 " Basic
@@ -139,3 +145,31 @@ let g:EasyMotion_do_mapping = 0
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 nmap s <Plug>(easymotion-overwin-f)
+
+" completion
+let g:deoplete#enable_at_startup = 1
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['~/.local/bin/pyls'],
+    \ }
+nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
+nnoremap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
+
+" fzf
+let g:fzf_layout = { 'down': '~40%' }
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
