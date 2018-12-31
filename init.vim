@@ -152,7 +152,7 @@ nnoremap <leader>lm :call LanguageClient_contextMenu()<CR>
 nnoremap <silent> <leader>lh :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <leader>lr :call LanguageClient#textDocument_rename()<CR>
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"<Paste>
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 " fzf
 nnoremap <silent> <leader>ff :Files<CR>
