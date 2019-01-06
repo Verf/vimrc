@@ -33,7 +33,7 @@ set updatecount=100                                        " after type this man
  
 set mouse=a                                                " enable mouse in all mode
 set clipboard=unnamedplus                                  " use system clip board
-set pastetoggle=<f5>                                       " toggle paste mode by <F5>
+set pastetoggle=<f9>                                       " toggle paste mode by <F5>
 set nobackup                                               " close auto backup
 set autowriteall                                           " auto save
 
@@ -90,6 +90,17 @@ noremap V V
 noremap B B
 noremap P N
 noremap M M
+
+" one key compile
+func! CompileRunGcc()
+    exec "w" 
+    if &filetype == 'python' 
+        exec '!time python %'
+    elseif &filetype == 'sh'
+        :!time bash %
+   endif
+endfunc 
+map <F5> :call CompileRunGcc()<CR>
 
 " The leader based key binding
 " windows operate
