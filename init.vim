@@ -1,5 +1,8 @@
 " vim-plug
 call plug#begin('~/.nvim/plugged')
+Plug 'ervandew/supertab'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'zchee/deoplete-jedi'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
@@ -178,3 +181,7 @@ nnoremap <silent> <leader>rt :call asyncrun#quickfix_toggle(6)<CR>
 
 " autoformater
 au BufWrite * :Autoformat                                  " autoformat when save
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
+let g:python3_host_prog = '/bin/python3'
