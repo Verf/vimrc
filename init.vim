@@ -1,14 +1,11 @@
 " vim-plug
 call plug#begin('~/.nvim/plugged')
-Plug 'w0rp/ale'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
-Plug 'maximbaz/lightline-ale'
-Plug 'maximbaz/lightline-ale'
 Plug 'easymotion/vim-easymotion'
 Plug 'joshdick/onedark.vim'
 call plug#end()
@@ -119,7 +116,7 @@ noremap <silent> <leader>4 :tabn 4<CR>                      " switch to tab4
 noremap <silent> <leader><tab> :tabnext<CR>                 " switch to next tab
 
 " UI
-colorscheme onedark   
+colorscheme onedark
 set termguicolors                                          " true color support in terminal
 set cursorline                                             " highlight current line
 set showmatch                                              " highlight matching parenthesis
@@ -132,29 +129,18 @@ set noshowmode                                             " don't show insert s
 
 " lightline
 let g:lightline = {
-      \ 'colorscheme': 'onedark',
-      \ 'active': {
-      \     'left': [ [ 'mode', 'paste' ],
-      \               [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
-      \     'right': [[ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-      \               [ 'lineinfo' ],
-      \               [ 'percent' ],
-      \               [ 'fileformat', 'fileencoding', 'filetype' ]]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name',
-      \   'linter_checking': 'lightline#ale#checking',
-      \   'linter_warnings': 'lightline#ale#warnings',
-      \   'linter_errors': 'lightline#ale#errors',
-      \   'linter_ok': 'lightline#ale#ok',
-      \ },
-      \ 'component_type': {
-      \     'linter_checking': 'left',
-      \     'linter_warnings': 'warning',
-      \     'linter_errors': 'error',
-      \     'linter_ok': 'left',
-      \ }
-      \ }
+            \ 'colorscheme': 'onedark',
+            \ 'active': {
+            \     'left': [ [ 'mode', 'paste' ],
+            \               [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+            \     'right': [[ 'lineinfo' ],
+            \               [ 'percent' ],
+            \               [ 'fileformat', 'fileencoding', 'filetype' ]]
+            \ },
+            \ 'component_function': {
+            \   'gitbranch': 'gitbranch#name',
+            \ },
+            \ }
 
 " easy motion
 let g:EasyMotion_smartcase = 1
@@ -189,11 +175,6 @@ let g:asyncrun_rootmarks = [
             \ ]
 nnoremap <silent> <leader>rr :AsyncRun -raw python %<CR>
 nnoremap <silent> <leader>rt :call asyncrun#quickfix_toggle(6)<CR>
-
-" ale
-let b:ale_linters = {
-       \ 'pythoe': ['pylint'],
-       \ }
 
 " autoformater
 au BufWrite * :Autoformat                                  " autoformat when save
