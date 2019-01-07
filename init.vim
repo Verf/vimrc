@@ -15,7 +15,7 @@ let mapleader = " "
 
 set scrolloff=999                                          " keep line in center of screen
 set linebreak                                              " wrap long line
-set showbreak=                                            " label of line break
+set showbreak=⮎                                            " label of line break
 set textwidth=80                                           " maxium line length
 
 set smartcase                                              " case sensitive only if pattern contains upper letter
