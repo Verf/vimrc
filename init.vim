@@ -1,6 +1,7 @@
 " vim-plug
 call plug#begin('~/.nvim/plugged')
 Plug 'ervandew/supertab'
+Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'Chiel92/vim-autoformat'
