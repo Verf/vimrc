@@ -11,6 +11,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'easymotion/vim-easymotion'
 Plug 'joshdick/onedark.vim'
+Plug 'vim-python/python-syntax'
 call plug#end()
 
 " Basic
@@ -188,3 +189,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " deoplete
 let g:deoplete#enable_at_startup = 1
 let g:python3_host_prog = '/bin/python3'
+
+" python
+let g:python_highlight_all = 1
