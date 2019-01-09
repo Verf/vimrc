@@ -3,7 +3,6 @@ call plug#begin('~/.nvim/plugged')
 Plug 'ervandew/supertab'
 Plug 'Shougo/echodoc.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'zchee/deoplete-jedi'
 Plug 'Chiel92/vim-autoformat'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
@@ -189,7 +188,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-let g:python3_host_prog = '/bin/python3'
 
 " python
 let g:python_highlight_all = 1
