@@ -180,9 +180,6 @@ let g:asyncrun_rootmarks = [
 nnoremap <silent> <leader>rr :AsyncRun -raw python %<CR>
 nnoremap <silent> <leader>rt :call asyncrun#quickfix_toggle(6)<CR>
 
-" autoformater
-au BufWrite * :Autoformat                                  " autoformat when save
-
 "supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
