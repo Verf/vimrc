@@ -1,7 +1,23 @@
+"  __      _______ __  __ _____   _____ 
+"  \ \    / /_   _|  \/  |  __ \ / ____|
+"   \ \  / /  | | | \  / | |__) | |     
+"    \ \/ /   | | | |\/| |  _  /| |     
+"     \  /   _| |_| |  | | | \ \| |____ 
+"      \/   |_____|_|  |_|_|  \_\\_____|
+"                                       
+" Vimrc for Verf
+" Key Binding:
+"     <F2> Rename
+"     <F9> Toggle paste mode
+"
 " vim-plug
 call plug#begin('~/.nvim/plugged')
 Plug 'ervandew/supertab'
 Plug 'Shougo/echodoc.vim'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Chiel92/vim-autoformat'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
@@ -99,9 +115,9 @@ noremap M M
 
 " The leader based key binding
 " buffer operate
-noremap <leader>bd :bd<CR>
-noremap <leader>bn :bn<CR>
-noremap <leader>bp :bp<CR>
+noremap <leader>bd :bd<CR>                                 " close current buffer
+noremap <leader>bn :bn<CR>                                 " switch to next buffer
+noremap <leader>bp :bp<CR>                                 " switch to previous buffer
 " windows operate
 noremap <leader>ws <C-w>s                                  " split window vertical
 noremap <leader>wv <C-w>v                                  " split window horizontal
@@ -188,3 +204,10 @@ let g:deoplete#enable_at_startup = 1
 
 " python
 let g:python_highlight_all = 1
+
+" lsp
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['/usr/bin/pyls'],
+    \ }
+nnoremap <silent>gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent><F2> :call LanguageClient#textDocument_rename()<CR>
