@@ -32,6 +32,7 @@ call plug#end()
 
 " Basic
 let mapleader = " "
+set timeoutlen=2000                                        " timeout for map sequence (ms)
 
 set scrolloff=999                                          " keep line in center of screen
 set linebreak                                              " wrap long line
@@ -207,7 +208,9 @@ let g:python_highlight_all = 1
 
 " lsp
 let g:LanguageClient_serverCommands = {
+    \ 'cpp': ['/usr/bin/cquery'],
     \ 'python': ['/usr/bin/pyls'],
     \ }
-nnoremap <silent>gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent><F2> :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent> <leader>lr :call LanguageClient#textDocument_references()<CR>
+nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <leader>ln :call LanguageClient#textDocument_rename()<CR>
