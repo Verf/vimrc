@@ -201,6 +201,7 @@ nnoremap <silent> <leader>rt :call asyncrun#quickfix_toggle(6)<CR>
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " deoplete
+autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 let g:deoplete#enable_at_startup = 1
 
 " python
