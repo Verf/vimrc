@@ -210,7 +210,7 @@ let g:python_highlight_all = 1
 " lsp
 let g:LanguageClient_serverCommands = {
     \ 'cpp': ['/usr/bin/cquery'],
-    \ 'python': ['/usr/bin/pyls'],
+    \ 'python': ['$HOME/.pyenv/shims/pyls'],
     \ }
 nnoremap <silent> <leader>lr :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
