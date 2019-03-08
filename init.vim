@@ -7,7 +7,6 @@
 "                                       
 " Vimrc for Verf
 " Key Binding:
-"     <F2> Rename
 "     <F9> Toggle paste mode
 "
 " vim-plug
@@ -169,6 +168,8 @@ let g:EasyMotion_do_mapping = 0
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 nmap s <Plug>(easymotion-overwin-f)
+map <Leader>gn <Plug>(easymotion-j)
+map <Leader>gi <Plug>(easymotion-k)
 
 " leader F
 let g:Lf_ShortcutF = '<leader>ff'                          " open file by leaderF
@@ -212,6 +213,6 @@ let g:LanguageClient_serverCommands = {
     \ 'cpp': ['/usr/bin/cquery'],
     \ 'python': ['$HOME/.pyenv/shims/pyls'],
     \ }
-nnoremap <silent> <leader>lr :call LanguageClient#textDocument_references()<CR>
-nnoremap <silent> <leader>ld :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <leader>ln :call LanguageClient#textDocument_rename()<CR>
+nnoremap <silent> <leader>rf :call LanguageClient#textDocument_references()<CR>
+nnoremap <silent> <leader>gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <leader>rn :call LanguageClient#textDocument_rename()<CR>
