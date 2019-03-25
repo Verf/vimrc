@@ -20,6 +20,7 @@ Plug 'autozimu/LanguageClient-neovim', {
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Chiel92/vim-autoformat'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'junegunn/fzf'
 Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
@@ -36,6 +37,7 @@ set timeoutlen=2000                                        " timeout for map seq
 set scrolloff=999                                          " keep line in center of screen
 set linebreak                                              " wrap long line
 set showbreak=⮎                                            " label of line break
+set nowrap
 set textwidth=80                                           " maxium line length
 
 set smartcase                                              " case sensitive only if pattern contains upper letter
@@ -137,7 +139,7 @@ noremap <silent> <leader><tab> :tabnext<CR>                 " switch to next tab
 
 " UI
 colorscheme onedark
-set termguicolors                                          " true color support in terminal
+" set termguicolors                                          " true color support in terminal
 set cursorline                                             " highlight current line
 set showmatch                                              " highlight matching parenthesis
 set novisualbell                                           " no beep and screen flash
@@ -146,6 +148,12 @@ set ruler                                                  " show cursor positio
 set relativenumber                                         " show relative line number
 set switchbuf=useopen,usetab,newtab                        " better buffer switch
 set noshowmode                                             " don't show insert status (use lightline instead)
+
+" Language
+" python
+let g:python_highlight_all = 1
+let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
+let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 
 " lightline
 let g:lightline = {
@@ -205,13 +213,10 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 let g:deoplete#enable_at_startup = 1
 
-" python
-let g:python_highlight_all = 1
-
 " lsp
 let g:LanguageClient_serverCommands = {
     \ 'cpp': ['/usr/bin/cquery'],
-    \ 'python': ['$HOME/.pyenv/shims/pyls'],
+    \ 'python': ['/usr/bin/pyls'],
     \ }
 nnoremap <silent> <leader>rf :call LanguageClient#textDocument_references()<CR>
 nnoremap <silent> <leader>gd :call LanguageClient#textDocument_definition()<CR>
