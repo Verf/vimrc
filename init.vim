@@ -6,22 +6,13 @@
 "      \/   |_____|_|  |_|_|  \_\\_____|
 "                                       
 " Vimrc for Verf
-" Key Binding:
-"     <F9> Toggle paste mode
 "
 " vim-plug
 call plug#begin('~/.nvim/plugged')
-Plug 'ervandew/supertab'
-Plug 'Shougo/echodoc.vim'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Chiel92/vim-autoformat'
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'Shougo/neosnippet.vim'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'junegunn/fzf'
-Plug 'skywind3000/asyncrun.vim', {'on': 'AsyncRun'}
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
@@ -31,14 +22,15 @@ Plug 'vim-python/python-syntax'
 call plug#end()
 
 " Basic
-let mapleader = " "
-set timeoutlen=2000                                        " timeout for map sequence (ms)
+let g:mapleader = "\<Space>"
+let g:maplocalleader = ','
+set timeoutlen=1500                                        " timeout for map sequence (ms)
 
 set scrolloff=999                                          " keep line in center of screen
 set linebreak                                              " wrap long line
 set showbreak=⮎                                            " label of line break
-set nowrap
-set textwidth=80                                           " maxium line length
+set nowrap                                                 " close autowrap
+set textwidth=80                                           " autowrap line length
 
 set smartcase                                              " case sensitive only if pattern contains upper letter
 set incsearch                                              " incrementally highlights all pattern matches
@@ -60,6 +52,14 @@ set clipboard=unnamedplus                                  " use system clip boa
 set pastetoggle=<F9>                                       " toggle paste mode by <F9>
 set nobackup                                               " close auto backup
 set autowriteall                                           " auto save
+
+" extra setting
+set hidden
+set cmdheight=2
+set updatetime=300
+set shortmess+=c
+set signcolumn=yes
+
 
 " The key map for norman key board layout
 noremap q q
@@ -130,7 +130,7 @@ noremap <leader>wi <C-w>k                                  " jump to the above w
 noremap <leader>wo <C-w>l                                  " jump to the right window
 " tab operate
 noremap <silent> <leader>tn :tabnew<CR>                     " create new tab
-noremap <silent> <leader>tc :tabclose<CR>                   " close current tab
+noremap <silent> <leader>tq :tabclose<CR>                   " close current tab
 noremap <silent> <leader>1 :tabn 1<CR>                      " switch to tab1
 noremap <silent> <leader>2 :tabn 2<CR>                      " switch to tab2
 noremap <silent> <leader>3 :tabn 3<CR>                      " switch to tab3
@@ -160,13 +160,14 @@ let g:lightline = {
             \ 'colorscheme': 'onedark',
             \ 'active': {
             \     'left': [ [ 'mode', 'paste' ],
-            \               [ 'gitbranch', 'readonly', 'filename', 'modified' ] ],
+            \               [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ],
             \     'right': [[ 'lineinfo' ],
             \               [ 'percent' ],
             \               [ 'fileformat', 'fileencoding', 'filetype' ]]
             \ },
             \ 'component_function': {
             \   'gitbranch': 'gitbranch#name',
+            \   'cocstatus': 'coc#status',
             \ },
             \ }
 
@@ -183,6 +184,7 @@ map <Leader>gi <Plug>(easymotion-k)
 let g:Lf_ShortcutF = '<leader>ff'                          " open file by leaderF
 let g:Lf_ShortcutB = '<leader>fb'                          " open buffer by leaderF
 let g:Lf_WindowHeight = 0.30                               " pop menu height of leaderF
+let g:Lf_CommandMap = {'<C-T>': ['<CR>']}                  " open file in new tab
 " marker of root directory
 let g:Lf_RootMarkers = [
             \ '.git',
@@ -192,32 +194,47 @@ let g:Lf_RootMarkers = [
             \ '.env',
             \ ]
 " open file in new tab like mordern editor
-let g:Lf_CommandMap = {'<C-T>': ['<CR>']}
 
-" AsyncRun
-let g:asyncrun_open = 6                                    " quickfix window height
-let g:asyncrun_rootmarks = [
-            \ '.git',
-            \ '.hg',
-            \ '.svn',
-            \ '.python-version',
-            \ '.env',
-            \ ]
-nnoremap <silent> <leader>rr :AsyncRun -raw python %<CR>
-nnoremap <silent> <leader>rt :call asyncrun#quickfix_toggle(6)<CR>
-
-"supertab
+" supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
-" deoplete
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-let g:deoplete#enable_at_startup = 1
+" coc
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" lsp
-let g:LanguageClient_serverCommands = {
-    \ 'cpp': ['/usr/bin/cquery'],
-    \ 'python': ['/usr/bin/pyls'],
-    \ }
-nnoremap <silent> <leader>rf :call LanguageClient#textDocument_references()<CR>
-nnoremap <silent> <leader>gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <leader>rn :call LanguageClient#textDocument_rename()<CR>
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+" enter to expand snippets
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+" auto close completion menu
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+" key binding
+nmap <leader>rn <Plug>(coc-rename)
+vmap <leader>lf  <Plug>(coc-format-selected)
+nmap <leader>lf  <Plug>(coc-format-selected)
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" neosnippet
+let g:neosnippet#disable_runtime_snippets = {
+\   '_' : 1,
+\ }
+let g:neosnippet#snippets_directory = '~/.config/nvim/snippets'
+imap <expr><C-f>
+\ pumvisible() ? "\<C-n>" :
+\ neosnippet#expandable_or_jumpable() ?
+\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><C-f> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
