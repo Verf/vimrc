@@ -9,16 +9,16 @@
 "
 " vim-plug
 call plug#begin('~/.nvim/plugged')
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-Plug 'Shougo/neosnippet.vim'
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'junegunn/fzf'
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'easymotion/vim-easymotion'
 Plug 'joshdick/onedark.vim'
 Plug 'vim-python/python-syntax'
+Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'honza/vim-snippets'
+Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " Basic
@@ -55,7 +55,6 @@ set autowriteall                                           " auto save
 
 " extra setting
 set hidden
-set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
@@ -195,46 +194,22 @@ let g:Lf_RootMarkers = [
             \ ]
 " open file in new tab like mordern editor
 
-" supertab
-let g:SuperTabDefaultCompletionType = "<c-n>"
-
 " coc
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gt <Plug>(coc-type-definition)
+nmap <silent> <leader>gr <Plug>(coc-references)
+nmap <silent> <leader>rn <Plug>(coc-rename)
+
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? coc#rpc#request('doKeymap', ['snippets-expand-jump','']) :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-" enter to expand snippets
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-" auto close completion menu
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
-" key binding
-nmap <leader>rn <Plug>(coc-rename)
-vmap <leader>lf  <Plug>(coc-format-selected)
-nmap <leader>lf  <Plug>(coc-format-selected)
-augroup mygroup
-  autocmd!
-  " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  " Update signature help on jump placeholder
-  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-augroup end
 
-" neosnippet
-let g:neosnippet#disable_runtime_snippets = {
-\   '_' : 1,
-\ }
-let g:neosnippet#snippets_directory = '~/.config/nvim/snippets'
-imap <expr><C-f>
-\ pumvisible() ? "\<C-n>" :
-\ neosnippet#expandable_or_jumpable() ?
-\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><C-f> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+let g:coc_snippet_next = '<Tab>'
+let g:coc_snippet_prev = '<S-Tab>'
