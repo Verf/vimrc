@@ -16,7 +16,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'joshdick/onedark.vim'
 Plug 'vim-python/python-syntax'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'junegunn/fzf.vim'
 call plug#end()
 
 " Basic
@@ -178,6 +177,7 @@ map <Leader>gn <Plug>(easymotion-j)
 map <Leader>gi <Plug>(easymotion-k)
 
 " leader F
+let g:Lf_ReverseOrder = 1                                  " show result bottom to top
 let g:Lf_ShortcutF = '<leader>ff'                          " open file by leaderF
 let g:Lf_ShortcutB = '<leader>fb'                          " open buffer by leaderF
 let g:Lf_WindowHeight = 0.30                               " pop menu height of leaderF
@@ -190,24 +190,3 @@ let g:Lf_RootMarkers = [
             \ '.python-version',
             \ '.env',
             \ ]
-" open file in new tab like mordern editor
-
-" coc
-nmap <silent> <leader>gd <Plug>(coc-definition)
-nmap <silent> <leader>gt <Plug>(coc-type-definition)
-nmap <silent> <leader>gr <Plug>(coc-references)
-nmap <silent> <leader>rn <Plug>(coc-rename)
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? coc#rpc#request('doKeymap', ['snippets-expand-jump','']) :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-let g:coc_snippet_next = '<Tab>'
-let g:coc_snippet_prev = '<S-Tab>'
