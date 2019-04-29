@@ -16,8 +16,6 @@ Plug 'easymotion/vim-easymotion'
 Plug 'joshdick/onedark.vim'
 Plug 'vim-python/python-syntax'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
-Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf.vim'
 call plug#end()
 
