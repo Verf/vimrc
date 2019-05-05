@@ -200,8 +200,9 @@ let g:Lf_RootMarkers = [
             \ ]
 
 " Deoplete
-let g:deoplete#enable_at_startup = 1
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#jedi#show_docstring = 0
 
 " Ultisnips
 let g:UltiSnipsExpandTrigger="<M-Tab>"
