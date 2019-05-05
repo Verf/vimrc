@@ -13,9 +13,15 @@ Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'easymotion/vim-easymotion'
-Plug 'joshdick/onedark.vim'
 Plug 'vim-python/python-syntax'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'neomake/neomake'
+Plug 'SirVer/ultisnips'
+Plug 'Shougo/echodoc.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'joshdick/onedark.vim'
 call plug#end()
 
 " Basic
@@ -113,29 +119,31 @@ noremap M M
 
 " The leader based key binding
 " buffer operate
-noremap <leader>bd :bd<CR>                                 " close current buffer
-noremap <leader>bn :bn<CR>                                 " switch to next buffer
-noremap <leader>bp :bp<CR>                                 " switch to previous buffer
+nnoremap <leader>bq :bd<CR>                                 " close current buffer
+nnoremap <leader>bn :bn<CR>                                 " switch to next buffer
+nnoremap <leader>bp :bp<CR>                                 " switch to previous buffer
 " windows operate
-noremap <leader>ws <C-w>s                                  " split window vertical
-noremap <leader>wv <C-w>v                                  " split window horizontal
-noremap <leader>wq <C-w>c                                  " close current window
-noremap <leader>wy <C-w>h                                  " jump to the left window
-noremap <leader>wn <C-w>j                                  " jump to the below window
-noremap <leader>wi <C-w>k                                  " jump to the above window
-noremap <leader>wo <C-w>l                                  " jump to the right window
+nnoremap <leader>ws <C-w>s                                  " split window vertical
+nnoremap <leader>wv <C-w>v                                  " split window horizontal
+nnoremap <leader>wq <C-w>c                                  " close current window
+nnoremap <leader>wt <C-w>T                                  " move current window to new tab
+nnoremap <leader>wy <C-w>h                                  " jump to the left window
+nnoremap <leader>wn <C-w>j                                  " jump to the below window
+nnoremap <leader>wi <C-w>k                                  " jump to the above window
+nnoremap <leader>wo <C-w>l                                  " jump to the right window
 " tab operate
-noremap <silent> <leader>tn :tabnew<CR>                     " create new tab
-noremap <silent> <leader>tq :tabclose<CR>                   " close current tab
-noremap <silent> <leader>1 :tabn 1<CR>                      " switch to tab1
-noremap <silent> <leader>2 :tabn 2<CR>                      " switch to tab2
-noremap <silent> <leader>3 :tabn 3<CR>                      " switch to tab3
-noremap <silent> <leader>4 :tabn 4<CR>                      " switch to tab4
-noremap <silent> <leader><tab> :tabnext<CR>                 " switch to next tab
+nnoremap <silent> <leader>tn :tabnew<CR>                     " create new tab
+nnoremap <silent> <leader>tq :tabclose<CR>                   " close current tab
+nnoremap <silent> <leader>1 :tabn 1<CR>                      " switch to tab1
+nnoremap <silent> <leader>2 :tabn 2<CR>                      " switch to tab2
+nnoremap <silent> <leader>3 :tabn 3<CR>                      " switch to tab3
+nnoremap <silent> <leader>4 :tabn 4<CR>                      " switch to tab4
+nnoremap <silent> <leader><tab> :tabnext<CR>                 " switch to next tab
 
 " UI
 colorscheme onedark
-" set termguicolors                                          " true color support in terminal
+set background=dark
+set termguicolors                                          " true color support in terminal
 set cursorline                                             " highlight current line
 set showmatch                                              " highlight matching parenthesis
 set novisualbell                                           " no beep and screen flash
@@ -148,8 +156,6 @@ set noshowmode                                             " don't show insert s
 " Language
 " python
 let g:python_highlight_all = 1
-let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
-let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 
 " lightline
 let g:lightline = {
@@ -170,13 +176,14 @@ let g:lightline = {
 " easy motion
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
-map  / <Plug>(easymotion-sn)
+map / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-nmap s <Plug>(easymotion-overwin-f)
+map s <Plug>(easymotion-overwin-f)
 map <Leader>gn <Plug>(easymotion-j)
 map <Leader>gi <Plug>(easymotion-k)
 
-" leader F
+" leaderF
+let g:Lf_HideHelp = 1
 let g:Lf_ReverseOrder = 1                                  " show result bottom to top
 let g:Lf_ShortcutF = '<leader>ff'                          " open file by leaderF
 let g:Lf_ShortcutB = '<leader>fb'                          " open buffer by leaderF
@@ -189,4 +196,14 @@ let g:Lf_RootMarkers = [
             \ '.svn',
             \ '.python-version',
             \ '.env',
+            \ '.root',
             \ ]
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+" Ultisnips
+let g:UltiSnipsExpandTrigger="<M-Tab>"
+let g:UltiSnipsJumpForwardTrigger="<M-n>"
+let g:UltiSnipsJumpBackwardTrigger="<M-i>"
