@@ -201,6 +201,7 @@ let g:Lf_RootMarkers = [
 
 " Deoplete
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+set completeopt-=preview
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#sources#jedi#show_docstring = 0
 
