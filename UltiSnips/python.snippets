@@ -1,10 +1,6 @@
-snippet #! "Shebang header for python scripts" b
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-$0
-endsnippet
+priority -50
 
-snippet coding "Shebang header for utf-8 coding" b
+snippet utf8 "Shebang for coding type" b
 # -*- coding: utf-8 -*-
 $0
 endsnippet
@@ -21,24 +17,9 @@ with $1 as $2:
     $0
 endsnippet
 
-snippet for "for loop" b
-for ${1:i} in ${2}:
-    $0
-endsnippet
-
-snippet if "if condition" b
-if $1:
-    $0
-endsnippet
-
 snippet ifelse "if else condition" b
 if $1:
     $2
 else:
-    $0
-endsnippet
-
-snippet elif "else if condition" b
-elif $1:
     $0
 endsnippet

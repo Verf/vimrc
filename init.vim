@@ -18,6 +18,7 @@ Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'Shougo/echodoc.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'joshdick/onedark.vim'
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 call plug#end()
 
 " Basic
@@ -45,18 +46,16 @@ set shiftwidth=4                                           " number of spaces to
 set report=0                                               " always report changed lines
 set synmaxcol=200                                          " maxium column for search syntax items
 set updatecount=100                                        " after type this many characters the swap file will be written to disk
+set updatetime=300                                         " updatetime for CursorHold & CursorHoldI
 
 set mouse=a                                                " enable mouse in all mode
 set clipboard=unnamedplus                                  " use system clip board
 set pastetoggle=<F9>                                       " toggle paste mode by <F9>
 set nobackup                                               " close auto backup
-set autowriteall                                           " auto save
-
-" extra setting
+set nowritebackup                                          " close auto write
 set hidden
-set updatetime=300
-set shortmess+=c
-set signcolumn=yes
+set shortmess+=c                                           " don't give ins-completion-menu messages
+set signcolumn=yes                                         " always show signcolumns
 
 
 " The key map for norman key board layout
@@ -175,8 +174,6 @@ let g:EasyMotion_do_mapping = 0
 map / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map s <Plug>(easymotion-overwin-f)
-map <Leader>gn <Plug>(easymotion-j)
-map <Leader>gi <Plug>(easymotion-k)
 
 " leaderF
 let g:Lf_HideHelp = 1
@@ -194,3 +191,43 @@ let g:Lf_RootMarkers = [
             \ '.env',
             \ '.root',
             \ ]
+
+" echodoc
+let g:echodoc#enable_at_startup = 1
+let g:echodoc#type = 'virtual'
+
+" coc
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" 
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" for jsonc
+autocmd FileType json syntax match Comment +\/\/.\+$+
