@@ -15,10 +15,6 @@ Plug 'itchyny/vim-gitbranch'
 Plug 'easymotion/vim-easymotion'
 Plug 'vim-python/python-syntax'
 Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'deoplete-plugins/deoplete-jedi'
-Plug 'neomake/neomake'
-Plug 'SirVer/ultisnips'
 Plug 'Shougo/echodoc.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'joshdick/onedark.vim'
@@ -198,14 +194,3 @@ let g:Lf_RootMarkers = [
             \ '.env',
             \ '.root',
             \ ]
-
-" Deoplete
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-set completeopt-=preview
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#jedi#show_docstring = 0
-
-" Ultisnips
-let g:UltiSnipsExpandTrigger="<M-Tab>"
-let g:UltiSnipsJumpForwardTrigger="<M-n>"
-let g:UltiSnipsJumpBackwardTrigger="<M-i>"
