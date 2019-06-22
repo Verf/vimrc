@@ -10,9 +10,7 @@
                     "directory": "/tmp/ccls-cache"
                 }
             }
-        }
-    },
-    "languageserver": {
+        },
         "python": {
             "command": "python",
             "args": [
@@ -65,6 +63,17 @@
                             "matchDir": "[^\\.].*"
                         },
                         "pylint": {
+                            "enabled": false
+                        },
+                        "pydocstyle": {
+                            "enabled": false,
+                            "match": "(?!test_).*\\.py",
+                            "matchDir": "[^\\.].*"
+                        },
+                        "pyflakes": {
+                            "enabled": false
+                        },
+                        "rope_completion": {
                             "enabled": true
                         },
                         "yapf": {
