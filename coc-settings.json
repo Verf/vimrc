@@ -30,9 +30,6 @@
                         "server": "verbose"
                     },
                     "commandPath": "",
-                    "configurationSources": [
-                        "pycodestyle"
-                    ],
                     "plugins": {
                         "jedi_completion": {
                             "enabled": true
@@ -57,18 +54,8 @@
                         "preload": {
                             "enabled": true
                         },
-                        "pydocstyle": {
-                            "enabled": false,
-                            "match": "(?!test_).*\\.py",
-                            "matchDir": "[^\\.].*"
-                        },
                         "pylint": {
                             "enabled": false
-                        },
-                        "pydocstyle": {
-                            "enabled": false,
-                            "match": "(?!test_).*\\.py",
-                            "matchDir": "[^\\.].*"
                         },
                         "pyflakes": {
                             "enabled": false
