@@ -231,3 +231,5 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 " for jsonc
 autocmd FileType json syntax match Comment +\/\/.\+$+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')

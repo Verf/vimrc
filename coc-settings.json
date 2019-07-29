@@ -1,5 +1,6 @@
 {
     "suggest.noselect": false,
+    "python.formatting.provider": "yapf",
     "languageserver": {
         "ccls": {
             "command": "ccls",
