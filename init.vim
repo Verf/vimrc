@@ -14,7 +14,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'easymotion/vim-easymotion'
 Plug 'vim-python/python-syntax'
-Plug 'Yggdroot/LeaderF', { 'do': './install.sh' }
 Plug 'Shougo/echodoc.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'joshdick/onedark.vim'
@@ -173,23 +172,6 @@ let g:EasyMotion_do_mapping = 0
 map / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map s <Plug>(easymotion-overwin-f)
-
-" leaderF
-let g:Lf_HideHelp = 1
-let g:Lf_ReverseOrder = 1                                  " show result bottom to top
-let g:Lf_ShortcutF = '<leader>ff'                          " open file by leaderF
-let g:Lf_ShortcutB = '<leader>fb'                          " open buffer by leaderF
-let g:Lf_WindowHeight = 0.30                               " pop menu height of leaderF
-let g:Lf_CommandMap = {'<C-T>': ['<CR>']}                  " open file in new tab
-" marker of root directory
-let g:Lf_RootMarkers = [
-            \ '.git',
-            \ '.hg',
-            \ '.svn',
-            \ '.python-version',
-            \ '.env',
-            \ '.root',
-            \ ]
 
 " echodoc
 let g:echodoc#enable_at_startup = 1
