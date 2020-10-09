@@ -8,13 +8,16 @@
 " Vimrc for Verf
 "
 " vim-plug
-call plug#begin('~/.nvim/plugged')
+if has('win32')
+    call plug#begin('~\AppData\Local\nvim\plugged')
+else
+    call plug#begin('~/.config/nvim/plugged')
+endif
 Plug 'tpope/vim-vinegar'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
+Plug 'jceb/vim-orgmode'
 Plug 'easymotion/vim-easymotion'
-Plug 'vim-python/python-syntax'
-Plug 'Shougo/echodoc.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'joshdick/onedark.vim'
 call plug#end()
@@ -42,11 +45,13 @@ set tabstop=4                                              " number of spaces th
 set softtabstop=4                                          " number of spaces that a <Tab> is inserted
 set shiftwidth=4                                           " number of spaces to use for (auto)indent
 set report=0                                               " always report changed lines
+
 set synmaxcol=200                                          " maxium column for search syntax items
 set updatecount=100                                        " after type this many characters the swap file will be written to disk
 set updatetime=300                                         " updatetime for CursorHold & CursorHoldI
 
 set mouse=a                                                " enable mouse in all mode
+set autochdir
 set clipboard=unnamedplus                                  " use system clip board
 set pastetoggle=<F9>                                       " toggle paste mode by <F9>
 set nobackup                                               " close auto backup
@@ -146,10 +151,6 @@ set relativenumber                                         " show relative line 
 set switchbuf=useopen,usetab,newtab                        " better buffer switch
 set noshowmode                                             " don't show insert status (use lightline instead)
 
-" Language
-" python
-let g:python_highlight_all = 1
-
 " lightline
 let g:lightline = {
             \ 'colorscheme': 'onedark',
@@ -172,7 +173,3 @@ let g:EasyMotion_do_mapping = 0
 map / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map s <Plug>(easymotion-overwin-f)
-
-" echodoc
-let g:echodoc#enable_at_startup = 1
-let g:echodoc#type = 'virtual'
