@@ -160,19 +160,12 @@ nnoremap <silent> <leader>wo <C-w>l                         " jump to the right 
 nnoremap <silent> <leader>wc :only<CR>                      " close all the other windows
 " tab operate
 nnoremap <silent> <leader>tn :tabnew<CR>                    " create new tab
-nnoremap <silent> <leader>tq :tabclose<CR>                  " close current tab
+nnoremap <silent> <leader>tq :bd<CR>                        " close current tab
 nnoremap <silent> <leader>1 :tabn 1<CR>                     " switch to tab1
 nnoremap <silent> <leader>2 :tabn 2<CR>                     " switch to tab2
 nnoremap <silent> <leader>3 :tabn 3<CR>                     " switch to tab3
 nnoremap <silent> <leader>4 :tabn 4<CR>                     " switch to tab4
 nnoremap <silent> <leader><tab> :tabnext<CR>                " switch to next tab
-" buffer operate
-nmap <silent> <leader><tab> <C-^>                           " switch to last buffer
-nmap <silent> <Leader>1 :b1<CR>                             " switch to buffer 1
-nmap <silent> <Leader>2 :b2<CR>                             " switch to buffer 2
-nmap <silent> <Leader>3 :b3<CR>                             " switch to buffer 3
-nmap <silent> <Leader>4 :b4<CR>                             " switch to buffer 4
-nmap <silent> <Leader>5 :b5<CR>                             " switch to buffer 5
 
 " lightline
 let g:lightline#bufferline#show_number = 2
@@ -214,16 +207,19 @@ let g:vimwiki_list = [{'path': '~/Sync/Notes', 'syntax': 'markdown', 'ext': '.md
 " trigger completion
 inoremap <silent><expr> <c-/> coc#refresh()
 " use tab to select and expand snippets
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" enter to select
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 let g:coc_snippet_next = '<tab>'
 " goto code navigation
@@ -242,17 +238,11 @@ xmap <silent> <C-s> <Plug>(coc-range-select)
 " Mappings for CoCList
 " Show all diagnostics.
 nnoremap <silent><nowait> <leader>ca  :<C-u>CocList diagnostics<cr>
-" Manage extensions.
 nnoremap <silent><nowait> <leader>ce  :<C-u>CocList extensions<cr>
-" Show commands.
 nnoremap <silent><nowait> <leader>cc  :<C-u>CocList commands<cr>
-" Find symbol of current document.
+nnoremap <silent><nowait> <leader>cf  :<C-u>CocList files<cr>
 nnoremap <silent><nowait> <leader>co  :<C-u>CocList outline<cr>
-" Search workspace symbols.
 nnoremap <silent><nowait> <leader>cs  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent><nowait> <leader>cn  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> <leader>ci  :<C-u>CocPrev<CR>
-" view all errors
-nnoremap <silent> <leader>cl  :<C-u>CocList locationlist<CR>
+" multiple cursor
+nmap <silent> <C-s> <Plug>(coc-cursors-word)*
+xmap <silent> <C-s> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
