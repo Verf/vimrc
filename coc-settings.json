@@ -1,9 +1,0 @@
-{
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-1.8",
-            "path": "/path/to/jdk-8",
-            "default": true
-        }
-    ]
-}
