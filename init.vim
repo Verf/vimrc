@@ -20,6 +20,9 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'itchyny/calendar.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'easymotion/vim-easymotion'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc-java', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
 Plug 'jiangmiao/auto-pairs'
 Plug 'joshdick/onedark.vim'
 call plug#end()
