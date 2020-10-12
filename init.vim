@@ -14,16 +14,19 @@ else
     call plug#begin('~/.config/nvim/plugged')
 endif
 Plug 'liuchengxu/vim-which-key'
+Plug 'easymotion/vim-easymotion'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'itchyny/calendar.vim'
-Plug 'easymotion/vim-easymotion'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'vimwiki/vimwiki'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-surround'
+Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-rooter'
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'joshdick/onedark.vim'
 call plug#end()
 
@@ -230,6 +233,22 @@ omap / <Plug>(easymotion-tn)
 map s <Plug>(easymotion-overwin-f)
 
 " vimwiki
+let g:vimwiki_list = [{'path': '~/Sync/Notes', 'syntax': 'markdown', 'ext': '.md'}]
+let g:which_key_map.n = {
+    \ 'name': 'Notes',
+    \ 'i': 'open index',
+    \ 's': 'select availdable wiki',
+    \ 'd': 'open diary index',
+    \ 'w': 'open today',
+    \ 'y': 'open yesterday',
+    \ 't': 'open tomorrow',
+    \ }
+nmap <silent> <leader>ni <Plug>VimwikiIndex
+nmap <silent> <leader>ns <Plug>VimwikiUISelect
+nmap <silent> <leader>nd <Plug>VimwikiDiaryIndex
+nmap <silent> <leader>nw <Plug>VimwikiMakeDiaryNote
+nmap <silent> <leader>ny <Plug>VimwikiMakeYesterdayNote
+nmap <silent> <leader>nt <Plug>VimwikiMakeTomorrowDiaryNote
 
 " coc.nvim
 " use tab to select and expand snippets
@@ -274,7 +293,7 @@ nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 " Mappings for CoCList
 " Show all diagnostics.
-let g:which_key_map.c= {
+let g:which_key_map.l= {
     \ 'name': '+CocList',
     \ 'd': 'diagnostics',
     \ 'e': 'extensions',
@@ -285,14 +304,14 @@ let g:which_key_map.c= {
     \ 's': 'symbols',
     \ 'r': 'recent files'
     \ }
-nnoremap <silent><nowait> <leader>cd  :<C-u>CocList diagnostics<cr>
-nnoremap <silent><nowait> <leader>ce  :<C-u>CocList extensions<cr>
-nnoremap <silent><nowait> <leader>cc  :<C-u>CocList commands<cr>
-nnoremap <silent><nowait> <leader>cf  :<C-u>CocList files<cr>
-nnoremap <silent><nowait> <leader>cb  :<C-u>CocList buffers<cr>
-nnoremap <silent><nowait> <leader>co  :<C-u>CocList outline<cr>
-nnoremap <silent><nowait> <leader>cs  :<C-u>CocList -I symbols<cr>
-nnoremap <silent><nowait> <leader>cr  :<C-u>CocList mru<cr>
+nnoremap <silent><nowait> <leader>ld  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <leader>le  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <leader>lc  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <leader>lf  :<C-u>CocList files<cr>
+nnoremap <silent><nowait> <leader>lb  :<C-u>CocList buffers<cr>
+nnoremap <silent><nowait> <leader>lo  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <leader>lr  :<C-u>CocList mru<cr>
 " multiple cursor
 nmap <silent> <C-s> <Plug>(coc-cursors-word)*
 xmap <silent> <C-s> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
@@ -347,3 +366,8 @@ let g:rooter_change_directory_for_non_project_files = 'current'
 " vim-easy-align
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+
+" nerdcommenter
+let g:NERDSpaceDelims = 1
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
