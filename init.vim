@@ -13,6 +13,7 @@ if has('win32')
 else
     call plug#begin('~/.config/nvim/plugged')
 endif
+Plug 'liuchengxu/vim-which-key'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'mengelbrecht/lightline-bufferline'
@@ -20,6 +21,7 @@ Plug 'itchyny/calendar.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'easymotion/vim-easymotion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'airblade/vim-rooter'
 Plug 'joshdick/onedark.vim'
@@ -142,16 +144,47 @@ noremap B B
 noremap P N
 noremap M M
 
+" F-filed
+noremap <silent> <F2> :Defx<CR>
+
+" vim-which-key
+call which_key#register('<Space>', "g:which_key_map")
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
+set timeoutlen=500
+" Define prefix dictionary
+let g:which_key_map =  {}
+
 " The leader based key binding
+let g:which_key_map.s = {
+    \ 'name': '+settings',
+    \ 'o': 'open-vimrc',
+    \ 'r': 'reload-vimrc'
+    \ }
 nnoremap <silent> <leader>so :e $MYVIMRC<CR>               " open vimrc
 nnoremap <silent> <leader>sr :source $MYVIMRC<CR>          " reload vimrc
 " buffer operate
+let g:which_key_map.q = 'close buffer'
 nnoremap <silent> <leader>q :bd!<CR>                       " close current buffer
+let g:which_key_map.n= 'next buffer'
 nnoremap <silent> <leader>n :bn<CR>                        " switch to next buffer
+let g:which_key_map.p= 'previous buffer'
 nnoremap <silent> <leader>p :bp<CR>                        " switch to previous buffer
 " windows operate
-nnoremap <silent> <leader>ws <C-w>s                        " split window vertical
-nnoremap <silent> <leader>wv <C-w>v                        " split window horizontal
+let g:which_key_map.w = {
+    \ 'name': '+windows',
+    \ 'h': 'split window horizontal',
+    \ 'v': 'split window vertical',
+    \ 'q': 'close current window',
+    \ 't': 'move window to tab',
+    \ 'y': 'jump to left window',
+    \ 'n': 'jump to below window',
+    \ 'i': 'jump to above window',
+    \ 'o': 'jump to right window',
+    \ 'c': 'close all the other windows'
+    \ }
+nnoremap <silent> <leader>wh <C-w>s                        " split window horizontal
+nnoremap <silent> <leader>wv <C-w>v                        " split window vertical
 nnoremap <silent> <leader>wq <C-w>c                        " close current window
 nnoremap <silent> <leader>wt <C-w>T                        " move current window to new tab
 nnoremap <silent> <leader>wy <C-w>h                        " jump to the left window
@@ -166,28 +199,28 @@ nnoremap <silent> <leader>wc :only<CR>                     " close all the other
 " lightline
 let g:lightline#bufferline#show_number = 2
 let g:lightline = {
-            \ 'colorscheme': 'onedark',
-            \ 'active': {
-            \     'left': [ [ 'mode', 'paste' ],
-            \               [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ],
-            \     'right': [[ 'lineinfo' ],
-            \               [ 'percent' ],
-            \               [ 'fileformat', 'fileencoding', 'filetype' ]]
-            \ },
-            \ 'tabline': {
-            \   'left': [ ['buffers'] ],
-            \   'right': [ ['close'] ]
-            \ },
-            \ 'component_expand': {
-            \   'buffers': 'lightline#bufferline#buffers'
-            \ },
-            \ 'component_type': {
-            \   'buffers': 'tabsel'
-            \ },
-            \ 'component_function': {
-            \     'gitbranch': 'gitbranch#name',
-            \ },
-            \ }
+    \ 'colorscheme': 'onedark',
+    \ 'active': {
+    \     'left': [ [ 'mode', 'paste' ],
+    \               [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ],
+    \     'right': [[ 'lineinfo' ],
+    \               [ 'percent' ],
+    \               [ 'fileformat', 'fileencoding', 'filetype' ]]
+    \ },
+    \ 'tabline': {
+    \   'left': [ ['buffers'] ],
+    \   'right': [ ['close'] ]
+    \ },
+    \ 'component_expand': {
+    \   'buffers': 'lightline#bufferline#buffers'
+    \ },
+    \ 'component_type': {
+    \   'buffers': 'tabsel'
+    \ },
+    \ 'component_function': {
+    \     'gitbranch': 'gitbranch#name',
+    \ },
+    \ }
 
 " easy motion
 let g:EasyMotion_smartcase = 1
@@ -209,9 +242,9 @@ function! s:check_back_space() abort
 endfunction
 
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+    \ pumvisible() ? "\<C-n>" :
+    \ <SID>check_back_space() ? "\<TAB>" :
+    \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " enter to select
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
@@ -219,6 +252,13 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 let g:coc_snippet_next = '<tab>'
 " goto code navigation
+let g:which_key_map.g= {
+    \ 'name': 'next buffer',
+    \ 'd': 'goto definition',
+    \ 'y': 'type definition',
+    \ 'i': 'goto implementation',
+    \ 'r': 'show references'
+    \ }
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
@@ -226,6 +266,10 @@ nmap <silent> gr <Plug>(coc-references)
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " symbol rename
+let g:which_key_map.r = {
+    \ 'name': '+rename',
+    \ 'n': 'rename symbol'
+    \ }
 nmap <leader>rn <Plug>(coc-rename)
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
@@ -233,6 +277,17 @@ nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 " Mappings for CoCList
 " Show all diagnostics.
+let g:which_key_map.c= {
+    \ 'name': '+CocList',
+    \ 'd': 'diagnostics',
+    \ 'e': 'extensions',
+    \ 'c': 'commands',
+    \ 'f': 'files',
+    \ 'b': 'buffers',
+    \ 'o': 'outline',
+    \ 's': 'symbols',
+    \ 'r': 'recent files'
+    \ }
 nnoremap <silent><nowait> <leader>cd  :<C-u>CocList diagnostics<cr>
 nnoremap <silent><nowait> <leader>ce  :<C-u>CocList extensions<cr>
 nnoremap <silent><nowait> <leader>cc  :<C-u>CocList commands<cr>
@@ -240,10 +295,83 @@ nnoremap <silent><nowait> <leader>cf  :<C-u>CocList files<cr>
 nnoremap <silent><nowait> <leader>cb  :<C-u>CocList buffers<cr>
 nnoremap <silent><nowait> <leader>co  :<C-u>CocList outline<cr>
 nnoremap <silent><nowait> <leader>cs  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <leader>cr  :<C-u>CocList mru<cr>
 " multiple cursor
 nmap <silent> <C-s> <Plug>(coc-cursors-word)*
 xmap <silent> <C-s> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 
+" defx
+call defx#custom#option('_', {
+      \ 'winwidth': 30,
+      \ 'split': 'vertical',
+      \ 'direction': 'topleft',
+      \ 'show_ignored_files': 0,
+      \ 'buffer_name': '',
+      \ 'toggle': 1,
+      \ 'resume': 1
+      \ })
+autocmd FileType defx call s:defx_my_settings()
+function! s:defx_my_settings() abort
+  " Define mappings
+  nnoremap <silent><buffer><expr> <CR>
+  \ defx#do_action('open')
+  nnoremap <silent><buffer><expr> c
+  \ defx#do_action('copy')
+  nnoremap <silent><buffer><expr> m
+  \ defx#do_action('move')
+  nnoremap <silent><buffer><expr> p
+  \ defx#do_action('paste')
+  nnoremap <silent><buffer><expr> l
+  \ defx#do_action('open')
+  nnoremap <silent><buffer><expr> V
+  \ defx#do_action('open', 'vsplit')
+  nnoremap <silent><buffer><expr> o
+  \ defx#do_action('open_tree', 'toggle')
+  nnoremap <silent><buffer><expr> K
+  \ defx#do_action('new_directory')
+  nnoremap <silent><buffer><expr> N
+  \ defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> M
+  \ defx#do_action('new_multiple_files')
+  nnoremap <silent><buffer><expr> C
+  \ defx#do_action('toggle_columns',
+  \                'mark:indent:icon:filename:type:size:time')
+  nnoremap <silent><buffer><expr> S
+  \ defx#do_action('toggle_sort', 'time')
+  nnoremap <silent><buffer><expr> d
+  \ defx#do_action('remove')
+  nnoremap <silent><buffer><expr> r
+  \ defx#do_action('rename')
+  nnoremap <silent><buffer><expr> !
+  \ defx#do_action('execute_command')
+  nnoremap <silent><buffer><expr> x
+  \ defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> yy
+  \ defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> .
+  \ defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> -
+  \ defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> ~
+  \ defx#do_action('cd')
+  nnoremap <silent><buffer><expr> q
+  \ defx#do_action('quit')
+  nnoremap <silent><buffer><expr> <Space>
+  \ defx#do_action('toggle_select') . 'j'
+  nnoremap <silent><buffer><expr> *
+  \ defx#do_action('toggle_select_all')
+  nnoremap <silent><buffer><expr> n
+  \ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> i
+  \ line('.') == 1 ? 'G' : 'k'
+  nnoremap <silent><buffer><expr> <C-l>
+  \ defx#do_action('redraw')
+  nnoremap <silent><buffer><expr> <C-g>
+  \ defx#do_action('print')
+  nnoremap <silent><buffer><expr> cd
+  \ defx#do_action('change_vim_cwd')
+endfunction
+
 " rooter
-let g:rooter_patterns = ['.git', 'pom.xml', '.project']
+let g:rooter_patterns = ['.git', 'pom.xml', '.project', '.classpath']
 let g:rooter_change_directory_for_non_project_files = 'current'
