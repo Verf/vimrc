@@ -18,11 +18,11 @@ Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'itchyny/calendar.vim'
-Plug 'vimwiki/vimwiki'
 Plug 'easymotion/vim-easymotion'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/vim-easy-align'
 Plug 'airblade/vim-rooter'
 Plug 'joshdick/onedark.vim'
 call plug#end()
@@ -230,11 +230,8 @@ omap / <Plug>(easymotion-tn)
 map s <Plug>(easymotion-overwin-f)
 
 " vimwiki
-let g:vimwiki_list = [{'path': '~/Sync/Notes', 'syntax': 'markdown', 'ext': '.md'}]
 
 " coc.nvim
-" trigger completion
-inoremap <silent><expr> <c-/> coc#refresh()
 " use tab to select and expand snippets
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -312,66 +309,41 @@ call defx#custom#option('_', {
       \ })
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
-  " Define mappings
-  nnoremap <silent><buffer><expr> <CR>
-  \ defx#do_action('open')
-  nnoremap <silent><buffer><expr> c
-  \ defx#do_action('copy')
-  nnoremap <silent><buffer><expr> m
-  \ defx#do_action('move')
-  nnoremap <silent><buffer><expr> p
-  \ defx#do_action('paste')
-  nnoremap <silent><buffer><expr> l
-  \ defx#do_action('open')
-  nnoremap <silent><buffer><expr> V
-  \ defx#do_action('open', 'vsplit')
-  nnoremap <silent><buffer><expr> o
-  \ defx#do_action('open_tree', 'toggle')
-  nnoremap <silent><buffer><expr> K
-  \ defx#do_action('new_directory')
-  nnoremap <silent><buffer><expr> N
-  \ defx#do_action('new_file')
-  nnoremap <silent><buffer><expr> M
-  \ defx#do_action('new_multiple_files')
-  nnoremap <silent><buffer><expr> C
-  \ defx#do_action('toggle_columns',
-  \                'mark:indent:icon:filename:type:size:time')
-  nnoremap <silent><buffer><expr> S
-  \ defx#do_action('toggle_sort', 'time')
-  nnoremap <silent><buffer><expr> d
-  \ defx#do_action('remove')
-  nnoremap <silent><buffer><expr> r
-  \ defx#do_action('rename')
-  nnoremap <silent><buffer><expr> !
-  \ defx#do_action('execute_command')
-  nnoremap <silent><buffer><expr> x
-  \ defx#do_action('execute_system')
-  nnoremap <silent><buffer><expr> yy
-  \ defx#do_action('yank_path')
-  nnoremap <silent><buffer><expr> .
-  \ defx#do_action('toggle_ignored_files')
-  nnoremap <silent><buffer><expr> -
-  \ defx#do_action('cd', ['..'])
-  nnoremap <silent><buffer><expr> ~
-  \ defx#do_action('cd')
-  nnoremap <silent><buffer><expr> q
-  \ defx#do_action('quit')
-  nnoremap <silent><buffer><expr> <Space>
-  \ defx#do_action('toggle_select') . 'j'
-  nnoremap <silent><buffer><expr> *
-  \ defx#do_action('toggle_select_all')
-  nnoremap <silent><buffer><expr> n
-  \ line('.') == line('$') ? 'gg' : 'j'
-  nnoremap <silent><buffer><expr> i
-  \ line('.') == 1 ? 'G' : 'k'
-  nnoremap <silent><buffer><expr> <C-l>
-  \ defx#do_action('redraw')
-  nnoremap <silent><buffer><expr> <C-g>
-  \ defx#do_action('print')
-  nnoremap <silent><buffer><expr> cd
-  \ defx#do_action('change_vim_cwd')
+    " Define mappings
+    nnoremap <silent><buffer><expr> <CR>    defx#do_action('open')
+    nnoremap <silent><buffer><expr>  c      defx#do_action('copy')
+    nnoremap <silent><buffer><expr>  m      defx#do_action('move')
+    nnoremap <silent><buffer><expr>  p      defx#do_action('paste')
+    nnoremap <silent><buffer><expr>  l      defx#do_action('open')
+    nnoremap <silent><buffer><expr>  V      defx#do_action('open', 'vsplit')
+    nnoremap <silent><buffer><expr>  o      defx#do_action('open_tree', 'toggle')
+    nnoremap <silent><buffer><expr>  K      defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr>  N      defx#do_action('new_file')
+    nnoremap <silent><buffer><expr>  M      defx#do_action('new_multiple_files')
+    nnoremap <silent><buffer><expr>  C      defx#do_action('toggle_columns, dent:icon:filename:type:size:time')
+    nnoremap <silent><buffer><expr>  S      defx#do_action('toggle_sort', 'time')
+    nnoremap <silent><buffer><expr>  d      defx#do_action('remove')
+    nnoremap <silent><buffer><expr>  r      defx#do_action('rename')
+    nnoremap <silent><buffer><expr>  !      defx#do_action('execute_command')
+    nnoremap <silent><buffer><expr>  x      defx#do_action('execute_system')
+    nnoremap <silent><buffer><expr>  yy     defx#do_action('yank_path')
+    nnoremap <silent><buffer><expr>  .      defx#do_action('toggle_ignored_files')
+    nnoremap <silent><buffer><expr>  -      defx#do_action('cd', ['..'])
+    nnoremap <silent><buffer><expr>  ~      defx#do_action('cd')
+    nnoremap <silent><buffer><expr>  q      defx#do_action('quit')
+    nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
+    nnoremap <silent><buffer><expr>  *      defx#do_action('toggle_select_all')
+    nnoremap <silent><buffer><expr>  n      line('.') == line('$') ? 'gg' : 'j'
+    nnoremap <silent><buffer><expr>  i      line('.') == 1 ? 'G' : 'k'
+    nnoremap <silent><buffer><expr> <C-l>   defx#do_action('redraw')
+    nnoremap <silent><buffer><expr> <C-g>   defx#do_action('print')
+    nnoremap <silent><buffer><expr>  cd     defx#do_action('change_vim_cwd')
 endfunction
 
 " rooter
 let g:rooter_patterns = ['.git', 'pom.xml', '.project', '.classpath']
 let g:rooter_change_directory_for_non_project_files = 'current'
+
+" vim-easy-align
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
