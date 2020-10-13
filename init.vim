@@ -21,6 +21,7 @@ Plug 'mengelbrecht/lightline-bufferline'
 Plug 'itchyny/calendar.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'jiangmiao/auto-pairs'
+Plug 'Verf/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-rooter'
@@ -237,6 +238,7 @@ nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/Sync/Notes'}]
+let g:vimwiki_global_ext=0
 let g:which_key_map.n = {
     \ 'name': 'Notes',
     \ 'i': 'open index',
