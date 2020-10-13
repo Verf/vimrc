@@ -9,9 +9,9 @@
 "
 " vim-plug
 if has('win32')
-    call plug#begin('~\AppData\Local\nvim\plugged')
+    silent! call plug#begin('~\AppData\Local\nvim\plugged')
 else
-    call plug#begin('~/.config/nvim/plugged')
+    silent! call plug#begin('~/.config/nvim/plugged')
 endif
 Plug 'liuchengxu/vim-which-key'
 Plug 'easymotion/vim-easymotion'
@@ -22,7 +22,6 @@ Plug 'itchyny/calendar.vim'
 Plug 'vimwiki/vimwiki'
 Plug 'jiangmiao/auto-pairs'
 Plug 'junegunn/vim-easy-align'
-Plug 'tpope/vim-surround'
 Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-rooter'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -167,12 +166,15 @@ let g:which_key_map.s = {
 nnoremap <silent> <leader>so :e $MYVIMRC<CR>               " open vimrc
 nnoremap <silent> <leader>sr :source $MYVIMRC<CR>          " reload vimrc
 " buffer operate
-let g:which_key_map.q = 'close buffer'
-nnoremap <silent> <leader>q :bd!<CR>                       " close current buffer
-let g:which_key_map.n= 'next buffer'
-nnoremap <silent> <leader>n :bn<CR>                        " switch to next buffer
-let g:which_key_map.p= 'previous buffer'
-nnoremap <silent> <leader>p :bp<CR>                        " switch to previous buffer
+let g:which_key_map.b = {
+    \ 'name': '+buffers',
+    \ 'q': 'close buffer',
+    \ 'n': 'next buffer',
+    \ 'p': 'previous buffer'
+  \ }
+nnoremap <silent> <leader>bq :bd<CR>                        " close current buffer
+nnoremap <silent> <leader>bn :bn<CR>                        " switch to next buffer
+nnoremap <silent> <leader>bp :bp<CR>                        " switch to previous buffer
 " windows operate
 let g:which_key_map.w = {
     \ 'name': '+windows',
@@ -230,10 +232,11 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
 map / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-map s <Plug>(easymotion-overwin-f)
+let g:which_key_map.space = 'move to'
+nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
 
 " vimwiki
-let g:vimwiki_list = [{'path': '~/Sync/Notes', 'syntax': 'markdown', 'ext': '.md'}]
+let g:vimwiki_list = [{'path': '~/Sync/Notes'}]
 let g:which_key_map.n = {
     \ 'name': 'Notes',
     \ 'i': 'open index',
