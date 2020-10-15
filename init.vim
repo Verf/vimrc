@@ -37,7 +37,7 @@ set nocompatible
 filetype plugin on
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
-set timeoutlen=1500                                        " timeout for map sequence (ms)
+set timeoutlen=1000                                        " timeout for map sequence (ms)
 
 set scrolloff=999                                          " keep line in center of screen
 set linebreak                                              " wrap long line
@@ -154,40 +154,113 @@ noremap <silent> <F2> :Defx<CR>
 call which_key#register('<Space>', "g:which_key_map")
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
-set timeoutlen=500
-" Define prefix dictionary
-let g:which_key_map =  {}
 
-" The leader based key binding
-let g:which_key_map.s = {
-    \ 'name': '+settings',
-    \ 'o': 'open-vimrc',
-    \ 'r': 'reload-vimrc'
+let g:which_key_map =  {}
+let g:which_key_map.space = 'Goto Char'
+nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
+let g:which_key_map.a = {
+    \ 'name': '+Application',
     \ }
-nnoremap <silent> <leader>so :e $MYVIMRC<CR>               " open vimrc
-nnoremap <silent> <leader>sr :source $MYVIMRC<CR>          " reload vimrc
-" buffer operate
 let g:which_key_map.b = {
-    \ 'name': '+buffers',
-    \ 'q': 'close buffer',
-    \ 'n': 'next buffer',
-    \ 'p': 'previous buffer'
-  \ }
+    \ 'name': '+Buffers',
+    \ 'q': 'Close Buffer',
+    \ 'n': 'Next Buffer',
+    \ 'p': 'Previous Buffer',
+    \ 'b': 'List Buft buffer by CocLister',
+    \ 'tab': 'Next Buffer',
+    \ }
 nnoremap <silent> <leader>bq :bd<CR>                        " close current buffer
 nnoremap <silent> <leader>bn :bn<CR>                        " switch to next buffer
 nnoremap <silent> <leader>bp :bp<CR>                        " switch to previous buffer
-" windows operate
+nnoremap <silent> <leader>bb :CocList buffers<CR>   " list buffer by CocList
+nnoremap <silent> <leader>tab :bn<CR>                       " switch to next buffer
+let g:which_key_map.c = {
+    \ 'name': '+Commenter',
+   \ }
+let g:which_key_map.d = {}
+let g:which_key_map.e = {}
+let g:which_key_map.f = {}
+let g:which_key_map.g= {
+    \ 'name': 'Goto',
+    \ 'd': 'goto definition',
+    \ 'y': 'type definition',
+    \ 'i': 'goto implementation',
+    \ 'r': 'show references',
+    \ 'l': 'goto line',
+    \ }
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gy <Plug>(coc-type-definition)
+nmap <silent> <leader>gi <Plug>(coc-implementation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+nmap <silent> <leader>gl <Plug>(easymotion-overwin-line)
+let g:which_key_map.h = {}
+let g:which_key_map.i = {}
+let g:which_key_map.j = {}
+let g:which_key_map.k = {}
+let g:which_key_map.l= {
+    \ 'name': '+CocList',
+    \ 'd': 'diagnostics',
+    \ 'e': 'extensions',
+    \ 'c': 'commands',
+    \ 'f': 'files',
+    \ 'b': 'buffers',
+    \ 'o': 'outline',
+    \ 's': 'symbols',
+    \ 'r': 'recent files'
+    \ }
+nnoremap <silent> <leader>ld :CocList diagnostics<CR>
+nnoremap <silent> <leader>le :CocList extensions<CR>
+nnoremap <silent> <leader>lc :CocList commands<CR>
+nnoremap <silent> <leader>lf :CocList files<CR>
+nnoremap <silent> <leader>lb :CocList buffers<CR>
+nnoremap <silent> <leader>lo :CocList outline<CR>
+nnoremap <silent> <leader>ls :CocList -I symbols<CR>
+nnoremap <silent> <leader>lr :CocList mru<CR>
+let g:which_key_map.m = {}
+let g:which_key_map.n = {
+    \ 'name': 'Notes',
+    \ 'i': 'Wiki Index',
+    \ 's': 'Wiki List',
+    \ 'd': 'Diary Index',
+    \ 'w': 'Today Diary',
+    \ 'y': 'Yesterday Diary',
+    \ 't': 'Tomorrow Diary',
+    \ }
+nmap <silent> <leader>ni <Plug>VimwikiIndex
+nmap <silent> <leader>ns <Plug>VimwikiUISelect
+nmap <silent> <leader>nd <Plug>VimwikiDiaryIndex
+nmap <silent> <leader>nw <Plug>VimwikiMakeDiaryNote
+nmap <silent> <leader>ny <Plug>VimwikiMakeYesterdayNote
+nmap <silent> <leader>nt <Plug>VimwikiMakeTomorrowDiaryNote
+let g:which_key_map.o = {}
+let g:which_key_map.p = {}
+let g:which_key_map.q = {}
+let g:which_key_map.r = {
+    \ 'name': '+Rename',
+    \ 'n': 'Rename Symbol'
+    \ }
+nmap <leader>rn <Plug>(coc-rename)
+let g:which_key_map.s = {
+    \ 'name': '+Settings',
+    \ 'o': 'Open Vimrc',
+    \ 'r': 'Reload Vimrc',
+    \ }
+nnoremap <silent> <leader>so :e $MYVIMRC<CR>               " open vimrc
+nnoremap <silent> <leader>sr :source $MYVIMRC<CR>          " reload vimrc
+let g:which_key_map.t = {}
+let g:which_key_map.u = {}
+let g:which_key_map.v = {}
 let g:which_key_map.w = {
-    \ 'name': '+windows',
-    \ 'h': 'split window horizontal',
-    \ 'v': 'split window vertical',
-    \ 'q': 'close current window',
-    \ 't': 'move window to tab',
-    \ 'y': 'jump to left window',
-    \ 'n': 'jump to below window',
-    \ 'i': 'jump to above window',
-    \ 'o': 'jump to right window',
-    \ 'c': 'close all the other windows'
+    \ 'name': '+Windows',
+    \ 'h': 'Split Window Horizontal',
+    \ 'v': 'Split Window Vertical',
+    \ 'q': 'Close Current Window',
+    \ 't': 'Window to New Tab',
+    \ 'y': 'Jump to Left Window',
+    \ 'n': 'Jump to Below Window',
+    \ 'i': 'Jump to Above Window',
+    \ 'o': 'Jump to Right Window',
+    \ 'c': 'Close All The Other Windows'
     \ }
 nnoremap <silent> <leader>wh <C-w>s                        " split window horizontal
 nnoremap <silent> <leader>wv <C-w>v                        " split window vertical
@@ -198,7 +271,9 @@ nnoremap <silent> <leader>wn <C-w>j                        " jump to the below w
 nnoremap <silent> <leader>wi <C-w>k                        " jump to the above window
 nnoremap <silent> <leader>wo <C-w>l                        " jump to the right window
 nnoremap <silent> <leader>wc :only<CR>                     " close all the other windows
-
+let g:which_key_map.x = {}
+let g:which_key_map.y = {}
+let g:which_key_map.z = {}
 " ===================
 "   Plugin Settings
 " ===================
@@ -233,28 +308,10 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
 map / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-let g:which_key_map.space = 'move to'
-nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/Sync/Notes'}]
 let g:vimwiki_global_ext=0
-let g:which_key_map.n = {
-    \ 'name': 'Notes',
-    \ 'i': 'open index',
-    \ 's': 'select availdable wiki',
-    \ 'd': 'open diary index',
-    \ 'w': 'open today',
-    \ 'y': 'open yesterday',
-    \ 't': 'open tomorrow',
-    \ }
-nmap <silent> <leader>ni <Plug>VimwikiIndex
-nmap <silent> <leader>ns <Plug>VimwikiUISelect
-nmap <silent> <leader>nd <Plug>VimwikiDiaryIndex
-nmap <silent> <leader>nw <Plug>VimwikiMakeDiaryNote
-nmap <silent> <leader>ny <Plug>VimwikiMakeYesterdayNote
-nmap <silent> <leader>nt <Plug>VimwikiMakeTomorrowDiaryNote
-
 " coc.nvim
 " use tab to select and expand snippets
 function! s:check_back_space() abort
@@ -273,50 +330,15 @@ inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 
 let g:coc_snippet_next = '<tab>'
 " goto code navigation
-let g:which_key_map.g= {
-    \ 'name': 'next buffer',
-    \ 'd': 'goto definition',
-    \ 'y': 'type definition',
-    \ 'i': 'goto implementation',
-    \ 'r': 'show references'
-    \ }
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
 " symbol rename
-let g:which_key_map.r = {
-    \ 'name': '+rename',
-    \ 'n': 'rename symbol'
-    \ }
-nmap <leader>rn <Plug>(coc-rename)
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
 nmap <silent> <C-s> <Plug>(coc-range-select)
 xmap <silent> <C-s> <Plug>(coc-range-select)
 " Mappings for CoCList
 " Show all diagnostics.
-let g:which_key_map.l= {
-    \ 'name': '+CocList',
-    \ 'd': 'diagnostics',
-    \ 'e': 'extensions',
-    \ 'c': 'commands',
-    \ 'f': 'files',
-    \ 'b': 'buffers',
-    \ 'o': 'outline',
-    \ 's': 'symbols',
-    \ 'r': 'recent files'
-    \ }
-nnoremap <silent><nowait> <leader>ld  :<C-u>CocList diagnostics<cr>
-nnoremap <silent><nowait> <leader>le  :<C-u>CocList extensions<cr>
-nnoremap <silent><nowait> <leader>lc  :<C-u>CocList commands<cr>
-nnoremap <silent><nowait> <leader>lf  :<C-u>CocList files<cr>
-nnoremap <silent><nowait> <leader>lb  :<C-u>CocList buffers<cr>
-nnoremap <silent><nowait> <leader>lo  :<C-u>CocList outline<cr>
-nnoremap <silent><nowait> <leader>ls  :<C-u>CocList -I symbols<cr>
-nnoremap <silent><nowait> <leader>lr  :<C-u>CocList mru<cr>
 " multiple cursor
 nmap <silent> <C-s> <Plug>(coc-cursors-word)*
 xmap <silent> <C-s> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
