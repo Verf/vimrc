@@ -35,6 +35,7 @@ call plug#end()
 " =========
 set nocompatible
 filetype plugin on
+language en_US
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
 set timeoutlen=1000                                        " timeout for map sequence (ms)
@@ -159,55 +160,92 @@ let g:which_key_map =  {}
 let g:which_key_map.space = 'Goto Char'
 nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
 let g:which_key_map.a = {
-    \ 'name': '+Application',
-    \ }
+            \ 'name': '+Application',
+            \ 'w': {
+            \     'name': '+Wiki',
+            \     'i': 'Wiki Index',
+            \     's': 'Wiki List',
+            \     },
+            \ 'd': {
+            \     'name': '+Diary',
+            \     'i': 'Diary Index',
+            \     'd': 'Make Today',
+            \     'y': 'Make Yesterday',
+            \     't': 'Make Tomorrow',
+            \   },
+            \ 'c': {
+            \     'name': '+Calendar',
+            \     'c': 'Clock',
+            \     'y': 'Year',
+            \     'm': 'Month',
+            \     'w': 'Week',
+            \     'd': 'Day',
+            \     't': 'Task',
+            \   }
+            \ }
+nmap <silent> <leader>awi <Plug>VimwikiIndex
+nmap <silent> <leader>aws <Plug>VimwikiUISelect
+nmap <silent> <leader>adi <Plug>VimwikiDiaryIndex
+nmap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
+nmap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
+nmap <silent> <leader>adt <Plug>VimwikiMakeTomorrowDiaryNote
+nmap <silent> <leader>acc :Calendar -clock<CR>
+nmap <silent> <leader>acy :Calendar -year<CR>
+nmap <silent> <leader>acm :Calendar -month<CR>
+nmap <silent> <leader>acw :Calendar -week<CR>
+nmap <silent> <leader>acd :Calendar -day<CR>
+nmap <silent> <leader>act :Calendar -task<CR>
 let g:which_key_map.b = {
-    \ 'name': '+Buffers',
-    \ 'q': 'Close Buffer',
-    \ 'n': 'Next Buffer',
-    \ 'p': 'Previous Buffer',
-    \ 'b': 'List Buft buffer by CocLister',
-    \ 'tab': 'Next Buffer',
-    \ }
-nnoremap <silent> <leader>bq :bd<CR>                        " close current buffer
-nnoremap <silent> <leader>bn :bn<CR>                        " switch to next buffer
-nnoremap <silent> <leader>bp :bp<CR>                        " switch to previous buffer
-nnoremap <silent> <leader>bb :CocList buffers<CR>   " list buffer by CocList
-nnoremap <silent> <leader>tab :bn<CR>                       " switch to next buffer
+            \ 'name': '+Buffers',
+            \ 'q': 'Close Buffer',
+            \ 'n': 'Next Buffer',
+            \ 'p': 'Previous Buffer',
+            \ 'b': 'List Buft buffer by CocLister',
+            \ 'tab': 'Next Buffer',
+            \ }
+nnoremap <silent> <leader>bq :bd<CR>
+nnoremap <silent> <leader>bn :bn<CR>
+nnoremap <silent> <leader>bp :bp<CR>
+nnoremap <silent> <leader>bb :CocList buffers<CR>
+nnoremap <silent> <leader>tab :bn<CR>
 let g:which_key_map.c = {
-    \ 'name': '+Commenter',
-   \ }
-let g:which_key_map.d = {}
-let g:which_key_map.e = {}
-let g:which_key_map.f = {}
+            \ 'name': '+Commenter',
+            \ }
+" let g:which_key_map.d = {}
+" let g:which_key_map.e = {}
+let g:which_key_map.f = {
+    \ 'name': '+Files',
+    \ 't': 'Tree View',
+  \ }
+nnoremap <silent> <leader>ft :Defx<CR>
 let g:which_key_map.g= {
-    \ 'name': 'Goto',
-    \ 'd': 'goto definition',
-    \ 'y': 'type definition',
-    \ 'i': 'goto implementation',
-    \ 'r': 'show references',
-    \ 'l': 'goto line',
-    \ }
+            \ 'name': 'Goto',
+            \ 'd': 'goto definition',
+            \ 'y': 'type definition',
+            \ 'i': 'goto implementation',
+            \ 'r': 'show references',
+            \ 'l': 'goto line',
+            \ }
 nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
 nmap <silent> <leader>gl <Plug>(easymotion-overwin-line)
-let g:which_key_map.h = {}
-let g:which_key_map.i = {}
-let g:which_key_map.j = {}
-let g:which_key_map.k = {}
+" let g:which_key_map.h = {}
+" let g:which_key_map.i = {}
+" let g:which_key_map.j = {}
+" let g:which_key_map.k = {}
 let g:which_key_map.l= {
-    \ 'name': '+CocList',
-    \ 'd': 'diagnostics',
-    \ 'e': 'extensions',
-    \ 'c': 'commands',
-    \ 'f': 'files',
-    \ 'b': 'buffers',
-    \ 'o': 'outline',
-    \ 's': 'symbols',
-    \ 'r': 'recent files'
-    \ }
+            \ 'name': '+CocList',
+            \ 'd': 'diagnostics',
+            \ 'e': 'extensions',
+            \ 'c': 'commands',
+            \ 'f': 'files',
+            \ 'b': 'buffers',
+            \ 'o': 'outline',
+            \ 's': 'symbols',
+            \ 'r': 'recent files'
+            \ }
 nnoremap <silent> <leader>ld :CocList diagnostics<CR>
 nnoremap <silent> <leader>le :CocList extensions<CR>
 nnoremap <silent> <leader>lc :CocList commands<CR>
@@ -216,93 +254,91 @@ nnoremap <silent> <leader>lb :CocList buffers<CR>
 nnoremap <silent> <leader>lo :CocList outline<CR>
 nnoremap <silent> <leader>ls :CocList -I symbols<CR>
 nnoremap <silent> <leader>lr :CocList mru<CR>
-let g:which_key_map.m = {}
-let g:which_key_map.n = {
-    \ 'name': 'Notes',
-    \ 'i': 'Wiki Index',
-    \ 's': 'Wiki List',
-    \ 'd': 'Diary Index',
-    \ 'w': 'Today Diary',
-    \ 'y': 'Yesterday Diary',
-    \ 't': 'Tomorrow Diary',
-    \ }
-nmap <silent> <leader>ni <Plug>VimwikiIndex
-nmap <silent> <leader>ns <Plug>VimwikiUISelect
-nmap <silent> <leader>nd <Plug>VimwikiDiaryIndex
-nmap <silent> <leader>nw <Plug>VimwikiMakeDiaryNote
-nmap <silent> <leader>ny <Plug>VimwikiMakeYesterdayNote
-nmap <silent> <leader>nt <Plug>VimwikiMakeTomorrowDiaryNote
-let g:which_key_map.o = {}
-let g:which_key_map.p = {}
-let g:which_key_map.q = {}
+" let g:which_key_map.m = {}
+let g:which_key_map.n = {}
+" let g:which_key_map.o = {}
+" let g:which_key_map.p = {}
+let g:which_key_map.q = {
+            \ 'name': '+Quit',
+            \ 'q': 'Quit Buffer',
+            \ 'w': 'Save Quit',
+            \ 'a': 'Save Quit All',
+            \ 'x': 'Force Quit',
+            \ }
+nnoremap <silent> <leader>qq :bd!<CR>
+nnoremap <silent> <leader>qw :qw<CR>
+nnoremap <silent> <leader>qa :qa<CR>
+nnoremap <silent> <leader>qx :qa!<CR>
 let g:which_key_map.r = {
-    \ 'name': '+Rename',
-    \ 'n': 'Rename Symbol'
-    \ }
+            \ 'name': '+Rename',
+            \ 'n': 'Rename Symbol'
+            \ }
 nmap <leader>rn <Plug>(coc-rename)
 let g:which_key_map.s = {
-    \ 'name': '+Settings',
-    \ 'o': 'Open Vimrc',
-    \ 'r': 'Reload Vimrc',
-    \ }
-nnoremap <silent> <leader>so :e $MYVIMRC<CR>               " open vimrc
-nnoremap <silent> <leader>sr :source $MYVIMRC<CR>          " reload vimrc
-let g:which_key_map.t = {}
-let g:which_key_map.u = {}
-let g:which_key_map.v = {}
+            \ 'name': '+Settings',
+            \ 'o': 'Open Vimrc',
+            \ 'r': 'Reload Vimrc',
+            \ }
+nnoremap <silent> <leader>so :e $MYVIMRC<CR>
+nnoremap <silent> <leader>sr :source $MYVIMRC<CR>
+" let g:which_key_map.t = {}
+" let g:which_key_map.u = {}
+" let g:which_key_map.v = {}
 let g:which_key_map.w = {
-    \ 'name': '+Windows',
-    \ 'h': 'Split Window Horizontal',
-    \ 'v': 'Split Window Vertical',
-    \ 'q': 'Close Current Window',
-    \ 't': 'Window to New Tab',
-    \ 'y': 'Jump to Left Window',
-    \ 'n': 'Jump to Below Window',
-    \ 'i': 'Jump to Above Window',
-    \ 'o': 'Jump to Right Window',
-    \ 'c': 'Close All The Other Windows'
-    \ }
-nnoremap <silent> <leader>wh <C-w>s                        " split window horizontal
-nnoremap <silent> <leader>wv <C-w>v                        " split window vertical
-nnoremap <silent> <leader>wq <C-w>c                        " close current window
-nnoremap <silent> <leader>wt <C-w>T                        " move current window to new tab
-nnoremap <silent> <leader>wy <C-w>h                        " jump to the left window
-nnoremap <silent> <leader>wn <C-w>j                        " jump to the below window
-nnoremap <silent> <leader>wi <C-w>k                        " jump to the above window
-nnoremap <silent> <leader>wo <C-w>l                        " jump to the right window
-nnoremap <silent> <leader>wc :only<CR>                     " close all the other windows
-let g:which_key_map.x = {}
-let g:which_key_map.y = {}
-let g:which_key_map.z = {}
+            \ 'name': '+Windows',
+            \ 'h': 'Split Window Horizontal',
+            \ 'v': 'Split Window Vertical',
+            \ 'q': 'Close Current Window',
+            \ 't': 'Window to New Tab',
+            \ 'y': 'Jump to Left Window',
+            \ 'n': 'Jump to Below Window',
+            \ 'i': 'Jump to Above Window',
+            \ 'o': 'Jump to Right Window',
+            \ 'c': 'Close All The Other Windows'
+            \ }
+nnoremap <silent> <leader>wh <C-w>s
+nnoremap <silent> <leader>wv <C-w>v
+nnoremap <silent> <leader>wq <C-w>c
+nnoremap <silent> <leader>wt <C-w>T
+nnoremap <silent> <leader>wy <C-w>h
+nnoremap <silent> <leader>wn <C-w>j
+nnoremap <silent> <leader>wi <C-w>k
+nnoremap <silent> <leader>wo <C-w>l
+nnoremap <silent> <leader>wc :only<CR>
+" let g:which_key_map.x = {}
+" let g:which_key_map.y = {}
+" let g:which_key_map.z = {}
 " ===================
 "   Plugin Settings
 " ===================
 " lightline
 let g:lightline#bufferline#show_number = 2
 let g:lightline = {
-    \ 'colorscheme': 'onedark',
-    \ 'active': {
-    \     'left': [ [ 'mode', 'paste' ],
-    \               [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ],
-    \     'right': [[ 'lineinfo' ],
-    \               [ 'percent' ],
-    \               [ 'fileformat', 'fileencoding', 'filetype' ]]
-    \ },
-    \ 'tabline': {
-    \   'left': [ ['buffers'] ],
-    \   'right': [ ['close'] ]
-    \ },
-    \ 'component_expand': {
-    \   'buffers': 'lightline#bufferline#buffers'
-    \ },
-    \ 'component_type': {
-    \   'buffers': 'tabsel'
-    \ },
-    \ 'component_function': {
-    \     'gitbranch': 'gitbranch#name',
-    \ },
-    \ }
+            \ 'colorscheme': 'onedark',
+            \ 'active': {
+            \     'left': [ [ 'mode', 'paste' ],
+            \               [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ],
+            \     'right': [[ 'lineinfo' ],
+            \               [ 'percent' ],
+            \               [ 'fileformat', 'fileencoding', 'filetype' ]]
+            \ },
+            \ 'tabline': {
+            \   'left': [ ['buffers'] ],
+            \   'right': [ ['close'] ]
+            \ },
+            \ 'component_expand': {
+            \   'buffers': 'lightline#bufferline#buffers'
+            \ },
+            \ 'component_type': {
+            \   'buffers': 'tabsel'
+            \ },
+            \ 'component_function': {
+            \     'gitbranch': 'gitbranch#name',
+            \ },
+            \ }
 
+" Calendar.vim
+let g:calendar_first_day = 'monday'
 " easy motion
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
@@ -315,18 +351,18 @@ let g:vimwiki_global_ext=0
 " coc.nvim
 " use tab to select and expand snippets
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
 inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ coc#refresh()
+            \ pumvisible() ? "\<C-n>" :
+            \ <SID>check_back_space() ? "\<TAB>" :
+            \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 " enter to select
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 let g:coc_snippet_next = '<tab>'
 " goto code navigation
@@ -345,14 +381,14 @@ xmap <silent> <C-s> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)
 
 " defx
 call defx#custom#option('_', {
-      \ 'winwidth': 30,
-      \ 'split': 'vertical',
-      \ 'direction': 'topleft',
-      \ 'show_ignored_files': 0,
-      \ 'buffer_name': '',
-      \ 'toggle': 1,
-      \ 'resume': 1
-      \ })
+            \ 'winwidth': 26,
+            \ 'split': 'vertical',
+            \ 'direction': 'topleft',
+            \ 'show_ignored_files': 0,
+            \ 'buffer_name': '',
+            \ 'toggle': 1,
+            \ 'resume': 1
+            \ })
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
     " Define mappings
