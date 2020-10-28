@@ -15,10 +15,11 @@ else
 endif
 Plug 'liuchengxu/vim-which-key'
 Plug 'easymotion/vim-easymotion'
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
-Plug 'mengelbrecht/lightline-bufferline'
-Plug 'itchyny/calendar.vim'
+Plug 'ap/vim-buftabline'
+Plug 'itchyny/calendar.vim', { 'on': 'Calendar' }
 Plug 'vimwiki/vimwiki'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Verf/vim-surround'
@@ -26,9 +27,19 @@ Plug 'junegunn/vim-easy-align'
 Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-rooter'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+Plug 'liuchengxu/vista.vim'
 Plug 'joshdick/onedark.vim'
 call plug#end()
+
+
+" ==========
+"   Server
+" ==========
+if has('win32')
+    silent! call serverstart('\\.\pipe\nvim-pipe-12345')
+endif
 
 " =========
 "   Basic
@@ -75,6 +86,7 @@ set nowritebackup                                          " close auto write
 set hidden
 set shortmess+=c                                           " don't give ins-completion-menu messages
 set signcolumn=yes                                         " always show signcolumns
+set backspace=indent,start
 
 " UI
 colorscheme onedark                                        " set colorscheme
@@ -109,7 +121,11 @@ noremap a a
 noremap s s
 noremap e d
 noremap t f
+" g field
 noremap g g
+xnoremap ga <Plug>(EasyAlign)
+nnoremap ga <Plug>(EasyAlign)
+
 noremap y h
 noremap n j
 noremap i k
@@ -148,8 +164,10 @@ noremap B B
 noremap P N
 noremap M M
 
-" F-filed
-noremap <silent> <F2> :Defx<CR>
+
+map / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
 
 " vim-which-key
 call which_key#register('<Space>', "g:which_key_map")
@@ -158,13 +176,17 @@ nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
 let g:which_key_map =  {}
 let g:which_key_map.space = 'Goto Char'
-nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
+nnoremap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
+let g:which_key_map.tab= 'Last Tab'
+nnoremap <silent> <leader><Tab> <Plug>BufTabLine.Go(-1)
 let g:which_key_map.a = {
             \ 'name': '+Application',
             \ 'w': {
             \     'name': '+Wiki',
             \     'i': 'Wiki Index',
-            \     's': 'Wiki List',
+            \     'n': 'Wiki New',
+            \     'd': 'Wiki Delete',
+            \     'r': 'Wiki Rename',
             \     },
             \ 'd': {
             \     'name': '+Diary',
@@ -183,31 +205,32 @@ let g:which_key_map.a = {
             \     't': 'Task',
             \   }
             \ }
-nmap <silent> <leader>awi <Plug>VimwikiIndex
-nmap <silent> <leader>aws <Plug>VimwikiUISelect
-nmap <silent> <leader>adi <Plug>VimwikiDiaryIndex
-nmap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
-nmap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
-nmap <silent> <leader>adt <Plug>VimwikiMakeTomorrowDiaryNote
-nmap <silent> <leader>acc :Calendar -clock<CR>
-nmap <silent> <leader>acy :Calendar -year<CR>
-nmap <silent> <leader>acm :Calendar -month<CR>
-nmap <silent> <leader>acw :Calendar -week<CR>
-nmap <silent> <leader>acd :Calendar -day<CR>
-nmap <silent> <leader>act :Calendar -task<CR>
+nnoremap <silent> <leader>awi <Plug>VimwikiIndex
+nnoremap <silent> <leader>awn <Plug>VimwikiGoto
+nnoremap <silent> <leader>awd <Plug>VimwikiDeleteFile
+nnoremap <silent> <leader>awr <Plug>VimwikiRenameFile
+nnoremap <silent> <leader>adi <Plug>VimwikiDiaryIndex
+nnoremap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
+nnoremap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
+nnoremap <silent> <leader>adt <Plug>VimwikiMakeTomorrowDiaryNote
+nnoremap <silent> <leader>acc :Calendar -clock<CR>
+nnoremap <silent> <leader>acy :Calendar -year<CR>
+nnoremap <silent> <leader>acm :Calendar -month<CR>
+nnoremap <silent> <leader>acw :Calendar -week<CR>
+nnoremap <silent> <leader>acd :Calendar -day<CR>
+nnoremap <silent> <leader>act :Calendar -task<CR>
 let g:which_key_map.b = {
             \ 'name': '+Buffers',
             \ 'q': 'Close Buffer',
             \ 'n': 'Next Buffer',
             \ 'p': 'Previous Buffer',
-            \ 'b': 'List Buft buffer by CocLister',
             \ 'tab': 'Next Buffer',
             \ }
 nnoremap <silent> <leader>bq :bd<CR>
 nnoremap <silent> <leader>bn :bn<CR>
 nnoremap <silent> <leader>bp :bp<CR>
-nnoremap <silent> <leader>bb :CocList buffers<CR>
-nnoremap <silent> <leader>tab :bn<CR>
+nnoremap <silent> <leader><Tab> :bn<CR>
+nnoremap <silent> <leader>bb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
 let g:which_key_map.c = {
             \ 'name': '+Commenter',
             \ }
@@ -215,9 +238,14 @@ let g:which_key_map.c = {
 " let g:which_key_map.e = {}
 let g:which_key_map.f = {
     \ 'name': '+Files',
-    \ 't': 'Tree View',
-  \ }
-nnoremap <silent> <leader>ft :Defx<CR>
+    \ 'f': 'File Search',
+    \ 'd': 'Directory View',
+    \ 't': 'Tags View',
+    \ 'm': 'File MRU'
+    \ }
+nnoremap <silent> <leader>fd :Defx<CR>
+nnoremap <silent> <leader>ft :Vista!!<CR>
+nnoremap <silent> <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
 let g:which_key_map.g= {
             \ 'name': 'Goto',
             \ 'd': 'goto definition',
@@ -226,38 +254,22 @@ let g:which_key_map.g= {
             \ 'r': 'show references',
             \ 'l': 'goto line',
             \ }
-nmap <silent> <leader>gd <Plug>(coc-definition)
-nmap <silent> <leader>gy <Plug>(coc-type-definition)
-nmap <silent> <leader>gi <Plug>(coc-implementation)
-nmap <silent> <leader>gr <Plug>(coc-references)
-nmap <silent> <leader>gl <Plug>(easymotion-overwin-line)
+nnoremap <silent> <leader>gd <Plug>(coc-definition)
+nnoremap <silent> <leader>gy <Plug>(coc-type-definition)
+nnoremap <silent> <leader>gi <Plug>(coc-implementation)
+nnoremap <silent> <leader>gr <Plug>(coc-references)
+nnoremap <silent> <leader>gl <Plug>(easymotion-overwin-line)
 " let g:which_key_map.h = {}
 " let g:which_key_map.i = {}
 " let g:which_key_map.j = {}
 " let g:which_key_map.k = {}
-let g:which_key_map.l= {
-            \ 'name': '+CocList',
-            \ 'd': 'diagnostics',
-            \ 'e': 'extensions',
-            \ 'c': 'commands',
-            \ 'f': 'files',
-            \ 'b': 'buffers',
-            \ 'o': 'outline',
-            \ 's': 'symbols',
-            \ 'r': 'recent files'
-            \ }
-nnoremap <silent> <leader>ld :CocList diagnostics<CR>
-nnoremap <silent> <leader>le :CocList extensions<CR>
-nnoremap <silent> <leader>lc :CocList commands<CR>
-nnoremap <silent> <leader>lf :CocList files<CR>
-nnoremap <silent> <leader>lb :CocList buffers<CR>
-nnoremap <silent> <leader>lo :CocList outline<CR>
-nnoremap <silent> <leader>ls :CocList -I symbols<CR>
-nnoremap <silent> <leader>lr :CocList mru<CR>
+" let g:which_key_map.l= {}
 " let g:which_key_map.m = {}
-let g:which_key_map.n = {}
+let g:which_key_map.n = 'Next Tab'
+nnoremap <silent> <leader>n :bn<CR>
 " let g:which_key_map.o = {}
-" let g:which_key_map.p = {}
+let g:which_key_map.p = 'Previous Tab'
+nnoremap <silent> <leader>p :bp<CR>
 let g:which_key_map.q = {
             \ 'name': '+Quit',
             \ 'q': 'Quit Buffer',
@@ -273,7 +285,7 @@ let g:which_key_map.r = {
             \ 'name': '+Rename',
             \ 'n': 'Rename Symbol'
             \ }
-nmap <leader>rn <Plug>(coc-rename)
+nnoremap <leader>rn <Plug>(coc-rename)
 let g:which_key_map.s = {
             \ 'name': '+Settings',
             \ 'o': 'Open Vimrc',
@@ -322,16 +334,6 @@ let g:lightline = {
             \               [ 'percent' ],
             \               [ 'fileformat', 'fileencoding', 'filetype' ]]
             \ },
-            \ 'tabline': {
-            \   'left': [ ['buffers'] ],
-            \   'right': [ ['close'] ]
-            \ },
-            \ 'component_expand': {
-            \   'buffers': 'lightline#bufferline#buffers'
-            \ },
-            \ 'component_type': {
-            \   'buffers': 'tabsel'
-            \ },
             \ 'component_function': {
             \     'gitbranch': 'gitbranch#name',
             \ },
@@ -342,12 +344,11 @@ let g:calendar_first_day = 'monday'
 " easy motion
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
-map / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
 
 " vimwiki
-let g:vimwiki_list = [{'path': '~/Sync/Notes'}]
+let g:vimwiki_list = [{'path': '~/Sync/Wiki'}]
 let g:vimwiki_global_ext=0
+
 " coc.nvim
 " use tab to select and expand snippets
 function! s:check_back_space() abort
@@ -368,16 +369,6 @@ let g:coc_snippet_next = '<tab>'
 " goto code navigation
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
-" symbol rename
-" Use CTRL-S for selections ranges.
-" Requires 'textDocument/selectionRange' support of language server.
-nmap <silent> <C-s> <Plug>(coc-range-select)
-xmap <silent> <C-s> <Plug>(coc-range-select)
-" Mappings for CoCList
-" Show all diagnostics.
-" multiple cursor
-nmap <silent> <C-s> <Plug>(coc-cursors-word)*
-xmap <silent> <C-s> y/\V<C-r>=escape(@",'/\')<CR><CR>gN<Plug>(coc-cursors-range)gn
 
 " defx
 call defx#custom#option('_', {
@@ -427,10 +418,26 @@ let g:rooter_patterns = ['.git', 'pom.xml', '.project', '.classpath']
 let g:rooter_change_directory_for_non_project_files = 'current'
 
 " vim-easy-align
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
+
+" leaderF
+" don't show the help in normal mode
+let g:Lf_HideHelp = 1
+let g:Lf_UseCache = 0
+let g:Lf_UseVersionControlTool = 0
+let g:Lf_IgnoreCurrentBufferName = 1
+" popup mode
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_PreviewInPopup = 1
+let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
+let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
+" keymapping
+let g:Lf_ShortcutF = "<leader>ff"
+
+" vista
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+
