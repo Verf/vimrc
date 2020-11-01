@@ -18,16 +18,18 @@ Plug 'easymotion/vim-easymotion'
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
-Plug 'ap/vim-buftabline'
-Plug 'itchyny/calendar.vim', { 'on': 'Calendar' }
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'romgrk/barbar.nvim'
 Plug 'vimwiki/vimwiki'
 Plug 'jiangmiao/auto-pairs'
+Plug '907th/vim-auto-save'
 Plug 'Verf/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-rooter'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'SirVer/ultisnips'
 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'liuchengxu/vista.vim'
 Plug 'joshdick/onedark.vim'
@@ -44,7 +46,6 @@ endif
 " =========
 "   Basic
 " =========
-set nocompatible
 filetype plugin on
 language en_US
 let g:mapleader = "\<Space>"
@@ -64,7 +65,6 @@ set smartcase                                              " case sensitive only
 set incsearch                                              " incrementally highlights all pattern matches
 set nohlsearch                                             " don't highlight search pattern
 
-set autoindent                                             " automatically indent when starting a new line
 set smartindent                                            " automatically inserts one extra level of indentation in some cases
 set expandtab                                              " replace tab to blanks
 set smarttab                                               " <Tab> insert blanks according to 'shiftwidth', 'tabstop' or 'softabstop'
@@ -77,7 +77,8 @@ set synmaxcol=200                                          " maxium column for s
 set updatecount=100                                        " after type this many characters the swap file will be written to disk
 set updatetime=300                                         " updatetime for CursorHold & CursorHoldI
 
-set mouse=a                                                " enable mouse in all mode
+set undofile
+set undolevels=1000
 set autochdir
 set clipboard=unnamedplus                                  " use system clip board
 set pastetoggle=<F9>                                       " toggle paste mode by <F9>
@@ -86,20 +87,14 @@ set nowritebackup                                          " close auto write
 set hidden
 set shortmess+=c                                           " don't give ins-completion-menu messages
 set signcolumn=yes                                         " always show signcolumns
-set backspace=indent,start
 
 " UI
 colorscheme onedark                                        " set colorscheme
-set background=dark                                        " set background color
 set termguicolors                                          " true color support in terminal
 set cursorline                                             " highlight current line
 set showmatch                                              " highlight matching parenthesis
-set novisualbell                                           " no beep and screen flash
 set showtabline=2                                          " show tabline
-
-set ruler                                                  " show cursor position on status line
 set relativenumber                                         " show relative line number
-set switchbuf=useopen,usetab,newtab                        " better buffer switch
 set noshowmode                                             " don't show insert status (use lightline instead)
 
 
@@ -123,8 +118,8 @@ noremap e d
 noremap t f
 " g field
 noremap g g
-xnoremap ga <Plug>(EasyAlign)
-nnoremap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 
 noremap y h
 noremap n j
@@ -164,8 +159,7 @@ noremap B B
 noremap P N
 noremap M M
 
-
-map / <Plug>(easymotion-sn)
+nmap / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 
 
@@ -175,10 +169,8 @@ nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
 let g:which_key_map =  {}
-let g:which_key_map.space = 'Goto Char'
-nnoremap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
-let g:which_key_map.tab= 'Last Tab'
-nnoremap <silent> <leader><Tab> <Plug>BufTabLine.Go(-1)
+let g:which_key_map.Space = 'Goto Char'
+nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
 let g:which_key_map.a = {
             \ 'name': '+Application',
             \ 'w': {
@@ -195,42 +187,26 @@ let g:which_key_map.a = {
             \     'y': 'Make Yesterday',
             \     't': 'Make Tomorrow',
             \   },
-            \ 'c': {
-            \     'name': '+Calendar',
-            \     'c': 'Clock',
-            \     'y': 'Year',
-            \     'm': 'Month',
-            \     'w': 'Week',
-            \     'd': 'Day',
-            \     't': 'Task',
-            \   }
             \ }
-nnoremap <silent> <leader>awi <Plug>VimwikiIndex
-nnoremap <silent> <leader>awn <Plug>VimwikiGoto
-nnoremap <silent> <leader>awd <Plug>VimwikiDeleteFile
-nnoremap <silent> <leader>awr <Plug>VimwikiRenameFile
-nnoremap <silent> <leader>adi <Plug>VimwikiDiaryIndex
-nnoremap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
-nnoremap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
-nnoremap <silent> <leader>adt <Plug>VimwikiMakeTomorrowDiaryNote
-nnoremap <silent> <leader>acc :Calendar -clock<CR>
-nnoremap <silent> <leader>acy :Calendar -year<CR>
-nnoremap <silent> <leader>acm :Calendar -month<CR>
-nnoremap <silent> <leader>acw :Calendar -week<CR>
-nnoremap <silent> <leader>acd :Calendar -day<CR>
-nnoremap <silent> <leader>act :Calendar -task<CR>
+nmap <silent> <leader>awi <Plug>VimwikiIndex
+nmap <silent> <leader>awn <Plug>VimwikiGoto
+nmap <silent> <leader>awd <Plug>VimwikiDeleteFile
+nmap <silent> <leader>awr <Plug>VimwikiRenameFile
+nmap <silent> <leader>adi <Plug>VimwikiDiaryIndex
+nmap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
+nmap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
+nmap <silent> <leader>adt <Plug>VimwikiMakeTomorrowDiaryNote
 let g:which_key_map.b = {
             \ 'name': '+Buffers',
             \ 'q': 'Close Buffer',
             \ 'n': 'Next Buffer',
             \ 'p': 'Previous Buffer',
-            \ 'tab': 'Next Buffer',
+            \ 'Tab': 'Buffer Jump',
             \ }
-nnoremap <silent> <leader>bq :bd<CR>
-nnoremap <silent> <leader>bn :bn<CR>
-nnoremap <silent> <leader>bp :bp<CR>
-nnoremap <silent> <leader><Tab> :bn<CR>
-nnoremap <silent> <leader>bb :<C-U><C-R>=printf("Leaderf buffer %s", "")<CR><CR>
+nmap <silent> <leader>bq :BufferClose<CR><CR>
+nmap <silent> <leader>bn :BufferNext<CR>
+nmap <silent> <leader>bp :BufferPrevious<CR>
+nmap <silent> <leader><Tab> :BufferPick<CR>
 let g:which_key_map.c = {
             \ 'name': '+Commenter',
             \ }
@@ -243,9 +219,9 @@ let g:which_key_map.f = {
     \ 't': 'Tags View',
     \ 'm': 'File MRU'
     \ }
-nnoremap <silent> <leader>fd :Defx<CR>
-nnoremap <silent> <leader>ft :Vista!!<CR>
-nnoremap <silent> <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+nmap <silent> <leader>fd :Defx<CR>
+nmap <silent> <leader>ft :Vista!!<CR>
+nmap <silent> <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
 let g:which_key_map.g= {
             \ 'name': 'Goto',
             \ 'd': 'goto definition',
@@ -254,11 +230,11 @@ let g:which_key_map.g= {
             \ 'r': 'show references',
             \ 'l': 'goto line',
             \ }
-nnoremap <silent> <leader>gd <Plug>(coc-definition)
-nnoremap <silent> <leader>gy <Plug>(coc-type-definition)
-nnoremap <silent> <leader>gi <Plug>(coc-implementation)
-nnoremap <silent> <leader>gr <Plug>(coc-references)
-nnoremap <silent> <leader>gl <Plug>(easymotion-overwin-line)
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gy <Plug>(coc-type-definition)
+nmap <silent> <leader>gi <Plug>(coc-implementation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+nmap <silent> <leader>gl <Plug>(easymotion-overwin-line)
 " let g:which_key_map.h = {}
 " let g:which_key_map.i = {}
 " let g:which_key_map.j = {}
@@ -266,10 +242,10 @@ nnoremap <silent> <leader>gl <Plug>(easymotion-overwin-line)
 " let g:which_key_map.l= {}
 " let g:which_key_map.m = {}
 let g:which_key_map.n = 'Next Tab'
-nnoremap <silent> <leader>n :bn<CR>
+nmap <silent> <leader>n :bn<CR>
 " let g:which_key_map.o = {}
 let g:which_key_map.p = 'Previous Tab'
-nnoremap <silent> <leader>p :bp<CR>
+nmap <silent> <leader>p :bp<CR>
 let g:which_key_map.q = {
             \ 'name': '+Quit',
             \ 'q': 'Quit Buffer',
@@ -277,22 +253,22 @@ let g:which_key_map.q = {
             \ 'a': 'Save Quit All',
             \ 'x': 'Force Quit',
             \ }
-nnoremap <silent> <leader>qq :bd!<CR>
-nnoremap <silent> <leader>qw :qw<CR>
-nnoremap <silent> <leader>qa :qa<CR>
-nnoremap <silent> <leader>qx :qa!<CR>
+nmap <silent> <leader>qq :BufferClose<CR><CR>
+nmap <silent> <leader>qw :qw<CR>
+nmap <silent> <leader>qa :qa<CR>
+nmap <silent> <leader>qx :qa!<CR>
 let g:which_key_map.r = {
             \ 'name': '+Rename',
             \ 'n': 'Rename Symbol'
             \ }
-nnoremap <leader>rn <Plug>(coc-rename)
+nmap <leader>rn <Plug>(coc-rename)
 let g:which_key_map.s = {
             \ 'name': '+Settings',
             \ 'o': 'Open Vimrc',
             \ 'r': 'Reload Vimrc',
             \ }
-nnoremap <silent> <leader>so :e $MYVIMRC<CR>
-nnoremap <silent> <leader>sr :source $MYVIMRC<CR>
+nmap <silent> <leader>so :e $MYVIMRC<CR>
+nmap <silent> <leader>sr :source $MYVIMRC<CR>
 " let g:which_key_map.t = {}
 " let g:which_key_map.u = {}
 " let g:which_key_map.v = {}
@@ -308,15 +284,15 @@ let g:which_key_map.w = {
             \ 'o': 'Jump to Right Window',
             \ 'c': 'Close All The Other Windows'
             \ }
-nnoremap <silent> <leader>wh <C-w>s
-nnoremap <silent> <leader>wv <C-w>v
-nnoremap <silent> <leader>wq <C-w>c
-nnoremap <silent> <leader>wt <C-w>T
-nnoremap <silent> <leader>wy <C-w>h
-nnoremap <silent> <leader>wn <C-w>j
-nnoremap <silent> <leader>wi <C-w>k
-nnoremap <silent> <leader>wo <C-w>l
-nnoremap <silent> <leader>wc :only<CR>
+nmap <silent> <leader>wh <C-w>s
+nmap <silent> <leader>wv <C-w>v
+nmap <silent> <leader>wq <C-w>c
+nmap <silent> <leader>wt <C-w>T
+nmap <silent> <leader>wy <C-w>h
+nmap <silent> <leader>wn <C-w>j
+nmap <silent> <leader>wi <C-w>k
+nmap <silent> <leader>wo <C-w>l
+nmap <silent> <leader>wc :only<CR>
 " let g:which_key_map.x = {}
 " let g:which_key_map.y = {}
 " let g:which_key_map.z = {}
@@ -350,25 +326,18 @@ let g:vimwiki_list = [{'path': '~/Sync/Wiki'}]
 let g:vimwiki_global_ext=0
 
 " coc.nvim
-" use tab to select and expand snippets
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
 inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-" enter to select
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-let g:coc_snippet_next = '<tab>'
-" goto code navigation
-" Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd FileType vimwiki let b:coc_suggest_disable = 1
 
 " defx
 call defx#custom#option('_', {
@@ -418,6 +387,11 @@ let g:rooter_patterns = ['.git', 'pom.xml', '.project', '.classpath']
 let g:rooter_change_directory_for_non_project_files = 'current'
 
 " vim-easy-align
+let g:easy_align_delimiters = {
+            \ 'b': { 
+            \     'pattern': '::',
+            \     'right_margin': 1},
+            \ }
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
@@ -425,19 +399,63 @@ let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 " leaderF
-" don't show the help in normal mode
+let g:Lf_ShortcutF = "<leader>ff"
+let g:Lf_ShortcutB = "<leader>bb"
+let g:Lf_RootMarkers = ['.git', '.project', 'pom.xml']
 let g:Lf_HideHelp = 1
 let g:Lf_UseCache = 0
-let g:Lf_UseVersionControlTool = 0
 let g:Lf_IgnoreCurrentBufferName = 1
-" popup mode
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_PreviewInPopup = 1
-let g:Lf_StlSeparator = { 'left': "\ue0b0", 'right': "\ue0b2", 'font': "DejaVu Sans Mono for Powerline" }
-let g:Lf_PreviewResult = {'Function': 0, 'BufTag': 0 }
-" keymapping
-let g:Lf_ShortcutF = "<leader>ff"
+let g:Lf_StlSeparator = { 'left': '►', 'right': '◄', 'font': '等距更纱黑体 SC' }
 
 " vista
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+
+" ultisnips
+let g:UltiSnipsExpandTrigger       = "<C-l>"
+let g:UltiSnipsJumpForwardTrigger  = "<C-n>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-i>"
+
+" vim-visual-multi
+let g:VM_maps = {}
+let g:VM_maps['Find Under']         = '<C-s>'
+let g:VM_maps['Find Subword Under'] = '<C-s>'
+let g:VM_maps['Add Cursor Down']    = '<M-Down>'
+let g:VM_maps['Add Cursor Up']      = '<M-Up>'
+
+
+let g:VM_maps["Find Next"]          = '<C-s>'
+let g:VM_maps["Find Prev"]          = '<C-S>'
+let g:VM_maps["Goto Next"]          = ']'
+let g:VM_maps["Goto Prev"]          = '['
+let g:VM_maps["Seek Next"]          = '<C-b>'
+let g:VM_maps["Seek Prev"]          = '<C-b>'
+let g:VM_maps["Skip Region"]        = '<C-x>'
+let g:VM_maps["Remove Region"]      = '<C-X>'
+let g:VM_maps["Replace"]            = 'R'
+let g:VM_maps["Surround"]           = 'S'
+let g:VM_maps["Toggle Multiline"]   = 'M'
+
+" vim-autosave
+let g:auto_save = 1
+let g:auto_save_silent = 1
+let g:auto_save_write_all_buffers = 1
+let g:auto_save_events = ["InsertLeave", "TextChanged"]
+
+" web-devicons
+lua << EOF
+require'nvim-web-devicons'.setup {
+ default = true;
+}
+EOF
+" barbar.nvim
+let bufferline = {}
+let bufferline.shadow = v:true
+let bufferline.animation = v:true
+let bufferline.icons = v:true
+let bufferline.closable = v:false
+let bufferline.clickable = v:false
+let bufferline.semantic_letters = v:true
+let bufferline.letters = 
+  \ 'aseqwdzxcftvkgb'
+let bufferline.maximum_padding = 4
 
