@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 # This script open file via Neovim RPC protocol
+import os
 import sys
-import neovim
+from pynvim import attach
 
 SERVER = '\\\\.\\pipe\\nvim-pipe-12345'
 
 def main(argv):
-    try:
-        nvim = neovim.attach("socket", path=SERVER)
-    except Exception:
-        print("[!] Neovim not found.")
-        return 1
     path = sys.argv[1]
-    nvim.command(f':e {path}')
-    nvim.close()
+    try:
+        nvim = attach("socket", path=SERVER)
+    except Exception:
+        nvim = None
+    if nvim:
+        nvim.command(f':e {path}')
+        nvim.close()
+    else:
+        os.system(f'start nvim-qt {path}')
     return 0
 
 
