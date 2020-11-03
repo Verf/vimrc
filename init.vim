@@ -25,6 +25,7 @@ Plug '907th/vim-auto-save'
 Plug 'Verf/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'preservim/nerdcommenter'
+Plug 'sbdchd/neoformat'
 Plug 'airblade/vim-rooter'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
@@ -213,11 +214,12 @@ let g:which_key_map.f = {
     \ 'name': '+Files',
     \ 'f': 'File Search',
     \ 'd': 'Directory View',
-    \ 't': 'Tags View',
-    \ 'm': 'File MRU'
+    \ 'h': 'File History',
+    \ 'm': 'File Format',
     \ }
 nmap <silent> <leader>fd :Defx<CR>
-nmap <silent> <leader>fm :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+nmap <silent> <leader>fh :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
+nmap <silent> <leader>fm :Neoformat<CR>
 let g:which_key_map.g= {
             \ 'name': 'Goto',
             \ 'd': 'goto definition',
@@ -259,12 +261,12 @@ let g:which_key_map.r = {
             \ }
 nmap <leader>rn <Plug>(coc-rename)
 let g:which_key_map.s = {
-            \ 'name': '+Settings',
-            \ 'o': 'Open Vimrc',
-            \ 'r': 'Reload Vimrc',
+            \ 'name': '+Search',
+            \ 'w': 'Search Word',
+            \ 'p': 'Search Point',
             \ }
-nmap <silent> <leader>so :e $MYVIMRC<CR>
-nmap <silent> <leader>sr :source $MYVIMRC<CR>
+nmap <silent> <leader>sw :Leaderf rg -e 
+nmap <silent> <leader>sp :<C-U><C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
 let g:which_key_map.t = {
             \ 'name': '+Tags',
             \ 't': 'View Tags',
@@ -275,7 +277,13 @@ nmap <silent> <leader>tt :Vista!!<CR>
 nmap <silent> <leader>tf :LeaderfBufTag<CR>
 nmap <silent> <leader>ta :LeaderfBufTagAll<CR>
 " let g:which_key_map.u = {}
-" let g:which_key_map.v = {}
+let g:which_key_map.v = {
+            \ 'name': '+Vimrc',
+            \ 'o': 'Open Vimrc',
+            \ 'r': 'Reload Vimrc',
+}
+nmap <silent> <leader>vo :e $MYVIMRC<CR>
+nmap <silent> <leader>vr :source $MYVIMRC<CR>
 let g:which_key_map.w = {
             \ 'name': '+Windows',
             \ 'h': 'Split Window Horizontal',
@@ -286,6 +294,10 @@ let g:which_key_map.w = {
             \ 'n': 'Jump to Below Window',
             \ 'i': 'Jump to Above Window',
             \ 'o': 'Jump to Right Window',
+            \ 'Y': 'Move to Left Window',
+            \ 'N': 'Move to Below Window',
+            \ 'I': 'Move to Above Window',
+            \ 'O': 'Move to Right Window',
             \ 'c': 'Close All The Other Windows'
             \ }
 nmap <silent> <leader>wh <C-w>s
@@ -296,10 +308,20 @@ nmap <silent> <leader>wy <C-w>h
 nmap <silent> <leader>wn <C-w>j
 nmap <silent> <leader>wi <C-w>k
 nmap <silent> <leader>wo <C-w>l
+nmap <silent> <leader>wY <C-w>h
+nmap <silent> <leader>wN <C-w>j
+nmap <silent> <leader>wI <C-w>k
+nmap <silent> <leader>wO <C-w>l
 nmap <silent> <leader>wc :only<CR>
 " let g:which_key_map.x = {}
 " let g:which_key_map.y = {}
 " let g:which_key_map.z = {}
+" ===================
+"     Languages
+" ===================
+if has('win32')
+    let g:python3_host_prog = 'C:\Users\vo4f\scoop\shims\python.exe'
+endif
 " ===================
 "   Plugin Settings
 " ===================
@@ -354,16 +376,17 @@ call defx#custom#option('_', {
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
     " Define mappings
-    nnoremap <silent><buffer><expr> <CR>    defx#do_action('open')
+    nnoremap <silent><buffer><expr> <CR>
+                \ defx#is_directory() ?
+                \ defx#do_action('open_directory') :
+                \ defx#do_action('drop')
     nnoremap <silent><buffer><expr>  c      defx#do_action('copy')
     nnoremap <silent><buffer><expr>  m      defx#do_action('move')
     nnoremap <silent><buffer><expr>  p      defx#do_action('paste')
-    nnoremap <silent><buffer><expr>  l      defx#do_action('open')
-    nnoremap <silent><buffer><expr>  V      defx#do_action('open', 'vsplit')
+    nnoremap <silent><buffer><expr>  V      defx#do_action('multi', ['drop', 'vsplit', 'quit'])
     nnoremap <silent><buffer><expr>  o      defx#do_action('open_tree', 'toggle')
-    nnoremap <silent><buffer><expr>  K      defx#do_action('new_directory')
+    nnoremap <silent><buffer><expr>  D      defx#do_action('new_directory')
     nnoremap <silent><buffer><expr>  N      defx#do_action('new_file')
-    nnoremap <silent><buffer><expr>  M      defx#do_action('new_multiple_files')
     nnoremap <silent><buffer><expr>  C      defx#do_action('toggle_columns, dent:icon:filename:type:size:time')
     nnoremap <silent><buffer><expr>  S      defx#do_action('toggle_sort', 'time')
     nnoremap <silent><buffer><expr>  d      defx#do_action('remove')
@@ -425,9 +448,15 @@ let g:vista_executive_for = {
             \ }
 
 " ultisnips
+if has('win32')
+    let g:UltiSnipsSnippetDirectories = [$HOME.'/AppData/Local/nvim/UltiSnips']
+else
+    let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/UltiSnips']
+endif
 let g:UltiSnipsExpandTrigger       = "<C-l>"
 let g:UltiSnipsJumpForwardTrigger  = "<C-n>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-i>"
+let g:ultisnips_python_style = 'google'
 
 " vim-visual-multi
 let g:VM_maps = {}
@@ -453,3 +482,6 @@ let g:auto_save = 1
 let g:auto_save_silent = 0
 let g:auto_save_write_all_buffers = 1
 let g:auto_save_events = ["InsertLeave", "TextChanged"]
+
+" neoformat
+let g:neoformat_enabled_python = ['yapf']
