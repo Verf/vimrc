@@ -56,10 +56,7 @@ set scrolloff=999                                          " keep line in center
 set linebreak                                              " wrap long line
 set showbreak=⮎                                            " label of line break
 set nowrap                                                 " close autowrap
-set textwidth=80                                           " autowrap line length
-set encoding=utf-8                                         " set default encoding to utf-8
-set fileencoding=utf-8                                     " set default file encoding to utf-8
-set termencoding=utf-8                                     " set default terminal encoding to utf-8
+set textwidth=120                                          " autowrap line length
 
 set smartcase                                              " case sensitive only if pattern contains upper letter
 set incsearch                                              " incrementally highlights all pattern matches
@@ -67,11 +64,9 @@ set nohlsearch                                             " don't highlight sea
 
 set smartindent                                            " automatically inserts one extra level of indentation in some cases
 set expandtab                                              " replace tab to blanks
-set smarttab                                               " <Tab> insert blanks according to 'shiftwidth', 'tabstop' or 'softabstop'
 set tabstop=4                                              " number of spaces that a <Tab> in the file count for
 set softtabstop=4                                          " number of spaces that a <Tab> is inserted
 set shiftwidth=4                                           " number of spaces to use for (auto)indent
-set report=0                                               " always report changed lines
 
 set synmaxcol=200                                          " maxium column for search syntax items
 set updatecount=100                                        " after type this many characters the swap file will be written to disk
@@ -269,7 +264,15 @@ let g:which_key_map.s = {
             \ }
 nmap <silent> <leader>so :e $MYVIMRC<CR>
 nmap <silent> <leader>sr :source $MYVIMRC<CR>
-" let g:which_key_map.t = {}
+let g:which_key_map.t = {
+            \ 'name': '+Tags',
+            \ 't': 'View Tags',
+            \ 'f': 'Find Tags',
+            \ 'a': 'Find All Tags',
+            \ }
+nmap <silent> <leader>tt :Vista!!<CR>
+nmap <silent> <leader>tf :LeaderfBufTag<CR>
+nmap <silent> <leader>ta :LeaderfBufTagAll<CR>
 " let g:which_key_map.u = {}
 " let g:which_key_map.v = {}
 let g:which_key_map.w = {
@@ -282,6 +285,10 @@ let g:which_key_map.w = {
             \ 'n': 'Jump to Below Window',
             \ 'i': 'Jump to Above Window',
             \ 'o': 'Jump to Right Window',
+            \ 'Y': 'Move to Left Window',
+            \ 'N': 'Move to Below Window',
+            \ 'I': 'Move to Above Window',
+            \ 'O': 'Move to Right Window',
             \ 'c': 'Close All The Other Windows'
             \ }
 nmap <silent> <leader>wh <C-w>s
@@ -292,6 +299,10 @@ nmap <silent> <leader>wy <C-w>h
 nmap <silent> <leader>wn <C-w>j
 nmap <silent> <leader>wi <C-w>k
 nmap <silent> <leader>wo <C-w>l
+nmap <silent> <leader>wY <C-w>H
+nmap <silent> <leader>wN <C-w>J
+nmap <silent> <leader>wI <C-w>K
+nmap <silent> <leader>wO <C-w>L
 nmap <silent> <leader>wc :only<CR>
 " let g:which_key_map.x = {}
 " let g:which_key_map.y = {}
@@ -315,8 +326,6 @@ let g:lightline = {
             \ },
             \ }
 
-" Calendar.vim
-let g:calendar_first_day = 'monday'
 " easy motion
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
@@ -383,15 +392,10 @@ function! s:defx_my_settings() abort
 endfunction
 
 " rooter
-let g:rooter_patterns = ['.git', 'pom.xml', '.project', '.classpath']
+let g:rooter_patterns = ['.git', 'pom.xml', '.project']
 let g:rooter_change_directory_for_non_project_files = 'current'
 
 " vim-easy-align
-let g:easy_align_delimiters = {
-            \ 'b': { 
-            \     'pattern': '::',
-            \     'right_margin': 1},
-            \ }
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
@@ -401,14 +405,31 @@ let g:NERDTrimTrailingWhitespace = 1
 " leaderF
 let g:Lf_ShortcutF = "<leader>ff"
 let g:Lf_ShortcutB = "<leader>bb"
-let g:Lf_RootMarkers = ['.git', '.project', 'pom.xml']
 let g:Lf_HideHelp = 1
-let g:Lf_UseCache = 0
 let g:Lf_IgnoreCurrentBufferName = 1
-let g:Lf_StlSeparator = { 'left': '►', 'right': '◄', 'font': '等距更纱黑体 SC' }
+let g:Lf_WindowHeight = 0.30
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '更纱黑体 Mono SC Nerd' }
+let g:Lf_StlColorscheme = 'one'
+let g:Lf_DefaultExternalTool = 'rg'
+let g:Lf_RootMarkers = ['.git', '.project', 'pom.xml']
+let g:Lf_WildIgnore = {
+            \ 'dir': ['.git', '.vscode', '.cache'],
+            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+            \ }
+let g:Lf_CommandMap = {
+            \ '<C-j>': ['<C-n>'],
+            \ '<C-k>': ['<C-i>'],
+            \ '<C-]>': ['<C-->'],
+            \ '<C-x>': ['<C-|>'],
+            \ }
 
 " vista
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_stay_on_open = 0
+let g:vista_executive_for = {
+            \ 'vimwiki': 'markdown',
+            \ 'pandoc': 'markdown',
+            \ }
 
 " ultisnips
 let g:UltiSnipsExpandTrigger       = "<C-l>"
@@ -421,7 +442,6 @@ let g:VM_maps['Find Under']         = '<C-s>'
 let g:VM_maps['Find Subword Under'] = '<C-s>'
 let g:VM_maps['Add Cursor Down']    = '<M-Down>'
 let g:VM_maps['Add Cursor Up']      = '<M-Up>'
-
 
 let g:VM_maps["Find Next"]          = '<C-s>'
 let g:VM_maps["Find Prev"]          = '<C-S>'
@@ -437,7 +457,7 @@ let g:VM_maps["Toggle Multiline"]   = 'M'
 
 " vim-autosave
 let g:auto_save = 1
-let g:auto_save_silent = 1
+let g:auto_save_silent = 0
 let g:auto_save_write_all_buffers = 1
 let g:auto_save_events = ["InsertLeave", "TextChanged"]
 
