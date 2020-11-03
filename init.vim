@@ -1,10 +1,10 @@
-"  __      _______ __  __ _____   _____ 
+"  __      _______ __  __ _____   _____
 "  \ \    / /_   _|  \/  |  __ \ / ____|
-"   \ \  / /  | | | \  / | |__) | |     
-"    \ \/ /   | | | |\/| |  _  /| |     
-"     \  /   _| |_| |  | | | \ \| |____ 
+"   \ \  / /  | | | \  / | |__) | |
+"    \ \/ /   | | | |\/| |  _  /| |
+"     \  /   _| |_| |  | | | \ \| |____
 "      \/   |_____|_|  |_|_|  \_\\_____|
-"                                       
+"
 " Vimrc for Verf
 "
 " vim-plug
@@ -265,7 +265,7 @@ let g:which_key_map.s = {
             \ 'w': 'Search Word',
             \ 'p': 'Search Point',
             \ }
-nmap <silent> <leader>sw :Leaderf rg -e 
+nmap <silent> <leader>sw :Leaderf rg -e
 nmap <silent> <leader>sp :<C-U><C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
 let g:which_key_map.t = {
             \ 'name': '+Tags',
@@ -281,7 +281,7 @@ let g:which_key_map.v = {
             \ 'name': '+Vimrc',
             \ 'o': 'Open Vimrc',
             \ 'r': 'Reload Vimrc',
-}
+            \ }
 nmap <silent> <leader>vo :e $MYVIMRC<CR>
 nmap <silent> <leader>vr :source $MYVIMRC<CR>
 let g:which_key_map.w = {
