@@ -29,6 +29,7 @@ Plug 'sbdchd/neoformat'
 Plug 'airblade/vim-rooter'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
+Plug 'tpope/vim-unimpaired'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'SirVer/ultisnips'
@@ -323,6 +324,8 @@ nmap <silent> <leader>wY <C-w>h
 nmap <silent> <leader>wN <C-w>j
 nmap <silent> <leader>wI <C-w>k
 nmap <silent> <leader>wO <C-w>l
+nmap <silent> <leader>w+ <C-w>+
+nmap <silent> <leader>w- <C-w>-
 nmap <silent> <leader>wc :only<CR>
 " let g:which_key_map.x = {}
 " let g:which_key_map.y = {}
@@ -331,7 +334,7 @@ nmap <silent> <leader>wc :only<CR>
 "     Languages
 " ===================
 if has('win32')
-    let g:python3_host_prog = 'C:\Users\vo4f\scoop\shims\python.exe'
+    let g:python3_host_prog = '~\scoop\shims\python.exe'
 endif
 " ===================
 "   Plugin Settings
