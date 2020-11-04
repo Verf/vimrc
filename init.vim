@@ -500,6 +500,5 @@ let g:neoformat_enabled_java = ['uncrustify']
 
 " vim-session
 set sessionoptions-=help
-set sessionoptions-=buffers
 let g:session_autoload = 'no'
 let g:session_autosave = 'yes'
