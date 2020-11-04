@@ -27,10 +27,13 @@ Plug 'junegunn/vim-easy-align'
 Plug 'preservim/nerdcommenter'
 Plug 'sbdchd/neoformat'
 Plug 'airblade/vim-rooter'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'SirVer/ultisnips'
 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
+Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/vista.vim'
 Plug 'joshdick/onedark.vim'
 call plug#end()
@@ -211,15 +214,19 @@ let g:which_key_map.c = {
 " let g:which_key_map.d = {}
 " let g:which_key_map.e = {}
 let g:which_key_map.f = {
-    \ 'name': '+Files',
+    \ 'name': '+Files/Find',
     \ 'f': 'File Search',
     \ 'd': 'Directory View',
     \ 'h': 'File History',
     \ 'm': 'File Format',
+    \ 'w': 'Find Word',
+    \ 'p': 'Find at Ponit',
     \ }
 nmap <silent> <leader>fd :Defx<CR>
 nmap <silent> <leader>fh :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
 nmap <silent> <leader>fm :Neoformat<CR>
+nmap <silent> <leader>fw :Leaderf rg -e
+nmap <silent> <leader>fp :<C-U><C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
 let g:which_key_map.g= {
             \ 'name': 'Goto',
             \ 'd': 'goto definition',
@@ -261,12 +268,16 @@ let g:which_key_map.r = {
             \ }
 nmap <leader>rn <Plug>(coc-rename)
 let g:which_key_map.s = {
-            \ 'name': '+Search',
-            \ 'w': 'Search Word',
-            \ 'p': 'Search Point',
+            \ 'name': '+Session',
+            \ 's': 'Save Session',
+            \ 'o': 'Open Session',
+            \ 'c': 'Close Session',
+            \ 'd': 'Delete Session',
             \ }
-nmap <silent> <leader>sw :Leaderf rg -e
-nmap <silent> <leader>sp :<C-U><C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
+nmap <leader>ss :SaveSession
+nmap <leader>so :OpenSession
+nmap <leader>sc :CloseSession<CR>
+nmap <leader>sd :DeleteSession<CR>
 let g:which_key_map.t = {
             \ 'name': '+Tags',
             \ 't': 'View Tags',
@@ -485,3 +496,10 @@ let g:auto_save_events = ["InsertLeave", "TextChanged"]
 
 " neoformat
 let g:neoformat_enabled_python = ['yapf']
+let g:neoformat_enabled_java = ['uncrustify']
+
+" vim-session
+set sessionoptions-=help
+set sessionoptions-=buffers
+let g:session_autoload = 'no'
+let g:session_autosave = 'yes'

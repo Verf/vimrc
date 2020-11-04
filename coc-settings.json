@@ -1,2 +1,21 @@
 {
+    "list.insertMappings": {
+        "<C-r>": "do.refresh",
+        "<C-o>": "do:toggleMode",
+        "<C-c>": "do:stop",
+        "<C-f>": "feedkeys:\\<C-f>",
+        "<C-b>": "feedkeys:\\<C-b>",
+        "<C-a>": "prompt:start",
+        "<C-e>": "prompt:end",
+        "<C-u>": "prompt:removehead",
+        "<C-v>": "prompt:paste",
+        "<C-n>": "normal:j",
+        "<C-p>": "normal:k",
+        "<C-t>": "action:tabe"
+    },
+    "java.autobuild.enabled": false,
+    "java.codeGeneration.generateComments": true,
+    "java.completion.guessMethodArguments": true,
+    "java.completion.importOrder": ["java", "javax", "com", "org"],
+    "python.linting.enabled": true
 }
