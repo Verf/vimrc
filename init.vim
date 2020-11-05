@@ -30,7 +30,6 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-Plug 'SirVer/ultisnips'
 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/vista.vim'
@@ -172,6 +171,8 @@ nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 let g:which_key_map =  {}
 let g:which_key_map.Space = 'Goto Char'
 nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
+let g:which_key_map.Tab = 'Next Tab'
+nmap <silent> <leader><Tab> :tn<CR>
 let g:which_key_map.a = {
             \ 'name': '+Application',
             \ 'w': {
@@ -368,10 +369,13 @@ function! s:check_back_space() abort
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+imap <C-l> <Plug>(coc-snippets-expand)
+let g:coc_snippet_next = '<C-n>'
+let g:coc_snippet_prev = '<C-i>'
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 autocmd FileType vimwiki let b:coc_suggest_disable = 1
@@ -459,17 +463,6 @@ let g:vista_executive_for = {
             \ 'vimwiki': 'markdown',
             \ 'pandoc': 'markdown',
             \ }
-
-" ultisnips
-if has('win32')
-    let g:UltiSnipsSnippetDirectories = [$HOME.'/AppData/Local/nvim/UltiSnips']
-else
-    let g:UltiSnipsSnippetDirectories = [$HOME.'/.config/nvim/UltiSnips']
-endif
-let g:UltiSnipsExpandTrigger       = "<C-l>"
-let g:UltiSnipsJumpForwardTrigger  = "<C-n>"
-let g:UltiSnipsJumpBackwardTrigger = "<C-i>"
-let g:ultisnips_python_style = 'google'
 
 " vim-visual-multi
 let g:VM_maps = {}

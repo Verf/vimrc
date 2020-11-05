@@ -17,5 +17,6 @@
     "java.codeGeneration.generateComments": true,
     "java.completion.guessMethodArguments": true,
     "java.completion.importOrder": ["java", "javax", "com", "org"],
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "snippets.ultisnips.directories": ["~\\AppData\\Local\\nvim\\UltiSnips"]
 }
