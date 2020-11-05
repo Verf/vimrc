@@ -28,7 +28,6 @@ Plug 'preservim/nerdcommenter'
 Plug 'airblade/vim-rooter'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
-Plug 'tpope/vim-unimpaired'
 Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'SirVer/ultisnips'
