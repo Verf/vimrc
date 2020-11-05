@@ -267,10 +267,10 @@ nmap <silent> <leader>gl <Plug>(easymotion-overwin-line)
 " let g:which_key_map.k = {}
 " let g:which_key_map.l= {}
 " let g:which_key_map.m = {}
-let g:which_key_map.n = 'Next Tab'
+let g:which_key_map.n = 'Next Buffer'
 nmap <silent> <leader>n :bn<CR>
 " let g:which_key_map.o = {}
-let g:which_key_map.p = 'Previous Tab'
+let g:which_key_map.p = 'Previous Buffer'
 nmap <silent> <leader>p :bp<CR>
 let g:which_key_map.q = {
             \ 'name': '+Quit',
