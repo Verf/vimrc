@@ -25,7 +25,6 @@ Plug '907th/vim-auto-save'
 Plug 'Verf/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'preservim/nerdcommenter'
-Plug 'sbdchd/neoformat'
 Plug 'airblade/vim-rooter'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
@@ -215,18 +214,19 @@ let g:which_key_map.c = {
 " let g:which_key_map.e = {}
 let g:which_key_map.f = {
     \ 'name': '+Files/Find',
+    \ 't': 'Tree View',
+    \ 'd': 'Diagnostics',
     \ 'f': 'File Search',
-    \ 'd': 'Directory View',
     \ 'h': 'File History',
     \ 'm': 'File Format',
     \ 'w': 'Find Word',
     \ 'p': 'Find at Ponit',
     \ }
-nmap <silent> <leader>fd :Defx<CR>
-nmap <silent> <leader>fh :<C-U><C-R>=printf("Leaderf mru %s", "")<CR><CR>
-nmap <silent> <leader>fm :Neoformat<CR>
+nmap <silent> <leader>ft :Defx<CR>
+nmap <silent> <leader>fd :CocList diagnostics<CR>
+nmap <silent> <leader>fh :<C-R>=printf("Leaderf mru %s", "")<CR><CR>
 nmap <silent> <leader>fw :Leaderf rg -e
-nmap <silent> <leader>fp :<C-U><C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
+nmap <silent> <leader>fp :<C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
 let g:which_key_map.g= {
             \ 'name': 'Goto',
             \ 'd': 'goto definition',
@@ -493,10 +493,6 @@ let g:auto_save = 1
 let g:auto_save_silent = 0
 let g:auto_save_write_all_buffers = 1
 let g:auto_save_events = ["InsertLeave", "TextChanged"]
-
-" neoformat
-let g:neoformat_enabled_python = ['yapf']
-let g:neoformat_enabled_java = ['uncrustify']
 
 " vim-session
 set sessionoptions-=help
