@@ -172,7 +172,27 @@ let g:which_key_map =  {}
 let g:which_key_map.Space = 'Goto Char'
 nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
 let g:which_key_map.Tab = 'Next Tab'
-nmap <silent> <leader><Tab> :tn<CR>
+nmap <silent> <leader><Tab> :<Plug>BufTabLine.Go(-1)
+let g:which_key_map.1 = ''
+let g:which_key_map.2 = ''
+let g:which_key_map.3 = ''
+let g:which_key_map.4 = ''
+let g:which_key_map.5 = ''
+let g:which_key_map.6 = ''
+let g:which_key_map.7 = ''
+let g:which_key_map.8 = ''
+let g:which_key_map.9 = ''
+let g:which_key_map.0 = ''
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(10)
 let g:which_key_map.a = {
             \ 'name': '+Application',
             \ 'w': {
@@ -493,3 +513,7 @@ let g:auto_save_events = ["InsertLeave", "TextChanged"]
 set sessionoptions-=help
 let g:session_autoload = 'no'
 let g:session_autosave = 'yes'
+
+" buftabline
+let g:buftabline_numbers = 2
+hi link BufTabLineCurrent PmenuSel
