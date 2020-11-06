@@ -49,39 +49,35 @@ endif
 " =========
 filetype plugin on
 language en_US
+command! Bd :bp | :sp | :bn | :bd " use :Bd to close buffer without close windows
+set nowrap                        " close autowrap
+set linebreak                     " wrap long line
+set smartcase                     " case sensitive only if pattern contains upper letter
+set expandtab                     " replace tab to blanks
+set smartindent                   " automatically inserts one extra level of indentation in some cases
+set incsearch                     " incrementally highlights all pattern matches
+set nohlsearch                    " don't highlight search pattern
+set autochdir                     " change current working directory whenever open a file
+set nobackup                      " close auto backup
+set nowritebackup                 " close auto write
+set hidden
+
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
-set timeoutlen=1000                                        " timeout for map sequence (ms)
-
-set scrolloff=999                                          " keep line in center of screen
-set linebreak                                              " wrap long line
-set showbreak=⮎                                            " label of line break
-set nowrap                                                 " close autowrap
-set textwidth=120                                          " autowrap line length
-
-set smartcase                                              " case sensitive only if pattern contains upper letter
-set incsearch                                              " incrementally highlights all pattern matches
-set nohlsearch                                             " don't highlight search pattern
-
-set smartindent                                            " automatically inserts one extra level of indentation in some cases
-set expandtab                                              " replace tab to blanks
-set tabstop=4                                              " number of spaces that a <Tab> in the file count for
-set softtabstop=4                                          " number of spaces that a <Tab> is inserted
-set shiftwidth=4                                           " number of spaces to use for (auto)indent
-
-set synmaxcol=200                                          " maxium column for search syntax items
-set updatecount=100                                        " after type this many characters the swap file will be written to disk
-set updatetime=300                                         " updatetime for CursorHold & CursorHoldI
-
-set mouse=a                                                " enable mouse in all mode
-set autochdir
-set clipboard=unnamedplus                                  " use system clip board
-set pastetoggle=<F9>                                       " toggle paste mode by <F9>
-set nobackup                                               " close auto backup
-set nowritebackup                                          " close auto write
-set hidden
-set shortmess+=c                                           " don't give ins-completion-menu messages
-set signcolumn=yes                                         " always show signcolumns
+set timeoutlen=1000               " timeout for map sequence (ms)
+set scrolloff=999                 " keep line in center of screen
+set showbreak=⮎                   " label of line break
+set textwidth=120                 " autowrap line length
+set tabstop=4                     " number of spaces that a <Tab> in the file count for
+set softtabstop=4                 " number of spaces that a <Tab> is inserted
+set shiftwidth=4                  " number of spaces to use for (auto)indent
+set synmaxcol=200                 " maxium column for search syntax items
+set updatecount=100               " after type this many characters the swap file will be written to disk
+set updatetime=300                " updatetime for CursorHold & CursorHoldI
+set mouse=a                       " enable mouse in all mode
+set clipboard=unnamedplus         " use system clip board
+set signcolumn=yes                " always show signcolumns
+set shortmess+=c                  " don't give ins-completion-menu messages
 
 " UI
 colorscheme onedark                                        " set colorscheme
@@ -89,11 +85,9 @@ set termguicolors                                          " true color support 
 set cursorline                                             " highlight current line
 set showmatch                                              " highlight matching parenthesis
 set showtabline=2                                          " show tabline
-
 set relativenumber                                         " show relative line number
 set switchbuf=useopen,usetab,newtab                        " better buffer switch
 set noshowmode                                             " don't show insert status (use lightline instead)
-
 
 " ================
 "   Key Bindings
@@ -119,6 +113,10 @@ noremap t f
 noremap g g
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
+nmap gl <Plug>(easymotion-overwin-line)
+nmap gf <Plug>(easymotion-s)
+nmap gw <Plug>(easymotion-bd-w)
+nmap ge <Plug>(easymotion-bd-e)
 
 noremap y h
 noremap n j
@@ -170,19 +168,17 @@ nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 
 let g:which_key_map =  {}
 let g:which_key_map.Space = 'Goto Char'
-nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f)
-let g:which_key_map.Tab = 'Next Tab'
-nmap <silent> <leader><Tab> :<Plug>BufTabLine.Go(-1)
-let g:which_key_map.1 = ''
-let g:which_key_map.2 = ''
-let g:which_key_map.3 = ''
-let g:which_key_map.4 = ''
-let g:which_key_map.5 = ''
-let g:which_key_map.6 = ''
-let g:which_key_map.7 = ''
-let g:which_key_map.8 = ''
-let g:which_key_map.9 = ''
-let g:which_key_map.0 = ''
+nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f2)
+let g:which_key_map.1 = 'which_key_ignore'
+let g:which_key_map.2 = 'which_key_ignore'
+let g:which_key_map.3 = 'which_key_ignore'
+let g:which_key_map.4 = 'which_key_ignore'
+let g:which_key_map.5 = 'which_key_ignore'
+let g:which_key_map.6 = 'which_key_ignore'
+let g:which_key_map.7 = 'which_key_ignore'
+let g:which_key_map.8 = 'which_key_ignore'
+let g:which_key_map.9 = 'which_key_ignore'
+let g:which_key_map.0 = 'which_key_ignore'
 nmap <leader>1 <Plug>BufTabLine.Go(1)
 nmap <leader>2 <Plug>BufTabLine.Go(2)
 nmap <leader>3 <Plug>BufTabLine.Go(3)
@@ -225,12 +221,26 @@ let g:which_key_map.b = {
             \ 'p': 'Previous Buffer',
             \ 'b': 'Buffer List',
             \ }
-nmap <silent> <leader>bq :bd<CR>
+nmap <silent> <leader>bq :Bd<CR><CR>
 nmap <silent> <leader>bn :bn<CR>
 nmap <silent> <leader>bp :bp<CR>
 let g:which_key_map.c = {
             \ 'name': '+Commenter',
+            \ 'c': 'Toggle Comment',
+            \ 'n': 'Nest Comment',
+            \ 'm': 'Minimal Comment',
+            \ 'i': 'Invert Comment',
+            \ 's': 'Sexy Comment',
+            \ 'y': 'Yank Comment',
+            \ '$': 'Comment To EOL',
+            \ 'A': 'Append Comment',
+            \ 'a': 'Change Comment Style',
+            \ 'l': 'Comment AlignLeft',
+            \ 'b': 'Comment AlignRight',
+            \ 'u': 'Uncomment',
             \ }
+nmap <silent> <leader>cc <Plug>NERDCommenterToggle
+xmap <silent> <leader>cc <Plug>NERDCommenterToggle
 " let g:which_key_map.d = {}
 " let g:which_key_map.e = {}
 let g:which_key_map.f = {
@@ -238,6 +248,7 @@ let g:which_key_map.f = {
     \ 't': 'Tree View',
     \ 'd': 'Diagnostics',
     \ 'f': 'File Search',
+    \ 'a': 'File Search All',
     \ 'h': 'File History',
     \ 'm': 'File Format',
     \ 'w': 'Find Word',
@@ -245,6 +256,7 @@ let g:which_key_map.f = {
     \ }
 nmap <silent> <leader>ft :Defx<CR>
 nmap <silent> <leader>fd :CocList diagnostics<CR>
+nmap <silent> <leader>ft :LeaderfFile $HOME<CR>
 nmap <silent> <leader>fh :<C-R>=printf("Leaderf mru %s", "")<CR><CR>
 nmap <silent> <leader>fw :Leaderf rg -e
 nmap <silent> <leader>fp :<C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
@@ -254,13 +266,11 @@ let g:which_key_map.g= {
             \ 'y': 'type definition',
             \ 'i': 'goto implementation',
             \ 'r': 'show references',
-            \ 'l': 'goto line',
             \ }
 nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
-nmap <silent> <leader>gl <Plug>(easymotion-overwin-line)
 " let g:which_key_map.h = {}
 " let g:which_key_map.i = {}
 " let g:which_key_map.j = {}
@@ -279,7 +289,7 @@ let g:which_key_map.q = {
             \ 'a': 'Save Quit All',
             \ 'x': 'Force Quit',
             \ }
-nmap <silent> <leader>qq :bd!<CR>
+nmap <silent> <leader>qq :Bd<CR><CR>
 nmap <silent> <leader>qw :qw<CR>
 nmap <silent> <leader>qa :qa<CR>
 nmap <silent> <leader>qx :qa!<CR>
@@ -388,14 +398,14 @@ function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+
+inoremap <silent><expr> <Tab>
+            \ pumvisible() ? "\<C-n>":
+            \ <SID>check_back_space() ? "\<Tab>" :
+            \ coc#refresh()
 imap <C-l> <Plug>(coc-snippets-expand)
-let g:coc_snippet_next = '<C-n>'
-let g:coc_snippet_prev = '<C-i>'
+let g:coc_snippet_next = '<C-j>'
+let g:coc_snippet_prev = '<C-k>'
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 autocmd FileType vimwiki let b:coc_suggest_disable = 1
@@ -459,10 +469,12 @@ let g:NERDTrimTrailingWhitespace = 1
 let g:Lf_ShortcutF = "<leader>ff"
 let g:Lf_ShortcutB = "<leader>bb"
 let g:Lf_HideHelp = 1
+let g:Lf_WindowPosition = 'popup'
 let g:Lf_IgnoreCurrentBufferName = 1
 let g:Lf_WindowHeight = 0.30
 let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '更纱黑体 Mono SC Nerd' }
 let g:Lf_StlColorscheme = 'one'
+let g:Lf_PopupColorscheme = 'one'
 let g:Lf_DefaultExternalTool = 'rg'
 let g:Lf_RootMarkers = ['.git', '.project', 'pom.xml']
 let g:Lf_WildIgnore = {
