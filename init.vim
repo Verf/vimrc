@@ -256,7 +256,7 @@ let g:which_key_map.f = {
     \ }
 nmap <silent> <leader>ft :Defx<CR>
 nmap <silent> <leader>fd :CocList diagnostics<CR>
-nmap <silent> <leader>ft :LeaderfFile $HOME<CR>
+nmap <silent> <leader>fa :LeaderfFile $HOME<CR>
 nmap <silent> <leader>fh :<C-R>=printf("Leaderf mru %s", "")<CR><CR>
 nmap <silent> <leader>fw :Leaderf rg -e
 nmap <silent> <leader>fp :<C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
