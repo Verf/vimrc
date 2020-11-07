@@ -33,7 +33,7 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/vista.vim'
-Plug 'konfekt/fastfold'
+Plug 'simnalamburt/vim-mundo'
 Plug 'joshdick/onedark.vim'
 call plug#end()
 
@@ -61,7 +61,8 @@ set nohlsearch                    " don't highlight search pattern
 set autochdir                     " change current working directory whenever open a file
 set nobackup                      " close auto backup
 set nowritebackup                 " close auto write
-set hidden
+set hidden                        " buffer became hidden when it is abandoned
+set undofile                      " presistent undo file
 
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
@@ -319,7 +320,10 @@ let g:which_key_map.t = {
 nmap <silent> <leader>tt :Vista!!<CR>
 nmap <silent> <leader>tf :LeaderfBufTag<CR>
 nmap <silent> <leader>ta :LeaderfBufTagAll<CR>
-" let g:which_key_map.u = {}
+let g:which_key_map.u = {
+            \ 'name': 'Undo Tree',
+            \ }
+nmap <silent> <leader>u :MundoToggle<CR>
 let g:which_key_map.v = {
             \ 'name': '+Vimrc',
             \ 'o': 'Open Vimrc',
@@ -530,3 +534,22 @@ let g:session_autosave = 'yes'
 " buftabline
 let g:buftabline_numbers = 2
 hi link BufTabLineCurrent PmenuSel
+
+" Mundo
+let g:mundo_mappings = {
+          \ '<CR>': 'preview',
+          \ 'n': 'move_older',
+          \ 'i': 'move_newer',
+          \ 'gg': 'move_top',
+          \ 'G': 'move_bottom',
+          \ 'P': 'play_to',
+          \ 'd': 'diff',
+          \ 'l': 'toggle_inline',
+          \ '/': 'search',
+          \ 'm': 'next_match',
+          \ 'M': 'previous_match',
+          \ 'p': 'diff_current_buffer',
+          \ 'f': 'diff',
+          \ '?': 'toggle_help',
+          \ 'q': 'quit',
+          \ }
