@@ -33,6 +33,7 @@ Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/vista.vim'
+Plug 'konfekt/fastfold'
 Plug 'joshdick/onedark.vim'
 call plug#end()
 
