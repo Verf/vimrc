@@ -34,9 +34,9 @@ Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/vista.vim'
 Plug 'simnalamburt/vim-mundo'
+Plug 'vifm/vifm.vim'
 Plug 'joshdick/onedark.vim'
 call plug#end()
-
 
 " ==========
 "   Server
@@ -56,7 +56,6 @@ set linebreak                     " wrap long line
 set smartcase                     " case sensitive only if pattern contains upper letter
 set expandtab                     " replace tab to blanks
 set smartindent                   " automatically inserts one extra level of indentation in some cases
-set incsearch                     " incrementally highlights all pattern matches
 set nohlsearch                    " don't highlight search pattern
 set autochdir                     " change current working directory whenever open a file
 set nobackup                      " close auto backup
@@ -66,7 +65,7 @@ set undofile                      " presistent undo file
 
 let g:mapleader = "\<Space>"
 let g:maplocalleader = ','
-set timeoutlen=1000               " timeout for map sequence (ms)
+set timeoutlen=500               " timeout for map sequence (ms)
 set scrolloff=999                 " keep line in center of screen
 set showbreak=⮎                   " label of line break
 set textwidth=120                 " autowrap line length
@@ -252,7 +251,7 @@ let g:which_key_map.f = {
     \ 'f': 'File Search',
     \ 'a': 'File Search All',
     \ 'h': 'File History',
-    \ 'm': 'File Format',
+    \ 'm': 'File Manager',
     \ 'w': 'Find Word',
     \ 'p': 'Find at Ponit',
     \ }
@@ -260,6 +259,7 @@ nmap <silent> <leader>ft :Defx<CR>
 nmap <silent> <leader>fd :CocList diagnostics<CR>
 nmap <silent> <leader>fa :LeaderfFile $HOME<CR>
 nmap <silent> <leader>fh :<C-R>=printf("Leaderf mru %s", "")<CR><CR>
+nmap <silent> <leader>fm :Vifm<CR>
 nmap <silent> <leader>fw :Leaderf rg -e
 nmap <silent> <leader>fp :<C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
 let g:which_key_map.g= {
@@ -412,17 +412,17 @@ let g:vimwiki_key_mappings = {
 
 " coc.nvim
 function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-inoremap <silent><expr> <Tab>
-            \ pumvisible() ? "\<C-n>":
-            \ <SID>check_back_space() ? "\<Tab>" :
-            \ coc#refresh()
-imap <C-l> <Plug>(coc-snippets-expand)
-let g:coc_snippet_next = '<C-j>'
-let g:coc_snippet_prev = '<C-k>'
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+let g:coc_snippet_next = '<Tab>'
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 autocmd FileType vimwiki let b:coc_suggest_disable = 1
@@ -551,6 +551,8 @@ let g:mundo_mappings = {
           \ '<CR>': 'preview',
           \ 'n': 'move_older',
           \ 'i': 'move_newer',
+          \ 'N': 'move_older_write',
+          \ 'I': 'move_newer_write',
           \ 'gg': 'move_top',
           \ 'G': 'move_bottom',
           \ 'P': 'play_to',
@@ -564,3 +566,6 @@ let g:mundo_mappings = {
           \ '?': 'toggle_help',
           \ 'q': 'quit',
           \ }
+
+" indentLine
+let g:indentLine_setConceal = 0
