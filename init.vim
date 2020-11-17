@@ -397,6 +397,18 @@ let g:EasyMotion_do_mapping = 0
 " vimwiki
 let g:vimwiki_list = [{'path': '~/Sync/Wiki'}]
 let g:vimwiki_global_ext=0
+let g:vimwiki_key_mappings = {
+            \   'global': 1,
+            \   'headers': 1,
+            \   'text_objs': 1,
+            \   'table_format': 1,
+            \   'table_mappings': 1,
+            \   'lists': 0,
+            \   'links': 1,
+            \   'html': 0,
+            \   'mouse': 0,
+            \ }
+
 
 " coc.nvim
 function! s:check_back_space() abort
@@ -507,15 +519,14 @@ let g:VM_maps['Find Under']         = '<C-s>'
 let g:VM_maps['Find Subword Under'] = '<C-s>'
 let g:VM_maps['Add Cursor Down']    = '<M-Down>'
 let g:VM_maps['Add Cursor Up']      = '<M-Up>'
-
 let g:VM_maps["Find Next"]          = '<C-s>'
-let g:VM_maps["Find Prev"]          = '<C-S>'
+let g:VM_maps["Find Prev"]          = '<C-S-s>'
 let g:VM_maps["Goto Next"]          = ']'
 let g:VM_maps["Goto Prev"]          = '['
 let g:VM_maps["Seek Next"]          = '<C-b>'
 let g:VM_maps["Seek Prev"]          = '<C-b>'
 let g:VM_maps["Skip Region"]        = '<C-x>'
-let g:VM_maps["Remove Region"]      = '<C-X>'
+let g:VM_maps["Remove Region"]      = '<C-S-x>'
 let g:VM_maps["Replace"]            = 'R'
 let g:VM_maps["Surround"]           = 'S'
 let g:VM_maps["Toggle Multiline"]   = 'M'
