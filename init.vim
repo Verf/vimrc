@@ -34,7 +34,6 @@ Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/vista.vim'
 Plug 'simnalamburt/vim-mundo'
-Plug 'vifm/vifm.vim'
 Plug 'joshdick/onedark.vim'
 call plug#end()
 
@@ -161,7 +160,6 @@ noremap M M
 nmap / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 
-
 " vim-which-key
 call which_key#register('<Space>', "g:which_key_map")
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
@@ -198,6 +196,7 @@ let g:which_key_map.a = {
             \     'n': 'Wiki New',
             \     'd': 'Wiki Delete',
             \     'r': 'Wiki Rename',
+            \     'h': 'Wiki2HTML'
             \     },
             \ 'd': {
             \     'name': '+Diary',
@@ -211,6 +210,7 @@ nmap <silent> <leader>awi <Plug>VimwikiIndex
 nmap <silent> <leader>awn <Plug>VimwikiGoto
 nmap <silent> <leader>awd <Plug>VimwikiDeleteFile
 nmap <silent> <leader>awr <Plug>VimwikiRenameFile
+nmap <silent> <leader>awh <Plug>Vimwiki2HTML
 nmap <silent> <leader>adi <Plug>VimwikiDiaryIndex
 nmap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
 nmap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
@@ -398,16 +398,18 @@ let g:EasyMotion_do_mapping = 0
 let g:vimwiki_list = [{'path': '~/Sync/Wiki'}]
 let g:vimwiki_global_ext=0
 let g:vimwiki_key_mappings = {
-            \   'global': 1,
-            \   'headers': 1,
-            \   'text_objs': 1,
-            \   'table_format': 1,
-            \   'table_mappings': 1,
-            \   'lists': 0,
-            \   'links': 1,
-            \   'html': 0,
-            \   'mouse': 0,
+            \ 'global': 0,
+            \ 'links': 0,
+            \ 'html': 0,
+            \ 'mouse': 0,
             \ }
+augroup vimwiki-mappings
+    au!
+    au filetype vimwiki nmap <C-CR> <Plug>VimwikiFollowLink
+    au filetype vimwiki nmap <Backspace> <Plug>VimwikiGoBackLink
+    au filetype vimwiki nmap <Tab> <Plug>VimwikiNextLink
+    au filetype vimwiki nmap <S-Tab> <Plug>VimwikiPrevLink
+augroup END
 
 " coc.nvim
 function! s:check_back_space() abort
@@ -475,6 +477,30 @@ let g:rooter_patterns = ['.git', 'pom.xml', '.project']
 let g:rooter_change_directory_for_non_project_files = 'current'
 
 " vim-easy-align
+let g:easy_align_delimiters = {
+            \ '>': { 'pattern': '>>\|=>\|>' },
+            \ '/': {
+            \     'pattern':         '//\+\|/\*\|\*/',
+            \     'delimiter_align': 'l',
+            \     'ignore_groups':   ['!Comment'] },
+            \ ']': {
+            \     'pattern':       '[[\]]',
+            \     'left_margin':   0,
+            \     'right_margin':  0,
+            \     'stick_to_left': 0
+            \   },
+            \ ')': {
+            \     'pattern':       '[()]',
+            \     'left_margin':   0,
+            \     'right_margin':  0,
+            \     'stick_to_left': 0
+            \   },
+            \ 'd': {
+            \     'pattern':      ' \(\S\+\s*[;=]\)\@=',
+            \     'left_margin':  0,
+            \     'right_margin': 0
+            \   }
+            \ }
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
@@ -522,7 +548,7 @@ let g:VM_maps["Find Next"]          = '<C-s>'
 let g:VM_maps["Find Prev"]          = '<C-S-s>'
 let g:VM_maps["Goto Next"]          = ']'
 let g:VM_maps["Goto Prev"]          = '['
-let g:VM_maps["Seek Next"]          = '<C-b>'
+let g:VM_maps["Seek Next"]          = '<C-f>'
 let g:VM_maps["Seek Prev"]          = '<C-b>'
 let g:VM_maps["Skip Region"]        = '<C-x>'
 let g:VM_maps["Remove Region"]      = '<C-S-x>'
