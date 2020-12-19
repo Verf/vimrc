@@ -409,7 +409,6 @@ let g:vimwiki_key_mappings = {
             \   'mouse': 0,
             \ }
 
-
 " coc.nvim
 function! s:check_back_space() abort
   let col = col('.') - 1
