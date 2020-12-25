@@ -7,7 +7,7 @@ from pynvim import attach
 SERVER = '\\\\.\\pipe\\nvim-pipe-12345'
 
 def main(argv):
-    path = ''.join(argv)
+    path = argv[1]
     try:
         nvim = attach("socket", path=SERVER)
     except Exception:
@@ -21,5 +21,4 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    ret = main(sys.argv)
-    sys.exit(ret)
+    sys.exit(main(sys.argv))

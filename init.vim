@@ -117,7 +117,6 @@ nmap gl <Plug>(easymotion-overwin-line)
 nmap gf <Plug>(easymotion-s)
 nmap gw <Plug>(easymotion-bd-w)
 nmap ge <Plug>(easymotion-bd-e)
-
 noremap y h
 noremap n j
 noremap i k
@@ -251,7 +250,6 @@ let g:which_key_map.f = {
     \ 'f': 'File Search',
     \ 'a': 'File Search All',
     \ 'h': 'File History',
-    \ 'm': 'File Manager',
     \ 'w': 'Find Word',
     \ 'p': 'Find at Ponit',
     \ }
@@ -259,7 +257,6 @@ nmap <silent> <leader>ft :Defx<CR>
 nmap <silent> <leader>fd :CocList diagnostics<CR>
 nmap <silent> <leader>fa :LeaderfFile $HOME<CR>
 nmap <silent> <leader>fh :<C-R>=printf("Leaderf mru %s", "")<CR><CR>
-nmap <silent> <leader>fm :Vifm<CR>
 nmap <silent> <leader>fw :Leaderf rg -e
 nmap <silent> <leader>fp :<C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
 let g:which_key_map.g= {
@@ -355,10 +352,10 @@ nmap <silent> <leader>wy <C-w>h
 nmap <silent> <leader>wn <C-w>j
 nmap <silent> <leader>wi <C-w>k
 nmap <silent> <leader>wo <C-w>l
-nmap <silent> <leader>wY <C-w>h
-nmap <silent> <leader>wN <C-w>j
-nmap <silent> <leader>wI <C-w>k
-nmap <silent> <leader>wO <C-w>l
+nmap <silent> <leader>wY <C-w>H
+nmap <silent> <leader>wN <C-w>J
+nmap <silent> <leader>wI <C-w>K
+nmap <silent> <leader>wO <C-w>L
 nmap <silent> <leader>w+ <C-w>+
 nmap <silent> <leader>w- <C-w>-
 nmap <silent> <leader>wc :only<CR>
@@ -399,6 +396,7 @@ let g:vimwiki_list = [{'path': '~/Sync/Wiki'}]
 let g:vimwiki_global_ext=0
 let g:vimwiki_key_mappings = {
             \ 'global': 0,
+            \ 'lists': 0,
             \ 'links': 0,
             \ 'html': 0,
             \ 'mouse': 0,
