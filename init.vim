@@ -34,6 +34,7 @@ Plug 'Yggdroot/LeaderF', { 'do': '.\install.bat' }
 Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/vista.vim'
 Plug 'simnalamburt/vim-mundo'
+Plug 'gcmt/wildfire.vim'
 Plug 'joshdick/onedark.vim'
 call plug#end()
 
@@ -167,6 +168,8 @@ nnoremap <silent> <localleader> :<c-u>WhichKey  ','<CR>
 let g:which_key_map =  {}
 let g:which_key_map.Space = 'Goto Char'
 nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f2)
+nmap <silent> <leader>= <Plug>(wildfire-fuel)
+vmap <silent> <leader>- <Plug>(wildfire-water)
 let g:which_key_map.1 = 'which_key_ignore'
 let g:which_key_map.2 = 'which_key_ignore'
 let g:which_key_map.3 = 'which_key_ignore'
