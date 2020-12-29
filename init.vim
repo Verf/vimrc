@@ -245,7 +245,11 @@ let g:which_key_map.c = {
 nmap <silent> <leader>cc <Plug>NERDCommenterToggle
 xmap <silent> <leader>cc <Plug>NERDCommenterToggle
 " let g:which_key_map.d = {}
-" let g:which_key_map.e = {}
+let g:which_key_map.e = {
+            \ 'name': '+Edit',
+            \ 't': 'Trim Trailing',
+            \ }
+nmap <silent> <leader>et :%s /\s\+$//e<CR>
 let g:which_key_map.f = {
     \ 'name': '+Files/Find',
     \ 't': 'Tree View',
