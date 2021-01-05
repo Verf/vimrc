@@ -35,6 +35,8 @@ Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/vista.vim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'gcmt/wildfire.vim'
+Plug 'vifm/vifm.vim'
+Plug 'voldikss/vim-floaterm'
 Plug 'joshdick/onedark.vim'
 call plug#end()
 
@@ -157,8 +159,17 @@ noremap B B
 noremap P N
 noremap M M
 
-nmap / <Plug>(easymotion-sn)
-omap / <Plug>(easymotion-tn)
+
+nnoremap / <Plug>(easymotion-sn)
+onoremap / <Plug>(easymotion-tn)
+tnoremap <Esc> <C-\><C-n>
+
+noremap <silent> <C-`> :FloatermToggle<CR>
+tnoremap <silent> <C-`> <C-\><C-n>:FloatermToggle<CR>
+tnoremap <silent> <C-t> <C-\><C-n>:FloatermNew<CR>
+tnoremap <silent> <C-q> <C-\><C-n>:FloatermKill<CR>
+tnoremap <silent> <C-n> <C-\><C-n>:FloatermNext<CR>
+tnoremap <silent> <C-p> <C-\><C-n>:FloatermPrev<CR>
 
 " vim-which-key
 call which_key#register('<Space>', "g:which_key_map")
@@ -169,6 +180,8 @@ let g:which_key_map =  {}
 let g:which_key_map.Space = 'Goto Char'
 nmap <silent> <leader><leader> <Plug>(easymotion-overwin-f2)
 nmap <silent> <leader>= <Plug>(wildfire-fuel)
+vmap <silent> <leader>= <Plug>(wildfire-fuel)
+nmap <silent> <leader>- <Plug>(wildfire-water)
 vmap <silent> <leader>- <Plug>(wildfire-water)
 let g:which_key_map.1 = 'which_key_ignore'
 let g:which_key_map.2 = 'which_key_ignore'
@@ -248,22 +261,28 @@ xmap <silent> <leader>cc <Plug>NERDCommenterToggle
 let g:which_key_map.e = {
             \ 'name': '+Edit',
             \ 't': 'Trim Trailing',
+            \ 'r': 'Remove Null Line',
+            \ 'j': 'Join Two Blocks',
             \ }
-nmap <silent> <leader>et :%s /\s\+$//e<CR>
+nmap <silent> <leader>et :%s/\s\+$//e<CR>
+nmap <silent> <leader>er :%d/^$/g<CR>
+nmap <silent> <leader>ej :1,g/^/''+m.|-j!<CR>
 let g:which_key_map.f = {
-    \ 'name': '+Files/Find',
-    \ 't': 'Tree View',
-    \ 'd': 'Diagnostics',
-    \ 'f': 'File Search',
-    \ 'a': 'File Search All',
-    \ 'h': 'File History',
-    \ 'w': 'Find Word',
-    \ 'p': 'Find at Ponit',
-    \ }
+            \ 'name': '+Files/Find',
+            \ 't': 'Tree View',
+            \ 'd': 'Diagnostics',
+            \ 'f': 'File Search',
+            \ 'a': 'File Search All',
+            \ 'h': 'File History',
+            \ 'm': 'File Manager',
+            \ 'w': 'Find Word',
+            \ 'p': 'Find at Ponit',
+            \ }
 nmap <silent> <leader>ft :Defx<CR>
 nmap <silent> <leader>fd :CocList diagnostics<CR>
 nmap <silent> <leader>fa :LeaderfFile $HOME<CR>
 nmap <silent> <leader>fh :<C-R>=printf("Leaderf mru %s", "")<CR><CR>
+nmap <silent> <leader>fm :Vifm<CR>
 nmap <silent> <leader>fw :Leaderf rg -e
 nmap <silent> <leader>fp :<C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
 let g:which_key_map.g = {
@@ -599,3 +618,9 @@ let g:mundo_mappings = {
 
 " indentLine
 let g:indentLine_setConceal = 0
+let g:indentLine_bufTypeExclude = ['help', 'terminal', 'floaterm']
+
+" floaterm
+let g:floaterm_shell = 'powershell'
+let g:floaterm_rootmarkers = ['.project', '.git', '.gitignore', 'pom.xml']
+let g:floaterm_autoclose = 1
