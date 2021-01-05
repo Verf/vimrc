@@ -262,11 +262,9 @@ let g:which_key_map.e = {
             \ 'name': '+Edit',
             \ 't': 'Trim Trailing',
             \ 'r': 'Remove Null Line',
-            \ 'j': 'Join Two Blocks',
             \ }
 nmap <silent> <leader>et :%s/\s\+$//e<CR>
 nmap <silent> <leader>er :%d/^$/g<CR>
-nmap <silent> <leader>ej :1,g/^/''+m.|-j!<CR>
 let g:which_key_map.f = {
             \ 'name': '+Files/Find',
             \ 't': 'Tree View',
