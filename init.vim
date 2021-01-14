@@ -35,6 +35,7 @@ Plug 'Yggdroot/indentLine'
 Plug 'liuchengxu/vista.vim'
 Plug 'simnalamburt/vim-mundo'
 Plug 'gcmt/wildfire.vim'
+Plug 'farmergreg/vim-lastplace'
 Plug 'vifm/vifm.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'joshdick/onedark.vim'
@@ -160,8 +161,8 @@ noremap P N
 noremap M M
 
 
-nnoremap / <Plug>(easymotion-sn)
-onoremap / <Plug>(easymotion-tn)
+nmap / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
 tnoremap <Esc> <C-\><C-n>
 
 noremap <silent> <C-`> :FloatermToggle<CR>
