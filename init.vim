@@ -28,7 +28,6 @@ Plug 'voldikss/vim-floaterm'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'} 
 Plug 'KeitaNakamura/neodark.vim'
 Plug 'mhartington/oceanic-next'
 Plug 'sainnhe/sonokai'
@@ -455,23 +454,6 @@ let g:floaterm_autoclose = 1
 " lua plugin
 " ===========
 lua <<EOF
-require 'nvim-treesitter.configs'.setup {
-  ensure_installed = {"python", "java", "bash", "lua", "json"},
-  highlight = {
-    enable = true,
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      node_incremental = "<leader>=",
-      node_decremental = "<leader>-",
-    },
-  },
-  indent = {
-    enable = true
-  },
-}
-
 require'nvim-web-devicons'.setup {
  default = true;
 }
