@@ -28,12 +28,10 @@ Plug 'voldikss/vim-floaterm'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'KeitaNakamura/neodark.vim'
-Plug 'mhartington/oceanic-next'
-Plug 'sainnhe/sonokai'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
+Plug 'lifepillar/vim-solarized8'
 call plug#end()
 
 " ==========
@@ -79,9 +77,7 @@ set signcolumn=yes                " always show signcolumns
 set shortmess+=c                  " don't give ins-completion-menu messages
 
 " UI
-let g:oceanic_next_terminal_bold = 1
-let g:oceanic_next_terminal_italic = 1
-colorscheme OceanicNext                                    " set colorscheme
+colorscheme solarized8                                     " set colorscheme
 set termguicolors                                          " true color support in terminal
 set cursorline                                             " highlight current line
 set showmatch                                              " highlight matching parenthesis
@@ -159,7 +155,7 @@ noremap M M
 
 nmap / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-tnoremap <Esc> <C-\><C-n>
+tnoremap <C-o> <C-\><C-n>
 
 noremap <silent> <C-`> :FloatermToggle<CR>
 tnoremap <silent> <C-`> <C-\><C-n>:FloatermToggle<CR>
@@ -211,12 +207,27 @@ nmap <silent> <leader>adi <Plug>VimwikiDiaryIndex
 nmap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
 nmap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
 nmap <silent> <leader>adt <Plug>VimwikiMakeTomorrowDiaryNote
-" let g:which_key_map.b = {}
+let g:which_key_map.b = {
+            \ 'name': '+Buffer',
+            \ 'b': 'Buffers',
+            \ }
+nnoremap <leader>bb <CMD>lua require('telescope.builtin').buffers()<CR>
+
 " let g:which_key_map.c = {}
 " let g:which_key_map.d = {}
 " let g:which_key_map.e = {}
-" let g:which_key_map.f = {}
-" let g:which_key_map.g = {}
+let g:which_key_map.f = {
+            \ 'name': '+Find',
+            \ 'f': 'Find File',
+            \ 'g': 'Find Word',
+            \ 'h': 'Find History File',
+            \ 't': 'Find Tags',
+            \ }
+nnoremap <leader>ff <CMD>lua require('telescope.builtin').find_files()<CR>
+nnoremap <leader>fw <CMD>lua require('telescope.builtin').live_grep()<CR>
+nnoremap <leader>fh <CMD>lua require('telescope.builtin').oldfiles()<CR>
+nnoremap <leader>ft <CMD>lua require('telescope.builtin').tags()<CR>
+let g:which_key_map.g = {}
 " let g:which_key_map.h = {}
 " let g:which_key_map.i = {}
 " let g:which_key_map.j = {}
@@ -238,14 +249,8 @@ nmap <silent> <leader>qw :qw<CR>
 nmap <silent> <leader>qa :qa<CR>
 nmap <silent> <leader>qx :qa!<CR>
 " let g:which_key_map.r = {}
-nmap <leader>rn <Plug>(coc-rename)
 " let g:which_key_map.s = {}
-let g:which_key_map.t = {
-            \ 'name': '+Tags',
-            \ 't': 'View Tags',
-            \ 'f': 'Find Tags',
-            \ 'a': 'Find All Tags',
-            \ }
+" let g:which_key_map.t = {
 let g:which_key_map.u = {
             \ 'name': 'Undo Tree',
             \ }
@@ -303,7 +308,7 @@ endif
 " lightline
 let g:lightline#bufferline#show_number = 2
 let g:lightline = {
-            \ 'colorscheme': 'jellybeans',
+            \ 'colorscheme': 'solarized dark',
             \ 'active': {
             \     'left': [ [ 'mode', 'paste' ],
             \               [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ],
@@ -369,29 +374,6 @@ let g:NERDSpaceDelims = 1
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
 
-" leaderF
-let g:Lf_ShortcutF = "<leader>ff"
-let g:Lf_ShortcutB = "<leader>bb"
-let g:Lf_HideHelp = 1
-let g:Lf_WindowPosition = 'popup'
-let g:Lf_IgnoreCurrentBufferName = 1
-let g:Lf_WindowHeight = 0.30
-let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '更纱黑体 Mono SC Nerd' }
-let g:Lf_StlColorscheme = 'one'
-let g:Lf_PopupColorscheme = 'one'
-let g:Lf_DefaultExternalTool = 'rg'
-let g:Lf_RootMarkers = ['.git', '.project', 'pom.xml']
-let g:Lf_WildIgnore = {
-            \ 'dir': ['.git', '.vscode', '.cache'],
-            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
-            \ }
-let g:Lf_CommandMap = {
-            \ '<C-j>': ['<C-n>'],
-            \ '<C-k>': ['<C-i>'],
-            \ '<C-]>': ['<C-->'],
-            \ '<C-x>': ['<C-|>'],
-            \ }
-
 " vista
 let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista_stay_on_open = 0
@@ -449,6 +431,8 @@ let g:mundo_mappings = {
 let g:floaterm_shell = 'powershell'
 let g:floaterm_rootmarkers = ['.project', '.git', '.gitignore', 'pom.xml']
 let g:floaterm_autoclose = 1
+
+" telescope
 
 " ===========
 " lua plugin
