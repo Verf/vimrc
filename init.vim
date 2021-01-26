@@ -15,20 +15,25 @@ else
 endif
 Plug 'liuchengxu/vim-which-key'
 Plug 'easymotion/vim-easymotion'
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-Plug 'vimwiki/vimwiki'
+Plug 'mg979/vim-visual-multi'
+Plug 'plasticboy/vim-markdown'
 Plug 'jiangmiao/auto-pairs'
 Plug '907th/vim-auto-save'
 Plug 'Verf/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'simnalamburt/vim-mundo'
 Plug 'farmergreg/vim-lastplace'
-Plug 'neovim/nvim-lspconfig'
 Plug 'voldikss/vim-floaterm'
+Plug 'neovim/nvim-lspconfig'
+Plug 'norcalli/snippets.nvim'
+Plug 'glepnir/lspsaga.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-project.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'akinsho/nvim-bufferline.lua'
+Plug 'airblade/vim-rooter'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'lifepillar/vim-solarized8'
@@ -131,6 +136,7 @@ noremap W W
 noremap D E
 noremap F R
 noremap K T
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 noremap J Y
 noremap U U
 noremap R I
@@ -153,16 +159,27 @@ noremap B B
 noremap P N
 noremap M M
 
+
+" for easymotion
 nmap / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-tnoremap <C-o> <C-\><C-n>
 
+" for terminal
+tnoremap <C-o> <C-\><C-n>
 noremap <silent> <C-`> :FloatermToggle<CR>
 tnoremap <silent> <C-`> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <silent> <C-t> <C-\><C-n>:FloatermNew<CR>
 tnoremap <silent> <C-q> <C-\><C-n>:FloatermKill<CR>
 tnoremap <silent> <C-n> <C-\><C-n>:FloatermNext<CR>
 tnoremap <silent> <C-p> <C-\><C-n>:FloatermPrev<CR>
+
+" for lsp diagnostic
+nnoremap <silent> [e <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
+nnoremap <silent> ]e <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
+
+" for snippets
+inoremap <c-e> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
+inoremap <c-a> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
 " vim-which-key
 call which_key#register('<Space>', "g:which_key_map")
@@ -180,38 +197,25 @@ let g:which_key_map.7 = 'which_key_ignore'
 let g:which_key_map.8 = 'which_key_ignore'
 let g:which_key_map.9 = 'which_key_ignore'
 let g:which_key_map.0 = 'which_key_ignore'
+nnoremap <leader>1 :lua require"bufferline".go_to_buffer(1)<CR>
+nnoremap <leader>2 :lua require"bufferline".go_to_buffer(2)<CR>
+nnoremap <leader>3 :lua require"bufferline".go_to_buffer(3)<CR>
+nnoremap <leader>4 :lua require"bufferline".go_to_buffer(4)<CR>
+nnoremap <leader>5 :lua require"bufferline".go_to_buffer(5)<CR>
 let g:which_key_map.a = {
             \ 'name': '+Application',
-            \ 'w': {
-            \     'name': '+Wiki',
-            \     'i': 'Wiki Index',
-            \     'n': 'Wiki New',
-            \     'd': 'Wiki Delete',
-            \     'r': 'Wiki Rename',
-            \     'h': 'Wiki2HTML'
-            \     },
-            \ 'd': {
-            \     'name': '+Diary',
-            \     'i': 'Diary Index',
-            \     'd': 'Make Today',
-            \     'y': 'Make Yesterday',
-            \     't': 'Make Tomorrow',
-            \   },
+            \ 'w': 'Wiki',
+            \ 'a': 'Action'
             \ }
-nmap <silent> <leader>awi <Plug>VimwikiIndex
-nmap <silent> <leader>awn <Plug>VimwikiGoto
-nmap <silent> <leader>awd <Plug>VimwikiDeleteFile
-nmap <silent> <leader>awr <Plug>VimwikiRenameFile
-nmap <silent> <leader>awh <Plug>Vimwiki2HTML
-nmap <silent> <leader>adi <Plug>VimwikiDiaryIndex
-nmap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
-nmap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
-nmap <silent> <leader>adt <Plug>VimwikiMakeTomorrowDiaryNote
+nnoremap <silent> <leader>aw :e <CR>
+nnoremap <silent> <leader>aa <CMD>lua require('lspsaga.codeaction').code_action()<CR>
 let g:which_key_map.b = {
             \ 'name': '+Buffer',
-            \ 'b': 'Buffers',
+            \ 'f': 'Find Buffers',
+            \ 'b': 'Switch Buffers',
             \ }
-nnoremap <leader>bb <CMD>lua require('telescope.builtin').buffers()<CR>
+nnoremap <leader>bf <CMD>lua require('telescope.builtin').buffers()<CR>
+nnoremap <silent> <leader>bb :BufferLinePick<CR>
 
 " let g:which_key_map.c = {}
 " let g:which_key_map.d = {}
@@ -222,11 +226,15 @@ let g:which_key_map.f = {
             \ 'g': 'Find Word',
             \ 'h': 'Find History File',
             \ 't': 'Find Tags',
+            \ 'l': 'Find Lsp Provider',
+            \ 'p': 'Find Project',
             \ }
-nnoremap <leader>ff <CMD>lua require('telescope.builtin').find_files()<CR>
-nnoremap <leader>fw <CMD>lua require('telescope.builtin').live_grep()<CR>
-nnoremap <leader>fh <CMD>lua require('telescope.builtin').oldfiles()<CR>
-nnoremap <leader>ft <CMD>lua require('telescope.builtin').tags()<CR>
+nnoremap <silent> <leader>ff <CMD>lua require('telescope.builtin').find_files()<CR>
+nnoremap <silent> <leader>fw <CMD>lua require('telescope.builtin').live_grep()<CR>
+nnoremap <silent> <leader>fh <CMD>lua require('telescope.builtin').oldfiles()<CR>
+nnoremap <silent> <leader>ft <CMD>lua require('telescope.builtin').tags()<CR>
+nnoremap <silent> <leader>fl <CMD>lua require'lspsaga.provider'.lsp_finder()<CR>
+nnoremap <silent> <leader>fp <CMD>lua require'telescope'.extensions.project.project()<CR>
 " let g:which_key_map.g = {}
 " let g:which_key_map.h = {}
 " let g:which_key_map.i = {}
@@ -251,9 +259,7 @@ nmap <silent> <leader>qx :qa!<CR>
 " let g:which_key_map.r = {}
 " let g:which_key_map.s = {}
 " let g:which_key_map.t = {
-let g:which_key_map.u = {
-            \ 'name': 'Undo Tree',
-            \ }
+let g:which_key_map.u = ' Undo Tree'
 nmap <silent> <leader>u :MundoToggle<CR>
 let g:which_key_map.v = {
             \ 'name': '+Vimrc',
@@ -325,24 +331,6 @@ let g:lightline = {
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
 
-" vimwiki
-let g:vimwiki_list = [{'path': '~/Sync/Wiki'}]
-let g:vimwiki_global_ext=0
-let g:vimwiki_key_mappings = {
-            \ 'global': 0,
-            \ 'lists': 0,
-            \ 'links': 0,
-            \ 'html': 0,
-            \ 'mouse': 0,
-            \ }
-augroup vimwiki-mappings
-    au!
-    au filetype vimwiki nmap <C-CR> <Plug>VimwikiFollowLink
-    au filetype vimwiki nmap <Backspace> <Plug>VimwikiGoBackLink
-    au filetype vimwiki nmap <Tab> <Plug>VimwikiNextLink
-    au filetype vimwiki nmap <S-Tab> <Plug>VimwikiPrevLink
-augroup END
-
 " vim-easy-align
 let g:easy_align_delimiters = {
             \ '>': { 'pattern': '>>\|=>\|>' },
@@ -367,19 +355,6 @@ let g:easy_align_delimiters = {
             \     'left_margin':  0,
             \     'right_margin': 0
             \   }
-            \ }
-
-" nerdcommenter
-let g:NERDSpaceDelims = 1
-let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
-
-" vista
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-let g:vista_stay_on_open = 0
-let g:vista_executive_for = {
-            \ 'vimwiki': 'markdown',
-            \ 'pandoc': 'markdown',
             \ }
 
 " vim-visual-multi
@@ -432,14 +407,47 @@ let g:floaterm_shell = 'powershell'
 let g:floaterm_rootmarkers = ['.project', '.git', '.gitignore', 'pom.xml']
 let g:floaterm_autoclose = 1
 
-" telescope
+" vim-markdown
+map <Plug> <Plug>Markdown_MoveToParentHeader
+map <C-Enter> <Plug>Markdown_MoveToParentHeader
+let g:vim_markdown_folding_disabled = 1
+
+" vim-rooter
+let g:rooter_silent_chdir = 1
+let g:rooter_patterns = ['.git', '.project', 'pom.xml']
 
 " ===========
 " lua plugin
 " ===========
 lua <<EOF
 require'nvim-web-devicons'.setup {
- default = true;
+  default = true;
+}
+
+require'bufferline'.setup{
+  options = {
+    view = "multiwindow",
+    numbers = "none",
+    always_show_bufferline = true,
+    buffer_close_icon= '',
+    modified_icon = '●',
+    close_icon = '',
+    left_trunc_marker = '',
+    right_trunc_marker = '',
+    max_name_length = 18,
+    max_prefix_length = 15,
+    tab_size = 18,
+    diagnostics = "nvim_lsp",
+    diagnostics_indicator = function(count, level)
+      return "("..count..")"
+    end,
+    show_buffer_close_icons = false,
+    persist_buffer_sort = true,
+    separator_style = "thin",
+    enforce_regular_tabs = false,
+    always_show_bufferline = true,
+    sort_by = 'extension',
+  }
 }
 
 local nvim_lsp = require('lspconfig')
@@ -451,20 +459,17 @@ local on_attach = function(client, bufnr)
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<leader>gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
   buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 
   -- Set some keybinds conditional on server capabilities
   if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<space>fm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    buf_set_keymap("n", "<leader>rm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<space>fm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    buf_set_keymap("n", "<leader>rm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
   end
 
   -- Set autocommands conditional on server_capabilities
@@ -482,10 +487,29 @@ local on_attach = function(client, bufnr)
   end
 end
 
--- Use a loop to conveniently both setup defined servers 
--- and map buffer local keybindings when the language server attaches
-local servers = { "pyright", "tsserver" }
+-- loop to setup
+local servers = { "pyright", }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { on_attach = on_attach }
+  nvim_lsp[lsp].setup { capabilities = capabilities, on_attach = on_attach }
 end
+
+-- lsp ui
+require'lspsaga'.init_lsp_saga()
+
+-- telescope
+require'telescope'.load_extension('project')
+
+-- snippets
+require'snippets'.use_suggested_mappings()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true;
+
+require'snippets'.snippets = {
+python = {
+["utf"] = [[
+# -*- coding: utf-8 -*-
+$0
+]]
+}
+}
 EOF
