@@ -25,11 +25,15 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'farmergreg/vim-lastplace'
 Plug 'voldikss/vim-floaterm'
 Plug 'neovim/nvim-lspconfig'
+Plug 'norcalli/snippets.nvim'
+Plug 'glepnir/lspsaga.nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-project.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/nvim-bufferline.lua'
+Plug 'airblade/vim-rooter'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'lifepillar/vim-solarized8'
@@ -132,6 +136,7 @@ noremap W W
 noremap D E
 noremap F R
 noremap K T
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 noremap J Y
 noremap U U
 noremap R I
@@ -154,16 +159,27 @@ noremap B B
 noremap P N
 noremap M M
 
+
+" for easymotion
 nmap / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-tnoremap <C-o> <C-\><C-n>
 
+" for terminal
+tnoremap <C-o> <C-\><C-n>
 noremap <silent> <C-`> :FloatermToggle<CR>
 tnoremap <silent> <C-`> <C-\><C-n>:FloatermToggle<CR>
 tnoremap <silent> <C-t> <C-\><C-n>:FloatermNew<CR>
 tnoremap <silent> <C-q> <C-\><C-n>:FloatermKill<CR>
 tnoremap <silent> <C-n> <C-\><C-n>:FloatermNext<CR>
 tnoremap <silent> <C-p> <C-\><C-n>:FloatermPrev<CR>
+
+" for lsp diagnostic
+nnoremap <silent> [e <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_prev()<CR>
+nnoremap <silent> ]e <cmd>lua require'lspsaga.diagnostic'.lsp_jump_diagnostic_next()<CR>
+
+" for snippets
+inoremap <c-e> <cmd>lua return require'snippets'.expand_or_advance(1)<CR>
+inoremap <c-a> <cmd>lua return require'snippets'.advance_snippet(-1)<CR>
 
 " vim-which-key
 call which_key#register('<Space>', "g:which_key_map")
@@ -188,12 +204,11 @@ nnoremap <leader>4 :lua require"bufferline".go_to_buffer(4)<CR>
 nnoremap <leader>5 :lua require"bufferline".go_to_buffer(5)<CR>
 let g:which_key_map.a = {
             \ 'name': '+Application',
-            \ 'w': {
-            \     'name': '+Wiki',
-            \     'i': 'Wiki Index',
-            \   },
+            \ 'w': 'Wiki',
+            \ 'a': 'Action'
             \ }
-nmap <silent> <leader>awi :e <CR>
+nnoremap <silent> <leader>aw :e <CR>
+nnoremap <silent> <leader>aa <CMD>lua require('lspsaga.codeaction').code_action()<CR>
 let g:which_key_map.b = {
             \ 'name': '+Buffer',
             \ 'f': 'Find Buffers',
@@ -211,11 +226,15 @@ let g:which_key_map.f = {
             \ 'g': 'Find Word',
             \ 'h': 'Find History File',
             \ 't': 'Find Tags',
+            \ 'l': 'Find Lsp Provider',
+            \ 'p': 'Find Project',
             \ }
-nnoremap <leader>ff <CMD>lua require('telescope.builtin').find_files()<CR>
-nnoremap <leader>fw <CMD>lua require('telescope.builtin').live_grep()<CR>
-nnoremap <leader>fh <CMD>lua require('telescope.builtin').oldfiles()<CR>
-nnoremap <leader>ft <CMD>lua require('telescope.builtin').tags()<CR>
+nnoremap <silent> <leader>ff <CMD>lua require('telescope.builtin').find_files()<CR>
+nnoremap <silent> <leader>fw <CMD>lua require('telescope.builtin').live_grep()<CR>
+nnoremap <silent> <leader>fh <CMD>lua require('telescope.builtin').oldfiles()<CR>
+nnoremap <silent> <leader>ft <CMD>lua require('telescope.builtin').tags()<CR>
+nnoremap <silent> <leader>fl <CMD>lua require'lspsaga.provider'.lsp_finder()<CR>
+nnoremap <silent> <leader>fp <CMD>lua require'telescope'.extensions.project.project()<CR>
 " let g:which_key_map.g = {}
 " let g:which_key_map.h = {}
 " let g:which_key_map.i = {}
@@ -338,19 +357,6 @@ let g:easy_align_delimiters = {
             \   }
             \ }
 
-" nerdcommenter
-let g:NERDSpaceDelims = 1
-let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
-
-" vista
-let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-let g:vista_stay_on_open = 0
-let g:vista_executive_for = {
-            \ 'vimwiki': 'markdown',
-            \ 'pandoc': 'markdown',
-            \ }
-
 " vim-visual-multi
 let g:VM_maps = {}
 let g:VM_maps['Find Under']         = '<C-s>'
@@ -406,6 +412,10 @@ map <Plug> <Plug>Markdown_MoveToParentHeader
 map <C-Enter> <Plug>Markdown_MoveToParentHeader
 let g:vim_markdown_folding_disabled = 1
 
+" vim-rooter
+let g:rooter_silent_chdir = 1
+let g:rooter_patterns = ['.git', '.project', 'pom.xml']
+
 " ===========
 " lua plugin
 " ===========
@@ -417,7 +427,7 @@ require'nvim-web-devicons'.setup {
 require'bufferline'.setup{
   options = {
     view = "multiwindow",
-    numbers = "ordinal",
+    numbers = "none",
     always_show_bufferline = true,
     buffer_close_icon= '',
     modified_icon = '●',
@@ -440,5 +450,66 @@ require'bufferline'.setup{
   }
 }
 
-require'lspconfig'.pyright.setup{}
+local nvim_lsp = require('lspconfig')
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+  buf_set_keymap('n', '<leader>gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+
+  -- Set some keybinds conditional on server capabilities
+  if client.resolved_capabilities.document_formatting then
+    buf_set_keymap("n", "<leader>rm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  elseif client.resolved_capabilities.document_range_formatting then
+    buf_set_keymap("n", "<leader>rm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  end
+
+  -- Set autocommands conditional on server_capabilities
+  if client.resolved_capabilities.document_highlight then
+    vim.api.nvim_exec([[
+      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
+      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
+      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
+      augroup lsp_document_highlight
+        autocmd!
+        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      augroup END
+    ]], false)
+  end
+end
+
+-- loop to setup
+local servers = { "pyright", }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { capabilities = capabilities, on_attach = on_attach }
+end
+
+-- lsp ui
+require'lspsaga'.init_lsp_saga()
+
+-- telescope
+require'telescope'.load_extension('project')
+
+-- snippets
+require'snippets'.use_suggested_mappings()
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true;
+
+require'snippets'.snippets = {
+python = {
+["utf"] = [[
+# -*- coding: utf-8 -*-
+$0
+]]
+}
+}
 EOF
