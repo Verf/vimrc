@@ -15,20 +15,21 @@ else
 endif
 Plug 'liuchengxu/vim-which-key'
 Plug 'easymotion/vim-easymotion'
-Plug 'mg979/vim-visual-multi', {'branch': 'master'}
-Plug 'vimwiki/vimwiki'
+Plug 'mg979/vim-visual-multi'
+Plug 'plasticboy/vim-markdown'
 Plug 'jiangmiao/auto-pairs'
 Plug '907th/vim-auto-save'
 Plug 'Verf/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'simnalamburt/vim-mundo'
 Plug 'farmergreg/vim-lastplace'
-Plug 'neovim/nvim-lspconfig'
 Plug 'voldikss/vim-floaterm'
+Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'akinsho/nvim-bufferline.lua'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'lifepillar/vim-solarized8'
@@ -180,38 +181,26 @@ let g:which_key_map.7 = 'which_key_ignore'
 let g:which_key_map.8 = 'which_key_ignore'
 let g:which_key_map.9 = 'which_key_ignore'
 let g:which_key_map.0 = 'which_key_ignore'
+nnoremap <leader>1 :lua require"bufferline".go_to_buffer(1)<CR>
+nnoremap <leader>2 :lua require"bufferline".go_to_buffer(2)<CR>
+nnoremap <leader>3 :lua require"bufferline".go_to_buffer(3)<CR>
+nnoremap <leader>4 :lua require"bufferline".go_to_buffer(4)<CR>
+nnoremap <leader>5 :lua require"bufferline".go_to_buffer(5)<CR>
 let g:which_key_map.a = {
             \ 'name': '+Application',
             \ 'w': {
             \     'name': '+Wiki',
             \     'i': 'Wiki Index',
-            \     'n': 'Wiki New',
-            \     'd': 'Wiki Delete',
-            \     'r': 'Wiki Rename',
-            \     'h': 'Wiki2HTML'
-            \     },
-            \ 'd': {
-            \     'name': '+Diary',
-            \     'i': 'Diary Index',
-            \     'd': 'Make Today',
-            \     'y': 'Make Yesterday',
-            \     't': 'Make Tomorrow',
             \   },
             \ }
-nmap <silent> <leader>awi <Plug>VimwikiIndex
-nmap <silent> <leader>awn <Plug>VimwikiGoto
-nmap <silent> <leader>awd <Plug>VimwikiDeleteFile
-nmap <silent> <leader>awr <Plug>VimwikiRenameFile
-nmap <silent> <leader>awh <Plug>Vimwiki2HTML
-nmap <silent> <leader>adi <Plug>VimwikiDiaryIndex
-nmap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
-nmap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
-nmap <silent> <leader>adt <Plug>VimwikiMakeTomorrowDiaryNote
+nmap <silent> <leader>awi :e <CR>
 let g:which_key_map.b = {
             \ 'name': '+Buffer',
-            \ 'b': 'Buffers',
+            \ 'f': 'Find Buffers',
+            \ 'b': 'Switch Buffers',
             \ }
-nnoremap <leader>bb <CMD>lua require('telescope.builtin').buffers()<CR>
+nnoremap <leader>bf <CMD>lua require('telescope.builtin').buffers()<CR>
+nnoremap <silent> <leader>bb :BufferLinePick<CR>
 
 " let g:which_key_map.c = {}
 " let g:which_key_map.d = {}
@@ -227,7 +216,7 @@ nnoremap <leader>ff <CMD>lua require('telescope.builtin').find_files()<CR>
 nnoremap <leader>fw <CMD>lua require('telescope.builtin').live_grep()<CR>
 nnoremap <leader>fh <CMD>lua require('telescope.builtin').oldfiles()<CR>
 nnoremap <leader>ft <CMD>lua require('telescope.builtin').tags()<CR>
-let g:which_key_map.g = {}
+" let g:which_key_map.g = {}
 " let g:which_key_map.h = {}
 " let g:which_key_map.i = {}
 " let g:which_key_map.j = {}
@@ -251,9 +240,7 @@ nmap <silent> <leader>qx :qa!<CR>
 " let g:which_key_map.r = {}
 " let g:which_key_map.s = {}
 " let g:which_key_map.t = {
-let g:which_key_map.u = {
-            \ 'name': 'Undo Tree',
-            \ }
+let g:which_key_map.u = ' Undo Tree'
 nmap <silent> <leader>u :MundoToggle<CR>
 let g:which_key_map.v = {
             \ 'name': '+Vimrc',
@@ -308,7 +295,7 @@ endif
 " lightline
 let g:lightline#bufferline#show_number = 2
 let g:lightline = {
-            \ 'colorscheme': 'solarized dark',
+            \ 'colorscheme': 'solarized',
             \ 'active': {
             \     'left': [ [ 'mode', 'paste' ],
             \               [ 'gitbranch', 'cocstatus', 'readonly', 'filename', 'modified' ] ],
@@ -324,24 +311,6 @@ let g:lightline = {
 " easy motion
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
-
-" vimwiki
-let g:vimwiki_list = [{'path': '~/Sync/Wiki'}]
-let g:vimwiki_global_ext=0
-let g:vimwiki_key_mappings = {
-            \ 'global': 0,
-            \ 'lists': 0,
-            \ 'links': 0,
-            \ 'html': 0,
-            \ 'mouse': 0,
-            \ }
-augroup vimwiki-mappings
-    au!
-    au filetype vimwiki nmap <C-CR> <Plug>VimwikiFollowLink
-    au filetype vimwiki nmap <Backspace> <Plug>VimwikiGoBackLink
-    au filetype vimwiki nmap <Tab> <Plug>VimwikiNextLink
-    au filetype vimwiki nmap <S-Tab> <Plug>VimwikiPrevLink
-augroup END
 
 " vim-easy-align
 let g:easy_align_delimiters = {
@@ -432,14 +401,43 @@ let g:floaterm_shell = 'powershell'
 let g:floaterm_rootmarkers = ['.project', '.git', '.gitignore', 'pom.xml']
 let g:floaterm_autoclose = 1
 
-" telescope
+" vim-markdown
+map <Plug> <Plug>Markdown_MoveToParentHeader
+map <C-Enter> <Plug>Markdown_MoveToParentHeader
+let g:vim_markdown_folding_disabled = 1
 
 " ===========
 " lua plugin
 " ===========
 lua <<EOF
 require'nvim-web-devicons'.setup {
- default = true;
+  default = true;
+}
+
+require'bufferline'.setup{
+  options = {
+    view = "multiwindow",
+    numbers = "ordinal",
+    always_show_bufferline = true,
+    buffer_close_icon= '',
+    modified_icon = '●',
+    close_icon = '',
+    left_trunc_marker = '',
+    right_trunc_marker = '',
+    max_name_length = 18,
+    max_prefix_length = 15,
+    tab_size = 18,
+    diagnostics = "nvim_lsp",
+    diagnostics_indicator = function(count, level)
+      return "("..count..")"
+    end,
+    show_buffer_close_icons = false,
+    persist_buffer_sort = true,
+    separator_style = "thin",
+    enforce_regular_tabs = false,
+    always_show_bufferline = true,
+    sort_by = 'extension',
+  }
 }
 
 require'lspconfig'.pyright.setup{}
