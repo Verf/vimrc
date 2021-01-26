@@ -19,7 +19,6 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
 Plug 'ap/vim-buftabline'
-Plug 'vimwiki/vimwiki'
 Plug 'jiangmiao/auto-pairs'
 Plug '907th/vim-auto-save'
 Plug 'Verf/vim-surround'
@@ -39,6 +38,9 @@ Plug 'farmergreg/vim-lastplace'
 Plug 'vifm/vifm.vim'
 Plug 'voldikss/vim-floaterm'
 Plug 'joshdick/onedark.vim'
+Plug 'lifepillar/vim-solarized8'
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 call plug#end()
 
 " ==========
@@ -209,28 +211,9 @@ let g:which_key_map.a = {
             \ 'w': {
             \     'name': '+Wiki',
             \     'i': 'Wiki Index',
-            \     'n': 'Wiki New',
-            \     'd': 'Wiki Delete',
-            \     'r': 'Wiki Rename',
-            \     'h': 'Wiki2HTML'
             \     },
-            \ 'd': {
-            \     'name': '+Diary',
-            \     'i': 'Diary Index',
-            \     'd': 'Make Today',
-            \     'y': 'Make Yesterday',
-            \     't': 'Make Tomorrow',
-            \   },
             \ }
-nmap <silent> <leader>awi <Plug>VimwikiIndex
-nmap <silent> <leader>awn <Plug>VimwikiGoto
-nmap <silent> <leader>awd <Plug>VimwikiDeleteFile
-nmap <silent> <leader>awr <Plug>VimwikiRenameFile
-nmap <silent> <leader>awh <Plug>Vimwiki2HTML
-nmap <silent> <leader>adi <Plug>VimwikiDiaryIndex
-nmap <silent> <leader>add <Plug>VimwikiMakeDiaryNote
-nmap <silent> <leader>ady <Plug>VimwikiMakeYesterdayNote
-nmap <silent> <leader>adt <Plug>VimwikiMakeTomorrowDiaryNote
+nmap <silent> <leader>awi :e ~/Sync/Notes/index.md<CR>
 let g:which_key_map.b = {
             \ 'name': '+Buffers',
             \ 'q': 'Close Buffer',
@@ -416,24 +399,6 @@ let g:lightline = {
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_do_mapping = 0
 
-" vimwiki
-let g:vimwiki_list = [{'path': '~/Sync/Wiki'}]
-let g:vimwiki_global_ext=0
-let g:vimwiki_key_mappings = {
-            \ 'global': 0,
-            \ 'lists': 0,
-            \ 'links': 0,
-            \ 'html': 0,
-            \ 'mouse': 0,
-            \ }
-augroup vimwiki-mappings
-    au!
-    au filetype vimwiki nmap <C-CR> <Plug>VimwikiFollowLink
-    au filetype vimwiki nmap <Backspace> <Plug>VimwikiGoBackLink
-    au filetype vimwiki nmap <Tab> <Plug>VimwikiNextLink
-    au filetype vimwiki nmap <S-Tab> <Plug>VimwikiPrevLink
-augroup END
-
 " coc.nvim
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -449,7 +414,6 @@ inoremap <silent><expr> <TAB>
 let g:coc_snippet_next = '<Tab>'
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
-autocmd FileType vimwiki let b:coc_suggest_disable = 1
 
 " defx
 call defx#custom#option('_', {
@@ -623,3 +587,5 @@ let g:indentLine_bufTypeExclude = ['help', 'terminal', 'floaterm']
 let g:floaterm_shell = 'powershell'
 let g:floaterm_rootmarkers = ['.project', '.git', '.gitignore', 'pom.xml']
 let g:floaterm_autoclose = 1
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
