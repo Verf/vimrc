@@ -25,17 +25,19 @@ Plug 'simnalamburt/vim-mundo'
 Plug 'farmergreg/vim-lastplace'
 Plug 'voldikss/vim-floaterm'
 Plug 'neovim/nvim-lspconfig'
-Plug 'norcalli/snippets.nvim'
-Plug 'glepnir/lspsaga.nvim'
+Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'norcalli/snippets.nvim'
+Plug 'glepnir/lspsaga.nvim'
+Plug 'airblade/vim-rooter'
+Plug 'liuchengxu/vista.vim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-project.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/nvim-bufferline.lua'
-Plug 'airblade/vim-rooter'
-Plug 'itchyny/lightline.vim'
-Plug 'itchyny/vim-gitbranch'
+Plug 'airblade/vim-gitgutter'
+Plug 'glepnir/galaxyline.nvim'
 Plug 'lifepillar/vim-solarized8'
 call plug#end()
 
@@ -159,6 +161,9 @@ noremap B B
 noremap P N
 noremap M M
 
+" for completion
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " for easymotion
 nmap / <Plug>(easymotion-sn)
@@ -416,9 +421,15 @@ let g:vim_markdown_folding_disabled = 1
 let g:rooter_silent_chdir = 1
 let g:rooter_patterns = ['.git', '.project', 'pom.xml']
 
+" completion.nvim
+let g:completion_enable_snippet = 'snippets.nvim'
+imap <tab> <Plug>(completion_smart_tab)
+imap <s-tab> <Plug>(completion_smart_s_tab)
+
 " ===========
 " lua plugin
 " ===========
+lua require('configs.galaxyline')
 lua <<EOF
 require'nvim-web-devicons'.setup {
   default = true;
@@ -490,7 +501,7 @@ end
 -- loop to setup
 local servers = { "pyright", }
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { capabilities = capabilities, on_attach = on_attach }
+  nvim_lsp[lsp].setup { capabilities = capabilities, on_attach = require'completion'.on_attach }
 end
 
 -- lsp ui
