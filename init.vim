@@ -235,7 +235,17 @@ nnoremap <silent> <leader>fh <CMD>lua require('telescope.builtin').oldfiles()<CR
 nnoremap <silent> <leader>ft <CMD>lua require('telescope.builtin').tags()<CR>
 nnoremap <silent> <leader>fl <CMD>lua require'lspsaga.provider'.lsp_finder()<CR>
 nnoremap <silent> <leader>fp <CMD>lua require'telescope'.extensions.project.project()<CR>
-" let g:which_key_map.g = {}
+let g:which_key_map.g = {
+            \ 'name': '+Goto',
+            \ 'd': 'Goto Definition',
+            \ 'i': 'Goto Implementation',
+            \ 't': 'Goto Type_Def',
+            \ 'r': 'Goto References',
+            \ }
+nnoremap <silent> <leader>gd <CMD>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <leader>gi <CMD>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <leader>gt <CMD>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> <leader>gr <CMD>lua vim.lsp.buf.references()<CR>
 " let g:which_key_map.h = {}
 " let g:which_key_map.i = {}
 " let g:which_key_map.j = {}
@@ -256,7 +266,13 @@ nmap <silent> <leader>qq :Bd<CR><CR>
 nmap <silent> <leader>qw :qw<CR>
 nmap <silent> <leader>qa :qa<CR>
 nmap <silent> <leader>qx :qa!<CR>
-" let g:which_key_map.r = {}
+let g:which_key_map.r = {
+            \ 'name': '+Re',
+            \ 'n': 'Rename',
+            \ 'm': 'Reformat',
+            \ }
+nnoremap <silent> <leader>rn <CMD>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <leader>rm <CMD>lua vim.lsp.buf.formatting()<CR>
 " let g:which_key_map.s = {}
 " let g:which_key_map.t = {
 let g:which_key_map.u = ' Undo Tree'
@@ -419,97 +435,8 @@ let g:rooter_patterns = ['.git', '.project', 'pom.xml']
 " ===========
 " lua plugin
 " ===========
-lua <<EOF
-require'nvim-web-devicons'.setup {
-  default = true;
-}
-
-require'bufferline'.setup{
-  options = {
-    view = "multiwindow",
-    numbers = "none",
-    always_show_bufferline = true,
-    buffer_close_icon= '',
-    modified_icon = '●',
-    close_icon = '',
-    left_trunc_marker = '',
-    right_trunc_marker = '',
-    max_name_length = 18,
-    max_prefix_length = 15,
-    tab_size = 18,
-    diagnostics = "nvim_lsp",
-    diagnostics_indicator = function(count, level)
-      return "("..count..")"
-    end,
-    show_buffer_close_icons = false,
-    persist_buffer_sort = true,
-    separator_style = "thin",
-    enforce_regular_tabs = false,
-    always_show_bufferline = true,
-    sort_by = 'extension',
-  }
-}
-
-local nvim_lsp = require('lspconfig')
-local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', '<leader>gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', '<leader>gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<leader>gt', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<leader>gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-
-  -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "<leader>rm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "<leader>rm", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  end
-
-  -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
-      hi LspReferenceWrite cterm=bold ctermbg=red guibg=LightYellow
-      augroup lsp_document_highlight
-        autocmd!
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  end
-end
-
--- loop to setup
-local servers = { "pyright", }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup { capabilities = capabilities, on_attach = on_attach }
-end
-
--- lsp ui
-require'lspsaga'.init_lsp_saga()
-
--- telescope
-require'telescope'.load_extension('project')
-
--- snippets
-require'snippets'.use_suggested_mappings()
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true;
-
-require'snippets'.snippets = {
-python = {
-["utf"] = [[
-# -*- coding: utf-8 -*-
-$0
-]]
-}
-}
-EOF
+lua require('configs.devicons')
+lua require('configs.bufferline')
+lua require('configs.lsp')
+lua require('configs.telescope')
+lua require('configs.snippets')
