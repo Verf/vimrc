@@ -461,7 +461,7 @@ let g:Lf_CommandMap = {
 " ===========
 " lua plugin
 " ===========
-lua require('configs.devicon')
+lua require('configs.devicons')
 lua require('configs.galaxyline')
 lua require('configs.bufferline')
 lua require('configs.lsp')
