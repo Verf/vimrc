@@ -1,4 +1,29 @@
 require'bufferline'.setup{
+<<<<<<< HEAD
+  options = {
+    view = "multiwindow",
+    numbers = "none",
+    always_show_bufferline = true,
+    buffer_close_icon= '',
+    modified_icon = '●',
+    close_icon = '',
+    left_trunc_marker = '',
+    right_trunc_marker = '',
+    max_name_length = 18,
+    max_prefix_length = 15,
+    tab_size = 18,
+    diagnostics = "nvim_lsp",
+    diagnostics_indicator = function(count, level)
+      return "("..count..")"
+    end,
+    show_buffer_close_icons = false,
+    persist_buffer_sort = true,
+    separator_style = "thin",
+    enforce_regular_tabs = false,
+    always_show_bufferline = true,
+    sort_by = 'extension',
+  }
+=======
     options = {
         view = "multiwindow",
         numbers = "none",
@@ -22,4 +47,5 @@ require'bufferline'.setup{
         always_show_bufferline = true,
         sort_by = 'extension',
     }
+>>>>>>> 517958f79bef9ce477868fc014ee169b263c95d9
 }
