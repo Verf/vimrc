@@ -29,14 +29,12 @@ Plug 'farmergreg/vim-lastplace'
 Plug 'voldikss/vim-floaterm'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'SirVer/ultisnips'
+Plug 'Yggdroot/LeaderF'
 Plug 'airblade/vim-rooter'
 Plug 'liuchengxu/vista.vim'
 Plug 'sbdchd/neoformat'
-Plug 'nvim-telescope/telescope.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/nvim-bufferline.lua'
 Plug 'glepnir/galaxyline.nvim'
@@ -214,40 +212,44 @@ let g:which_key_map.a = {
             \ 'w': 'Wiki',
             \ 'a': 'Action'
             \ }
-nnoremap <silent> <leader>aw :e <CR>
-nnoremap <silent> <leader>aa <CMD>lua require('lspsaga.codeaction').code_action()<CR>
+nmap <silent> <leader>aw :e <CR>
+nmap <silent> <leader>aa <CMD>lua require('lspsaga.codeaction').code_action()<CR>
 let g:which_key_map.b = {
             \ 'name': '+Buffer',
             \ 'f': 'Find Buffers',
             \ 'b': 'Switch Buffers',
             \ }
-nnoremap <leader>bf <CMD>lua require('telescope.builtin').buffers()<CR>
-nnoremap <silent> <leader>bb :BufferLinePick<CR>
+let g:Lf_ShortcutB = '<leader>bf'
+nmap <silent> <leader>bb :BufferLinePick<CR>
 " let g:which_key_map.c = {}
 " let g:which_key_map.d = {}
 " let g:which_key_map.e = {}
 let g:which_key_map.f = {
             \ 'name': '+Find',
             \ 'f': 'Find File',
-            \ 'g': 'Find Word',
-            \ 'h': 'Find History File',
+            \ 'a': 'Find All',
             \ 't': 'Find Tags',
+            \ 'p': 'Find Point',
+            \ 'w': 'Find Word',
+            \ 'h': 'Find History',
             \ 'l': 'Find Lsp Provider',
             \ }
-nnoremap <silent> <leader>ff <CMD>lua require('telescope.builtin').find_files({previewer=false})<CR>
-nnoremap <silent> <leader>fw <CMD>lua require('telescope.builtin').live_grep({previewer=false})<CR>
-nnoremap <silent> <leader>fh <CMD>lua require('telescope.builtin').oldfiles({previewer=false})<CR>
-nnoremap <silent> <leader>ft <CMD>lua require('telescope.builtin').tags({previewer=false})<CR>
-nnoremap <silent> <leader>fl <CMD>lua require'lspsaga.provider'.lsp_finder()<CR>
+let g:Lf_ShortcutF = '<leader>ff'
+nmap <silent> <leader>fa :LeaderfFile $HOME<CR>
+nmap <silent> <leader>ft :LeaderfBufTag<CR>
+nmap <silent> <leader>fh :Leaderf mru<CR>
+nmap <silent> <leader>fp :<C-R>=printf("Leaderf rg -e %s ", expand("<cword>"))<CR><CR>
+nmap <silent> <leader>fw :<C-R>=printf("Leaderf rg -e ")<CR>
+nmap <silent> <leader>fl <CMD>lua require'lspsaga.provider'.lsp_finder()<CR>
 let g:which_key_map.g = {
             \ 'name': '+Goto',
             \ 'd': 'Goto Defination',
             \ 'i': 'Goto Implementation',
             \ 'r': 'Goto References',
             \ }
-nnoremap <silent> <leader>gd <CMD>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <leader>gi <CMD>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <leader>gr <CMD>lua vim.lsp.buf.references()<CR>
+nmap <silent> <leader>gd <CMD>lua vim.lsp.buf.definition()<CR>
+nmap <silent> <leader>gi <CMD>lua vim.lsp.buf.implementation()<CR>
+nmap <silent> <leader>gr <CMD>lua vim.lsp.buf.references()<CR>
 " let g:which_key_map.h = {}
 " let g:which_key_map.i = {}
 " let g:which_key_map.j = {}
@@ -273,8 +275,8 @@ let g:which_key_map.r = {
             \ 'n': 'Rename',
             \ 'm': 'Reformat',
             \ }
-nnoremap <silent> <leader>rn <CMD>lua require('lspsaga.rename').rename()<CR>
-nnoremap <silent> <leader>rm <CMD>lua vim.lsp.buf.formatting()<CR>
+nmap <silent> <leader>rn <CMD>lua require('lspsaga.rename').rename()<CR>
+nmap <silent> <leader>rm <CMD>lua vim.lsp.buf.formatting()<CR>
 " let g:which_key_map.s = {}
 " let g:which_key_map.t = {
 let g:which_key_map.u = ' Undo Tree'
@@ -413,8 +415,8 @@ let g:floaterm_weight = 0.8
 let g:floaterm_height = 0.8
 
 " vim-markdown
-map <Plug> <Plug>Markdown_MoveToParentHeader
-map <C-Enter> <Plug>Markdown_MoveToParentHeader
+autocmd FileType markdown map <Plug> <Plug>Markdown_MoveToParentHeader
+autocmd FileType markdown map <C-Enter> <Plug>Markdown_MoveToParentHeader
 let g:vim_markdown_folding_disabled = 1
 
 " vim-rooter
@@ -435,12 +437,32 @@ let g:UltiSnipsJumpBackwardTrigger = "<S-Tab>"
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetStorageDirectoryForUltiSnipsEdit = VIMHOME.'/ultisnips'
 
+" leaderf
+let g:Lf_WindowPosition = 'popup'
+let g:Lf_IgnoreCurrentBufferName = 1
+let g:Lf_WindowHeight = 0.30
+let g:Lf_StlSeparator = { 'left': '', 'right': '', 'font': '更纱黑体 Mono SC Nerd' }
+let g:Lf_StlColorscheme = 'one'
+let g:Lf_PopupColorscheme = 'one'
+let g:Lf_DefaultExternalTool = 'rg'
+let g:Lf_RootMarkers = ['.git', '.project', 'pom.xml']
+let g:Lf_WildIgnore = {
+            \ 'dir': ['.git', '.vscode', '.cache'],
+            \ 'file': ['*.sw?','~$*','*.bak','*.exe','*.o','*.so','*.py[co]']
+            \ }
+let g:Lf_CommandMap = {
+            \ '<C-j>': ['<C-n>'],
+            \ '<C-k>': ['<C-i>'],
+            \ '<C-]>': ['<C-->'],
+            \ '<C-x>': ['<C-|>'],
+            \ }
+
+
 " ===========
 " lua plugin
 " ===========
 lua require('configs.devicon')
 lua require('configs.galaxyline')
 lua require('configs.bufferline')
-lua require('configs.telescope')
 lua require('configs.lsp')
 lua require('configs.completion')
