@@ -438,7 +438,7 @@ let g:UltiSnipsSnippetStorageDirectoryForUltiSnipsEdit = VIMHOME.'/ultisnips'
 " ===========
 " lua plugin
 " ===========
-lua require('configs.devicon')
+lua require('configs.devicons')
 lua require('configs.galaxyline')
 lua require('configs.bufferline')
 lua require('configs.telescope')
