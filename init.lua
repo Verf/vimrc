@@ -1,4 +1,4 @@
---  __      _______ __  __ _____   _____
+--  __      _______ __  __ _____   _____
 --   \ \    / /_   _|  \/  |  __ \ / ____|
 --    \ \  / /  | | | \  / | |__) | |
 --     \ \/ /   | | | |\/| |  _  /| |
@@ -16,6 +16,9 @@ local function opt(scope, key, value)
     scopes[scope][key] = value
     if scope ~= 'o' then scopes['o'][key] = value end
 end
+
+------------ Server --------------
+cmd 'call serverstart(\'\\\\.\\pipe\\nvim-pipe-12345\')'
 
 ----------  Plugin ----------
 cmd 'packadd paq-nvim'
