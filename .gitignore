@@ -2,3 +2,5 @@ rplugin.vim
 .netrwhist
 plugged/
 session/
+Session.vim
+Sessionx.vim
