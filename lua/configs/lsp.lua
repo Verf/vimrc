@@ -24,4 +24,13 @@ for _, lsp in ipairs(servers) do
 end
 
 -- lsp ui
-require'lspsaga'.init_lsp_saga()
+require'lspsaga'.init_lsp_saga {
+    finder_action_keys = {
+        open = '<CR>',
+        vsplit = 'v',
+        split = 's',
+        quit = 'q',
+        scroll_down = '<C-d>',
+        scroll_up = '<C-u>'
+    }
+}
