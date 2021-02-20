@@ -78,7 +78,6 @@ set synmaxcol=200                 " maxium column for search syntax items
 set updatecount=100               " after type this many characters the swap file will be written to disk
 set updatetime=300                " updatetime for CursorHold & CursorHoldI
 set mouse=a                       " enable mouse in all mode
-set clipboard=unnamedplus         " use system clip board
 set signcolumn=yes                " always show signcolumns
 set shortmess+=c                  " don't give ins-completion-menu messages
 set completeopt=menu,menuone,noselect
