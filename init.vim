@@ -21,6 +21,7 @@ Plug 'mg979/vim-visual-multi'
 Plug 'plasticboy/vim-markdown'
 Plug 'cohama/lexima.vim'
 Plug '907th/vim-auto-save'
+Plug 'tpope/vim-repeat'
 Plug 'Verf/vim-surround'
 Plug 'junegunn/vim-easy-align'
 Plug 'b3nj5m1n/kommentary'
@@ -37,7 +38,7 @@ Plug 'liuchengxu/vista.vim'
 Plug 'sbdchd/neoformat'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/nvim-bufferline.lua'
-Plug 'glepnir/galaxyline.nvim'
+Plug 'hoob3rt/lualine.nvim'
 Plug 'lifepillar/vim-solarized8'
 Plug 'joshdick/onedark.vim'
 Plug 'lifepillar/vim-solarized8'
@@ -169,7 +170,6 @@ noremap P N
 " for easymotion
 nmap / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
-tnoremap <Esc> <C-\><C-n>
 
 " for terminal
 tnoremap <C-o> <C-\><C-n>
@@ -258,8 +258,11 @@ let g:which_key_map.g = {
             \ }
 nmap <silent> <leader>gd <CMD>lua vim.lsp.buf.definition()<CR>
 nmap <silent> <leader>gi <CMD>lua vim.lsp.buf.implementation()<CR>
-nmap <silent> <leader>gr <CMD>lua vim.lsp.buf.references()<CR>
-" let g:which_key_map.h = {}
+nmap <silent> <leader>gr <CMD>lua require'lspsaga.provider'.lsp_finder()<CR>
+let g:which_key_map.h = {
+            \ 'name': 'Help'
+            \ }
+nmap <silent> <leader>h <CMD>lua require('lspsaga.hover').render_hover_doc()<CR>
 " let g:which_key_map.i = {}
 " let g:which_key_map.j = {}
 " let g:which_key_map.k = {}
@@ -417,7 +420,7 @@ let g:mundo_mappings = {
           \ }
 
 " floaterm
-let g:floaterm_shell = 'powershell'
+let g:floaterm_shell = 'pwsh -nologo'
 let g:floaterm_rootmarkers = ['.project', '.git', '.gitignore', 'pom.xml']
 let g:floaterm_autoclose = 1
 let g:floaterm_weight = 0.8
@@ -471,7 +474,7 @@ let g:Lf_CommandMap = {
 " lua plugin
 " ===========
 lua require('configs.devicons')
-lua require('configs.galaxyline')
 lua require('configs.bufferline')
+lua require('configs.lualine')
 lua require('configs.lsp')
 lua require('configs.completion')
