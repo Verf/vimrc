@@ -18,7 +18,7 @@ local on_attach = function(client, bufnr)
 end
 
 -- loop to setup
-local servers = { "pyright", }
+local servers = { "pyright", "sumneko_lua"}
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup { on_attach = on_attach }
 end

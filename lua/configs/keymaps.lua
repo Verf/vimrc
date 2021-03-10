@@ -38,16 +38,16 @@ map('', 'O', 'L')
 map('', 'P', 'N')
 
 -- Easymotion
-map('n', 's', '<Plug>(easymotion-s2)')
+map('n', 's', '<Plug>(easymotion-s2)', {noremap=false})
 map('n', '/', '<Plug>(easymotion-sn)', {noremap=false})
 map('o', '/', '<Plug>(easymotion-tn)', {noremap=false})
-map('n', 'gl', '<Plug>(easymotion-overwin-line)')
-map('n', 'gw', '<Plug>(easymotion-bd-w)')
-map('n', 'ge', '<Plug>(easymotion-bd-e)')
-map('n', 'gf', '<Plug>(easymotion-lineforward)')
-map('n', 'gb', '<Plug>(easymotion-linebackward)')
-map('n', 'gn', '<Plug>(easymotion-j)')
-map('n', 'gi', '<Plug>(easymotion-k)')
+map('n', 'gl', '<Plug>(easymotion-overwin-line)', {noremap=false})
+map('n', 'gw', '<Plug>(easymotion-bd-w)', {noremap=false})
+map('n', 'ge', '<Plug>(easymotion-bd-e)', {noremap=false})
+map('n', 'gf', '<Plug>(easymotion-lineforward)', {noremap=false})
+map('n', 'gb', '<Plug>(easymotion-linebackward)', {noremap=false})
+map('n', 'gn', '<Plug>(easymotion-j)', {noremap=false})
+map('n', 'gi', '<Plug>(easymotion-k)', {noremap=false})
 
 -- Easy-Align
 map('x', 'ga', '<Plug>(EasyAlign)', {noremap=false})
@@ -71,7 +71,7 @@ map('n', '<leader><leader>', ':BufferLinePick<CR>')
 map('n', '<leader><Tab>', ':e#<CR>')
 
 -- Application
-map('n', '<leader>aw', ':e <CR>')
+map('n', '<leader>aw', ':e ~/Documents/FALT_WIKI/README.md<CR>')
 map('n', '<leader>aa', '<CMD>lua require(\'lspsaga.codeaction\').code_action()<CR>')
 
 -- Find and Search
@@ -81,6 +81,12 @@ map('n', '<leader>fh', ':Leaderf mru<CR>')
 map('n', '<leader>fp', ':<C-R>=printf(\'Leaderf rg -e %s \', expand(\'<cword>\'))<CR><CR>')
 map('n', '<leader>fw', ':<C-R>=printf(\'Leaderf rg -e \')<CR>')
 map('n', '<leader>fl', '<CMD>lua require\'lspsaga.provider\'.lsp_finder()<CR>')
+
+-- Paste
+map('n', '<leader>pp', '"+p')
+map('n', '<leader>pc', '":p')
+map('n', '<leader>ps', '"/p')
+map('n', '<leader>py', '"0p')
 
 -- Goto
 map('n', '<leader>gd', '<CMD>lua vim.lsp.buf.definition()<CR>')

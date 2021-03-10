@@ -35,6 +35,7 @@ paq 'neovim/nvim-lspconfig'
 -- Edit Enchance
 paq 'SirVer/ultisnips'
 paq 'sbdchd/neoformat'
+paq 'tpope/vim-repeat'
 paq 'cohama/lexima.vim'
 paq 'Verf/vim-surround'
 paq 'b3nj5m1n/kommentary'
@@ -42,7 +43,7 @@ paq 'mg979/vim-visual-multi'
 paq 'junegunn/vim-easy-align'
 -- UI Plugin
 paq 'joshdick/onedark.vim'
-paq 'glepnir/galaxyline.nvim'
+paq 'hoob3rt/lualine.nvim'
 paq 'akinsho/nvim-bufferline.lua'
 paq 'kyazdani42/nvim-web-devicons'
 -- Others
@@ -103,7 +104,7 @@ require('configs.keymaps')
 
 ---------- Lua Plugins --------------
 require('configs.devicons')
-require('configs.galaxyline')
+require('configs.lualine')
 require('configs.bufferline')
 require('configs.lsp')
 require('configs.completion')
@@ -115,7 +116,7 @@ g['EasyMotion_do_mapping'] = 0
 
 -- easy-align
 g['easy_align_delimiters'] = {
-    ['-'] = { pattern = '--\\+',  delimiter_align = 'l', ignore_groups = {'!Comment'}},
+    ['d'] = { pattern = '--',  delimiter_align = 'l', ignore_groups = {'!Comment'}},
 }
 
 -- vim-visual-multi
