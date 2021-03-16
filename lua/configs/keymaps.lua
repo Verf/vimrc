@@ -75,7 +75,7 @@ map('n', '<leader>aw', ':e ~/Documents/FALT_WIKI/README.md<CR>')
 map('n', '<leader>aa', '<CMD>lua require(\'lspsaga.codeaction\').code_action()<CR>')
 
 -- Edit
-map('n', '<leader>et', ':%s/\s\+$//e<CR>')
+map('n', '<leader>et', ':%s/\\s\\+$//e<CR>')
 map('n', '<leader>en', ':%d/^$/g<CR>')
 
 -- Find and Search
@@ -87,10 +87,10 @@ map('n', '<leader>fw', ':<C-R>=printf(\'Leaderf rg -e \')<CR>')
 map('n', '<leader>fl', '<CMD>lua require\'lspsaga.provider\'.lsp_finder()<CR>')
 
 -- Paste
-map('n', '<leader>pp', '"+p')
-map('n', '<leader>pc', '":p')
-map('n', '<leader>ps', '"/p')
-map('n', '<leader>py', '"0p')
+map('n', '<leader>pp', '"+h')
+map('n', '<leader>pc', '":h')
+map('n', '<leader>ps', '"/h')
+map('n', '<leader>py', '"0h')
 
 -- Goto
 map('n', '<leader>gd', '<CMD>lua vim.lsp.buf.definition()<CR>')
