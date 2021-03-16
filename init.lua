@@ -54,6 +54,7 @@ paq 'voldikss/vim-floaterm'
 paq 'simnalamburt/vim-mundo'
 paq 'farmergreg/vim-lastplace'
 paq {'nvim-treesitter/nvim-treesitter', run='TSUpdate'}
+paq 'nvim-treesitter/nvim-treesitter-textobjects'
 -- Language
 paq 'plasticboy/vim-markdown'
 
