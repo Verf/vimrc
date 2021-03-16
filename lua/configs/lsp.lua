@@ -24,4 +24,29 @@ for _, lsp in ipairs(servers) do
 end
 
 -- lsp ui
-require'lspsaga'.init_lsp_saga()
+require('lspsaga').init_lsp_saga()
+require('lspkind').init({
+    with_text = true,
+    symbol_map = {
+        Text = '',
+        Method = 'ƒ',
+        Function = '',
+        Constructor = '',
+        Variable = '',
+        Class = '',
+        Interface = 'ﰮ',
+        Module = '',
+        Property = '',
+        Unit = '',
+        Value = '',
+        Enum = '了',
+        Keyword = '',
+        Snippet = '﬌',
+        Color = '',
+        File = '',
+        Folder = '',
+        EnumMember = '',
+        Constant = '',
+        Struct = ''
+    },
+})

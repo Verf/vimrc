@@ -31,6 +31,7 @@ paq 'easymotion/vim-easymotion'
 -- Completion
 paq 'hrsh7th/nvim-compe'
 paq 'glepnir/lspsaga.nvim'
+paq 'onsails/lspkind-nvim'
 paq 'neovim/nvim-lspconfig'
 -- Edit Enchance
 paq 'SirVer/ultisnips'
@@ -44,6 +45,7 @@ paq 'junegunn/vim-easy-align'
 -- UI Plugin
 paq 'joshdick/onedark.vim'
 paq 'hoob3rt/lualine.nvim'
+paq 'kyazdani42/nvim-tree.lua'
 paq 'akinsho/nvim-bufferline.lua'
 paq 'kyazdani42/nvim-web-devicons'
 -- Others
@@ -108,6 +110,7 @@ require('configs.keymaps')
 require('configs.lsp')
 require('configs.lualine')
 require('configs.devicons')
+require('configs.nvim-tree')
 require('configs.bufferline')
 require('configs.completion')
 require('configs.treesitter')
