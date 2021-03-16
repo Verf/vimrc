@@ -74,6 +74,10 @@ map('n', '<leader><Tab>', ':e#<CR>')
 map('n', '<leader>aw', ':e ~/Documents/FALT_WIKI/README.md<CR>')
 map('n', '<leader>aa', '<CMD>lua require(\'lspsaga.codeaction\').code_action()<CR>')
 
+-- Edit
+map('n', '<leader>et', ':%s/\s\+$//e<CR>')
+map('n', '<leader>en', ':%d/^$/g<CR>')
+
 -- Find and Search
 map('n', '<leader>fa', ':LeaderfFile $HOME<CR>')
 map('n', '<leader>ft', ':LeaderfBufTag<CR>')
