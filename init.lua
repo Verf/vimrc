@@ -55,6 +55,7 @@ paq 'airblade/vim-rooter'
 paq 'voldikss/vim-floaterm'
 paq 'simnalamburt/vim-mundo'
 paq 'farmergreg/vim-lastplace'
+paq {'nvim-treesitter/nvim-treesitter', run='TSUpdate'}
 -- Language
 paq 'plasticboy/vim-markdown'
 
@@ -106,11 +107,12 @@ require('configs.keymaps')
 
 ---------- Lua Plugins --------------
 require('configs.lsp')
-require('configs.completion')
-require('configs.devicons')
 require('configs.lualine')
+require('configs.devicons')
 require('configs.nvim-tree')
 require('configs.bufferline')
+require('configs.completion')
+require('configs.treesitter')
 
 ---------- Vim Plugins --------------
 -- easy motion
@@ -170,8 +172,8 @@ g['mundo_mappings'] = {
 g['floaterm_weight']      = 0.8
 g['floaterm_height']      = 0.8
 g['floaterm_autoclose']   = 1
-g['floaterm_shell']       = 'powershell'
-g['floaterm_rootmarkers'] =  {'.project', '.git', '.gitignore', 'pom.xml', 'setup.py'}
+g['floaterm_shell']       = 'pwsh -nologo'
+g['floaterm_rootmarkers'] =  {'.project', '.git', '.gitignore', 'pom.xml'}
 
 -- vim-markdown
 cmd 'au FileType markdown map <Plug> <Plug>Markdown_MoveToParentHeader'
