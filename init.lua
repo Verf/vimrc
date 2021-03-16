@@ -31,6 +31,7 @@ paq 'easymotion/vim-easymotion'
 -- Completion
 paq 'hrsh7th/nvim-compe'
 paq 'glepnir/lspsaga.nvim'
+paq 'onsails/lspkind-nvim'
 paq 'neovim/nvim-lspconfig'
 -- Edit Enchance
 paq 'SirVer/ultisnips'
@@ -44,6 +45,7 @@ paq 'junegunn/vim-easy-align'
 -- UI Plugin
 paq 'joshdick/onedark.vim'
 paq 'hoob3rt/lualine.nvim'
+paq 'kyazdani42/nvim-tree.lua'
 paq 'akinsho/nvim-bufferline.lua'
 paq 'kyazdani42/nvim-web-devicons'
 -- Others
@@ -103,11 +105,12 @@ g['maplocalleader'] = ','
 require('configs.keymaps')
 
 ---------- Lua Plugins --------------
-require('configs.devicons')
-require('configs.lualine')
-require('configs.bufferline')
 require('configs.lsp')
 require('configs.completion')
+require('configs.devicons')
+require('configs.lualine')
+require('configs.nvim-tree')
+require('configs.bufferline')
 
 ---------- Vim Plugins --------------
 -- easy motion

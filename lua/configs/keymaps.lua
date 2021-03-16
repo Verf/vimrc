@@ -37,6 +37,12 @@ map('', 'I', 'K')
 map('', 'O', 'L')
 map('', 'P', 'N')
 
+-- F fields
+map('n', '<F2>', ':NvimTreeToggle<CR>')
+map('n', '<F3>', ':Vista!!<CR>')
+
+
+
 -- Easymotion
 map('n', 's', '<Plug>(easymotion-s2)', {noremap=false})
 map('n', '/', '<Plug>(easymotion-sn)', {noremap=false})
@@ -108,9 +114,6 @@ map('n','<leader>u', ':MundoToggle<CR>')
 
 -- open vimrc
 map('n', '<leader>vo', ':e $MYVIMRC<CR>')
-
--- Tags
-map('n', '<leader>t', ':Vista!!<CR>')
 
 -- Windows Operate
 map('n', '<leader>wh', '<C-w>s')
