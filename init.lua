@@ -24,10 +24,9 @@ local function map(mode, lhs, rhs, opts)
 end
 
 ------------- Plugin ------------------
-cmd [[packadd packer.nvim]]
 require('packer').startup(function()
     -- packer itself
-    use {'wbthomason/packer.nvim', opt = true}
+    use {'wbthomason/packer.nvim'}
     -- color shceme & indent enchance
     use 'sheerun/vim-polyglot'
     -- colorshceme sonokai
@@ -140,32 +139,31 @@ require('packer').startup(function()
         end
     }
     -- completion
-    use {
-        'hrsh7th/nvim-compe',
+    use {'hrsh7th/nvim-compe',
         config = function()
-            require'compe'.setup {
-                enabled = true;
-                autocomplete = true;
-                debug = false;
-                min_length = 1;
-                preselect = 'enable';
-                throttle_time = 80;
-                source_timeout = 200;
-                incomplete_delay = 400;
-                allow_prefix_unmatch = false;
+            require'compe'.setup{
+                enabled = true,
+                autocomplete = true,
+                debug = false,
+                min_length = 1,
+                preselect = 'enable',
+                throttle_time = 80,
+                source_timeout = 200,
+                incomplete_delay = 400,
+                max_abbr_width = 100,
+                max_kind_width = 100,
+                max_menu_width = 100,
+                documentation = true,
 
                 source = {
-                    path = true;
-                    buffer = true;
-                    calc = true;
-                    vsnip = false;
-                    nvim_lsp = true;
-                    nvim_lua = true;
-                    spell = false;
-                    tags = true;
-                    snippets_nvim = false;
-                    ultisnips = true;
-                };
+                    path = true,
+                    buffer = true,
+                    calc = true,
+                    nvim_lsp = true,
+                    nvim_lua = true,
+                    vsnips = false,
+                    ultisnips = true
+                }
             }
         end
     }
