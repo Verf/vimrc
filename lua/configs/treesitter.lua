@@ -1,5 +1,5 @@
 require'nvim-treesitter.configs'.setup {
-    ensure_installed = {"python", "java", "lua"},
+    ensure_installed = {}, -- {"python", "java", "lua"},
     highlight = {
         enable = true,
     },
@@ -19,8 +19,6 @@ require'nvim-treesitter.configs'.setup {
                 -- Or you can define your own textobjects like this
                 ["iF"] = {
                     python = "(function_definition) @function",
-                    cpp = "(function_definition) @function",
-                    c = "(function_definition) @function",
                     java = "(method_declaration) @function",
                 },
             },

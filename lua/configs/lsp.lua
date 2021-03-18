@@ -18,35 +18,11 @@ local on_attach = function(client, bufnr)
 end
 
 -- loop to setup
-local servers = { "pyright", "sumneko_lua"}
+local servers = { "pyright" }
 for _, lsp in ipairs(servers) do
     nvim_lsp[lsp].setup { on_attach = on_attach }
 end
 
 -- lsp ui
 require('lspsaga').init_lsp_saga()
-require('lspkind').init({
-    with_text = true,
-    symbol_map = {
-        Text = '',
-        Method = 'ƒ',
-        Function = '',
-        Constructor = '',
-        Variable = '',
-        Class = '',
-        Interface = 'ﰮ',
-        Module = '',
-        Property = '',
-        Unit = '',
-        Value = '',
-        Enum = '了',
-        Keyword = '',
-        Snippet = '﬌',
-        Color = '',
-        File = '',
-        Folder = '',
-        EnumMember = '',
-        Constant = '',
-        Struct = ''
-    },
-})
+

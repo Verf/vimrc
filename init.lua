@@ -1,4 +1,4 @@
---  __      _______ __  __ _____   _____
+--   __      _______ __  __ _____   _____
 --   \ \    / /_   _|  \/  |  __ \ / ____|
 --    \ \  / /  | | | \  / | |__) | |
 --     \ \/ /   | | | |\/| |  _  /| |
@@ -17,57 +17,246 @@ local function opt(scope, key, value)
     if scope ~= 'o' then scopes['o'][key] = value end
 end
 
------------- Server --------------
-cmd 'call serverstart(\'\\\\.\\pipe\\nvim-pipe-12345\')'
+local function map(mode, lhs, rhs, opts)
+    local options = {noremap = true, silent = true}
+    if opts then options = vim.tbl_extend('force', options, opts) end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+end
 
-----------  Plugin ----------
-cmd 'packadd paq-nvim'
-local paq = require'paq-nvim'.paq
-paq{'savq/paq-nvim', opt=true}
--- Fuzzy Search
-paq 'Yggdroot/LeaderF'
-paq 'liuchengxu/vista.vim'
-paq 'easymotion/vim-easymotion'
--- Completion
-paq 'hrsh7th/nvim-compe'
-paq 'glepnir/lspsaga.nvim'
-paq 'onsails/lspkind-nvim'
-paq 'neovim/nvim-lspconfig'
--- Edit Enchance
-paq 'SirVer/ultisnips'
-paq 'sbdchd/neoformat'
-paq 'tpope/vim-repeat'
-paq 'cohama/lexima.vim'
-paq 'Verf/vim-surround'
-paq 'b3nj5m1n/kommentary'
-paq 'mg979/vim-visual-multi'
-paq 'junegunn/vim-easy-align'
--- UI Plugin
-paq 'joshdick/onedark.vim'
-paq 'hoob3rt/lualine.nvim'
-paq 'kyazdani42/nvim-tree.lua'
-paq 'akinsho/nvim-bufferline.lua'
-paq 'kyazdani42/nvim-web-devicons'
--- Others
-paq 'ervandew/supertab'
-paq '907th/vim-auto-save'
-paq 'airblade/vim-rooter'
-paq 'voldikss/vim-floaterm'
-paq 'simnalamburt/vim-mundo'
-paq 'farmergreg/vim-lastplace'
-paq {'nvim-treesitter/nvim-treesitter', run='TSUpdate'}
-paq 'nvim-treesitter/nvim-treesitter-textobjects'
--- Language
-paq 'plasticboy/vim-markdown'
+------------- Plugin ------------------
+cmd [[packadd packer.nvim]]
+require('packer').startup(function()
+    -- packer itself
+    use {'wbthomason/packer.nvim', opt = true}
+    -- color shceme & indent enchance
+    use 'sheerun/vim-polyglot'
+    -- colorshceme sonokai
+    use 'sainnhe/sonokai'
+    -- auto pair
+    use 'cohama/lexima.vim'
+    -- surround enchance
+    use 'Verf/vim-surround'
+    -- auto formate
+    use 'sbdchd/neoformat'
+    -- tag viewer
+    use 'liuchengxu/vista.vim'
+    -- move enchance
+    use 'easymotion/vim-easymotion'
+    -- repeat enchance
+    use 'tpope/vim-repeat'
+    -- auto save
+    use '907th/vim-auto-save'
+    -- save last place
+    use 'farmergreg/vim-lastplace'
+    -- auto set root dir
+    use 'airblade/vim-rooter'
+    -- re/undo enchance & viewer
+    use 'simnalamburt/vim-mundo'
+    -- float terminal
+    use 'voldikss/vim-floaterm'
+    -- tab enchance
+    use 'ervandew/supertab'
+    -- snippet
+    use 'SirVer/ultisnips'
+    -- multiple edit
+    use 'mg979/vim-visual-multi'
+    -- align enchance
+    use 'junegunn/vim-easy-align'
+    -- comment enchance
+    use 'scrooloose/nerdcommenter'
+    -- tree viewer
+    use 'kyazdani42/nvim-tree.lua'
+    -- status line
+    use {
+        'hoob3rt/lualine.nvim',
+        config = function()
+            require('lualine').setup{
+                options = {
+                    theme = 'onedark',
+                    section_separators = {'', ''},
+                    component_separators = {'|', '|'},
+                    icons_enabled = true,
+                },
+                sections = {
+                    lualine_a = { {'mode', upper = true} },
+                    lualine_b = { {'branch', icon = ''} },
+                    lualine_c = { {'filename', file_status = true} },
+                    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+                    lualine_y = { 'progress' },
+                    lualine_z = { 'location'  },
+                },
+                inactive_sections = {
+                    lualine_a = {  },
+                    lualine_b = {  },
+                    lualine_c = { 'filename' },
+                    lualine_x = { 'location' },
+                    lualine_y = {  },
+                    lualine_z = {  }
+                },
+            }
+        end
+    }
+    -- markdown enchance
+    use 'plasticboy/vim-markdown'
+    -- fuzzy search
+    use 'Yggdroot/LeaderF'
+    -- buffer & tab line
+    use {
+        'akinsho/nvim-bufferline.lua',
+        config = function()
+            require'bufferline'.setup{
+                options = {
+                    view = "multiwindow",
+                    numbers = "none",
+                    always_show_bufferline = true,
+                    buffer_close_icon= '',
+                    modified_icon = '●',
+                    close_icon = '',
+                    left_trunc_marker = '',
+                    right_trunc_marker = '',
+                    max_name_length = 18,
+                    max_prefix_length = 15,
+                    tab_size = 18,
+                    diagnostics = "nvim_lsp",
+                    diagnostics_indicator = function(count, level)
+                        return "("..count..")"
+                    end,
+                    show_buffer_close_icons = false,
+                    persist_buffer_sort = true,
+                    separator_style = "thin",
+                    enforce_regular_tabs = false,
+                    sort_by = 'extension',
+                }
+            }
+        end
+    }
+    -- icons
+    use {
+        'kyazdani42/nvim-web-devicons',
+        config = function()
+            require'nvim-web-devicons'.setup {
+                default = true;
+            }
+        end
+    }
+    -- completion
+    use {
+        'hrsh7th/nvim-compe',
+        config = function()
+            require'compe'.setup {
+                enabled = true;
+                autocomplete = true;
+                debug = false;
+                min_length = 1;
+                preselect = 'enable';
+                throttle_time = 80;
+                source_timeout = 200;
+                incomplete_delay = 400;
+                allow_prefix_unmatch = false;
+
+                source = {
+                    path = true;
+                    buffer = true;
+                    calc = true;
+                    vsnip = false;
+                    nvim_lsp = true;
+                    nvim_lua = true;
+                    spell = false;
+                    tags = true;
+                    snippets_nvim = false;
+                    ultisnips = true;
+                };
+            }
+        end
+    }
+    -- lsp
+    use {
+        'neovim/nvim-lspconfig',
+        config = function()
+            local nvim_lsp = require('lspconfig')
+            local on_attach = function(client, bufnr)
+                vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+                -- Set autocommands conditional on server_capabilities
+                if client.resolved_capabilities.document_highlight then
+                    vim.api.nvim_exec([[
+                    hi LspReferenceRead term=underline cterm=underline gui=underline
+                    hi LspReferenceText term=underline cterm=underline gui=underline
+                    hi LspReferenceWrite term=underline cterm=underline gui=underline
+                    augroup lsp_document_highlight
+                    au!
+                    au CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+                    au CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+                    augroup END
+                        ]], false)
+                end
+            end
+            -- loop to setup
+            local servers = { "pyright" }
+            for _, lsp in ipairs(servers) do
+                nvim_lsp[lsp].setup { on_attach = on_attach }
+            end
+        end
+    }
+    use {
+        'glepnir/lspsaga.nvim',
+        config = function()
+            require('lspsaga').init_lsp_saga()
+        end
+    }
+    use {
+        'onsails/lspkind-nvim',
+        config = function()
+            require('lspkind').init()
+        end
+    }
+    -- treesitter
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                ensure_installed = {"python", "java", "lua"},
+                highlight = {
+                    enable = true,
+                },
+                indent = {
+                    enable = true
+                },
+                textobjects = {
+                    select = {
+                        enable = true,
+                        keymaps = {
+                            -- You can use the capture groups defined in textobjects.scm
+                            ["af"] = "@function.outer",
+                            ["if"] = "@function.inner",
+                            ["ac"] = "@class.outer",
+                            ["ic"] = "@class.inner",
+
+                            -- Or you can define your own textobjects like this
+                            ["iF"] = {
+                                python = "(function_definition) @function",
+                                java = "(method_declaration) @function",
+                            },
+                        },
+                    },
+                },
+            }
+        end
+    }
+    use 'nvim-treesitter/nvim-treesitter-textobjects'
+end
+)
 
 ----------- Command -------------
+cmd 'call serverstart(\'\\\\.\\pipe\\nvim-pipe-12345\')'
 cmd 'filetype plugin indent on'
+cmd 'colorscheme sonokai'
 cmd 'language en_US'
-cmd 'colorscheme onedark'
 cmd 'nohlsearch'
 cmd 'command! Bd :bp | :sp | :bn | :bd'
 
----------- Config ----------
+-------- Basic Config --------
 opt('o', 'number',        true)
 opt('o', 'hidden',        true)
 opt('o', 'showmatch',     true)
@@ -99,56 +288,154 @@ opt('w', 'signcolumn',    'yes')
 
 opt('o', 'shortmess',     'filnxtToOFc')
 opt('o', 'switchbuf',     'useopen,usetab,newtab')
-opt('o', 'completeopt',   'menu,menuone,noselect')
+opt('o', 'completeopt',   'menuone,noselect')
 
 ----------- Mappings --------------
 g['mapleader'] = ' '
 g['maplocalleader'] = ','
-require('configs.keymaps')
+-- Norman Keyboard Layout
+map('', 'd', 'e')
+map('', 'f', 'r')
+map('', 'k', 't')
+map('', 'j', 'y')
+map('', 'r', 'i')
+map('', 'l', 'o')
+map('', 'h', 'p')
+map('', 'e', 'd')
+map('', 't', 'f')
+map('', 'g', 'g')
+map('', 'y', 'h')
+map('', 'n', 'j')
+map('', 'i', 'k')
+map('', 'o', 'l')
+map('', 'p', 'n')
+map('', 'D', 'E')
+map('', 'F', 'R')
+map('', 'K', 'T')
+map('', 'J', 'Y')
+map('', 'R', 'I')
+map('', 'L', 'O')
+map('', 'H', 'P')
+map('', 'E', 'D')
+map('', 'T', 'F')
+map('', 'Y', 'H')
+map('', 'N', 'J')
+map('', 'I', 'K')
+map('', 'O', 'L')
+map('', 'P', 'N')
 
----------- Lua Plugins --------------
-require('configs.lsp')
-require('configs.lualine')
-require('configs.devicons')
-require('configs.nvim-tree')
-require('configs.bufferline')
-require('configs.completion')
-require('configs.treesitter')
+-- Terminal
+map('n', '<C-`>', ':FloatermToggle<CR>')
+map('t', '<C-o>', '<C-\\><C-n>')
+map('t', '<C-`>', '<C-\\><C-n>:FloatermToggle<CR>')
+map('t', '<C-t>', '<C-\\><C-n>:FloatermNew<CR>')
+map('t', '<C-q>', '<C-\\><C-n>:FloatermKill<CR>')
+map('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
+map('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
 
----------- Vim Plugins --------------
--- easy motion
-g['EasyMotion_smartcase'] = 1
-g['EasyMotion_do_mapping'] = 0
+-- Buffer Switch
+map('n', '<leader><leader>', ':BufferLinePick<CR>')
+map('n', '<leader><Tab>', ':e#<CR>')
+
+-- Edit
+map('n', '<leader>et', ':%s/\\s\\+$//e<CR>')
+map('n', '<leader>en', ':%d/^$/g<CR>')
+
+-- Paste
+map('n', '<leader>pp', '"+p')
+map('n', '<leader>pc', '":p')
+map('n', '<leader>ps', '"/p')
+map('n', '<leader>py', '"0p')
+
+-- Config
+map('n', '<leader>co', ':e $MYVIMRC<CR>')
+
+-- Quit
+map('n', '<leader>qq', ':Bd<CR><CR>')
+map('n', '<leader>qw', ':qw<CR>')
+map('n', '<leader>qa', ':qa<CR>')
+map('n', '<leader>qx', ':qa!<CR>')
+
+-- Windows Operate
+map('n', '<leader>wh', '<C-w>s')
+map('n', '<leader>wv', '<C-w>v')
+map('n', '<leader>wq', '<C-w>c')
+map('n', '<leader>wt', '<C-w>T')
+map('n', '<leader>wy', '<C-w>h')
+map('n', '<leader>wn', '<C-w>j')
+map('n', '<leader>wi', '<C-w>k')
+map('n', '<leader>wo', '<C-w>l')
+map('n', '<leader>wY', '<C-w>H')
+map('n', '<leader>wN', '<C-w>J')
+map('n', '<leader>wI', '<C-w>K')
+map('n', '<leader>wO', '<C-w>L')
+map('n', '<leader>w+', '<C-w>+')
+map('n', '<leader>w-', '<C-w>-')
+map('n', '<leader>wc', ':only<CR>')
+
+-- neoformat
+map('n', '<leader>fm', ':Neoformat<CR>')
+
+-- nvim-tree
+map('n', '<F2>', ':NvimTreeToggle<CR>')
+
+-- vista
+map('n', '<F3>', ':Vista!!<CR>')
+
+-- easymotion
+map('n', 's', '<Plug>(easymotion-s2)', {noremap=false})
+map('n', '/', '<Plug>(easymotion-sn)', {noremap=false})
+map('o', '/', '<Plug>(easymotion-tn)', {noremap=false})
+map('n', 'gl', '<Plug>(easymotion-overwin-line)', {noremap=false})
+map('n', 'gw', '<Plug>(easymotion-bd-w)', {noremap=false})
+map('n', 'ge', '<Plug>(easymotion-bd-e)', {noremap=false})
+map('n', 'gf', '<Plug>(easymotion-lineforward)', {noremap=false})
+map('n', 'gb', '<Plug>(easymotion-linebackward)', {noremap=false})
+map('n', 'gn', '<Plug>(easymotion-j)', {noremap=false})
+map('n', 'gi', '<Plug>(easymotion-k)', {noremap=false})
+
+-- mundo
+map('n','<leader>u', ':MundoToggle<CR>')
 
 -- easy-align
-g['easy_align_delimiters'] = {
-    ['d'] = { pattern = '--',  delimiter_align = 'l', ignore_groups = {'!Comment'}},
-}
+map('x', 'ga', '<Plug>(EasyAlign)', {noremap=false})
+map('n', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 
--- vim-visual-multi
-g['VM_maps'] = {
-    ['Find Under']         = '<C-s>',
-    ['Find Subword Under'] = '<C-s>',
-    ['Add Cursor Down']    = '<M-Down>',
-    ['Add Cursor Up']      = '<M-Up>',
-    ['Find Next']          = '<C-s>',
-    ['Find Prev']          = '<C-S-s>',
-    ['Goto Next']          = ']',
-    ['Goto Prev']          = '[',
-    ['Seek Next']          = '<C-f>',
-    ['Seek Prev']          = '<C-b>',
-    ['Skip Region']        = '<C-x>',
-    ['Remove Region']      = '<C-S-x>',
-    ['Replace']            = 'R',
-    ['Surround']           = 'S',
-    ['Toggle Multiline']   = 'M',
-}
+-- leaderf
+map('n', '<leader>fa', ':LeaderfFile $HOME<CR>')
+map('n', '<leader>ft', ':LeaderfBufTag<CR>')
+map('n', '<leader>fh', ':Leaderf mru<CR>')
+map('n', '<leader>fp', ':<C-R>=printf(\'Leaderf rg -e %s \', expand(\'<cword>\'))<CR><CR>')
+map('n', '<leader>fw', ':<C-R>=printf(\'Leaderf rg -e \')<CR>')
 
--- vim-autosave
+-- lsp
+map('n', '<leader>rn', '<CMD>lua require(\'lspsaga.rename\').rename()<CR>')
+map('n', 'gd', '<CMD>lua require\'lspsaga.provider\'.lsp_finder()<CR>')
+map('n', '[e', '<cmd>lua require\'lspsaga.diagnostic\'.lsp_jump_diagnostic_prev()<CR>')
+map('n', ']e', '<cmd>lua require\'lspsaga.diagnostic\'.lsp_jump_diagnostic_next()<CR>')
+
+------- Plugin Config --------
+-- sonokai
+g['sonokai_style'] = 'andromeda'
+g['sonokai_enable_italic'] = 1
+g['sonokai_disable_italic_comment'] = 0
+
+-- vista
+g['vista_stay_on_open'] = 0
+
+-- easymotion
+vim.g['EasyMotion_smartcase'] = 1
+vim.g['EasyMotion_do_mapping'] = 0
+
+-- auto-save
 g['auto_save'] = 1
 g['auto_save_silent'] = 0
 
--- Mundo
+-- vim-rooter
+g['rooter_silent_chdir'] = 1
+g['rooter_patterns'] = {'.git', '.gitignore', '.project', 'pom.xml', 'setup.py'}
+
+-- mundo
 g['mundo_mappings'] = {
     ["<CR>"] = 'preview',
     n        = 'move_older',
@@ -176,18 +463,6 @@ g['floaterm_autoclose']   = 1
 g['floaterm_shell']       = 'pwsh -nologo'
 g['floaterm_rootmarkers'] =  {'.project', '.git', '.gitignore', 'pom.xml'}
 
--- vim-markdown
-cmd 'au FileType markdown map <Plug> <Plug>Markdown_MoveToParentHeader'
-cmd 'au FileType markdown map <C-Enter> <Plug>Markdown_MoveToParentHeader'
-g['vim_markdown_folding_disabled'] = 1
-
--- vim-rooter
-g['rooter_silent_chdir'] = 1
-g['rooter_patterns'] = {'.git', '.gitignore', '.project', 'pom.xml', 'setup.py'}
-
--- vista
-g['vista_stay_on_open'] = 0
-
 -- supertab
 g['SuperTabDefaultCompletionType'] = 'context'
 g['SuperTabContextDefaultCompletionType'] = '<C-n>'
@@ -198,6 +473,35 @@ g['UltiSnipsJumpForwardTrigger']  = '<Tab>'
 g['UltiSnipsJumpBackwardTrigger'] = '<S-Tab>'
 g['UltiSnipsEditSplit'] = 'vertical'
 g['UltiSnipsSnippetStorageDirectoryForUltiSnipsEdit'] = 'ultisnips'
+
+-- multi edit
+g['VM_maps'] = {
+    ['Find Under']         = '<C-s>',
+    ['Find Subword Under'] = '<C-s>',
+    ['Add Cursor Down']    = '<M-Down>',
+    ['Add Cursor Up']      = '<M-Up>',
+    ['Find Next']          = '<C-s>',
+    ['Find Prev']          = '<C-S-s>',
+    ['Goto Next']          = ']',
+    ['Goto Prev']          = '[',
+    ['Seek Next']          = '<C-f>',
+    ['Seek Prev']          = '<C-b>',
+    ['Skip Region']        = '<C-x>',
+    ['Remove Region']      = '<C-S-x>',
+    ['Replace']            = 'R',
+    ['Surround']           = 'S',
+    ['Toggle Multiline']   = 'M',
+}
+
+-- easy-align
+g['easy_align_delimiters'] = {
+    ['d'] = { pattern = '--',  delimiter_align = 'l', ignore_groups = {'!Comment'}},
+}
+
+-- markdown
+cmd 'au FileType markdown map <Plug> <Plug>Markdown_EditUrlUnderCursor'
+cmd 'au FileType markdown map <C-Enter> <Plug>Markdown_EditUrlUnderCursor'
+g['vim_markdown_folding_disabled'] = 1
 
 -- leaderf
 g['Lf_ShortcutF'] = '<leader>ff'
