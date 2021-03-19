@@ -1,6 +1,7 @@
 rplugin.vim
 .netrwhist
 plugged/
+plugin/
 session/
 Session.vim
 Sessionx.vim

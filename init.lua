@@ -65,6 +65,8 @@ require('packer').startup(function()
     use 'scrooloose/nerdcommenter'
     -- tree viewer
     use 'kyazdani42/nvim-tree.lua'
+    -- markdown enchance
+    use 'plasticboy/vim-markdown'
     -- status line
     use {
         'hoob3rt/lualine.nvim',
@@ -95,8 +97,6 @@ require('packer').startup(function()
             }
         end
     }
-    -- markdown enchance
-    use 'plasticboy/vim-markdown'
     -- fuzzy search
     use 'Yggdroot/LeaderF'
     -- buffer & tab line
