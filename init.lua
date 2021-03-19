@@ -63,8 +63,6 @@ require('packer').startup(function()
     use 'junegunn/vim-easy-align'
     -- comment enchance
     use 'scrooloose/nerdcommenter'
-    -- tree viewer
-    use 'kyazdani42/nvim-tree.lua'
     -- markdown enchance
     use 'plasticboy/vim-markdown'
     -- status line
@@ -143,26 +141,17 @@ require('packer').startup(function()
         config = function()
             require'compe'.setup{
                 enabled = true,
-                autocomplete = true,
                 debug = false,
+                autocomplete = true,
                 min_length = 1,
                 preselect = 'enable',
-                throttle_time = 80,
-                source_timeout = 200,
-                incomplete_delay = 400,
-                max_abbr_width = 100,
-                max_kind_width = 100,
-                max_menu_width = 100,
-                documentation = true,
-
                 source = {
-                    path = true,
-                    buffer = true,
-                    calc = true,
-                    nvim_lsp = true,
-                    nvim_lua = true,
-                    vsnips = false,
-                    ultisnips = true
+                    path      = true,
+                    calc      = true,
+                    buffer    = true,
+                    nvim_lsp  = true,
+                    ultisnips = true,
+                    vsnips    = false
                 }
             }
         end
@@ -280,13 +269,13 @@ opt('o', 'showtabline',   2)
 opt('b', 'tabstop',       4)
 opt('b', 'softtabstop',   4)
 opt('b', 'shiftwidth',    4)
-opt('b', 'textwidth',     120)
+opt('b', 'textwidth',     200)
 opt('b', 'synmaxcol',     200)
 opt('w', 'signcolumn',    'yes')
 
 opt('o', 'shortmess',     'filnxtToOFc')
 opt('o', 'switchbuf',     'useopen,usetab,newtab')
-opt('o', 'completeopt',   'menuone,noselect')
+opt('o', 'completeopt',   'menuone,noinsert,noselect')
 
 ----------- Mappings --------------
 g['mapleader'] = ' '
@@ -374,6 +363,9 @@ map('n', '<leader>wc', ':only<CR>')
 -- neoformat
 map('n', '<leader>fm', ':Neoformat<CR>')
 
+-- nerdcommenter
+map('n', '<leader>c', '<Plug>NERDCommenterToggle')
+
 -- nvim-tree
 map('n', '<F2>', ':NvimTreeToggle<CR>')
 
@@ -412,7 +404,7 @@ map('n', 'gd', '<CMD>lua require\'lspsaga.provider\'.lsp_finder()<CR>')
 map('n', '[e', '<cmd>lua require\'lspsaga.diagnostic\'.lsp_jump_diagnostic_prev()<CR>')
 map('n', ']e', '<cmd>lua require\'lspsaga.diagnostic\'.lsp_jump_diagnostic_next()<CR>')
 
-------- Plugin Config --------
+---- Plugin Config --------
 -- sonokai
 g['sonokai_style'] = 'andromeda'
 g['sonokai_enable_italic'] = 1
@@ -522,3 +514,6 @@ g['Lf_CommandMap'] = {
     ['<C-]>'] = {'<C-->'},
     ['<C-x>'] = {'<C-|>'},
 }
+
+-- nerdcommenter
+g['NERDCreateDefaultMappings'] = 0
