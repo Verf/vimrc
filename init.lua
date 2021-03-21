@@ -17,11 +17,11 @@ local disabled_builtin = {
     'gzip', 'man', 'matchit', 'matchparen', 'tarPlugin', 'tar',
     'zipPlugin', 'zip', 'netrwPlugin'
 }
-for i = 1, 10 do g['loaded_' .. disabled_builtin[i]] = 1 end
+for i = 1, 9 do g['loaded_' .. disabled_builtin[i]] = 1 end
 
 ----- 初始命令 -----
 cmd 'language en_US'
-cmd 'colorscheme sonokai'
+cmd 'colorscheme desert'
 cmd 'filetype plugin indent on'
 cmd [[call serverstart('\\.\pipe\nvim-pipe-12345')]]
 
