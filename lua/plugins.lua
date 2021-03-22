@@ -23,7 +23,7 @@ local function init()
         'chaoren/vim-wordmotion',
         config = [[require('configs.wordmotion')]]
     }
-    use 'junegunn/vim-easy-align'
+    use {'junegunn/vim-easy-align', config=[[require('configs.easyalign')]]}
     use 'farmergreg/vim-lastplace'
 
     use {
@@ -90,13 +90,6 @@ local function init()
         'voldikss/vim-floaterm',
         config = [[require('configs.floaterm')]]
     }
-    use {
-        'ervandew/supertab',
-        config = function()
-            vim.g.SuperTabDefaultCompletionType = 'context'
-            vim.g.SuperTabContextDefaultCompletionType = '<C-n>'
-        end
-    }
 
     use {
         'hrsh7th/vim-vsnip',
@@ -148,6 +141,11 @@ local function init()
         run = ':TSUpdate',
         config = [[require('configs.treesitter')]],
         requires = {'nvim-treesitter/nvim-treesitter-textobjects'}
+    }
+
+    use {
+        'ms-jpq/chadtree',
+        config = [[require('configs.chadtree')]]
     }
 end
 

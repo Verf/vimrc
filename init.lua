@@ -42,7 +42,7 @@ opt('o', 'hlsearch',      false)
 opt('o', 'writebackup',   false)
 opt('b', 'expandtab',     true)
 opt('b', 'smartindent',   true)
-opt('w', 'number',        true)
+opt('w', 'rnu',           true)
 opt('w', 'linebreak',     true)
 opt('w', 'cursorline',    true)
 
@@ -135,3 +135,7 @@ map('n', '<leader>wc', ':only<CR>')
 
 -- 切换到上一个Buffer
 map('n', '<leader><Tab>', ':e#<CR>')
+
+-- 退出操作
+map('n', '<leader>qa', ':wqa')
+map('n', '<leader>qx', 'wq!')

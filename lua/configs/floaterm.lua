@@ -7,7 +7,8 @@ g.floaterm_autoclose   = 1
 g.floaterm_shell       = 'pwsh -nologo'
 g.floaterm_rootmarkers =  {'.project', '.git', '.gitignore', 'pom.xml'}
 
-map('', '<F1>', ':FloatermToggle<CR>')
+map('',  '<F1>', ':FloatermToggle<CR>')
+map('t', '<F1>', ':FloatermToggle<CR>')
 map('t', '<C-o>', '<C-\\><C-n>')
 map('t', '<C-`>', '<C-\\><C-n>:FloatermToggle<CR>')
 map('t', '<C-t>', '<C-\\><C-n>:FloatermNew<CR>')
