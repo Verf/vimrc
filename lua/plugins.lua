@@ -142,11 +142,6 @@ local function init()
         config = [[require('configs.treesitter')]],
         requires = {'nvim-treesitter/nvim-treesitter-textobjects'}
     }
-
-    use {
-        'ms-jpq/chadtree',
-        config = [[require('configs.chadtree')]]
-    }
 end
 
 local plugins = setmetatable({}, {
