@@ -142,6 +142,11 @@ local function init()
         config = [[require('configs.treesitter')]],
         requires = {'nvim-treesitter/nvim-treesitter-textobjects'}
     }
+
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        branch = 'lua'
+    }
 end
 
 local plugins = setmetatable({}, {
