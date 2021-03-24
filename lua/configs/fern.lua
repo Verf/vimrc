@@ -1,3 +1,6 @@
+local map = require('utils').map
+
+map('', '<F2>', ':Fern . -drawer -toggle<CR>')
 -- vim.g['fern#disable_default_mappings'] = 1
 -- vim.api.nvim_exec(
 -- [[
