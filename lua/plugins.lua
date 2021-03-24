@@ -138,7 +138,6 @@ local function init()
 
     use {
         'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
         config = [[require('configs.treesitter')]],
         requires = {'nvim-treesitter/nvim-treesitter-textobjects'}
     }
@@ -146,6 +145,12 @@ local function init()
     use {
         'lukas-reineke/indent-blankline.nvim',
         branch = 'lua'
+    }
+
+    use {
+        'lambdalisue/fern.vim',
+        config = [[require('configs.fern')]],
+        requires = {'antoinemadec/FixCursorHold.nvim'}
     }
 end
 
