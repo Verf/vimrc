@@ -21,8 +21,6 @@ local function init()
 
     use 'Verf/vim-surround'
 
-    use 'sheerun/vim-polyglot'
-
     use {
         'chaoren/vim-wordmotion',
         config = [[require('configs.wordmotion')]]

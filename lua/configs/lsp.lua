@@ -67,7 +67,16 @@ require'lspconfig'.sumneko_lua.setup {
     on_attach = on_attach,
 }
 
-require('lspsaga').init_lsp_saga()
+require('lspsaga').init_lsp_saga{
+    finder_action_keys = {
+        open = '<CR>',
+        vsplit = 'v',
+        split = 's',
+        quit = '<ESC>',
+        scroll_up = '<C-u>',
+        scroll_down = '<C-d>'
+    }
+}
 require('lspkind').init()
 
 map('n', '<leader>gd', ':Lspsaga preview_definition<CR>')
