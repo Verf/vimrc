@@ -3,4 +3,4 @@ local map = require('utils').map
 
 g.NERDCreateDefaultMappings = 0
 
-map('n', 'gc', '<Plug>NERDCommenterToggle')
+map('n', 'gc', '<Plug>NERDCommenterToggle', {noremap=false})

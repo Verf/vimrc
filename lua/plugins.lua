@@ -16,14 +16,20 @@ local function init()
     }
 
     use 'tpope/vim-repeat'
+
     use 'cohama/lexima.vim'
+
     use 'Verf/vim-surround'
+
     use 'sheerun/vim-polyglot'
+
     use {
         'chaoren/vim-wordmotion',
         config = [[require('configs.wordmotion')]]
     }
+
     use {'junegunn/vim-easy-align', config=[[require('configs.easyalign')]]}
+
     use 'farmergreg/vim-lastplace'
 
     use {
@@ -151,6 +157,16 @@ local function init()
         'lambdalisue/fern.vim',
         config = [[require('configs.fern')]],
         requires = {'antoinemadec/FixCursorHold.nvim'}
+    }
+
+    use {
+        'luochen1990/rainbow',
+        config = [[vim.g.rainbow_active = 1]]
+    }
+
+    use {
+        'bfredl/nvim-miniyank',
+        config = [[require('configs.miniyank')]]
     }
 end
 
