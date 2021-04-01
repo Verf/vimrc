@@ -88,10 +88,12 @@ local function init()
         'liuchengxu/vista.vim',
         config = [[require('configs.vista')]]
     }
+
     use {
         'simnalamburt/vim-mundo',
         config = [[require('configs.mundo')]]
     }
+
     use {
         'voldikss/vim-floaterm',
         config = [[require('configs.floaterm')]]
@@ -151,17 +153,6 @@ local function init()
     use {
         'lukas-reineke/indent-blankline.nvim',
         branch = 'lua'
-    }
-
-    use {
-        'lambdalisue/fern.vim',
-        config = [[require('configs.fern')]],
-        requires = {'antoinemadec/FixCursorHold.nvim'}
-    }
-
-    use {
-        'luochen1990/rainbow',
-        config = [[vim.g.rainbow_active = 1]]
     }
 
     use {

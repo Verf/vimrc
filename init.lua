@@ -22,7 +22,6 @@ for i = 1, 9 do g['loaded_' .. disabled_builtin[i]] = 1 end
 ----- 初始命令 -----
 cmd 'language en_US'
 cmd 'colorscheme desert'
-cmd 'filetype plugin indent on'
 cmd [[call serverstart('\\.\pipe\nvim-pipe-12345')]]
 
 ----- 自定义命令 ----
@@ -160,12 +159,6 @@ map('x', 'N', 'J')
 map('x', 'I', 'K')
 map('x', 'O', 'L')
 map('x', 'P', 'N')
-
--- 粘贴
-map('n', '<leader>pp', '"+p')
-map('n', '<leader>pc', '":p')
-map('n', '<leader>ps', '"/p')
-map('n', '<leader>py', '"0p')
 
 -- 窗口操作
 map('n', '<leader>wh', '<C-w>s')

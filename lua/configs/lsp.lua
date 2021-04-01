@@ -1,3 +1,13 @@
+-- windows compatibility
+vim.loop.spawn = (function ()
+  local spawn = vim.loop.spawn
+  return function(path, options, on_exit)
+    local full_path = vim.fn.exepath(path)
+    return spawn(full_path, options, on_exit)
+  end
+end)()
+
+
 local map = require('utils').map
 
 local system_name
@@ -11,7 +21,6 @@ else
   print("Unsupported system for sumneko")
 end
 
-local nvim_lsp = require('lspconfig')
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 

@@ -16,5 +16,6 @@ require'compe'.setup{
     }
 }
 
-map('i', '<Tab>', [[vsnip#available(1) ? "<Plug>(vsnip-expand-or-jump)" : pumvisible() ? "\<C-n>" : "<Tab>"]], {noremap=false, expr=true})
-map('i', '<S-Tab>', [[vsnip#available(1) ? "<Plug>(vsnip-jump-prev)" : pumvisible() ? "\<C-p>" : "<S-Tab>"]], {noremap=false, expr=true})
+map('i', '<CR>',    [[pumvisible() ? "compe#confirm(lexima#expand("<LT>CR>", "i"))" : "<CR>"]])
+map('i', '<Tab>',   [[vsnip#available(1) ? "<Plug>(vsnip-expand)" : pumvisible() ? "\<C-n>" : vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"]], {noremap=false, expr=true})
+map('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : vsnip#jumpable(-1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"]], {noremap=false, expr=true})
