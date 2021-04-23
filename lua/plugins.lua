@@ -36,16 +36,8 @@ local function init()
     }
 
     use {
-        'sainnhe/sonokai',
-        setup = function()
-            vim.g.sonokai_style = 'andromeda'
-            vim.g.sonokai_enable_italic = 0
-            vim.g.sonokai_disable_italic_comment = 0
-        end,
-        config = function ()
-            vim.cmd 'packadd sonokai'
-            vim.cmd 'colorscheme sonokai'
-        end
+        'Th3Whit3Wolf/one-nvim',
+        config = [[vim.cmd 'colorscheme one-nvim']]
     }
 
     use {
@@ -159,6 +151,12 @@ local function init()
         'nvim-telescope/telescope.nvim',
         config = [[require('configs.telescope')]],
         requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}}
+    }
+
+    use {
+        'tamago324/lir.nvim',
+        config = [[require('configs.filetree')]],
+        requires = {'nvim-lua/plenary.nvim'}
     }
 end
 

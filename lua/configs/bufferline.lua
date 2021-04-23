@@ -26,6 +26,6 @@ require'bufferline'.setup{
 }
 
 
-map('n', '<leader><leader>', ':BufferLinePick<CR>', {noremap=false})
+map('n', '<leader><space>', ':BufferLinePick<CR>', {noremap=false})
 map('n', '[b', ':BufferLineCyc}leNext<CR>', {noremap=false})
 map('n', 'b]', ':BufferLineCyclePrev<CR>', {noremap=false})
