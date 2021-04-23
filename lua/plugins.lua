@@ -57,10 +57,12 @@ local function init()
         'mg979/vim-visual-multi',
         config = [[require('configs.visualmulti')]]
     }
+
     use {
-        'scrooloose/nerdcommenter',
-        config = [[require('configs.nerdcommenter')]]
+        'terrortylor/nvim-comment',
+        config = [[require('configs.comment')]]
     }
+
     use {
         'mhartington/formatter.nvim',
         config = [[require('configs.formatter')]]
@@ -113,11 +115,6 @@ local function init()
     }
 
     use {
-        'Yggdroot/LeaderF',
-        config = [[require('configs.leaderf')]]
-    }
-
-    use {
         'akinsho/nvim-bufferline.lua',
         config = [[require('configs.bufferline')]]
     }
@@ -156,6 +153,12 @@ local function init()
     use {
         'bfredl/nvim-miniyank',
         config = [[require('configs.miniyank')]]
+    }
+
+    use {
+        'nvim-telescope/telescope.nvim',
+        config = [[require('configs.telescope')]],
+        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}}
     }
 end
 
