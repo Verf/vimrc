@@ -21,14 +21,17 @@ local function init()
 
     use 'Verf/vim-surround'
 
+    use 'farmergreg/vim-lastplace'
+
     use {
         'chaoren/vim-wordmotion',
         config = [[require('configs.wordmotion')]]
     }
 
-    use {'junegunn/vim-easy-align', config=[[require('configs.easyalign')]]}
-
-    use 'farmergreg/vim-lastplace'
+    use {
+        'junegunn/vim-easy-align', 
+        config=[[require('configs.easyalign')]]
+    }
 
     use {
         'mhinz/vim-sayonara',
