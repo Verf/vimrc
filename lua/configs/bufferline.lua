@@ -14,9 +14,6 @@ require'bufferline'.setup{
         max_prefix_length = 15,
         tab_size = 18,
         diagnostics = "nvim_lsp",
-        diagnostics_indicator = function(count, level)
-            return "("..count..")"
-        end,
         show_buffer_close_icons = false,
         persist_buffer_sort = true,
         separator_style = "thin",
@@ -28,4 +25,4 @@ require'bufferline'.setup{
 
 map('n', '<leader><space>', ':BufferLinePick<CR>', {noremap=false})
 map('n', '[b', ':BufferLineCyc}leNext<CR>', {noremap=false})
-map('n', 'b]', ':BufferLineCyclePrev<CR>', {noremap=false})
+map('n', ']b', ':BufferLineCyclePrev<CR>', {noremap=false})

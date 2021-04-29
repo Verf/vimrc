@@ -2,13 +2,13 @@ local map = require('utils').map
 
 local system_name
 if vim.fn.has("mac") == 1 then
-  system_name = "macOS"
+    system_name = "macOS"
 elseif vim.fn.has("unix") == 1 then
-  system_name = "Linux"
+    system_name = "Linux"
 elseif vim.fn.has('win32') == 1 then
-  system_name = "Windows"
+    system_name = "Windows"
 else
-  print("Unsupported system for sumneko")
+    print("Unsupported system for sumneko")
 end
 
 local on_attach = function(client, bufnr)
@@ -69,9 +69,35 @@ require('lspsaga').init_lsp_saga{
 }
 require('lspkind').init()
 
+require('lsp_signature').on_attach()
+
+require('trouble').setup{
+    action_keys = {
+        close = "q",
+        cancel = "<esc>",
+        refresh = "r",
+        jump = {"<cr>", "<tab>"},
+        toggle_mode = "m",
+        toggle_preview = "P",
+        preview = "p",
+        close_folds = {"zM", "zm"},
+        open_folds = {"zR", "zr"},
+        toggle_fold = {"zA", "za"},
+        previous = "i",
+        next = "n"
+    },
+    indent_lines = true,
+    auto_open = false,
+    auto_close = true,
+    auto_preview = true,
+    auto_fold = false,
+}
+
 map('n', '<leader>gd', ':Lspsaga preview_definition<CR>')
 map('n', '<leader>gr', ':Lspsaga lsp_finder<CR>')
 map('n', '<leader>rn', ':Lspsaga rename<CR>')
 map('n', ']e', ':Lspsaga diagnostic_jump_next<CR>')
 map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
 
+map('', '<F3>', ':LspTroubleToggle<CR>')
+map('i', '<F3>', ':LspTroubleToggle<CR>')

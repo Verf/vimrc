@@ -34,4 +34,5 @@ require'lir'.setup {
   hide_cursor = true,
 }
 
-map('n', '<F2>', [[:lua require'lir.float'.toggle()<CR>]])
+map('', '<F2>', [[:lua require'lir.float'.toggle()<CR>]])
+map('i', '<F2>', [[:lua require'lir.float'.toggle()<CR>]])

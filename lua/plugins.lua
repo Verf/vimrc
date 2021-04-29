@@ -29,7 +29,7 @@ local function init()
     }
 
     use {
-        'junegunn/vim-easy-align', 
+        'junegunn/vim-easy-align',
         config=[[require('configs.easyalign')]]
     }
 
@@ -80,11 +80,6 @@ local function init()
     }
 
     use {
-        'liuchengxu/vista.vim',
-        config = [[require('configs.vista')]]
-    }
-
-    use {
         'simnalamburt/vim-mundo',
         config = [[require('configs.mundo')]]
     }
@@ -131,7 +126,12 @@ local function init()
     use {
         'neovim/nvim-lspconfig',
         config = [[require('configs.lsp')]],
-        requires = {'glepnir/lspsaga.nvim', 'onsails/lspkind-nvim'}
+        requires = {
+            'glepnir/lspsaga.nvim',
+            'onsails/lspkind-nvim',
+            'ray-x/lsp_signature.nvim',
+            'folke/lsp-trouble.nvim'
+        }
     }
 
     use {
@@ -153,13 +153,22 @@ local function init()
     use {
         'nvim-telescope/telescope.nvim',
         config = [[require('configs.telescope')]],
-        requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-fzy-native.nvim'}}
+        requires = {
+            'nvim-lua/popup.nvim',
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-fzy-native.nvim'
+        }
     }
 
     use {
         'tamago324/lir.nvim',
         config = [[require('configs.filetree')]],
         requires = {'nvim-lua/plenary.nvim'}
+    }
+
+    use {
+        'ludovicchabant/vim-gutentags',
+        config = [[require('configs.tags')]]
     }
 end
 

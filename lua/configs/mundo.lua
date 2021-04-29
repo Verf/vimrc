@@ -22,3 +22,4 @@ g.mundo_mappings = {
 }
 
 map('', '<F4>', ':MundoToggle<CR>')
+map('i', '<F4>', ':MundoToggle<CR>')

@@ -14,8 +14,8 @@ require('telescope').setup{
 
 require('telescope').load_extension('fzy_native')
 
-map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
-map('n', '<leader>fg', '<cmd>Telescope live_grep<CR>')
-map('n', '<leader>ft', '<cmd>Telescope tags<CR>')
-map('n', '<leader>bb', '<cmd>Telescope buffers<CR>')
-map('n', '<leader>fh', '<cmd>Telescope oldfiles<CR>')
+map('n', '<leader>ff', [[<cmd>Telescope find_files<CR>]])
+map('n', '<leader>fg', [[<cmd>Telescope live_grep<CR>]])
+map('n', '<leader>ft', [[<cmd>lua require('telescope.builtin').tags({ctags_file=vim.fn.tagfiles()[1]})<CR>]])
+map('n', '<leader>bb', [[<cmd>Telescope buffers<CR>]])
+map('n', '<leader>fh', [[<cmd>Telescope oldfiles<CR>]])
