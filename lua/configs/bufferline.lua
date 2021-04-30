@@ -1,5 +1,3 @@
-local map = require('utils').map
-
 require'bufferline'.setup{
     options = {
         view = "multiwindow",
@@ -21,8 +19,3 @@ require'bufferline'.setup{
         sort_by = 'extension',
     }
 }
-
-
-map('n', '<leader><space>', ':BufferLinePick<CR>', {noremap=false})
-map('n', '[b', ':BufferLineCyc}leNext<CR>', {noremap=false})
-map('n', ']b', ':BufferLineCyclePrev<CR>', {noremap=false})

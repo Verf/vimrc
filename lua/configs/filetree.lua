@@ -1,4 +1,3 @@
-local map = require('utils').map
 local actions = require'lir.actions'
 local clipboard_actions = require'lir.clipboard.actions'
 
@@ -33,6 +32,3 @@ require'lir'.setup {
   },
   hide_cursor = true,
 }
-
-map('', '<F2>', [[:lua require'lir.float'.toggle()<CR>]])
-map('i', '<F2>', [[:lua require'lir.float'.toggle()<CR>]])

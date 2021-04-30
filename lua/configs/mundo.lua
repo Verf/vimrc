@@ -1,5 +1,4 @@
 local g = vim.g
-local map = require('utils').map
 
 g.mundo_mappings = {
     ["<CR>"] = 'preview',
@@ -20,6 +19,3 @@ g.mundo_mappings = {
     ["?"]    = 'toggle_help',
     q        = 'quit'
 }
-
-map('', '<F4>', ':MundoToggle<CR>')
-map('i', '<F4>', ':MundoToggle<CR>')

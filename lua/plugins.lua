@@ -21,46 +21,77 @@ local function init()
 
     use 'Verf/vim-surround'
 
+    use 'mhinz/vim-sayonara'
+
     use 'farmergreg/vim-lastplace'
+
+    use 'junegunn/vim-easy-align'
+
+    use 'bfredl/nvim-miniyank'
+
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        branch = 'lua'
+    }
+
+    use {
+        'AndrewRadev/splitjoin.vim',
+        config = function()
+            vim.g.splitjoin_split_mapping = ''
+            vim.g.splitjoin_join_mapping = ''
+        end
+    }
 
     use {
         'chaoren/vim-wordmotion',
-        config = [[require('configs.wordmotion')]]
-    }
-
-    use {
-        'junegunn/vim-easy-align',
-        config=[[require('configs.easyalign')]]
-    }
-
-    use {
-        'mhinz/vim-sayonara',
-        config = [[require('configs.sayonara')]]
+        config = function()
+            vim.g.wordmotion_nomap = 1
+        end
     }
 
     use {
         'Th3Whit3Wolf/one-nvim',
-        config = [[vim.cmd 'colorscheme one-nvim']]
+        config = function()
+            vim.cmd 'colorscheme one-nvim'
+        end
     }
 
     use {
         'easymotion/vim-easymotion',
-        config = [[require('configs.easymotion')]]
+        config = function()
+            vim.g.EasyMotion_smartcase = 1
+            vim.g.EasyMotion_do_mapping = 0
+        end
     }
 
     use {
         'mg979/vim-visual-multi',
-        config = [[require('configs.visualmulti')]]
+        config = function()
+            vim.g.VM_maps = {
+                ['Find Under']         = '<C-s>',
+                ['Find Subword Under'] = '<C-s>',
+                ['Add Cursor Down']    = '<M-Down>',
+                ['Add Cursor Up']      = '<M-Up>',
+                ['Find Next']          = '<C-s>',
+                ['Find Prev']          = '<C-S-s>',
+                ['Goto Next']          = ']',
+                ['Goto Prev']          = '[',
+                ['Seek Next']          = '<C-f>',
+                ['Seek Prev']          = '<C-b>',
+                ['Skip Region']        = '<C-x>',
+                ['Remove Region']      = '<C-S-x>',
+                ['Replace']            = 'R',
+                ['Surround']           = 'S',
+                ['Toggle Multiline']   = 'M',
+            }
+        end
     }
 
     use {
         'terrortylor/nvim-comment',
-        config = [[require('configs.comment')]]
-    }
-
-    use {
-        'mhartington/formatter.nvim',
-        config = [[require('configs.formatter')]]
+        config = function()
+            require('nvim_comment').setup()
+        end
     }
 
     use {
@@ -80,36 +111,6 @@ local function init()
     }
 
     use {
-        'simnalamburt/vim-mundo',
-        config = [[require('configs.mundo')]]
-    }
-
-    use {
-        'voldikss/vim-floaterm',
-        config = [[require('configs.floaterm')]]
-    }
-
-    use {
-        'hrsh7th/vim-vsnip',
-        config = [[require('configs.vsnip')]]
-    }
-
-    use {
-        'plasticboy/vim-markdown',
-        config = [[require('configs.markdown')]]
-    }
-
-    use {
-        'hoob3rt/lualine.nvim',
-        config = [[require('configs.lualine')]]
-    }
-
-    use {
-        'akinsho/nvim-bufferline.lua',
-        config = [[require('configs.bufferline')]]
-    }
-
-    use {
         'kyazdani42/nvim-web-devicons',
         config = function()
             require'nvim-web-devicons'.setup {
@@ -119,10 +120,107 @@ local function init()
     }
 
     use {
-        'hrsh7th/nvim-compe',
-        config = [[require('configs.compe')]]
+        'hrsh7th/vim-vsnip',
+        config = function()
+            vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/vsnip'
+        end
     }
 
+    use {
+        'ludovicchabant/vim-gutentags',
+        config = function()
+            vim.g.gutentags_project_root = {'.git', '.project'}
+            vim.g.gutentags_cache_dir = vim.fn.stdpath("data") .. '/ctags'
+            vim.g.gutentags_generate_on_write = 1
+        end
+    }
+
+    use {
+        'nvim-telescope/telescope.nvim',
+        config = function()
+            require('telescope').setup()
+            require('telescope').load_extension('fzy_native')
+        end,
+        requires = {
+            'nvim-lua/popup.nvim',
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-fzy-native.nvim'
+        }
+    }
+
+    use {
+        "folke/which-key.nvim",
+        config = function()
+            require("which-key").setup {
+                plugins = {
+                    marks = false,
+                    registers = false,
+                    presets = {
+                        operators = false,
+                        motions = false,
+                        text_objects = false,
+                        windows = false,
+                        nav = false,
+                        z = false,
+                        g = false,
+                    }
+                }
+            }
+        end
+    }
+
+    use {
+        'plasticboy/vim-markdown',
+        config = function()
+            vim.cmd 'au FileType markdown map <silent><Plug> <Plug>Markdown_EditUrlUnderCursor'
+            vim.cmd 'au FileType markdown map <silent><C-Enter> <Plug>Markdown_EditUrlUnderCursor'
+            vim.g.vim_markdown_folding_disabled = 1
+        end
+    }
+
+    use {
+        'glepnir/galaxyline.nvim',
+        config = [[require('configs.statusline')]]
+    }
+
+    use {
+        'akinsho/nvim-bufferline.lua',
+        config = [[require('configs.bufferline')]]
+    }
+
+    use {
+        'hrsh7th/nvim-compe',
+        config = [[require('configs.completion')]]
+    }
+
+    use {
+        'mhartington/formatter.nvim',
+        config = [[require('configs.formatter')]]
+    }
+
+    use {
+        'nvim-treesitter/nvim-treesitter',
+        config = [[require('configs.treesitter')]],
+        requires = {
+            'nvim-treesitter/nvim-treesitter-textobjects',
+            'p00f/nvim-ts-rainbow'
+        }
+    }
+
+    -- F1
+    use {
+        'voldikss/vim-floaterm',
+        config = [[require('configs.floaterm')]]
+    }
+
+    -- F2
+    use {
+        'tamago324/lir.nvim',
+        config = [[require('configs.filetree')]],
+        requires = {'nvim-lua/plenary.nvim'}
+    }
+
+    -- F3
     use {
         'neovim/nvim-lspconfig',
         config = [[require('configs.lsp')]],
@@ -134,41 +232,10 @@ local function init()
         }
     }
 
+    -- F4
     use {
-        'nvim-treesitter/nvim-treesitter',
-        config = [[require('configs.treesitter')]],
-        requires = {'nvim-treesitter/nvim-treesitter-textobjects'}
-    }
-
-    use {
-        'lukas-reineke/indent-blankline.nvim',
-        branch = 'lua'
-    }
-
-    use {
-        'bfredl/nvim-miniyank',
-        config = [[require('configs.miniyank')]]
-    }
-
-    use {
-        'nvim-telescope/telescope.nvim',
-        config = [[require('configs.telescope')]],
-        requires = {
-            'nvim-lua/popup.nvim',
-            'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-fzy-native.nvim'
-        }
-    }
-
-    use {
-        'tamago324/lir.nvim',
-        config = [[require('configs.filetree')]],
-        requires = {'nvim-lua/plenary.nvim'}
-    }
-
-    use {
-        'ludovicchabant/vim-gutentags',
-        config = [[require('configs.tags')]]
+        'simnalamburt/vim-mundo',
+        config = [[require('configs.mundo')]]
     }
 end
 

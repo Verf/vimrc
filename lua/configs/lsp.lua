@@ -1,5 +1,3 @@
-local map = require('utils').map
-
 local system_name
 if vim.fn.has("mac") == 1 then
     system_name = "macOS"
@@ -92,12 +90,3 @@ require('trouble').setup{
     auto_preview = true,
     auto_fold = false,
 }
-
-map('n', '<leader>gd', ':Lspsaga preview_definition<CR>')
-map('n', '<leader>gr', ':Lspsaga lsp_finder<CR>')
-map('n', '<leader>rn', ':Lspsaga rename<CR>')
-map('n', ']e', ':Lspsaga diagnostic_jump_next<CR>')
-map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
-
-map('', '<F3>', ':LspTroubleToggle<CR>')
-map('i', '<F3>', ':LspTroubleToggle<CR>')

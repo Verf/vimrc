@@ -7,29 +7,29 @@
 --
 --  For Verf
 local utils = require('utils')
-local opt = utils.opt
-local map = utils.map
 local g = vim.g
 local cmd = vim.cmd
+local opt = utils.opt
+local map = utils.map
 
--- 关闭无用的内置模块
+-- Disable builtin module
 local disabled_builtin = {
     'gzip', 'man', 'matchit', 'matchparen', 'tarPlugin', 'tar',
     'zipPlugin', 'zip', 'netrwPlugin'
 }
 for i = 1, 9 do g['loaded_' .. disabled_builtin[i]] = 1 end
 
------ 初始命令 -----
+----- Init -----
 cmd 'language en_US'
 cmd 'colorscheme desert'
 cmd [[call serverstart('\\.\pipe\nvim-pipe-12345')]]
 
------ 自定义命令 ----
+----- Command  ----
 cmd [[command! Trim :%s/\s\+$//e]]
 cmd [[command! Trimline :%d/^$/g]]
 cmd [[command! Editrc :e $MYVIMRC]]
 
------ 基础设置 -----
+----- Basic -----
 opt('o', 'hidden',        true)
 opt('o', 'showmatch',     true)
 opt('o', 'smartcase',     true)
@@ -65,20 +65,21 @@ opt('o', 'shortmess',     'filnxtToOFc')
 opt('o', 'switchbuf',     'useopen,usetab,newtab')
 opt('o', 'completeopt',   'menuone,noinsert,noselect')
 
------ 语言支持 -----
+----- Language -----
 -- Python
 g.loaded_python_provider = 0
 
------ 插件管理 -----
+----- Packer -----
 cmd [[command! PackerInstall packadd packer.nvim | lua require('plugins').install()]]
 cmd [[command! PackerUpdate packadd packer.nvim | lua require('plugins').update()]]
 cmd [[command! PackerSync packadd packer.nvim | lua require('plugins').sync()]]
 cmd [[command! PackerClean packadd packer.nvim | lua require('plugins').clean()]]
 cmd [[command! PackerCompile packadd packer.nvim | lua require('plugins').compile()]]
 
------ 按键映射 -----
+----- Mappings -----
 g.mapleader = ' '
 g.maplocalleader = ','
+
 -- Norman Keyboard Layout
 map('n', 'd', 'e')
 map('n', 'f', 'r')
@@ -161,26 +162,126 @@ map('x', 'I', 'K')
 map('x', 'O', 'L')
 map('x', 'P', 'N')
 
--- 窗口操作
-map('n', '<leader>wh', '<C-w>s')
-map('n', '<leader>wv', '<C-w>v')
-map('n', '<leader>wq', '<C-w>c')
-map('n', '<leader>wt', '<C-w>T')
-map('n', '<leader>wy', '<C-w>h')
-map('n', '<leader>wn', '<C-w>j')
-map('n', '<leader>wi', '<C-w>k')
-map('n', '<leader>wo', '<C-w>l')
-map('n', '<leader>wY', '<C-w>H')
-map('n', '<leader>wN', '<C-w>J')
-map('n', '<leader>wI', '<C-w>K')
-map('n', '<leader>wO', '<C-w>L')
-map('n', '<leader>w+', '<C-w>+')
-map('n', '<leader>w-', '<C-w>-')
-map('n', '<leader>wc', ':only<CR>')
+-- Plugin Key Binding
+map('',  '<F1>', ':FloatermToggle<CR>')
+map('i', '<F1>', ':FloatermToggle<CR>')
+map('',  '<F2>', [[:lua require'lir.float'.toggle()<CR>]])
+map('i', '<F2>', [[:lua require'lir.float'.toggle()<CR>]])
+map('',  '<F3>', ':LspTroubleToggle<CR>')
+map('i', '<F3>', ':LspTroubleToggle<CR>')
+map('',  '<F4>', ':MundoToggle<CR>')
+map('i', '<F4>', ':MundoToggle<CR>')
 
--- 切换到上一个Buffer
-map('n', '<leader><Tab>', ':e#<CR>')
+map('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
+map('t', '<C-o>', '<C-\\><C-n>')
+map('t', '<C-`>', '<C-\\><C-n>:FloatermToggle<CR>')
+map('t', '<C-t>', '<C-\\><C-n>:FloatermNew<CR>')
+map('t', '<C-q>', '<C-\\><C-n>:FloatermKill<CR>')
+map('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
+map('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
 
--- 退出操作
-map('n', '<leader>qa', ':wqa<CR>')
-map('n', '<leader>qx', 'wq!<CR>')
+map('x', 'ga', '<Plug>(EasyAlign)', {noremap=false})
+map('n', 'ga', '<Plug>(EasyAlign)', {noremap=false})
+
+map('n', 'gj', ':SplitjoinJoin<CR>', {noremap=false})
+map('n', 'gs', ':SplitjoinSplit<CR>', {noremap=false})
+
+map('n', 's',  '<Plug>(easymotion-s2)',           {noremap=false})
+map('n', '/',  '<Plug>(easymotion-sn)',           {noremap=false})
+map('o', '/',  '<Plug>(easymotion-tn)',           {noremap=false})
+map('n', 'gl', '<Plug>(easymotion-overwin-line)', {noremap=false})
+map('n', 'gw', '<Plug>(easymotion-bd-w)',         {noremap=false})
+map('n', 'ge', '<Plug>(easymotion-bd-e)',         {noremap=false})
+map('n', 'gf', '<Plug>(easymotion-lineforward)',  {noremap=false})
+map('n', 'gb', '<Plug>(easymotion-linebackward)', {noremap=false})
+map('n', 'gn', '<Plug>(easymotion-j)',            {noremap=false})
+map('n', 'gi', '<Plug>(easymotion-k)',            {noremap=false})
+
+map('n', 'h', '<Plug>(miniyank-autoput)', {noremap=false})
+map('x', 'h', '<Plug>(miniyank-autoput)', {noremap=false})
+map('o', 'h', '<Plug>(miniyank-autoput)', {noremap=false})
+map('n', 'H', '<Plug>(miniyank-autoPut)', {noremap=false})
+map('x', 'H', '<Plug>(miniyank-autoPut)', {noremap=false})
+map('o', 'H', '<Plug>(miniyank-autoPut)', {noremap=false})
+
+map('n', 'w', '<Plug>WordMotion_w', {noremap=false})
+map('n', 'W', '<Plug>WordMotion_W', {noremap=false})
+map('n', 'b', '<Plug>WordMotion_b', {noremap=false})
+map('n', 'B', '<Plug>WordMotion_B', {noremap=false})
+map('n', 'd', '<Plug>WordMotion_e', {noremap=false})
+map('n', 'D', '<Plug>WordMotion_d', {noremap=false})
+
+map('n', '[b', ':BufferLineCyc}leNext<CR>', {noremap=false})
+map('n', ']b', ':BufferLineCyclePrev<CR>', {noremap=false})
+
+map('n', ']e', ':Lspsaga diagnostic_jump_next<CR>')
+map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
+
+-- Key Binding by Which-Key
+local wk = require("which-key")
+-- g
+wk.register({
+    g = {
+        a = "Align",
+        c = "Comment",
+        j = "Code Join",
+        s = "Code Split",
+        l = "Goto Line",
+        w = "Goto Word",
+        e = "Goto Word end",
+        f = "Goto Forward",
+        b = "Goto Backword",
+        n = "Goto Down",
+        i = "Goto Up",
+    }
+})
+-- Leader Key
+wk.register({
+    ["<Leader>"] = {
+        ["<Tab>"]   = {":e#<CR>",             "Last Buffer"},
+        ["<Space>"] = {":BufferLinePick<CR>", "Pick Buffer"},
+        f = {
+            name = "+Find",
+            f = {"<cmd>Telescope find_files<CR>", "Find Files"},
+            h = {"<cmd>Telescope oldfiles<CR>",   "Find Oldfiles"},
+            g = {"<cmd>Telescope live_grep<CR>",  "Find Grep"},
+            b = {"<cmd>Telescope buffers<CR>",    "Find Buffers"},
+            t = {"<cmd>lua require('telescope.builtin').tags({ctags_file=vim.fn.tagfiles()[1]})<CR>", "Find Tags"},
+        },
+        g = {
+            name = "+Goto",
+            d = {":Lspsaga preview_definition<CR>", "Goto Def"},
+            r = {":Lspsaga lsp_finder<CR>",         "Goto Ref"},
+        },
+        q = {
+            name = "+Quit",
+            a = {":wqa<CR>",       "Save&Quit"},
+            x = {":wqa!<CR>",      "Force Save&Quit"},
+            q = {":Sayonara!<CR>", "Quit Buffer"},
+        },
+        w = {
+            name  = "+Window",
+            c     = {"<C-w>o", "Only"},
+            q     = {"<C-w>c", "Close"},
+            h     = {"<C-w>s", "Split"},
+            v     = {"<C-w>v", "Vsplit"},
+            y     = {"<C-w>h", "Left"},
+            n     = {"<C-w>j", "Down"},
+            i     = {"<C-w>k", "Up"},
+            o     = {"<C-w>l", "Right"},
+            Y     = {"<C-w>H", "Move Left"},
+            N     = {"<C-w>J", "Move Down"},
+            I     = {"<C-w>K", "Move Up"},
+            O     = {"<C-w>L", "Move Right"},
+            ["+"] = {"<C-w>+", "Increase Size"},
+            ["-"] = {"<C-w>-", "Decrease Size"},
+            ["="] = {"<C-w>=", "Equally Size"},
+        },
+        r = {
+            name = "+Refactor",
+            n = {":Lspsaga rename<CR>", "rename"},
+        }
+    }
+})
+
+
