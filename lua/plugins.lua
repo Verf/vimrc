@@ -152,6 +152,7 @@ local function init()
         "folke/which-key.nvim",
         config = function()
             require("which-key").setup {
+                show_help = false,
                 plugins = {
                     marks = false,
                     registers = false,
@@ -164,7 +165,8 @@ local function init()
                         z = false,
                         g = false,
                     }
-                }
+                },
+                triggers = {"<leader>"}
             }
         end
     }

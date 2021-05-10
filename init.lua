@@ -219,69 +219,52 @@ map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
 
 -- Key Binding by Which-Key
 local wk = require("which-key")
--- g
-wk.register({
-    g = {
-        a = "Align",
-        c = "Comment",
-        j = "Code Join",
-        s = "Code Split",
-        l = "Goto Line",
-        w = "Goto Word",
-        e = "Goto Word end",
-        f = "Goto Forward",
-        b = "Goto Backword",
-        n = "Goto Down",
-        i = "Goto Up",
-    }
-})
 -- Leader Key
 wk.register({
-    ["<Leader>"] = {
-        ["<Tab>"]   = {":e#<CR>",             "Last Buffer"},
-        ["<Space>"] = {":BufferLinePick<CR>", "Pick Buffer"},
-        f = {
-            name = "+Find",
-            f = {"<cmd>Telescope find_files<CR>", "Find Files"},
-            h = {"<cmd>Telescope oldfiles<CR>",   "Find Oldfiles"},
-            g = {"<cmd>Telescope live_grep<CR>",  "Find Grep"},
-            b = {"<cmd>Telescope buffers<CR>",    "Find Buffers"},
-            t = {"<cmd>lua require('telescope.builtin').tags({ctags_file=vim.fn.tagfiles()[1]})<CR>", "Find Tags"},
-        },
-        g = {
-            name = "+Goto",
-            d = {":Lspsaga preview_definition<CR>", "Goto Def"},
-            r = {":Lspsaga lsp_finder<CR>",         "Goto Ref"},
-        },
-        q = {
-            name = "+Quit",
-            a = {":wqa<CR>",       "Save&Quit"},
-            x = {":wqa!<CR>",      "Force Save&Quit"},
-            q = {":Sayonara!<CR>", "Quit Buffer"},
-        },
-        w = {
-            name  = "+Window",
-            c     = {"<C-w>o", "Only"},
-            q     = {"<C-w>c", "Close"},
-            h     = {"<C-w>s", "Split"},
-            v     = {"<C-w>v", "Vsplit"},
-            y     = {"<C-w>h", "Left"},
-            n     = {"<C-w>j", "Down"},
-            i     = {"<C-w>k", "Up"},
-            o     = {"<C-w>l", "Right"},
-            Y     = {"<C-w>H", "Move Left"},
-            N     = {"<C-w>J", "Move Down"},
-            I     = {"<C-w>K", "Move Up"},
-            O     = {"<C-w>L", "Move Right"},
-            ["+"] = {"<C-w>+", "Increase Size"},
-            ["-"] = {"<C-w>-", "Decrease Size"},
-            ["="] = {"<C-w>=", "Equally Size"},
-        },
-        r = {
-            name = "+Refactor",
-            n = {":Lspsaga rename<CR>", "rename"},
-        }
+    ["<Tab>"]   = {":e#<CR>",             "Last Buffer"},
+    ["<Space>"] = {":BufferLinePick<CR>", "Pick Buffer"},
+    ["f"] = {
+        name = "+Find",
+        ["f"] = {"<cmd>Telescope find_files<CR>", "Find Files"},
+        ["h"] = {"<cmd>Telescope oldfiles<CR>",   "Find Oldfiles"},
+        ["g"] = {"<cmd>Telescope live_grep<CR>",  "Find Grep"},
+        ["b"] = {"<cmd>Telescope buffers<CR>",    "Find Buffers"},
+        ["t"] = {"<cmd>lua require('telescope.builtin').tags({ctags_file=vim.fn.tagfiles()[1]})<CR>", "Find Tags"},
+    },
+    ["g"] = {
+        name = "+Goto",
+        ["d"] = {":Lspsaga preview_definition<CR>", "Goto Def"},
+        ["r"] = {":Lspsaga lsp_finder<CR>",         "Goto Ref"},
+    },
+    ["q"] = {
+        name = "+Quit",
+        ["a"] = {":wqa<CR>",       "Save&Quit"},
+        ["x"] = {":wqa!<CR>",      "Force Save&Quit"},
+        ["q"] = {":Sayonara!<CR>", "Quit Buffer"},
+    },
+    ["w"] = {
+        name  = "+Window",
+        ["c"]     = {"<C-w>o", "Only"},
+        ["q"]     = {"<C-w>c", "Close"},
+        ["h"]     = {"<C-w>s", "Split"},
+        ["v"]     = {"<C-w>v", "Vsplit"},
+        ["y"]     = {"<C-w>h", "Left"},
+        ["n"]     = {"<C-w>j", "Down"},
+        ["i"]     = {"<C-w>k", "Up"},
+        ["o"]     = {"<C-w>l", "Right"},
+        ["Y"]     = {"<C-w>H", "Move Left"},
+        ["N"]     = {"<C-w>J", "Move Down"},
+        ["I"]     = {"<C-w>K", "Move Up"},
+        ["O"]     = {"<C-w>L", "Move Right"},
+        ["+"] = {"<C-w>+", "Increase Size"},
+        ["-"] = {"<C-w>-", "Decrease Size"},
+        ["="] = {"<C-w>=", "Equally Size"},
+    },
+    ["r"] = {
+        name = "+Refactor",
+        ["n"] = {":Lspsaga rename<CR>", "rename"},
     }
-})
+}, {prefix = "<leader>"}
+)
 
 
