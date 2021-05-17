@@ -144,7 +144,8 @@ local function init()
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-fzy-native.nvim'
+            'nvim-telescope/telescope-fzy-native.nvim',
+            'jvgrootveld/telescope-zoxide',
         }
     }
 
