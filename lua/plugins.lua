@@ -1,4 +1,5 @@
 local packer = nil
+
 local function init()
     if packer == nil then
         packer = require('packer')
@@ -31,7 +32,11 @@ local function init()
 
     use {
         'lukas-reineke/indent-blankline.nvim',
-        branch = 'lua'
+        branch = 'lua',
+        config = function()
+            vim.g.indent_blankline_use_treesitter = true
+            vim.g.indent_blankline_show_current_context = true
+        end
     }
 
     use {
