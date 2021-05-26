@@ -18,32 +18,39 @@ local function init()
 
     use 'tpope/vim-repeat'
 
-    use 'cohama/lexima.vim'
+    use 'Raimondi/delimitMate'
 
     use 'Verf/vim-surround'
 
     use 'mhinz/vim-sayonara'
 
+
     use 'farmergreg/vim-lastplace'
 
     use 'junegunn/vim-easy-align'
 
-    use 'bfredl/nvim-miniyank'
+    use 'svermeulen/vim-yoink'
 
     use {
         'lukas-reineke/indent-blankline.nvim',
         branch = 'lua',
-        config = function()
-            vim.g.indent_blankline_use_treesitter = true
-            vim.g.indent_blankline_show_current_context = true
+    }
+
+    use {
+        'jsfaint/gen_tags.vim',
+        config=function()
+            vim.g['g:gen_tags#gtags_auto_gen'] = 1
         end
     }
 
     use {
-        'AndrewRadev/splitjoin.vim',
+        'norcalli/nvim-colorizer.lua',
         config = function()
-            vim.g.splitjoin_split_mapping = ''
-            vim.g.splitjoin_join_mapping = ''
+            require 'colorizer'.setup{
+                'lua';
+                'css';
+                'javascript';
+            }
         end
     }
 
@@ -62,10 +69,9 @@ local function init()
     }
 
     use {
-        'easymotion/vim-easymotion',
+        'phaazon/hop.nvim',
+        as = 'hop',
         config = function()
-            vim.g.EasyMotion_smartcase = 1
-            vim.g.EasyMotion_do_mapping = 0
         end
     }
 
@@ -111,7 +117,7 @@ local function init()
         'airblade/vim-rooter',
         config = function()
             vim.g.rooter_silent_chdir = 1
-            vim.g.rooter_patterns = {'.git', '.gitignore', '.project', 'pom.xml', 'setup.py'}
+            vim.g.rooter_patterns = {'.project', '.root','.git', 'pom.xml', 'setup.py'}
         end
     }
 
@@ -132,15 +138,6 @@ local function init()
     }
 
     use {
-        'ludovicchabant/vim-gutentags',
-        config = function()
-            vim.g.gutentags_project_root = {'.git', '.project'}
-            vim.g.gutentags_cache_dir = vim.fn.stdpath("data") .. '/ctags'
-            vim.g.gutentags_generate_on_write = 1
-        end
-    }
-
-    use {
         'nvim-telescope/telescope.nvim',
         config = function()
             require('telescope').setup()
@@ -155,30 +152,8 @@ local function init()
     }
 
     use {
-        "folke/which-key.nvim",
-        config = function()
-            require("which-key").setup {
-                show_help = false,
-                plugins = {
-                    marks = false,
-                    registers = false,
-                    presets = {
-                        operators = false,
-                        motions = false,
-                        text_objects = false,
-                        windows = false,
-                        nav = false,
-                        z = false,
-                        g = false,
-                    }
-                },
-                triggers = {"<leader>"}
-            }
-        end
-    }
-
-    use {
         'plasticboy/vim-markdown',
+        ft = {'.md'},
         config = function()
             vim.cmd 'au FileType markdown map <silent><Plug> <Plug>Markdown_EditUrlUnderCursor'
             vim.cmd 'au FileType markdown map <silent><C-Enter> <Plug>Markdown_EditUrlUnderCursor'
@@ -215,9 +190,20 @@ local function init()
         }
     }
 
+    use {
+        'neovim/nvim-lspconfig',
+        config = [[require('configs.lsp')]],
+        requires = {
+            'glepnir/lspsaga.nvim',
+            'onsails/lspkind-nvim',
+            'ray-x/lsp_signature.nvim',
+        }
+    }
+
     -- F1
     use {
         'voldikss/vim-floaterm',
+        cmd = 'FloatermToggle',
         config = [[require('configs.floaterm')]]
     }
 
@@ -230,21 +216,10 @@ local function init()
 
     -- F3
     use {
-        'neovim/nvim-lspconfig',
-        config = [[require('configs.lsp')]],
-        requires = {
-            'glepnir/lspsaga.nvim',
-            'onsails/lspkind-nvim',
-            'ray-x/lsp_signature.nvim',
-            'folke/lsp-trouble.nvim'
-        }
-    }
-
-    -- F4
-    use {
         'simnalamburt/vim-mundo',
         config = [[require('configs.mundo')]]
     }
+
 end
 
 local plugins = setmetatable({}, {

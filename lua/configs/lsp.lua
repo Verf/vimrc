@@ -55,6 +55,7 @@ require'lspconfig'.sumneko_lua.setup {
     on_attach = on_attach,
 }
 
+
 require('lspsaga').init_lsp_saga{
     finder_action_keys = {
         open = '<CR>',
@@ -68,25 +69,3 @@ require('lspsaga').init_lsp_saga{
 require('lspkind').init()
 
 require('lsp_signature').on_attach()
-
-require('trouble').setup{
-    action_keys = {
-        close = "q",
-        cancel = "<esc>",
-        refresh = "r",
-        jump = {"<cr>", "<tab>"},
-        toggle_mode = "m",
-        toggle_preview = "P",
-        preview = "p",
-        close_folds = {"zM", "zm"},
-        open_folds = {"zR", "zr"},
-        toggle_fold = {"zA", "za"},
-        previous = "i",
-        next = "n"
-    },
-    indent_lines = true,
-    auto_open = false,
-    auto_close = true,
-    auto_preview = true,
-    auto_fold = false,
-}

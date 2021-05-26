@@ -42,7 +42,6 @@ opt('o', 'writebackup',   false)
 opt('b', 'expandtab',     true)
 opt('b', 'smartindent',   true)
 opt('w', 'number',        true)
-opt('w', 'rnu',           true)
 opt('w', 'linebreak',     true)
 opt('w', 'cursorline',    true)
 
@@ -68,6 +67,7 @@ opt('o', 'completeopt',   'menuone,noinsert,noselect')
 ----- Language -----
 -- Python
 g.loaded_python_provider = 0
+g.python3_host_prog = vim.fn.expand("~/scoop/shims/python3.exe")
 
 ----- Packer -----
 cmd [[command! PackerInstall packadd packer.nvim | lua require('plugins').install()]]
@@ -167,10 +167,8 @@ map('',  '<F1>', ':FloatermToggle<CR>')
 map('i', '<F1>', ':FloatermToggle<CR>')
 map('',  '<F2>', [[:lua require'lir.float'.toggle()<CR>]])
 map('i', '<F2>', [[:lua require'lir.float'.toggle()<CR>]])
-map('',  '<F3>', ':LspTroubleToggle<CR>')
-map('i', '<F3>', ':LspTroubleToggle<CR>')
-map('',  '<F4>', ':MundoToggle<CR>')
-map('i', '<F4>', ':MundoToggle<CR>')
+map('',  '<F3>', ':MundoToggle<CR>')
+map('i', '<F3>', ':MundoToggle<CR>')
 
 map('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
 map('t', '<C-o>', '<C-\\><C-n>')
@@ -183,26 +181,25 @@ map('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
 map('x', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 map('n', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 
-map('n', 'gj', ':SplitjoinJoin<CR>', {noremap=false})
-map('n', 'gs', ':SplitjoinSplit<CR>', {noremap=false})
+map('x', 's',  [[<CMD>lua require'hop'.hint_char1()<CR>]],    {noremap=false})
+map('n', 's',  [[<CMD>lua require'hop'.hint_char1()<CR>]],    {noremap=false})
+map('x', 'S',  [[<CMD>lua require'hop'.hint_char2()<CR>]],    {noremap=false})
+map('n', 'S',  [[<CMD>lua require'hop'.hint_char2()<CR>]],    {noremap=false})
+map('x', 'gw', [[<CMD>lua require'hop'.hint_words()<CR>]],    {noremap=false})
+map('n', 'gw', [[<CMD>lua require'hop'.hint_words()<CR>]],    {noremap=false})
+map('x', 'gl', [[<CMD>lua require'hop'.hint_lines()<CR>]],    {noremap=false})
+map('n', 'gl', [[<CMD>lua require'hop'.hint_lines()<CR>]],    {noremap=false})
 
-map('n', 's',  '<Plug>(easymotion-s2)',           {noremap=false})
-map('n', '/',  '<Plug>(easymotion-sn)',           {noremap=false})
-map('o', '/',  '<Plug>(easymotion-tn)',           {noremap=false})
-map('n', 'gl', '<Plug>(easymotion-overwin-line)', {noremap=false})
-map('n', 'gw', '<Plug>(easymotion-bd-w)',         {noremap=false})
-map('n', 'ge', '<Plug>(easymotion-bd-e)',         {noremap=false})
-map('n', 'gf', '<Plug>(easymotion-lineforward)',  {noremap=false})
-map('n', 'gb', '<Plug>(easymotion-linebackward)', {noremap=false})
-map('n', 'gn', '<Plug>(easymotion-j)',            {noremap=false})
-map('n', 'gi', '<Plug>(easymotion-k)',            {noremap=false})
-
-map('n', 'h', '<Plug>(miniyank-autoput)', {noremap=false})
-map('x', 'h', '<Plug>(miniyank-autoput)', {noremap=false})
-map('o', 'h', '<Plug>(miniyank-autoput)', {noremap=false})
-map('n', 'H', '<Plug>(miniyank-autoPut)', {noremap=false})
-map('x', 'H', '<Plug>(miniyank-autoPut)', {noremap=false})
-map('o', 'H', '<Plug>(miniyank-autoPut)', {noremap=false})
+map('',  '[y',    '<plug>(YoinkRotateBack)',                 {noremap=false})
+map('',  ']y',    '<plug>(YoinkRotateForward)',              {noremap=false})
+map('x', 'j',     '<plug>(YoinkYankPreserveCursorPosition)', {noremap=false})
+map('n', 'j',     '<plug>(YoinkYankPreserveCursorPosition)', {noremap=false})
+map('x', 'h',     '<plug>(YoinkPaste_p)',                    {noremap=false})
+map('n', 'h',     '<plug>(YoinkPaste_p)',                    {noremap=false})
+map('n', 'gh',    '<plug>(YoinkPaste_gp)',                   {noremap=false})
+map('n', 'gH',    '<plug>(YoinkPaste_gP)',                   {noremap=false})
+map('n', '<c-n>', '<plug>(YoinkPostPasteSwapBack',           {noremap=false})
+map('n', '<c-p>', '<plug>(YoinkPostPasteSwapForwrd)',        {noremap=false})
 
 map('n', 'w', '<Plug>WordMotion_w', {noremap=false})
 map('n', 'W', '<Plug>WordMotion_W', {noremap=false})
@@ -212,59 +209,44 @@ map('n', 'd', '<Plug>WordMotion_e', {noremap=false})
 map('n', 'D', '<Plug>WordMotion_d', {noremap=false})
 
 map('n', '[b', ':BufferLineCyc}leNext<CR>', {noremap=false})
-map('n', ']b', ':BufferLineCyclePrev<CR>', {noremap=false})
+map('n', ']b', ':BufferLineCyclePrev<CR>',  {noremap=false})
 
 map('n', ']e', ':Lspsaga diagnostic_jump_next<CR>')
 map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
 
 -- Key Binding by Which-Key
-local wk = require("which-key")
--- Leader Key
-wk.register({
-    ["<Tab>"]   = {":e#<CR>",             "Last Buffer"},
-    ["<Space>"] = {":BufferLinePick<CR>", "Pick Buffer"},
-    ["f"] = {
-        name = "+Find",
-        ["f"] = {"<cmd>Telescope find_files<CR>", "Find Files"},
-        ["h"] = {"<cmd>Telescope oldfiles<CR>",   "Find Oldfiles"},
-        ["g"] = {"<cmd>Telescope live_grep<CR>",  "Find Grep"},
-        ["b"] = {"<cmd>Telescope buffers<CR>",    "Find Buffers"},
-        ["t"] = {"<cmd>lua require('telescope.builtin').tags({ctags_file=vim.fn.tagfiles()[1]})<CR>", "Find Tags"},
-    },
-    ["g"] = {
-        name = "+Goto",
-        ["d"] = {":Lspsaga preview_definition<CR>", "Goto Def"},
-        ["r"] = {":Lspsaga lsp_finder<CR>",         "Goto Ref"},
-    },
-    ["q"] = {
-        name = "+Quit",
-        ["a"] = {":wqa<CR>",       "Save&Quit"},
-        ["x"] = {":wqa!<CR>",      "Force Save&Quit"},
-        ["q"] = {":Sayonara!<CR>", "Quit Buffer"},
-    },
-    ["w"] = {
-        name  = "+Window",
-        ["c"]     = {"<C-w>o", "Only"},
-        ["q"]     = {"<C-w>c", "Close"},
-        ["h"]     = {"<C-w>s", "Split"},
-        ["v"]     = {"<C-w>v", "Vsplit"},
-        ["y"]     = {"<C-w>h", "Left"},
-        ["n"]     = {"<C-w>j", "Down"},
-        ["i"]     = {"<C-w>k", "Up"},
-        ["o"]     = {"<C-w>l", "Right"},
-        ["Y"]     = {"<C-w>H", "Move Left"},
-        ["N"]     = {"<C-w>J", "Move Down"},
-        ["I"]     = {"<C-w>K", "Move Up"},
-        ["O"]     = {"<C-w>L", "Move Right"},
-        ["+"] = {"<C-w>+", "Increase Size"},
-        ["-"] = {"<C-w>-", "Decrease Size"},
-        ["="] = {"<C-w>=", "Equally Size"},
-    },
-    ["r"] = {
-        name = "+Refactor",
-        ["n"] = {":Lspsaga rename<CR>", "rename"},
-    }
-}, {prefix = "<leader>"}
-)
+map('n', '<leader><tab>', ':e#<CR>')
+map('n', '<leader><space>', ':BufferLinePick<CR>')
 
+map('n', '<leader>ff', '<cmd>Telescope find_files<CR>')
+map('n', '<leader>fh', '<cmd>Telescope oldfiles<CR>')
+map('n', '<leader>fg', '<cmd>Telescope live_grep<CR>')
+map('n', '<leader>fb', '<cmd>Telescope buffers<CR>')
+map('n', '<leader>ft', '<cmd>Telescope tags<CR>')
+-- map('n', '<leader>ft', '<cmd>lua require('telescope.builtin').tags({ctags_file=vim.fn.tagfiles()[1]})<CR>')
 
+map('n', '<leader>gd', ':Lspsaga preview_definition<CR>')
+map('n', '<leader>gr', ':Lspsaga lsp_finder<CR>')
+
+map('n', '<leader>qa', ':wqa<CR>')
+map('n', '<leader>qx', ':wqa!<CR>')
+map('n', '<leader>qq', ':Sayonara!<CR>')
+
+map('n', '<leader>wc', '<C-w>o')
+map('n', '<leader>wq', '<C-w>c')
+map('n', '<leader>wh', '<C-w>s')
+map('n', '<leader>wv', '<C-w>v')
+map('n', '<leader>wy', '<C-w>h')
+map('n', '<leader>wn', '<C-w>j')
+map('n', '<leader>wi', '<C-w>k')
+map('n', '<leader>wo', '<C-w>l')
+map('n', '<leader>wY', '<C-w>H')
+map('n', '<leader>wN', '<C-w>J')
+map('n', '<leader>wI', '<C-w>K')
+map('n', '<leader>wO', '<C-w>L')
+
+map('n', '<leader>w+','<C-w>+')
+map('n', '<leader>w-','<C-w>-')
+map('n', '<leader>w=', '<C-w>=')
+
+map('n', '<leader>rn', ':Lspsaga rename<CR>')
