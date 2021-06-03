@@ -39,7 +39,11 @@ local function init()
     use {
         'jsfaint/gen_tags.vim',
         config=function()
-            vim.g['g:gen_tags#gtags_auto_gen'] = 1
+            vim.g['gen_tags#ctags_auto_gen'] = 1
+            vim.g['gen_tags#ctags_auto_update'] = 1
+            vim.g['gen_tags#gtags_auto_gen'] = 0
+            vim.g['gen_tags#gtags_auto_update'] = 0
+            vim.g['gen_tags#gtags_default_map'] = 0
         end
     }
 
@@ -62,9 +66,9 @@ local function init()
     }
 
     use {
-        'Th3Whit3Wolf/one-nvim',
+        'folke/tokyonight.nvim',
         config = function()
-            vim.cmd 'colorscheme one-nvim'
+            vim.cmd 'colorscheme tokyonight'
         end
     }
 

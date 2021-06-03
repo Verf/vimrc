@@ -12,7 +12,6 @@ end
 local on_attach = function(client, bufnr)
     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
-    -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
         vim.api.nvim_exec([[
         hi LspReferenceRead term=underline cterm=underline gui=underline
@@ -25,12 +24,24 @@ local on_attach = function(client, bufnr)
         augroup END
             ]], false)
     end
+
+    -- enable signature help
+    require('lsp_signature').on_attach({
+        bind = true,
+        hint_prefix = ' ',
+        handler_opts = {
+            border = 'single'
+        },
+        decorator = {'*', '*'}
+    })
 end
--- loop to setup
+
+-- python setup
 require'lspconfig'.pyright.setup{
     on_attach = on_attach
 }
 
+-- lua setup
 local sumneko_root_path = [[C:\Programes\lua-language-server]]
 local sumneko_binary = sumneko_root_path.."/bin/"..system_name.."/lua-language-server"
 require'lspconfig'.sumneko_lua.setup {
@@ -66,6 +77,5 @@ require('lspsaga').init_lsp_saga{
         scroll_down = '<C-d>'
     }
 }
-require('lspkind').init()
 
-require('lsp_signature').on_attach()
+require('lspkind').init()
