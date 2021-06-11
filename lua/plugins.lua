@@ -75,8 +75,6 @@ local function init()
     use {
         'phaazon/hop.nvim',
         as = 'hop',
-        config = function()
-        end
     }
 
     use {
@@ -144,8 +142,9 @@ local function init()
     use {
         'nvim-telescope/telescope.nvim',
         config = function()
-            require('telescope').setup()
-            require('telescope').load_extension('fzy_native')
+            require'telescope'.setup()
+            require'telescope'.load_extension('fzy_native')
+            require'telescope'.load_extension('zoxide')
         end,
         requires = {
             'nvim-lua/popup.nvim',
@@ -153,16 +152,6 @@ local function init()
             'nvim-telescope/telescope-fzy-native.nvim',
             'jvgrootveld/telescope-zoxide',
         }
-    }
-
-    use {
-        'plasticboy/vim-markdown',
-        ft = {'.md'},
-        config = function()
-            vim.cmd 'au FileType markdown map <silent><Plug> <Plug>Markdown_EditUrlUnderCursor'
-            vim.cmd 'au FileType markdown map <silent><C-Enter> <Plug>Markdown_EditUrlUnderCursor'
-            vim.g.vim_markdown_folding_disabled = 1
-        end
     }
 
     use {

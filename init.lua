@@ -181,6 +181,9 @@ map('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
 map('x', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 map('n', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 
+map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
+map('n', 'gr', ':Lspsaga lsp_finder<CR>')
+
 map('n', '/', '<CMD>Telescope current_buffer_fuzzy_find<CR>', {noremap=false})
 
 map('x', 's',  [[<CMD>lua require'hop'.hint_char1()<CR>]],    {noremap=false})
@@ -225,9 +228,7 @@ map('n', '<leader>fh', '<CMD>Telescope oldfiles<CR>')
 map('n', '<leader>fg', '<CMD>Telescope live_grep<CR>')
 map('n', '<leader>fb', '<CMD>Telescope buffers<CR>')
 map('n', '<leader>ft', [[<CMD>lua require('telescope.builtin').tags({ctags_file=vim.fn.tagfiles()[1]})<CR>]])
-
-map('n', '<leader>gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
-map('n', '<leader>gr', ':Lspsaga lsp_finder<CR>')
+map('n', '<leader>fz', '<CMD>Telescope zoxide list<CR>')
 
 map('n', '<leader>qa', ':wqa<CR>')
 map('n', '<leader>qx', ':wqa!<CR>')
