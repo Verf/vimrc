@@ -24,7 +24,6 @@ local function init()
 
     use 'mhinz/vim-sayonara'
 
-
     use 'farmergreg/vim-lastplace'
 
     use 'junegunn/vim-easy-align'
@@ -37,17 +36,6 @@ local function init()
     }
 
     use {
-        'jsfaint/gen_tags.vim',
-        config=function()
-            vim.g['gen_tags#ctags_auto_gen'] = 1
-            vim.g['gen_tags#ctags_auto_update'] = 1
-            vim.g['gen_tags#gtags_auto_gen'] = 0
-            vim.g['gen_tags#gtags_auto_update'] = 0
-            vim.g['gen_tags#gtags_default_map'] = 0
-        end
-    }
-
-    use {
         'norcalli/nvim-colorizer.lua',
         config = function()
             require 'colorizer'.setup{
@@ -55,7 +43,8 @@ local function init()
                 'css';
                 'javascript';
             }
-        end
+        end,
+        ft = {"lua", "css", "javascript"}
     }
 
     use {
@@ -73,8 +62,7 @@ local function init()
     }
 
     use {
-        'phaazon/hop.nvim',
-        as = 'hop',
+        'ggandor/lightspeed.nvim',
     }
 
     use {
@@ -104,14 +92,6 @@ local function init()
         'terrortylor/nvim-comment',
         config = function()
             require('nvim_comment').setup()
-        end
-    }
-
-    use {
-        '907th/vim-auto-save',
-        config = function()
-            vim.g.auto_save = 1
-            vim.g.auto_save_silent = 0
         end
     }
 

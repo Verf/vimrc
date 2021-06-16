@@ -186,15 +186,6 @@ map('n', 'gr', ':Lspsaga lsp_finder<CR>')
 
 map('n', '/', '<CMD>Telescope current_buffer_fuzzy_find<CR>', {noremap=false})
 
-map('x', 's',  [[<CMD>lua require'hop'.hint_char1()<CR>]],    {noremap=false})
-map('n', 's',  [[<CMD>lua require'hop'.hint_char1()<CR>]],    {noremap=false})
-map('x', 'S',  [[<CMD>lua require'hop'.hint_char2()<CR>]],    {noremap=false})
-map('n', 'S',  [[<CMD>lua require'hop'.hint_char2()<CR>]],    {noremap=false})
-map('x', 'gw', [[<CMD>lua require'hop'.hint_words()<CR>]],    {noremap=false})
-map('n', 'gw', [[<CMD>lua require'hop'.hint_words()<CR>]],    {noremap=false})
-map('x', 'gl', [[<CMD>lua require'hop'.hint_lines()<CR>]],    {noremap=false})
-map('n', 'gl', [[<CMD>lua require'hop'.hint_lines()<CR>]],    {noremap=false})
-
 map('',  '[y',    '<plug>(YoinkRotateBack)',                 {noremap=false})
 map('',  ']y',    '<plug>(YoinkRotateForward)',              {noremap=false})
 map('x', 'j',     '<plug>(YoinkYankPreserveCursorPosition)', {noremap=false})
