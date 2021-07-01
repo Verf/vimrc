@@ -30,6 +30,17 @@ local function init()
 
     use 'svermeulen/vim-yoink'
 
+    use 'ggandor/lightspeed.nvim'
+
+    use {
+        '907th/vim-auto-save',
+        config = function()
+            vim.g.auto_save = 1
+            vim.g.auto_save_silent = 1
+            vim.g.auto_save_events = {"InsertLeave", "TextChanged"}
+        end
+    }
+
     use {
         'lukas-reineke/indent-blankline.nvim',
         branch = 'lua',
@@ -59,10 +70,6 @@ local function init()
         config = function()
             vim.cmd 'colorscheme tokyonight'
         end
-    }
-
-    use {
-        'ggandor/lightspeed.nvim',
     }
 
     use {
@@ -99,7 +106,7 @@ local function init()
         'airblade/vim-rooter',
         config = function()
             vim.g.rooter_silent_chdir = 1
-            vim.g.rooter_patterns = {'.project', '.root','.git', 'pom.xml', 'setup.py'}
+            vim.g.rooter_patterns = {'.git', '.project'}
         end
     }
 
@@ -121,16 +128,10 @@ local function init()
 
     use {
         'nvim-telescope/telescope.nvim',
-        config = function()
-            require'telescope'.setup()
-            require'telescope'.load_extension('fzy_native')
-            require'telescope'.load_extension('zoxide')
-        end,
+        config = [[require('configs.search')]],
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-fzy-native.nvim',
-            'jvgrootveld/telescope-zoxide',
         }
     }
 
@@ -173,21 +174,6 @@ local function init()
         }
     }
 
-    -- F1
-    use {
-        'voldikss/vim-floaterm',
-        cmd = 'FloatermToggle',
-        config = [[require('configs.floaterm')]]
-    }
-
-    -- F2
-    use {
-        'tamago324/lir.nvim',
-        config = [[require('configs.filetree')]],
-        requires = {'nvim-lua/plenary.nvim'}
-    }
-
-    -- F3
     use {
         'simnalamburt/vim-mundo',
         config = [[require('configs.mundo')]]

@@ -163,20 +163,7 @@ map('x', 'O', 'L')
 map('x', 'P', 'N')
 
 -- Plugin Key Binding
-map('',  '<F1>', ':FloatermToggle<CR>')
-map('i', '<F1>', ':FloatermToggle<CR>')
-map('',  '<F2>', [[:lua require'lir.float'.toggle()<CR>]])
-map('i', '<F2>', [[:lua require'lir.float'.toggle()<CR>]])
-map('',  '<F3>', ':MundoToggle<CR>')
-map('i', '<F3>', ':MundoToggle<CR>')
-
-map('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
-map('t', '<C-o>', '<C-\\><C-n>')
-map('t', '<C-`>', '<C-\\><C-n>:FloatermToggle<CR>')
-map('t', '<C-t>', '<C-\\><C-n>:FloatermNew<CR>')
-map('t', '<C-q>', '<C-\\><C-n>:FloatermKill<CR>')
-map('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
-map('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
+map('n', '/', ':Telescope current_buffer_fuzzy_find<CR>')
 
 map('x', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 map('n', 'ga', '<Plug>(EasyAlign)', {noremap=false})
@@ -184,7 +171,18 @@ map('n', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', 'gr', ':Lspsaga lsp_finder<CR>')
 
-map('n', '/', '<CMD>Telescope current_buffer_fuzzy_find<CR>', {noremap=false})
+map('n', 't', '<Plug>Lightspeed_f', {noremap=false})
+map('n', 'T', '<Plug>Lightspeed_F', {noremap=false})
+map('n', 'k', '<Plug>Lightspeed_t', {noremap=false})
+map('n', 'K', '<Plug>Lightspeed_T', {noremap=false})
+map('o', 't', '<Plug>Lightspeed_f', {noremap=false})
+map('o', 'T', '<Plug>Lightspeed_F', {noremap=false})
+map('o', 'k', '<Plug>Lightspeed_t', {noremap=false})
+map('o', 'K', '<Plug>Lightspeed_T', {noremap=false})
+map('x', 't', '<Plug>Lightspeed_f', {noremap=false})
+map('x', 'T', '<Plug>Lightspeed_F', {noremap=false})
+map('x', 'k', '<Plug>Lightspeed_t', {noremap=false})
+map('x', 'K', '<Plug>Lightspeed_T', {noremap=false})
 
 map('',  '[y',    '<plug>(YoinkRotateBack)',                 {noremap=false})
 map('',  ']y',    '<plug>(YoinkRotateForward)',              {noremap=false})
@@ -210,16 +208,9 @@ map('n', ']b', ':BufferLineCyclePrev<CR>',  {noremap=false})
 map('n', ']e', ':Lspsaga diagnostic_jump_next<CR>')
 map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
 
--- Key Binding by Which-Key
+-- Leader Key
 map('n', '<leader><tab>', ':e#<CR>')
 map('n', '<leader><space>', ':BufferLinePick<CR>')
-
-map('n', '<leader>ff', '<CMD>Telescope find_files<CR>')
-map('n', '<leader>fh', '<CMD>Telescope oldfiles<CR>')
-map('n', '<leader>fg', '<CMD>Telescope live_grep<CR>')
-map('n', '<leader>fb', '<CMD>Telescope buffers<CR>')
-map('n', '<leader>ft', [[<CMD>lua require('telescope.builtin').tags({ctags_file=vim.fn.tagfiles()[1]})<CR>]])
-map('n', '<leader>fz', '<CMD>Telescope zoxide list<CR>')
 
 map('n', '<leader>qa', ':wqa<CR>')
 map('n', '<leader>qx', ':wqa!<CR>')
@@ -243,3 +234,10 @@ map('n', '<leader>w-','<C-w>-')
 map('n', '<leader>w=', '<C-w>=')
 
 map('n', '<leader>rn', ':Lspsaga rename<CR>')
+
+map('n', '<leader>ff', ':Telescope find_files<CR>')
+map('n', '<leader>fh', ':Telescope oldfiles<CR>')
+map('n', '<leader>fg', ':Telescope live_grep<CR>')
+map('n', '<leader>bb', ':Telescope buffers<CR>')
+
+map('n', '<leader>u', ':MundoToggle<CR>')
