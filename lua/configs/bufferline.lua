@@ -12,14 +12,10 @@ require'bufferline'.setup{
         max_prefix_length = 15,
         tab_size = 18,
         diagnostics = "nvim_lsp",
-        diagnostics_indicator = function(count, level)
-            return "("..count..")"
-        end,
         show_buffer_close_icons = false,
         persist_buffer_sort = true,
         separator_style = "thin",
         enforce_regular_tabs = false,
-        always_show_bufferline = true,
         sort_by = 'extension',
     }
 }

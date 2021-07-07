@@ -1,2 +1,4 @@
 GuiTabline 0
-GuiFont! 更纱黑体 Mono SC Nerd:h14
+GuiPopupmenu 0
+GuiFont! Sarasa Mono SC Nerd:h15
+call GuiWindowMaximized(1)

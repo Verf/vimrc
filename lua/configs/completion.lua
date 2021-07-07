@@ -1,24 +1,24 @@
-require'compe'.setup {
-    enabled = true;
-    autocomplete = true;
-    debug = false;
-    min_length = 1;
-    preselect = 'enable';
-    throttle_time = 80;
-    source_timeout = 200;
-    incomplete_delay = 400;
-    allow_prefix_unmatch = false;
-
+require'compe'.setup{
+    enabled = true,
+    debug = false,
+    autocomplete = true,
+    min_length = 1,
+    preselect = 'enable',
     source = {
-        path = true;
-        buffer = true;
-        calc = true;
-        vsnip = false;
-        nvim_lsp = true;
-        nvim_lua = true;
-        spell = false;
-        tags = true;
-        snippets_nvim = false;
-        ultisnips = true;
-    };
+        path      = true,
+        calc      = true,
+        buffer    = true,
+        nvim_lsp  = true,
+        nvim_lua  = true,
+        vsnip     = true
+    }
 }
+vim.api.nvim_set_keymap('i', '<CR>',    [[compe#confirm({ "keys": "\<Plug>delimitMateCR", "mode": "" })]], {noremap=false, silent=true, expr=true})
+vim.api.nvim_set_keymap('i', '<Tab>',   [[vsnip#expandable() ? "<Plug>(vsnip-expand)" : pumvisible() ? "\<C-n>" : "<Tab>"]], {noremap=false, silent=true, expr=true})
+vim.api.nvim_set_keymap('s', '<Tab>',   [[vsnip#jumpable(1) ? "<Plug>(vsnip-jump-next)" : "<Tab>"]], {noremap=false, silent=true, expr=true})
+vim.api.nvim_set_keymap('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "<S-Tab>"]], {noremap=false, silent=true, expr=true})
+vim.api.nvim_set_keymap('s', '<S-Tab>', [[vsnip#jumpable(1) ? "<Plug>(vsnip-jump-prev)" : "<S-Tab>"]], {noremap=false, silent=true, expr=true})
+vim.api.nvim_set_keymap('i', '<C-d>', [[<Plug>(vsnip-jump-next)]], {noremap=false, silent=true})
+vim.api.nvim_set_keymap('s', '<C-d>', [[<Plug>(vsnip-jump-next)]], {noremap=false, silent=true})
+vim.api.nvim_set_keymap('i', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
+vim.api.nvim_set_keymap('s', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
