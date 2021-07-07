@@ -32,6 +32,8 @@ local function init()
 
     use 'ggandor/lightspeed.nvim'
 
+    use 'lukas-reineke/indent-blankline.nvim'
+
     use {
         '907th/vim-auto-save',
         config = function()
@@ -39,11 +41,6 @@ local function init()
             vim.g.auto_save_silent = 1
             vim.g.auto_save_events = {"InsertLeave", "TextChanged"}
         end
-    }
-
-    use {
-        'lukas-reineke/indent-blankline.nvim',
-        branch = 'lua',
     }
 
     use {
@@ -178,7 +175,6 @@ local function init()
         'simnalamburt/vim-mundo',
         config = [[require('configs.mundo')]]
     }
-
 end
 
 local plugins = setmetatable({}, {

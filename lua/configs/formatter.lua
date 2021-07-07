@@ -1,5 +1,3 @@
-local map = require('utils').map
-
 require('formatter').setup({
     logging = false,
     filetype = {
@@ -15,5 +13,3 @@ require('formatter').setup({
         }
     }
 })
-
-map('n', '<leader>fm', ':Format<CR>')
