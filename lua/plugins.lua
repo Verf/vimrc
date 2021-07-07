@@ -22,7 +22,10 @@ local function init()
 
     use 'Verf/vim-surround'
 
-    use 'mhinz/vim-sayonara'
+    use {
+        'mhinz/vim-sayonara',
+        cmd = {'Sayonara', 'Sayonara!'}
+    }
 
     use 'farmergreg/vim-lastplace'
 
@@ -172,8 +175,60 @@ local function init()
     }
 
     use {
+        "folke/trouble.nvim",
+        cmd = "TroubleToggle",
+        config = function()
+            require("trouble").setup {
+            }
+        end
+    }
+
+    use {
+        "simrat39/symbols-outline.nvim",
+        cmd = "SymbolsOutline",
+        config = function()
+            vim.g.symbols_outline = {
+                highlight_hovered_item = true,
+                show_guides = true,
+                auto_preview = true,
+                position = "right",
+                keymaps = {
+                    close = "<Esc>",
+                    goto_location = "<Cr>",
+                    focus_location = "l",
+                    hover_symbol = "k",
+                    rename_symbol = "r",
+                    code_actions = "a",
+                },
+                lsp_blacklist = {},
+            }
+        end
+    }
+
+    use {
         'simnalamburt/vim-mundo',
-        config = [[require('configs.mundo')]]
+        cmd = { 'MundoShow', 'MundoHide', 'MundoToggle' },
+        config = function()
+            vim.g.mundo_mappings = {
+                ["<CR>"] = 'preview',
+                n        = 'move_older',
+                i        = 'move_newer',
+                N        = 'move_older_write',
+                I        = 'move_newer_write',
+                gg       = 'move_top',
+                G        = 'move_bottom',
+                P        = 'play_to',
+                d        = 'diff',
+                l        = 'toggle_inline',
+                ["/"]    = 'search',
+                m        = 'next_match',
+                M        = 'previous_match',
+                p        = 'diff_current_buffer',
+                f        = 'diff',
+                ["?"]    = 'toggle_help',
+                q        = 'quit'
+            }
+        end
     }
 end
 

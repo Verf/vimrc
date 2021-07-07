@@ -89,8 +89,8 @@ map('x', 'P', 'N')
 map("v", "<", "<gv")
 map("v", ">", ">gv")
 
-map("n", "<TAB>", ":bnext<CR>")
-map("n", "<S-TAB>", ":bprevious<CR>")
+map("n", "<TAB>", ":BufferLineCycleNext<CR>")
+map("n", "<S-TAB>", ":BufferLineCyclePrev<CR>")
 
 -- Plugin
 map('n', '/', ':Telescope current_buffer_fuzzy_find<CR>')
@@ -136,7 +136,6 @@ map('n', ']e', ':Lspsaga diagnostic_jump_next<CR>')
 map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
 
 -- Leader
-map('n', '<leader><tab>', ':e#<CR>')
 map('n', '<leader><space>', ':BufferLinePick<CR>')
 
 map('n', '<leader>qa', ':wqa<CR>')
@@ -169,4 +168,6 @@ map('n', '<leader>bb', ':Telescope buffers<CR>')
 
 map('n', '<leader>fm', ':Format<CR>')
 
-map('n', '<leader>u', ':MundoToggle<CR>')
+map('n', '<leader>vu', ':MundoToggle<CR>')
+map('n', '<leader>vs', ':SymbolsOutline<CR>')
+map('n', '<leader>vd', ':TroubleToggle<CR>')
