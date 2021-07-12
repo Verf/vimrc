@@ -24,7 +24,7 @@ local function init()
 
     use {
         'mhinz/vim-sayonara',
-        cmd = {'Sayonara', 'Sayonara!'}
+        cmd = 'Sayonara'
     }
 
     use 'farmergreg/vim-lastplace'
@@ -123,6 +123,15 @@ local function init()
         'hrsh7th/vim-vsnip',
         config = function()
             vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/vsnip'
+        end
+    }
+
+    use {
+        'mfussenegger/nvim-dap',
+        requires = {'mfussenegger/nvim-dap-python', 'rcarriga/nvim-dap-ui'},
+        config = function()
+            require'dapui'.setup()
+            require'dap-python'.setup('python')
         end
     }
 

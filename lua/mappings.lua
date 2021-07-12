@@ -168,6 +168,15 @@ map('n', '<leader>bb', ':Telescope buffers<CR>')
 
 map('n', '<leader>fm', ':Format<CR>')
 
+map('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
+map('n', '<F6>', [[:lua require'dap'.disconnect()<CR>:lua require'dap'.stop()<CR>]])
+map('n', '<F7>', [[:lua require'dap'.repl.toggle()<CR>]])
+map('n', '<F8>', [[:lua require'dap'.toggle_breakpoint()<CR>]])
+map('n', '<F9>', [[:lua require'dap'.step_over()<CR>]])
+map('n', '<F10>', [[:lua require'dap'.step_into()<CR>]])
+map('n', '<F11>', [[:lua require'dap'.step_out()<CR>]])
+map('n', '<F12>', [[:lua require'dap'.run_to_cursor()<CR>]])
+
 map('n', '<leader>vu', ':MundoToggle<CR>')
 map('n', '<leader>vs', ':SymbolsOutline<CR>')
 map('n', '<leader>vd', ':TroubleToggle<CR>')
