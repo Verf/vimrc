@@ -137,7 +137,13 @@ local function init()
 
     use {
         'nvim-telescope/telescope.nvim',
-        config = [[require('configs.search')]],
+        config = function()
+            require('telescope').setup{
+                defaults = {
+                    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+                }
+            }
+        end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
@@ -237,6 +243,13 @@ local function init()
                 ["?"]    = 'toggle_help',
                 q        = 'quit'
             }
+        end
+    }
+
+    use {
+        'kristijanhusak/orgmode.nvim',
+        config = function()
+            require('orgmode').setup{}
         end
     }
 end

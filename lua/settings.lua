@@ -21,6 +21,7 @@ g.loaded_python_provider = 0
 g.python3_host_prog = vim.fn.expand("~/scoop/shims/python3.exe")
 
 ----- settings -----
+opt.wrap          = false
 opt.hidden        = true
 opt.showmatch     = true
 opt.smartcase     = true
@@ -45,7 +46,6 @@ opt.showtabline   = 2
 opt.tabstop       = 4
 opt.softtabstop   = 4
 opt.shiftwidth    = 4
-opt.textwidth     = 200
 opt.synmaxcol     = 200
 
 opt.mouse         = 'a'

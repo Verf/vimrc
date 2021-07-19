@@ -165,6 +165,7 @@ map('n', '<leader>ff', ':Telescope find_files<CR>')
 map('n', '<leader>fh', ':Telescope oldfiles<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>bb', ':Telescope buffers<CR>')
+map('n', '<leader>ft', ':Telescope tags<CR>')
 
 map('n', '<leader>fm', ':Format<CR>')
 

@@ -5,12 +5,13 @@ require'compe'.setup{
     min_length = 1,
     preselect = 'enable',
     source = {
-        path      = true,
-        calc      = true,
-        buffer    = true,
-        nvim_lsp  = true,
-        nvim_lua  = true,
-        vsnip     = true
+        path     = true,
+        calc     = true,
+        buffer   = true,
+        nvim_lsp = true,
+        nvim_lua = true,
+        vsnip    = true,
+        orgmode  = true,
     }
 }
 vim.api.nvim_set_keymap('i', '<CR>',    [[compe#confirm({ "keys": "\<Plug>delimitMateCR", "mode": "" })]], {noremap=false, silent=true, expr=true})
@@ -22,3 +23,5 @@ vim.api.nvim_set_keymap('i', '<C-d>', [[<Plug>(vsnip-jump-next)]], {noremap=fals
 vim.api.nvim_set_keymap('s', '<C-d>', [[<Plug>(vsnip-jump-next)]], {noremap=false, silent=true})
 vim.api.nvim_set_keymap('i', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
 vim.api.nvim_set_keymap('s', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
+* TODO config orgmode
+  [2021-07-19 Mon]
