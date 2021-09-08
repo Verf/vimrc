@@ -35,7 +35,23 @@ local function init()
 
     use 'ggandor/lightspeed.nvim'
 
-    use 'lukas-reineke/indent-blankline.nvim'
+    use 'jbyuki/venn.nvim'
+
+
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function ()
+            vim.g.indent_blankline_show_current_context  = false
+        end
+    }
+
+    use {
+        'pseewald/vim-anyfold',
+        config = function()
+            vim.g.anyfold_fold_comments = 1
+            vim.cmd [[autocmd FileType * AnyFoldActivate]]
+        end
+    }
 
     use {
         '907th/vim-auto-save',
@@ -69,6 +85,7 @@ local function init()
         'folke/tokyonight.nvim',
         config = function()
             vim.cmd 'colorscheme tokyonight'
+            vim.cmd [[highlight Folded ctermbg=NONE guibg=NONE]]
         end
     }
 
@@ -103,10 +120,23 @@ local function init()
     }
 
     use {
-        'airblade/vim-rooter',
+        "folke/todo-comments.nvim",
+        requires = "nvim-lua/plenary.nvim",
         config = function()
-            vim.g.rooter_silent_chdir = 1
-            vim.g.rooter_patterns = {'.git', '.project'}
+            require("todo-comments").setup {
+                search = {
+                    pattern = [[\b(KEYWORDS)\b]],
+                }
+            }
+        end
+    }
+
+    use {
+        'ahmedkhalf/project.nvim',
+        config = function()
+            require'project_nvim'.setup{
+                patterns = { ".git", ".root", ".project", ".svn", "make*", "pom.xml" }
+            }
         end
     }
 
@@ -141,7 +171,8 @@ local function init()
             require('telescope').setup{
                 defaults = {
                     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-                }
+                },
+                require('telescope').load_extension('projects')
             }
         end,
         requires = {
@@ -161,8 +192,14 @@ local function init()
     }
 
     use {
-        'hrsh7th/nvim-compe',
-        config = [[require('configs.completion')]]
+        'hrsh7th/nvim-cmp',
+        config = [[require('configs.completion')]],
+        requires = {
+            'hrsh7th/vim-vsnip',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-path',
+        }
     }
 
     use {
@@ -172,9 +209,11 @@ local function init()
 
     use {
         'nvim-treesitter/nvim-treesitter',
+        branch = '0.5-compat',
         config = [[require('configs.treesitter')]],
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
+            'RRethy/nvim-treesitter-textsubjects',
             'p00f/nvim-ts-rainbow'
         }
     }
@@ -190,39 +229,7 @@ local function init()
     }
 
     use {
-        "folke/trouble.nvim",
-        cmd = "TroubleToggle",
-        config = function()
-            require("trouble").setup {
-            }
-        end
-    }
-
-    use {
-        "simrat39/symbols-outline.nvim",
-        cmd = "SymbolsOutline",
-        config = function()
-            vim.g.symbols_outline = {
-                highlight_hovered_item = true,
-                show_guides = true,
-                auto_preview = true,
-                position = "right",
-                keymaps = {
-                    close = "<Esc>",
-                    goto_location = "<Cr>",
-                    focus_location = "l",
-                    hover_symbol = "k",
-                    rename_symbol = "r",
-                    code_actions = "a",
-                },
-                lsp_blacklist = {},
-            }
-        end
-    }
-
-    use {
         'simnalamburt/vim-mundo',
-        cmd = { 'MundoShow', 'MundoHide', 'MundoToggle' },
         config = function()
             vim.g.mundo_mappings = {
                 ["<CR>"] = 'preview',
@@ -247,9 +254,22 @@ local function init()
     }
 
     use {
-        'kristijanhusak/orgmode.nvim',
+        'voldikss/vim-floaterm',
         config = function()
-            require('orgmode').setup{}
+            vim.g.shell = 'pwsh'
+            vim.g.floaterm_weight = 0.8
+            vim.g.floaterm_height = 0.8
+        end
+    }
+
+    use {
+        'ludovicchabant/vim-gutentags',
+        config = function ()
+            vim.g.gutentags_project_root  = {".git", ".project", ".root"}
+            vim.g.gutentags_ctags_tagfile = '.tags'
+            vim.g.gutentags_modules = {"ctags"}
+            vim.g.gutentags_cache_dir = vim.fn.stdpath("data") .. '/tags'
+            vim.g.gutentags_auto_add_gtags_cscope = 0
         end
     }
 end

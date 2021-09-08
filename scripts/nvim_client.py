@@ -7,7 +7,7 @@ from pynvim import attach
 SERVER = '\\\\.\\pipe\\nvim-pipe-12345'
 
 def main(argv):
-    path = argv[1] if len(argv) > 1 else ''
+    path = ' '.join(argv[1:]) if len(argv) > 1 else ''
     try:
         nvim = attach("socket", path=SERVER)
     except Exception:

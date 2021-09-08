@@ -1,0 +1,24 @@
+{
+    "enc": {
+        "prefix": "#u",
+        "body": [
+            "# -*- coding: utf-8 -*-",
+            "$0"
+        ],
+        "description": "coding: utf-8"
+    },
+    "import": {
+        "prefix": ["im", "imp"],
+        "body": [
+            "import ${0:package}"
+        ],
+        "description": "import package"
+    },
+    "from import": {
+        "prefix": "fi",
+        "body": [
+            "from ${1:package} import ${0:module}"
+        ],
+        "description": "from package import module"
+    }
+}

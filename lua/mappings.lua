@@ -86,13 +86,31 @@ map('x', 'I', 'K')
 map('x', 'O', 'L')
 map('x', 'P', 'N')
 
-map("v", "<", "<gv")
-map("v", ">", ">gv")
+-- insert
+map('i', '<C-a>', '<Esc>^i')
+map('i', '<C-e>', '<Esc>$a')
 
-map("n", "<TAB>", ":BufferLineCycleNext<CR>")
-map("n", "<S-TAB>", ":BufferLineCyclePrev<CR>")
+-- normal
+map('n', ']z', 'zj')
+map('n', '[z', 'zk')
+
+map('n','<Up>', '<C-v>k:VBox<CR>', {noremap = true})
+map('n','<Down>', '<C-v>j:VBox<CR>', {noremap = true})
+map('n','<Left>', '<C-v>h:VBox<CR>', {noremap = true})
+map('n','<Right>', '<C-v>l:VBox<CR>', {noremap = true})
+map('v', '<C-b>', ':VBox<CR>', {noremap = true})
+
+-- visual
+map('v', '<', '<gv')
+map('v', '>', '>gv')
+
+-- terminal
+map('t', '<C-o>', '<C-\\><C-n>')
 
 -- Plugin
+map('n', '<TAB>', ':BufferLineCycleNext<CR>')
+map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>')
+
 map('n', '/', ':Telescope current_buffer_fuzzy_find<CR>')
 
 map('x', 'ga', '<Plug>(EasyAlign)', {noremap=false})
@@ -114,16 +132,16 @@ map('x', 'T', '<Plug>Lightspeed_F', {noremap=false})
 map('x', 'k', '<Plug>Lightspeed_t', {noremap=false})
 map('x', 'K', '<Plug>Lightspeed_T', {noremap=false})
 
-map('',  '[y',    '<plug>(YoinkRotateBack)',                 {noremap=false})
-map('',  ']y',    '<plug>(YoinkRotateForward)',              {noremap=false})
-map('x', 'j',     '<plug>(YoinkYankPreserveCursorPosition)', {noremap=false})
-map('n', 'j',     '<plug>(YoinkYankPreserveCursorPosition)', {noremap=false})
-map('x', 'h',     '<plug>(YoinkPaste_p)',                    {noremap=false})
-map('n', 'h',     '<plug>(YoinkPaste_p)',                    {noremap=false})
-map('n', 'gh',    '<plug>(YoinkPaste_gp)',                   {noremap=false})
-map('n', 'gH',    '<plug>(YoinkPaste_gP)',                   {noremap=false})
-map('n', '<c-n>', '<plug>(YoinkPostPasteSwapBack',           {noremap=false})
-map('n', '<c-p>', '<plug>(YoinkPostPasteSwapForwrd)',        {noremap=false})
+map('',  '[y',    '<Plug>(YoinkRotateBack)',                 {noremap=false})
+map('',  ']y',    '<Plug>(YoinkRotateForward)',              {noremap=false})
+map('x', 'j',     '<Plug>(YoinkYankPreserveCursorPosition)', {noremap=false})
+map('n', 'j',     '<Plug>(YoinkYankPreserveCursorPosition)', {noremap=false})
+map('x', 'h',     '<Plug>(YoinkPaste_p)',                    {noremap=false})
+map('n', 'h',     '<Plug>(YoinkPaste_p)',                    {noremap=false})
+map('n', 'gh',    '<Plug>(YoinkPaste_gp)',                   {noremap=false})
+map('n', 'gH',    '<Plug>(YoinkPaste_gP)',                   {noremap=false})
+map('n', '<C-n>', '<Plug>(YoinkPostPasteSwapBack)',          {noremap=false})
+map('n', '<C-p>', '<Plug>(YoinkPostPasteSwapForward)',          {noremap=false})
 
 map('n', 'w', '<Plug>WordMotion_w', {noremap=false})
 map('n', 'W', '<Plug>WordMotion_W', {noremap=false})
@@ -138,8 +156,7 @@ map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
 -- Leader
 map('n', '<leader><space>', ':BufferLinePick<CR>')
 
-map('n', '<leader>qa', ':wqa<CR>')
-map('n', '<leader>qx', ':wqa!<CR>')
+map('n', '<leader>qa', ':qa!<CR>')
 map('n', '<leader>qq', ':Sayonara!<CR>')
 
 map('n', '<leader>wc', '<C-w>o')
@@ -166,18 +183,23 @@ map('n', '<leader>fh', ':Telescope oldfiles<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>bb', ':Telescope buffers<CR>')
 map('n', '<leader>ft', ':Telescope tags<CR>')
+map('n', '<leader>fp', ':Telescope projects<CR>')
 
 map('n', '<leader>fm', ':Format<CR>')
 
+map('', '<F1>', '<Esc>:FloatermToggle<CR>')
+map('', '<F4>', '<Esc>:MundoToggle<CR>')
+
+map('t', '<F1>', [[<C-\><C-n>:FloatermToggle<CR>]])
+map('t', '<C-t>', [[<C-\><C-n>:FloatermNew<CR>]])
+map('t', '<C-n>', [[<C-\><C-n>:FloatermNext<CR>]])
+map('t', '<C-p>', [[<C-\><C-n>:FloatermPrev<CR>]])
+
 map('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
-map('n', '<F6>', [[:lua require'dap'.disconnect()<CR>:lua require'dap'.stop()<CR>]])
+map('n', '<F6>', [[:lua require'dap'.close()<CR>]])
 map('n', '<F7>', [[:lua require'dap'.repl.toggle()<CR>]])
 map('n', '<F8>', [[:lua require'dap'.toggle_breakpoint()<CR>]])
 map('n', '<F9>', [[:lua require'dap'.step_over()<CR>]])
 map('n', '<F10>', [[:lua require'dap'.step_into()<CR>]])
 map('n', '<F11>', [[:lua require'dap'.step_out()<CR>]])
 map('n', '<F12>', [[:lua require'dap'.run_to_cursor()<CR>]])
-
-map('n', '<leader>vu', ':MundoToggle<CR>')
-map('n', '<leader>vs', ':SymbolsOutline<CR>')
-map('n', '<leader>vd', ':TroubleToggle<CR>')
