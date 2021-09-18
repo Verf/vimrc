@@ -18,8 +18,6 @@ local function init()
 
     use 'tpope/vim-repeat'
 
-    use 'Raimondi/delimitMate'
-
     use 'Verf/vim-surround'
 
     use {
@@ -37,11 +35,14 @@ local function init()
 
     use 'jbyuki/venn.nvim'
 
+    use 'windwp/nvim-autopairs'
+
+    use 'tami5/sqlite.lua'
 
     use {
         'lukas-reineke/indent-blankline.nvim',
         config = function ()
-            vim.g.indent_blankline_show_current_context  = false
+            vim.g.indent_blankline_show_current_context = false
         end
     }
 
@@ -172,18 +173,23 @@ local function init()
                 defaults = {
                     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                 },
-                require('telescope').load_extension('projects')
             }
+            require'telescope'.load_extension('projects')
+            require'telescope'.load_extension('frecency')
         end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-frecency.nvim',
         }
     }
 
     use {
-        'glepnir/galaxyline.nvim',
-        config = [[require('configs.statusline')]]
+        'hoob3rt/lualine.nvim',
+        config = [[require('configs.statusline')]],
+        requires = {
+            'SmiteshP/nvim-gps',
+        }
     }
 
     use {
@@ -195,10 +201,11 @@ local function init()
         'hrsh7th/nvim-cmp',
         config = [[require('configs.completion')]],
         requires = {
+            'hrsh7th/cmp-path',
             'hrsh7th/vim-vsnip',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-nvim-lua',
         }
     }
 
@@ -271,6 +278,21 @@ local function init()
             vim.g.gutentags_cache_dir = vim.fn.stdpath("data") .. '/tags'
             vim.g.gutentags_auto_add_gtags_cscope = 0
         end
+    }
+
+    use {
+        'TimUntersberger/neogit',
+        config = function ()
+            require'neogit'.setup{
+                integrations = {
+                    diffview = true
+                },
+            }
+        end,
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'sindrets/diffview.nvim'
+        }
     }
 end
 

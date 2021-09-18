@@ -179,7 +179,7 @@ map('n', '<leader>w=', '<C-w>=')
 map('n', '<leader>rn', ':Lspsaga rename<CR>')
 
 map('n', '<leader>ff', ':Telescope find_files<CR>')
-map('n', '<leader>fh', ':Telescope oldfiles<CR>')
+map('n', '<leader>fh', ':Telescope frecency<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>bb', ':Telescope buffers<CR>')
 map('n', '<leader>ft', ':Telescope tags<CR>')
@@ -188,6 +188,7 @@ map('n', '<leader>fp', ':Telescope projects<CR>')
 map('n', '<leader>fm', ':Format<CR>')
 
 map('', '<F1>', '<Esc>:FloatermToggle<CR>')
+map('', '<F2>', '<Esc>:Neogit<CR>')
 map('', '<F4>', '<Esc>:MundoToggle<CR>')
 
 map('t', '<F1>', [[<C-\><C-n>:FloatermToggle<CR>]])

@@ -28,6 +28,7 @@ g.maplocalleader = ','
 -- language
 g.loaded_python_provider = 0
 g.python3_host_prog = vim.fn.expand("~/scoop/shims/python3.exe")
+g.sqlite_clib_path = [[C:\Programes\sqlite\sqlite3.dll]]
 
 cmd [[autocmd filetype org setlocal tabstop=2 softtabstop=2 shiftwidth=2]]
 
