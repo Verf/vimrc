@@ -20,24 +20,36 @@ local function init()
 
     use 'Verf/vim-surround'
 
+    use 'junegunn/vim-easy-align'
+
+    use 'svermeulen/vim-yoink'
+
     use {
         'mhinz/vim-sayonara',
         cmd = 'Sayonara'
     }
 
-    use 'farmergreg/vim-lastplace'
-
-    use 'junegunn/vim-easy-align'
-
-    use 'svermeulen/vim-yoink'
-
-    use 'ggandor/lightspeed.nvim'
+    use {
+        'ethanholz/nvim-lastplace',
+        config = function ()
+            require'nvim-lastplace'.setup {
+                lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
+                lastplace_ignore_filetype = {"gitcommit", "gitrebase", "svn", "hgcommit"},
+                lastplace_open_folds = true
+            }
+        end
+    }
 
     use 'jbyuki/venn.nvim'
 
     use 'windwp/nvim-autopairs'
 
-    use 'tami5/sqlite.lua'
+    use {
+        'phaazon/hop.nvim',
+        config = function ()
+            require'hop'.setup { keys = 'tfvnumdecriwsxloqazh' }
+        end
+    }
 
     use {
         'lukas-reineke/indent-blankline.nvim',
@@ -55,11 +67,24 @@ local function init()
     }
 
     use {
-        '907th/vim-auto-save',
-        config = function()
-            vim.g.auto_save = 1
-            vim.g.auto_save_silent = 1
-            vim.g.auto_save_events = {"InsertLeave", "TextChanged"}
+        'Pocco81/AutoSave.nvim',
+        config = function ()
+            require'autosave'.setup(
+                {
+                    enabled = true,
+                    execution_message = '',
+                    events = {"InsertLeave", "TextChanged"},
+                    conditions = {
+                        exists = true,
+                        filetype_is_not = {},
+                        modifiable = true
+                    },
+                    write_all_buffers = true,
+                    on_off_commands = true,
+                    clean_command_line_interval = 0,
+                    debounce_delay = 135
+                }
+            )
         end
     }
 
@@ -72,52 +97,53 @@ local function init()
                 'javascript';
             }
         end,
-        ft = {"lua", "css", "javascript"}
-    }
+        ft = {'lua', 'css', 'javascript'}
+        }
 
-    use {
-        'chaoren/vim-wordmotion',
-        config = function()
-            vim.g.wordmotion_nomap = 1
-        end
-    }
-
-    use {
-        'folke/tokyonight.nvim',
-        config = function()
-            vim.cmd 'colorscheme tokyonight'
-            vim.cmd [[highlight Folded ctermbg=NONE guibg=NONE]]
-        end
-    }
-
-    use {
-        'mg979/vim-visual-multi',
-        config = function()
-            vim.g.VM_maps = {
-                ['Find Under']         = '<C-s>',
-                ['Find Subword Under'] = '<C-s>',
-                ['Add Cursor Down']    = '<M-Down>',
-                ['Add Cursor Up']      = '<M-Up>',
-                ['Find Next']          = '<C-s>',
-                ['Find Prev']          = '<C-S-s>',
-                ['Goto Next']          = ']',
-                ['Goto Prev']          = '[',
-                ['Seek Next']          = '<C-f>',
-                ['Seek Prev']          = '<C-b>',
-                ['Skip Region']        = '<C-x>',
-                ['Remove Region']      = '<C-S-x>',
-                ['Replace']            = 'R',
-                ['Surround']           = 'S',
-                ['Toggle Multiline']   = 'M',
+            use {
+                'chaoren/vim-wordmotion',
+                config = function()
+                    vim.g.wordmotion_nomap = 1
+                end
             }
-        end
-    }
 
-    use {
+            use {
+                'folke/tokyonight.nvim',
+                config = function()
+                    vim.cmd 'colorscheme tokyonight'
+                    vim.cmd [[highlight Folded ctermbg=NONE guibg=NONE]]
+                end
+            }
+
+            use {
+                'mg979/vim-visual-multi',
+                config = function()
+                    vim.g.VM_maps = {
+                        ['Find Under']         = '<C-s>',
+                        ['Find Subword Under'] = '<C-s>',
+                        ['Add Cursor Down']    = '<M-Down>',
+                        ['Add Cursor Up']      = '<M-Up>',
+                        ['Find Next']          = '<C-s>',
+                        ['Find Prev']          = '<C-S-s>',
+                        ['Goto Next']          = ']',
+                        ['Goto Prev']          = '[',
+                        ['Seek Next']          = '<C-f>',
+                        ['Seek Prev']          = '<C-b>',
+                        ['Skip Region']        = '<C-x>',
+                        ['Remove Region']      = '<C-S-x>',
+                        ['Replace']            = 'R',
+                        ['Surround']           = 'S',
+                        ['Toggle Multiline']   = 'M',
+                    }
+                end
+            }
+
+        use {
         'terrortylor/nvim-comment',
         config = function()
             require('nvim_comment').setup()
-        end
+        end,
+        ft = {'python', 'java', 'vue', 'html', 'javascript', 'sh', 'ps1'}
     }
 
     use {
@@ -129,7 +155,8 @@ local function init()
                     pattern = [[\b(KEYWORDS)\b]],
                 }
             }
-        end
+        end,
+        ft = {'python', 'java', 'vue', 'html', 'javascript', 'sh', 'ps1'}
     }
 
     use {
@@ -163,7 +190,13 @@ local function init()
         config = function()
             require'dapui'.setup()
             require'dap-python'.setup('python')
-        end
+        end,
+        ft = {'python'}
+    }
+
+    use {
+        'tamago324/lir.nvim',
+        config = [[require('configs.explorer')]]
     }
 
     use {
@@ -175,12 +208,10 @@ local function init()
                 },
             }
             require'telescope'.load_extension('projects')
-            require'telescope'.load_extension('frecency')
         end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-frecency.nvim',
         }
     }
 
@@ -263,20 +294,9 @@ local function init()
     use {
         'voldikss/vim-floaterm',
         config = function()
-            vim.g.shell = 'pwsh'
+            vim.g.shell = vim.o.shell
             vim.g.floaterm_weight = 0.8
             vim.g.floaterm_height = 0.8
-        end
-    }
-
-    use {
-        'ludovicchabant/vim-gutentags',
-        config = function ()
-            vim.g.gutentags_project_root  = {".git", ".project", ".root"}
-            vim.g.gutentags_ctags_tagfile = '.tags'
-            vim.g.gutentags_modules = {"ctags"}
-            vim.g.gutentags_cache_dir = vim.fn.stdpath("data") .. '/tags'
-            vim.g.gutentags_auto_add_gtags_cscope = 0
         end
     }
 

@@ -106,6 +106,9 @@ map('v', '>', '>gv')
 
 -- terminal
 map('t', '<C-o>', '<C-\\><C-n>')
+map('t', '<C-t>', [[<C-\><C-n>:FloatermNew<CR>]])
+map('t', '<C-n>', [[<C-\><C-n>:FloatermNext<CR>]])
+map('t', '<C-p>', [[<C-\><C-n>:FloatermPrev<CR>]])
 
 -- Plugin
 map('n', '<TAB>', ':BufferLineCycleNext<CR>')
@@ -119,19 +122,6 @@ map('n', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 map('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>')
 map('n', 'gr', ':Lspsaga lsp_finder<CR>')
 
-map('n', 't', '<Plug>Lightspeed_f', {noremap=false})
-map('n', 'T', '<Plug>Lightspeed_F', {noremap=false})
-map('n', 'k', '<Plug>Lightspeed_t', {noremap=false})
-map('n', 'K', '<Plug>Lightspeed_T', {noremap=false})
-map('o', 't', '<Plug>Lightspeed_f', {noremap=false})
-map('o', 'T', '<Plug>Lightspeed_F', {noremap=false})
-map('o', 'k', '<Plug>Lightspeed_t', {noremap=false})
-map('o', 'K', '<Plug>Lightspeed_T', {noremap=false})
-map('x', 't', '<Plug>Lightspeed_f', {noremap=false})
-map('x', 'T', '<Plug>Lightspeed_F', {noremap=false})
-map('x', 'k', '<Plug>Lightspeed_t', {noremap=false})
-map('x', 'K', '<Plug>Lightspeed_T', {noremap=false})
-
 map('',  '[y',    '<Plug>(YoinkRotateBack)',                 {noremap=false})
 map('',  ']y',    '<Plug>(YoinkRotateForward)',              {noremap=false})
 map('x', 'j',     '<Plug>(YoinkYankPreserveCursorPosition)', {noremap=false})
@@ -141,7 +131,7 @@ map('n', 'h',     '<Plug>(YoinkPaste_p)',                    {noremap=false})
 map('n', 'gh',    '<Plug>(YoinkPaste_gp)',                   {noremap=false})
 map('n', 'gH',    '<Plug>(YoinkPaste_gP)',                   {noremap=false})
 map('n', '<C-n>', '<Plug>(YoinkPostPasteSwapBack)',          {noremap=false})
-map('n', '<C-p>', '<Plug>(YoinkPostPasteSwapForward)',          {noremap=false})
+map('n', '<C-p>', '<Plug>(YoinkPostPasteSwapForward)',       {noremap=false})
 
 map('n', 'w', '<Plug>WordMotion_w', {noremap=false})
 map('n', 'W', '<Plug>WordMotion_W', {noremap=false})
@@ -152,6 +142,13 @@ map('n', 'D', '<Plug>WordMotion_d', {noremap=false})
 
 map('n', ']e', ':Lspsaga diagnostic_jump_next<CR>')
 map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
+
+map('n', 'gw', ':HopWord<CR>')
+map('n', 'gl', ':HopLine<CR>')
+map('n', 's', ':HopChar2<CR>')
+map('v', 'gw', ':HopWord<CR>')
+map('v', 'gl', ':HopLine<CR>')
+map('v', 's', ':HopChar2<CR>')
 
 -- Leader
 map('n', '<leader><space>', ':BufferLinePick<CR>')
@@ -179,7 +176,7 @@ map('n', '<leader>w=', '<C-w>=')
 map('n', '<leader>rn', ':Lspsaga rename<CR>')
 
 map('n', '<leader>ff', ':Telescope find_files<CR>')
-map('n', '<leader>fh', ':Telescope frecency<CR>')
+map('n', '<leader>fh', ':Telescope oldfiles<CR>')
 map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>bb', ':Telescope buffers<CR>')
 map('n', '<leader>ft', ':Telescope tags<CR>')
@@ -187,14 +184,13 @@ map('n', '<leader>fp', ':Telescope projects<CR>')
 
 map('n', '<leader>fm', ':Format<CR>')
 
+-- F1: toggleterm
+--
 map('', '<F1>', '<Esc>:FloatermToggle<CR>')
-map('', '<F2>', '<Esc>:Neogit<CR>')
-map('', '<F4>', '<Esc>:MundoToggle<CR>')
-
 map('t', '<F1>', [[<C-\><C-n>:FloatermToggle<CR>]])
-map('t', '<C-t>', [[<C-\><C-n>:FloatermNew<CR>]])
-map('t', '<C-n>', [[<C-\><C-n>:FloatermNext<CR>]])
-map('t', '<C-p>', [[<C-\><C-n>:FloatermPrev<CR>]])
+map('', '<F2>', '<Esc>:Neogit<CR>')
+map('', '<F3>', [[<Esc>:lua require'lir.float'.toggle()<CR>]])
+map('', '<F4>', '<Esc>:MundoToggle<CR>')
 
 map('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
 map('n', '<F6>', [[:lua require'dap'.close()<CR>]])

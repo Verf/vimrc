@@ -67,6 +67,18 @@ require'lspconfig'.sumneko_lua.setup {
 }
 
 
+-- vue setup
+require'lspconfig'.vuels.setup{
+    cmd = { "vls.cmd" }
+}
+
+
+-- ts setup
+require'lspconfig'.tsserver.setup{
+    cmd = { "typescript-language-server.cmd", "--stdio" }
+}
+
+
 require('lspsaga').init_lsp_saga{
     finder_action_keys = {
         open = '<CR>',

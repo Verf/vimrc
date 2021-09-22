@@ -41,6 +41,7 @@ opt.autochdir     = true
 opt.termguicolors = true
 opt.foldenable    = true
 opt.backup        = false
+opt.undofile      = true
 opt.showmode      = false
 opt.hlsearch      = false
 opt.writebackup   = false
