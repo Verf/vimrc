@@ -22,8 +22,6 @@ local function init()
 
     use 'junegunn/vim-easy-align'
 
-    use 'svermeulen/vim-yoink'
-
     use {
         'mhinz/vim-sayonara',
         cmd = 'Sayonara'
@@ -260,35 +258,10 @@ local function init()
         'neovim/nvim-lspconfig',
         config = [[require('configs.lsp')]],
         requires = {
-            'glepnir/lspsaga.nvim',
+            'tami5/lspsaga.nvim',
             'onsails/lspkind-nvim',
             'ray-x/lsp_signature.nvim',
         }
-    }
-
-    use {
-        'simnalamburt/vim-mundo',
-        config = function()
-            vim.g.mundo_mappings = {
-                ["<CR>"] = 'preview',
-                n        = 'move_older',
-                i        = 'move_newer',
-                N        = 'move_older_write',
-                I        = 'move_newer_write',
-                gg       = 'move_top',
-                G        = 'move_bottom',
-                P        = 'play_to',
-                d        = 'diff',
-                l        = 'toggle_inline',
-                ["/"]    = 'search',
-                m        = 'next_match',
-                M        = 'previous_match',
-                p        = 'diff_current_buffer',
-                f        = 'diff',
-                ["?"]    = 'toggle_help',
-                q        = 'quit'
-            }
-        end
     }
 
     use {
@@ -298,21 +271,6 @@ local function init()
             vim.g.floaterm_weight = 0.8
             vim.g.floaterm_height = 0.8
         end
-    }
-
-    use {
-        'TimUntersberger/neogit',
-        config = function ()
-            require'neogit'.setup{
-                integrations = {
-                    diffview = true
-                },
-            }
-        end,
-        requires = {
-            'nvim-lua/plenary.nvim',
-            'sindrets/diffview.nvim'
-        }
     }
 end
 
