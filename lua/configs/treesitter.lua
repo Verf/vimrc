@@ -5,7 +5,7 @@ require'nvim-treesitter.configs'.setup {
     },
     indent = {
         enable = true,
-        disable = {'python'}
+        disable = {'python',}
     },
     incremental_selection = {
         enable = true,
@@ -22,9 +22,11 @@ require'nvim-treesitter.configs'.setup {
             keymaps = {
                 -- You can use the capture groups defined in textobjects.scm
                 ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
+                ["rf"] = "@function.inner",
                 ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
+                ["rc"] = "@class.inner",
+                ["am"] = "@parameter.outer",
+                ["rm"] = "@parameter.inner",
             },
         },
     },

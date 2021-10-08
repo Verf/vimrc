@@ -20,10 +20,8 @@ require'cmp'.setup({
                 vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>(vsnip-expand)', true, true, true), '')
             elseif vim.fn.pumvisible() == 1 then
                 vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
-            elseif check_back_space() then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Tab>', true, true, true), 'n')
             else
-                fallback()
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>(Tabout)', true, true, true), '')
             end
         end,
     },

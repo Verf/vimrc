@@ -16,9 +16,22 @@ local function init()
         opt = true
     }
 
-    use 'tpope/vim-repeat'
+    use {
+        'blackCauldron7/surround.nvim',
+        config = function ()
+            require'surround'.setup{mappings_style = 'sandwich'}
+        end
+    }
 
-    use 'Verf/vim-surround'
+    use {
+        'abecodes/tabout.nvim',
+        config = function ()
+            require'tabout'.setup{
+                tabkey = '',
+                backwards_tabkey = '',
+            }
+        end
+    }
 
     use 'junegunn/vim-easy-align'
 
@@ -31,14 +44,12 @@ local function init()
         'ethanholz/nvim-lastplace',
         config = function ()
             require'nvim-lastplace'.setup {
-                lastplace_ignore_buftype = {"quickfix", "nofile", "help"},
-                lastplace_ignore_filetype = {"gitcommit", "gitrebase", "svn", "hgcommit"},
+                lastplace_ignore_buftype = {'quickfix', 'nofile', 'help'},
+                lastplace_ignore_filetype = {'gitcommit', 'gitrebase', 'svn', 'hgcommit'},
                 lastplace_open_folds = true
             }
         end
     }
-
-    use 'jbyuki/venn.nvim'
 
     use 'windwp/nvim-autopairs'
 
@@ -71,7 +82,7 @@ local function init()
                 {
                     enabled = true,
                     execution_message = '',
-                    events = {"InsertLeave", "TextChanged"},
+                    events = {'InsertLeave', 'TextChanged'},
                     conditions = {
                         exists = true,
                         filetype_is_not = {},
@@ -145,10 +156,10 @@ local function init()
     }
 
     use {
-        "folke/todo-comments.nvim",
-        requires = "nvim-lua/plenary.nvim",
+        'folke/todo-comments.nvim',
+        requires = 'nvim-lua/plenary.nvim',
         config = function()
-            require("todo-comments").setup {
+            require('todo-comments').setup {
                 search = {
                     pattern = [[\b(KEYWORDS)\b]],
                 }
@@ -161,7 +172,7 @@ local function init()
         'ahmedkhalf/project.nvim',
         config = function()
             require'project_nvim'.setup{
-                patterns = { ".git", ".root", ".project", ".svn", "make*", "pom.xml" }
+                patterns = { '.git', '.root', '.project', '.svn', 'make*', 'pom.xml' }
             }
         end
     }
@@ -245,7 +256,6 @@ local function init()
 
     use {
         'nvim-treesitter/nvim-treesitter',
-        branch = '0.5-compat',
         config = [[require('configs.treesitter')]],
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
@@ -258,7 +268,6 @@ local function init()
         'neovim/nvim-lspconfig',
         config = [[require('configs.lsp')]],
         requires = {
-            'tami5/lspsaga.nvim',
             'onsails/lspkind-nvim',
             'ray-x/lsp_signature.nvim',
         }
