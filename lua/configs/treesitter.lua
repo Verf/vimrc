@@ -8,13 +8,7 @@ require'nvim-treesitter.configs'.setup {
         disable = {'python',}
     },
     incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = "<CR>",
-            node_incremental = "<CR>",
-            scope_incremental = "<C-CR>",
-            node_decremental = "<BS>",
-        },
+        enable = false,
     },
     textobjects = {
         select = {
@@ -29,12 +23,32 @@ require'nvim-treesitter.configs'.setup {
                 ["rm"] = "@parameter.inner",
             },
         },
+        move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+                ["]f"] = "@function.outer",
+                ["]c"] = "@class.outer",
+            },
+            goto_next_end = {
+                ["]F"] = "@function.outer",
+                ["]C"] = "@class.outer",
+            },
+            goto_previous_start = {
+                ["[f"] = "@function.outer",
+                ["[c"] = "@class.outer",
+            },
+            goto_previous_end = {
+                ["[F"] = "@function.outer",
+                ["[C"] = "@class.outer",
+            },
+        }
     },
     textsubjects = {
         enable = true,
         keymaps = {
-            ['.'] = 'textsubjects-smart',
-            [';'] = 'textsubjects-container-outer',
+            ['<CR>'] = 'textsubjects-smart',
+            ['<S-CR>'] = 'textsubjects-container-outer',
         }
     },
     rainbow = {
