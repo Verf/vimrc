@@ -9,6 +9,9 @@ else
     print("Unsupported system for sumneko")
 end
 
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
 local on_attach = function(client, bufnr)
     -- enable signature help
     require('lsp_signature').on_attach({
@@ -23,7 +26,8 @@ end
 
 -- python setup
 require'lspconfig'.pyright.setup{
-    on_attach = on_attach
+    on_attach = on_attach,
+    capabilities = capabilities
 }
 
 -- lua setup
@@ -54,13 +58,15 @@ require'lspconfig'.pyright.setup{
 
 -- vue setup
 require'lspconfig'.vuels.setup{
-    cmd = { "vls.cmd" }
+    cmd = { "vls.cmd" },
+    capabilities = capabilities
 }
 
 
 -- ts setup
 require'lspconfig'.tsserver.setup{
-    cmd = { "typescript-language-server.cmd", "--stdio" }
+    cmd = { "typescript-language-server.cmd", "--stdio" },
+    capabilities = capabilities
 }
 
 require('lspkind').init()

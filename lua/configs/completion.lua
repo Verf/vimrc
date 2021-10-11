@@ -3,27 +3,33 @@ vim.api.nvim_set_keymap('s', '<C-d>', [[<Plug>(vsnip-jump-next)]], {noremap=fals
 vim.api.nvim_set_keymap('i', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
 vim.api.nvim_set_keymap('s', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
 
-local check_back_space = function()
-  local col = vim.fn.col('.') - 1
-  return col == 0 or vim.fn.getline('.'):sub(col, col):match('%s')
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-require'cmp'.setup({
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
+local cmp = require('cmp')
+
+cmp.setup({
     snippet = {
         expand = function (args)
             vim.fn['vsnip#anonymous'](args.body)
         end,
     },
     mapping = {
-        ['<Tab>'] = function (fallback)
+        ['<Tab>'] = cmp.mapping(function(fallback)
             if vim.fn['vsnip#expandable']() == 1 then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>(vsnip-expand)', true, true, true), '')
-            elseif vim.fn.pumvisible() == 1 then
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+                feedkey('<Plug>(vsnip-expand)', '')
+            elseif cmp.visible() then
+                cmp.select_next_item()
             else
-                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>(Tabout)', true, true, true), '')
+                feedkey('<Plug>(Tabout)', '')
             end
-        end,
+        end, {'i', 's'})
     },
     sources = {
         { name = 'path' },

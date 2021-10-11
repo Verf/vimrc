@@ -68,14 +68,6 @@ local function init()
     }
 
     use {
-        'pseewald/vim-anyfold',
-        config = function()
-            vim.g.anyfold_fold_comments = 1
-            vim.cmd [[autocmd FileType * AnyFoldActivate]]
-        end
-    }
-
-    use {
         'Pocco81/AutoSave.nvim',
         config = function ()
             require'autosave'.setup(
@@ -187,13 +179,6 @@ local function init()
     }
 
     use {
-        'hrsh7th/vim-vsnip',
-        config = function()
-            vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/vsnip'
-        end
-    }
-
-    use {
         'mfussenegger/nvim-dap',
         requires = {'mfussenegger/nvim-dap-python', 'rcarriga/nvim-dap-ui'},
         config = function()
@@ -237,17 +222,6 @@ local function init()
         config = [[require('configs.bufferline')]]
     }
 
-    use {
-        'hrsh7th/nvim-cmp',
-        config = [[require('configs.completion')]],
-        requires = {
-            'hrsh7th/cmp-path',
-            'hrsh7th/vim-vsnip',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-nvim-lua',
-        }
-    }
 
     use {
         'mhartington/formatter.nvim',
@@ -273,6 +247,27 @@ local function init()
         }
     }
 
+    use {
+        'hrsh7th/vim-vsnip',
+        config = function()
+            vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/vsnip'
+        end
+    }
+ 
+
+    use {
+        'hrsh7th/nvim-cmp',
+        config = [[require('configs.completion')]],
+        requires = {
+            'hrsh7th/vim-vsnip',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-vsnip',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lua',
+        }
+    }
+ 
     use {
         'voldikss/vim-floaterm',
         config = function()

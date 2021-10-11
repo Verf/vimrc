@@ -1,6 +1,6 @@
 let s:fontname = "Sarasa Mono SC Nerd"
-let s:fontsize = 12
-let s:curfontsize = 12
+let s:fontsize = 13
+let s:curfontsize = 13
 
 function! SetDefaultFont()
   :execute "GuiFont! " . s:fontname . ":h" . s:fontsize
