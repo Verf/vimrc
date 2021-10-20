@@ -27,8 +27,7 @@ g.maplocalleader = ','
 
 -- language
 g.loaded_python_provider = 0
-g.python3_host_prog = vim.fn.expand("~/scoop/shims/python3.exe")
-g.sqlite_clib_path = [[C:\Programes\sqlite\sqlite3.dll]]
+g.python3_host_prog = vim.fn.expand([[D:\Env\Python\Python39\python.exe]])
 
 cmd [[autocmd filetype org setlocal tabstop=2 softtabstop=2 shiftwidth=2]]
 
@@ -64,6 +63,7 @@ opt.synmaxcol     = 200
 
 opt.foldlevel    = 99
 
+-- opt.guifont      = 'Sarasa Mono SC Nerd:h14'
 opt.mouse        = 'a'
 opt.showbreak    = '⮎'
 opt.signcolumn   = 'yes'

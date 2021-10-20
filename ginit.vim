@@ -29,4 +29,4 @@ if exists(':GuiScrollBar')
 endif
 
 call SetDefaultFont()
-" call GuiWindowMaximized(1)
+call GuiWindowMaximized(1)

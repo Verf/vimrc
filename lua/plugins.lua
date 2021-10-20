@@ -19,7 +19,11 @@ local function init()
     use {
         'blackCauldron7/surround.nvim',
         config = function ()
-            require'surround'.setup{mappings_style = 'sandwich'}
+            require'surround'.setup{
+                brackets = {"(", "{", "[", "<"},
+                load_keymaps = false,
+                map_insert_mode = false
+            }
         end
     }
 
@@ -38,6 +42,15 @@ local function init()
     use {
         'mhinz/vim-sayonara',
         cmd = 'Sayonara'
+    }
+
+    use 'yamatsum/nvim-cursorline'
+
+    use {
+        'rcarriga/nvim-notify',
+        config = function ()
+            vim.notify = require('notify')
+        end
     }
 
     use {
@@ -99,47 +112,47 @@ local function init()
             }
         end,
         ft = {'lua', 'css', 'javascript'}
-        }
+    }
 
-            use {
-                'chaoren/vim-wordmotion',
-                config = function()
-                    vim.g.wordmotion_nomap = 1
-                end
+    use {
+        'chaoren/vim-wordmotion',
+        config = function()
+            vim.g.wordmotion_nomap = 1
+        end
+    }
+
+    use {
+        'folke/tokyonight.nvim',
+        config = function()
+            vim.cmd 'colorscheme tokyonight'
+            vim.cmd [[highlight Folded ctermbg=NONE guibg=NONE]]
+        end
+    }
+
+    use {
+        'mg979/vim-visual-multi',
+        config = function()
+            vim.g.VM_maps = {
+                ['Find Under']         = '<C-s>',
+                ['Find Subword Under'] = '<C-s>',
+                ['Add Cursor Down']    = '<M-Down>',
+                ['Add Cursor Up']      = '<M-Up>',
+                ['Find Next']          = '<C-s>',
+                ['Find Prev']          = '<C-S-s>',
+                ['Goto Next']          = ']',
+                ['Goto Prev']          = '[',
+                ['Seek Next']          = '<C-f>',
+                ['Seek Prev']          = '<C-b>',
+                ['Skip Region']        = '<C-x>',
+                ['Remove Region']      = '<C-S-x>',
+                ['Replace']            = 'R',
+                ['Surround']           = 'S',
+                ['Toggle Multiline']   = 'M',
             }
+        end
+    }
 
-            use {
-                'folke/tokyonight.nvim',
-                config = function()
-                    vim.cmd 'colorscheme tokyonight'
-                    vim.cmd [[highlight Folded ctermbg=NONE guibg=NONE]]
-                end
-            }
-
-            use {
-                'mg979/vim-visual-multi',
-                config = function()
-                    vim.g.VM_maps = {
-                        ['Find Under']         = '<C-s>',
-                        ['Find Subword Under'] = '<C-s>',
-                        ['Add Cursor Down']    = '<M-Down>',
-                        ['Add Cursor Up']      = '<M-Up>',
-                        ['Find Next']          = '<C-s>',
-                        ['Find Prev']          = '<C-S-s>',
-                        ['Goto Next']          = ']',
-                        ['Goto Prev']          = '[',
-                        ['Seek Next']          = '<C-f>',
-                        ['Seek Prev']          = '<C-b>',
-                        ['Skip Region']        = '<C-x>',
-                        ['Remove Region']      = '<C-S-x>',
-                        ['Replace']            = 'R',
-                        ['Surround']           = 'S',
-                        ['Toggle Multiline']   = 'M',
-                    }
-                end
-            }
-
-        use {
+    use {
         'terrortylor/nvim-comment',
         config = function()
             require('nvim_comment').setup()
@@ -186,11 +199,6 @@ local function init()
             require'dap-python'.setup('python')
         end,
         ft = {'python'}
-    }
-
-    use {
-        'tamago324/lir.nvim',
-        config = [[require('configs.explorer')]]
     }
 
     use {
@@ -253,7 +261,7 @@ local function init()
             vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/vsnip'
         end
     }
- 
+
 
     use {
         'hrsh7th/nvim-cmp',
@@ -267,14 +275,29 @@ local function init()
             'hrsh7th/cmp-nvim-lua',
         }
     }
- 
+
     use {
         'voldikss/vim-floaterm',
-        config = function()
+        config = function ()
             vim.g.shell = vim.o.shell
             vim.g.floaterm_weight = 0.8
             vim.g.floaterm_height = 0.8
         end
+    }
+
+    use {
+        'kyazdani42/nvim-tree.lua',
+        config = function ()
+            vim.g.nvim_tree_show_icons = {
+                git = 0,
+                folders = 1,
+                files = 1,
+                folder_arrows = 1,
+            }
+            require'nvim-tree'.setup()
+        end,
+        requires = 'kyazdani42/nvim-web-devicons',
+        cmd = {'NvimTreeToggle', 'NvimTreeRefresh', 'NvimTreeFindFile'}
     }
 end
 

@@ -141,6 +141,9 @@ map('v', 'gw', ':HopWord<CR>')
 map('v', 'gl', ':HopLine<CR>')
 map('v', 'gs', ':HopChar2<CR>')
 
+map('n', 'sd', [[<Cmd>lua require'surround'.surround_delete()<CR>]])
+map('n', 'sc', [[<Cmd>lua require'surround'.surround_replace()<CR>]])
+
 -- Leader
 map('n', '<leader><space>', ':BufferLinePick<CR>')
 
@@ -179,11 +182,11 @@ map('n', '<leader>fm', ':Format<CR>')
 --
 map('', '<F1>', '<Esc>:FloatermToggle<CR>')
 map('t', '<F1>', [[<C-\><C-n>:FloatermToggle<CR>]])
-map('', '<F2>', [[<Esc>:lua require'lir.float'.toggle()<CR>]])
+map('', '<F2>', '<Esc>:NvimTreeToggle<CR>')
 
 map('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
 map('n', '<F6>', [[:lua require'dap'.close()<CR>]])
-map('n', '<F7>', [[:lua require'dap'.repl.toggle()<CR>]])
+map('n', '<F7>', [[:lua require'dapui'.toggle()<CR>]])
 map('n', '<F8>', [[:lua require'dap'.toggle_breakpoint()<CR>]])
 map('n', '<F9>', [[:lua require'dap'.step_over()<CR>]])
 map('n', '<F10>', [[:lua require'dap'.step_into()<CR>]])
