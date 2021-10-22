@@ -35,6 +35,7 @@ cmd [[autocmd filetype org setlocal tabstop=2 softtabstop=2 shiftwidth=2]]
 opt.wrap          = false
 opt.hidden        = true
 opt.showmatch     = true
+opt.ignorecase    = true
 opt.smartcase     = true
 opt.autochdir     = false
 opt.termguicolors = true
@@ -50,7 +51,6 @@ opt.number        = true
 opt.linebreak     = true
 opt.cursorline    = true
 
-
 opt.updatetime    = 300
 opt.scrolloff     = 999
 opt.timeoutlen    = 1500
@@ -62,6 +62,8 @@ opt.shiftwidth    = 4
 opt.synmaxcol     = 200
 
 opt.foldlevel    = 99
+opt.foldmethod   = 'indent'
+opt.foldtext     = 'v:lua.myfoldtext()'
 
 -- opt.guifont      = 'Sarasa Mono SC Nerd:h14'
 opt.mouse        = 'a'
@@ -79,3 +81,4 @@ opt.shortmess    = 'filnxtToOFc'
 opt.whichwrap    = ''
 opt.switchbuf    = 'useopen,usetab,newtab'
 opt.completeopt  = 'menuone,noselect'
+opt.fillchars    = 'fold: '

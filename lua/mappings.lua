@@ -114,8 +114,6 @@ map('t', '<C-p>', [[<C-\><C-n>:FloatermPrev<CR>]])
 map('n', '<TAB>', ':BufferLineCycleNext<CR>')
 map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>')
 
-map('n', '/', ':Telescope current_buffer_fuzzy_find<CR>')
-
 map('x', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 map('n', 'ga', '<Plug>(EasyAlign)', {noremap=false})
 
