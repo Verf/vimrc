@@ -16,6 +16,31 @@ local function init()
         opt = true
     }
 
+    use 'folke/tokyonight.nvim'
+
+    use 'shaunsingh/solarized.nvim'
+
+    use {
+        'TimUntersberger/neogit',
+        config = function ()
+            require'neogit'.setup()
+        end,
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'sindrets/diffview.nvim'
+        }
+    }
+
+    use {
+        'lewis6991/gitsigns.nvim',
+        config = function ()
+            require'gitsigns'.setup()
+        end,
+        requires = {
+            'nvim-lua/plenary.nvim'
+        }
+    }
+
     use {
         'blackCauldron7/surround.nvim',
         config = function ()
@@ -122,14 +147,6 @@ local function init()
     }
 
     use {
-        'folke/tokyonight.nvim',
-        config = function()
-            vim.cmd 'colorscheme tokyonight'
-            vim.cmd [[highlight Folded ctermbg=NONE guibg=NONE]]
-        end
-    }
-
-    use {
         'mg979/vim-visual-multi',
         config = function()
             vim.g.VM_maps = {
@@ -157,7 +174,7 @@ local function init()
         config = function()
             require('nvim_comment').setup()
         end,
-        ft = {'python', 'java', 'vue', 'html', 'javascript', 'sh', 'ps1'}
+        ft = {'python', 'java', 'vue', 'html', 'javascript', 'lua', 'sh', 'ps1'}
     }
 
     use {
@@ -218,7 +235,7 @@ local function init()
     }
 
     use {
-        'hoob3rt/lualine.nvim',
+        'nvim-lualine/lualine.nvim',
         config = [[require('configs.statusline')]],
         requires = {
             'SmiteshP/nvim-gps',
@@ -242,7 +259,8 @@ local function init()
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
             'RRethy/nvim-treesitter-textsubjects',
-            'p00f/nvim-ts-rainbow'
+            'p00f/nvim-ts-rainbow',
+            'windwp/nvim-ts-autotag'
         }
     }
 

@@ -56,4 +56,7 @@ require'nvim-treesitter.configs'.setup {
         extended_mode = true,
         max_file_lines = 2000,
     },
+    autotag = {
+        enable = true,
+    }
 }

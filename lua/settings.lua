@@ -4,7 +4,7 @@ local opt = vim.opt
 
 ----- Init -----
 cmd 'language en_US'
-cmd 'colorscheme desert'
+cmd 'colorscheme solarized'
 cmd [[call serverstart('\\.\pipe\nvim-pipe-12345')]]
 
 ----- Command  -----
