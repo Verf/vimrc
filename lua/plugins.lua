@@ -16,28 +16,97 @@ local function init()
         opt = true
     }
 
+    -- themes
     use 'folke/tokyonight.nvim'
 
     use 'shaunsingh/solarized.nvim'
 
+    -- ui
+    use 'yamatsum/nvim-cursorline'
+
     use {
-        'TimUntersberger/neogit',
+        'rcarriga/nvim-notify',
         config = function ()
-            require'neogit'.setup()
+            vim.notify = require('notify')
+        end
+    }
+
+    use {
+        'kyazdani42/nvim-web-devicons',
+        config = function ()
+            require'nvim-web-devicons'.setup {
+                default = true
+            }
+        end
+    }
+
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function ()
+            vim.g.indent_blankline_show_current_context = false
+        end
+    }
+
+    use {
+        'norcalli/nvim-colorizer.lua',
+        config = function ()
+            require 'colorizer'.setup{
+                'lua';
+                'css';
+                'javascript';
+            }
         end,
+        ft = {'lua', 'css', 'javascript'}
+    }
+
+    use {
+        'folke/todo-comments.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function ()
+            require('todo-comments').setup {
+                search = {
+                    pattern = [[\b(KEYWORDS)\b]],
+                }
+            }
+        end,
+        ft = {'python', 'java', 'vue', 'html', 'javascript', 'sh', 'ps1'}
+    }
+
+    use {
+        'nvim-lualine/lualine.nvim',
+        config = [[require('configs.statusline')]],
         requires = {
-            'nvim-lua/plenary.nvim',
-            'sindrets/diffview.nvim'
+            'SmiteshP/nvim-gps',
         }
     }
 
     use {
-        'lewis6991/gitsigns.nvim',
+        'akinsho/nvim-bufferline.lua',
+        config = [[require('configs.bufferline')]]
+    }
+
+    -- edit
+    use 'junegunn/vim-easy-align'
+
+    use 'windwp/nvim-autopairs'
+
+    use {
+        'hrsh7th/vim-vsnip',
         config = function ()
-            require'gitsigns'.setup()
-        end,
+            vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/vsnip'
+        end
+    }
+
+    use {
+        'hrsh7th/nvim-cmp',
+        config = [[require('configs.completion')]],
         requires = {
-            'nvim-lua/plenary.nvim'
+            'hrsh7th/vim-vsnip',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-vsnip',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lua',
         }
     }
 
@@ -47,7 +116,7 @@ local function init()
             require'surround'.setup{
                 brackets = {"(", "{", "[", "<"},
                 load_keymaps = false,
-                map_insert_mode = false
+                map_insert_mode = false,
             }
         end
     }
@@ -62,19 +131,54 @@ local function init()
         end
     }
 
-    use 'junegunn/vim-easy-align'
+    use {
+        'terrortylor/nvim-comment',
+        config = function ()
+            require('nvim_comment').setup()
+        end,
+        ft = {'python', 'java', 'vue', 'html', 'javascript', 'lua', 'sh', 'ps1'}
+    }
 
+    use {
+        'mg979/vim-visual-multi',
+        config = function ()
+            vim.g.VM_maps = {
+                ['Find Under']         = '<C-s>',
+                ['Find Subword Under'] = '<C-s>',
+                ['Add Cursor Down']    = '<M-Down>',
+                ['Add Cursor Up']      = '<M-Up>',
+                ['Find Next']          = '<C-s>',
+                ['Find Prev']          = '<C-S-s>',
+                ['Goto Next']          = ']',
+                ['Goto Prev']          = '[',
+                ['Seek Next']          = '<C-f>',
+                ['Seek Prev']          = '<C-b>',
+                ['Skip Region']        = '<C-x>',
+                ['Remove Region']      = '<C-S-x>',
+                ['Replace']            = 'R',
+                ['Surround']           = 'S',
+                ['Toggle Multiline']   = 'M',
+            }
+        end
+    }
+
+    -- enhance
     use {
         'mhinz/vim-sayonara',
         cmd = 'Sayonara'
     }
 
-    use 'yamatsum/nvim-cursorline'
+    use {
+        'chaoren/vim-wordmotion',
+        config = function ()
+            vim.g.wordmotion_nomap = 1
+        end
+    }
 
     use {
-        'rcarriga/nvim-notify',
+        'phaazon/hop.nvim',
         config = function ()
-            vim.notify = require('notify')
+            require'hop'.setup { keys = 'tfvnumdecriwsxloqazh' }
         end
     }
 
@@ -86,22 +190,6 @@ local function init()
                 lastplace_ignore_filetype = {'gitcommit', 'gitrebase', 'svn', 'hgcommit'},
                 lastplace_open_folds = true
             }
-        end
-    }
-
-    use 'windwp/nvim-autopairs'
-
-    use {
-        'phaazon/hop.nvim',
-        config = function ()
-            require'hop'.setup { keys = 'tfvnumdecriwsxloqazh' }
-        end
-    }
-
-    use {
-        'lukas-reineke/indent-blankline.nvim',
-        config = function ()
-            vim.g.indent_blankline_show_current_context = false
         end
     }
 
@@ -128,71 +216,8 @@ local function init()
     }
 
     use {
-        'norcalli/nvim-colorizer.lua',
-        config = function()
-            require 'colorizer'.setup{
-                'lua';
-                'css';
-                'javascript';
-            }
-        end,
-        ft = {'lua', 'css', 'javascript'}
-    }
-
-    use {
-        'chaoren/vim-wordmotion',
-        config = function()
-            vim.g.wordmotion_nomap = 1
-        end
-    }
-
-    use {
-        'mg979/vim-visual-multi',
-        config = function()
-            vim.g.VM_maps = {
-                ['Find Under']         = '<C-s>',
-                ['Find Subword Under'] = '<C-s>',
-                ['Add Cursor Down']    = '<M-Down>',
-                ['Add Cursor Up']      = '<M-Up>',
-                ['Find Next']          = '<C-s>',
-                ['Find Prev']          = '<C-S-s>',
-                ['Goto Next']          = ']',
-                ['Goto Prev']          = '[',
-                ['Seek Next']          = '<C-f>',
-                ['Seek Prev']          = '<C-b>',
-                ['Skip Region']        = '<C-x>',
-                ['Remove Region']      = '<C-S-x>',
-                ['Replace']            = 'R',
-                ['Surround']           = 'S',
-                ['Toggle Multiline']   = 'M',
-            }
-        end
-    }
-
-    use {
-        'terrortylor/nvim-comment',
-        config = function()
-            require('nvim_comment').setup()
-        end,
-        ft = {'python', 'java', 'vue', 'html', 'javascript', 'lua', 'sh', 'ps1'}
-    }
-
-    use {
-        'folke/todo-comments.nvim',
-        requires = 'nvim-lua/plenary.nvim',
-        config = function()
-            require('todo-comments').setup {
-                search = {
-                    pattern = [[\b(KEYWORDS)\b]],
-                }
-            }
-        end,
-        ft = {'python', 'java', 'vue', 'html', 'javascript', 'sh', 'ps1'}
-    }
-
-    use {
         'ahmedkhalf/project.nvim',
-        config = function()
+        config = function ()
             require'project_nvim'.setup{
                 patterns = { '.git', '.root', '.project', '.svn', 'make*', 'pom.xml' }
             }
@@ -200,27 +225,8 @@ local function init()
     }
 
     use {
-        'kyazdani42/nvim-web-devicons',
-        config = function()
-            require'nvim-web-devicons'.setup {
-                default = true
-            }
-        end
-    }
-
-    use {
-        'mfussenegger/nvim-dap',
-        requires = {'mfussenegger/nvim-dap-python', 'rcarriga/nvim-dap-ui'},
-        config = function()
-            require'dapui'.setup()
-            require'dap-python'.setup('python')
-        end,
-        ft = {'python'}
-    }
-
-    use {
         'nvim-telescope/telescope.nvim',
-        config = function()
+        config = function ()
             require('telescope').setup{
                 defaults = {
                     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
@@ -234,19 +240,37 @@ local function init()
         }
     }
 
+    -- integration
     use {
-        'nvim-lualine/lualine.nvim',
-        config = [[require('configs.statusline')]],
+        'TimUntersberger/neogit',
+        config = function ()
+            require'neogit'.setup()
+        end,
         requires = {
-            'SmiteshP/nvim-gps',
+            'nvim-lua/plenary.nvim',
+            'sindrets/diffview.nvim'
         }
     }
 
     use {
-        'akinsho/nvim-bufferline.lua',
-        config = [[require('configs.bufferline')]]
+        'lewis6991/gitsigns.nvim',
+        config = function ()
+            require'gitsigns'.setup()
+        end,
+        requires = {
+            'nvim-lua/plenary.nvim'
+        }
     }
 
+    use {
+        'mfussenegger/nvim-dap',
+        requires = {'mfussenegger/nvim-dap-python', 'rcarriga/nvim-dap-ui'},
+        config = function ()
+            require'dapui'.setup()
+            require'dap-python'.setup('python')
+        end,
+        ft = {'python'}
+    }
 
     use {
         'mhartington/formatter.nvim',
@@ -274,33 +298,13 @@ local function init()
     }
 
     use {
-        'hrsh7th/vim-vsnip',
-        config = function()
-            vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/vsnip'
-        end
-    }
-
-
-    use {
-        'hrsh7th/nvim-cmp',
-        config = [[require('configs.completion')]],
-        requires = {
-            'hrsh7th/vim-vsnip',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-vsnip',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-nvim-lua',
-        }
-    }
-
-    use {
         'voldikss/vim-floaterm',
         config = function ()
             vim.g.shell = vim.o.shell
-            vim.g.floaterm_weight = 0.8
+            vim.g.floaterm_weight = 0.9
             vim.g.floaterm_height = 0.8
-        end
+        end,
+        cmd = {'FloatermToggle'}
     }
 
     use {

@@ -14,6 +14,7 @@ local disabled_builtin = {
     'gzip', 'man', 'matchit', 'matchparen', 'tarPlugin', 'tar',
     'zipPlugin', 'zip', 'netrwPlugin'
 }
+
 for i = 1, 9 do g['loaded_' .. disabled_builtin[i]] = 1 end
 
 -- packer
@@ -25,4 +26,5 @@ cmd [[command! PackerCompile packadd packer.nvim | lua require('plugins').compil
 
 -- require
 require "settings"
+require "personal"
 require "mappings"

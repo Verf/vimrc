@@ -3,7 +3,7 @@ vim.api.nvim_set_keymap('s', '<C-d>', [[<Plug>(vsnip-jump-next)]], {noremap=fals
 vim.api.nvim_set_keymap('i', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
 vim.api.nvim_set_keymap('s', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
 
-local has_words_before = function()
+local has_words_before = function ()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
@@ -32,11 +32,11 @@ cmp.setup({
         end, {'i', 's'})
     },
     sources = {
-        { name = 'path' },
         { name = 'vsnip' },
-        { name = 'buffer' },
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
+        { name = 'buffer' },
+        { name = 'path' },
     }
 })
 require('nvim-autopairs').setup()

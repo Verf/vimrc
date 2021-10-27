@@ -14,11 +14,9 @@ cmd [[command! Editrc :e $MYVIMRC]]
 
 -- Functions
 function _G.myfoldtext()
-    -- local line = vim.fn.getline(vim.v.foldstart)
-    local line_indent = vim.fn.indent(vim.fn.nextnonblank(vim.v.foldstart))
+    local line = vim.fn.getline(vim.v.foldstart)
     local line_count = vim.v.foldend - vim.v.foldstart + 1
-    local omit_text = string.rep(" ", line_indent) .. ""
-    return string.format("%-20s 並×%d", omit_text, line_count)
+    return string.format("%s        並×%d", line, line_count)
 end
 
 -- global
@@ -27,9 +25,12 @@ g.maplocalleader = ','
 
 -- language
 g.loaded_python_provider = 0
-g.python3_host_prog = vim.fn.expand([[D:\Env\Python\Python39\python.exe]])
 
-cmd [[autocmd filetype org setlocal tabstop=2 softtabstop=2 shiftwidth=2]]
+cmd [[autocmd FileType html setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType css setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType javascript setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType vue setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType json setlocal shiftwidth=2 tabstop=2]]
 
 ----- settings -----
 opt.wrap          = false
@@ -46,6 +47,7 @@ opt.showmode      = false
 opt.hlsearch      = false
 opt.writebackup   = false
 opt.expandtab     = true
+opt.autoindent    = true
 opt.smartindent   = true
 opt.number        = true
 opt.linebreak     = true
@@ -61,24 +63,25 @@ opt.softtabstop   = 4
 opt.shiftwidth    = 4
 opt.synmaxcol     = 200
 
-opt.foldlevel    = 99
-opt.foldmethod   = 'indent'
-opt.foldtext     = 'v:lua.myfoldtext()'
+opt.foldlevel     = 99
+opt.foldmethod    = 'expr'
+opt.foldtext      = 'v:lua.myfoldtext()'
+opt.foldexpr      = 'nvim_treesitter#foldexpr()'
 
--- opt.guifont      = 'Sarasa Mono SC Nerd:h14'
-opt.mouse        = 'a'
-opt.showbreak    = '⮎'
-opt.signcolumn   = 'yes'
-opt.virtualedit  = 'all'
-opt.clipboard    = 'unnamed'
-opt.shell        = 'pwsh -nol'
-opt.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-opt.shellredir   = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-opt.shellpipe    = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-opt.shellquote   = ''
-opt.shellxquote  = ''
-opt.shortmess    = 'filnxtToOFc'
-opt.whichwrap    = ''
-opt.switchbuf    = 'useopen,usetab,newtab'
-opt.completeopt  = 'menuone,noselect'
-opt.fillchars    = 'fold: '
+-- opt.guifont    = 'Sarasa Mono SC Nerd:h14'
+opt.mouse         = 'a'
+opt.showbreak     = '⮎'
+opt.signcolumn    = 'yes'
+opt.virtualedit   = 'all'
+opt.clipboard     = 'unnamed'
+opt.shell         = 'pwsh -nol'
+opt.shellcmdflag  = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+opt.shellredir    = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+opt.shellpipe     = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+opt.shellquote    = ''
+opt.shellxquote   = ''
+opt.shortmess     = 'filnxtToOFc'
+opt.whichwrap     = ''
+opt.switchbuf     = 'useopen,usetab,newtab'
+opt.completeopt   = 'menuone,noselect'
+opt.fillchars     = 'fold: '

@@ -129,8 +129,8 @@ map('n', 'B', '<Plug>WordMotion_B', {noremap=false})
 map('n', 'd', '<Plug>WordMotion_e', {noremap=false})
 map('n', 'D', '<Plug>WordMotion_d', {noremap=false})
 
-map('n', ']e', ':Lspsaga diagnostic_jump_next<CR>')
-map('n', '[e', ':Lspsaga diagnostic_jump_prev<CR>')
+map('n', ']d', ':<Cmd>lua vim.lsp.diagnostic.goto_next<CR>')
+map('n', '[d', ':<Cmd>lua vim.lsp.diagnostic.goto_prev<CR>')
 
 map('n', 'gw', ':HopWord<CR>')
 map('n', 'gl', ':HopLine<CR>')
@@ -143,6 +143,7 @@ map('n', 'sd', [[<Cmd>lua require'surround'.surround_delete()<CR>]])
 map('n', 'sc', [[<Cmd>lua require'surround'.surround_replace()<CR>]])
 
 -- Leader
+map('n', '<leader>g', ':Neogit<CR>')
 map('n', '<leader><space>', ':BufferLinePick<CR>')
 
 map('n', '<leader>qa', ':qa!<CR>')
@@ -165,7 +166,7 @@ map('n', '<leader>w+','<C-w>+')
 map('n', '<leader>w-','<C-w>-')
 map('n', '<leader>w=', '<C-w>=')
 
-map('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()')
+map('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>')
 
 map('n', '<leader>ff', ':Telescope find_files<CR>')
 map('n', '<leader>fh', ':Telescope oldfiles<CR>')
@@ -176,8 +177,6 @@ map('n', '<leader>fp', ':Telescope projects<CR>')
 
 map('n', '<leader>fm', ':Format<CR>')
 
--- F1: toggleterm
---
 map('', '<F1>', '<Esc>:FloatermToggle<CR>')
 map('t', '<F1>', [[<C-\><C-n>:FloatermToggle<CR>]])
 map('', '<F2>', '<Esc>:NvimTreeToggle<CR>')

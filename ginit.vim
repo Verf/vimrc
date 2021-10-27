@@ -3,12 +3,12 @@ let s:fontsize = 13
 let s:curfontsize = 13
 
 function! SetDefaultFont()
-  :execute "GuiFont! " . s:fontname . ":h" . s:fontsize
+    :execute "GuiFont! " . s:fontname . ":h" . s:fontsize
 endfunction
 
 function! AdjustFontSize(amount)
-  let s:curfontsize = s:curfontsize + a:amount
-  :execute "GuiFont! " . s:fontname. ":h" . s:curfontsize
+    let s:curfontsize = s:curfontsize + a:amount
+    :execute "GuiFont! " . s:fontname . ":h" . s:curfontsize
 endfunction
 
 noremap <C-ScrollWheelUp> :call AdjustFontSize(1)<CR>
