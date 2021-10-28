@@ -17,18 +17,19 @@ local function init()
     }
 
     -- themes
-    use 'folke/tokyonight.nvim'
-
-    use 'shaunsingh/solarized.nvim'
+    use 'ishan9299/nvim-solarized-lua'
 
     -- ui
     use 'yamatsum/nvim-cursorline'
 
     use {
-        'rcarriga/nvim-notify',
-        config = function ()
-            vim.notify = require('notify')
-        end
+        "projekt0n/circles.nvim",
+        config = function()
+            require("circles").setup()
+        end,
+        requires = {
+            'kyazdani42/nvim-web-devicons',
+        }
     }
 
     use {
@@ -37,6 +38,16 @@ local function init()
             require'nvim-web-devicons'.setup {
                 default = true
             }
+        end
+    }
+
+    use {
+        'rcarriga/nvim-notify',
+        config = function ()
+            require('notify').setup({
+                timeout = 5000
+            })
+            vim.notify = require('notify')
         end
     }
 

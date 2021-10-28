@@ -129,8 +129,8 @@ map('n', 'B', '<Plug>WordMotion_B', {noremap=false})
 map('n', 'd', '<Plug>WordMotion_e', {noremap=false})
 map('n', 'D', '<Plug>WordMotion_d', {noremap=false})
 
-map('n', ']d', ':<Cmd>lua vim.lsp.diagnostic.goto_next<CR>')
-map('n', '[d', ':<Cmd>lua vim.lsp.diagnostic.goto_prev<CR>')
+map('n', ']d', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
+map('n', '[d', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
 
 map('n', 'gw', ':HopWord<CR>')
 map('n', 'gl', ':HopLine<CR>')
