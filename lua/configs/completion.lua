@@ -1,38 +1,45 @@
-vim.api.nvim_set_keymap('i', '<C-d>', [[<Plug>(vsnip-jump-next)]], {noremap=false, silent=true})
-vim.api.nvim_set_keymap('s', '<C-d>', [[<Plug>(vsnip-jump-next)]], {noremap=false, silent=true})
-vim.api.nvim_set_keymap('i', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
-vim.api.nvim_set_keymap('s', '<C-u>', [[<Plug>(vsnip-jump-prev)]], {noremap=false, silent=true})
-
-local has_words_before = function ()
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
+vim.api.nvim_set_keymap('i', '<C-d>', [[:lua require'luasnip'.jump(1)<CR>]], {noremap=false, silent=true})
+vim.api.nvim_set_keymap('s', '<C-d>', [[:lua require'luasnip'.jump(1)<CR>]], {noremap=false, silent=true})
+vim.api.nvim_set_keymap('i', '<C-u>', [[:lua require'luasnip'.jump(-1)<CR>]], {noremap=false, silent=true})
+vim.api.nvim_set_keymap('s', '<C-u>', [[:lua require'luasnip'.jump(-1)<CR>]], {noremap=false, silent=true})
 
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
 local cmp = require('cmp')
+local luasnip = require('luasnip')
 
 cmp.setup({
     snippet = {
         expand = function (args)
-            vim.fn['vsnip#anonymous'](args.body)
+            luasnip.lsp_expand(args.body)
         end,
     },
     mapping = {
-        ['<Tab>'] = cmp.mapping(function(fallback)
-            if vim.fn['vsnip#expandable']() == 1 then
-                feedkey('<Plug>(vsnip-expand)', '')
+        ['<Tab>'] = cmp.mapping(function (_)
+            if luasnip.expandable() then
+                luasnip.expand()
             elseif cmp.visible() then
                 cmp.select_next_item()
+            elseif luasnip.jumpable(1) then
+                luasnip.jump(1)
             else
                 feedkey('<Plug>(Tabout)', '')
+            end
+        end, {'i', 's'}),
+        ['<S-Tab>'] = cmp.mapping(function (fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
             end
         end, {'i', 's'})
     },
     sources = {
-        { name = 'vsnip' },
+        { name = 'luasnip' },
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
         { name = 'buffer' },

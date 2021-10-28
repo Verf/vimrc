@@ -23,29 +23,22 @@ local function init()
     use 'yamatsum/nvim-cursorline'
 
     use {
-        "projekt0n/circles.nvim",
-        config = function()
-            require("circles").setup()
-        end,
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-        }
+        'kyazdani42/nvim-web-devicons',
+        module = 'nvim-web-devicons'
     }
 
     use {
-        'kyazdani42/nvim-web-devicons',
-        config = function ()
-            require'nvim-web-devicons'.setup {
-                default = true
-            }
-        end
+        "projekt0n/circles.nvim",
+        module = 'circles',
+        requires = {'kyazdani42/nvim-web-devicons'}
     }
 
     use {
         'rcarriga/nvim-notify',
         config = function ()
             require('notify').setup({
-                timeout = 5000
+                stages = "fade",
+                timeout = 5000,
             })
             vim.notify = require('notify')
         end
@@ -55,6 +48,7 @@ local function init()
         'lukas-reineke/indent-blankline.nvim',
         config = function ()
             vim.g.indent_blankline_show_current_context = false
+            vim.g.buftype_exclude = {"terminal", 'NvimTree', 'NeogitStatus'}
         end
     }
 
@@ -62,9 +56,9 @@ local function init()
         'norcalli/nvim-colorizer.lua',
         config = function ()
             require 'colorizer'.setup{
-                'lua';
-                'css';
-                'javascript';
+                'lua',
+                'css',
+                'javascript',
             }
         end,
         ft = {'lua', 'css', 'javascript'}
@@ -86,9 +80,7 @@ local function init()
     use {
         'nvim-lualine/lualine.nvim',
         config = [[require('configs.statusline')]],
-        requires = {
-            'SmiteshP/nvim-gps',
-        }
+        requires = {'SmiteshP/nvim-gps'}
     }
 
     use {
@@ -97,24 +89,30 @@ local function init()
     }
 
     -- edit
-    use 'junegunn/vim-easy-align'
-
     use 'windwp/nvim-autopairs'
 
     use {
-        'hrsh7th/vim-vsnip',
+        'junegunn/vim-easy-align',
+        keys = "<Plug>(EasyAlign)"
+    }
+
+    use {
+        'L3MON4D3/LuaSnip',
         config = function ()
-            vim.g.vsnip_snippet_dir = vim.fn.stdpath('config') .. '/vsnip'
-        end
+            require('luasnip.loaders.from_vscode').lazy_load {
+                paths = vim.fn.stdpath('config') .. "/vsnip",
+            }
+        end,
+        events = 'InsertEnter'
     }
 
     use {
         'hrsh7th/nvim-cmp',
         config = [[require('configs.completion')]],
+        events = 'InsertEnter',
         requires = {
-            'hrsh7th/vim-vsnip',
+            'saadparwaiz1/cmp_luasnip',
             'hrsh7th/cmp-path',
-            'hrsh7th/cmp-vsnip',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lua',
@@ -129,7 +127,10 @@ local function init()
                 load_keymaps = false,
                 map_insert_mode = false,
             }
-        end
+        end,
+        keys = {
+            {'n', 's'}
+        }
     }
 
     use {
@@ -139,7 +140,8 @@ local function init()
                 tabkey = '',
                 backwards_tabkey = '',
             }
-        end
+        end,
+        events = 'InsertEnter'
     }
 
     use {
@@ -170,10 +172,19 @@ local function init()
                 ['Surround']           = 'S',
                 ['Toggle Multiline']   = 'M',
             }
-        end
+        end,
+        keys = {
+            {'n', '<C-s>'}
+        }
     }
 
     -- enhance
+    use 'nathom/filetype.nvim'
+
+    use {
+        'nvim-lua/plenary.nvim',
+        module = "plenary"
+    }
     use {
         'mhinz/vim-sayonara',
         cmd = 'Sayonara'
@@ -187,10 +198,24 @@ local function init()
     }
 
     use {
+        'andymass/vim-matchup',
+        config = function ()
+            vim.g.matchup_matchparen_offscreen = {
+                method = 'popup'
+            }
+        end
+    }
+
+    use {
         'phaazon/hop.nvim',
         config = function ()
             require'hop'.setup { keys = 'tfvnumdecriwsxloqazh' }
-        end
+        end,
+        cmd = {
+            'HopWord',
+            'HopLine',
+            'HopChar2',
+        }
     }
 
     use {
@@ -255,12 +280,25 @@ local function init()
     use {
         'TimUntersberger/neogit',
         config = function ()
-            require'neogit'.setup()
+            require'neogit'.setup({
+                disable_signs = false,
+                disable_context_highlighting = true,
+                integrations = {
+                    diffview = true,
+                },
+            })
         end,
+        cmd = {'Neogit'},
         requires = {
             'nvim-lua/plenary.nvim',
             'sindrets/diffview.nvim'
-        }
+        },
+    }
+
+    use {
+        'sindrets/diffview.nvim',
+        module = 'diffview',
+        cmd = {'DiffviewOpen', 'DiffviewToggleFiles'}
     }
 
     use {
@@ -268,6 +306,7 @@ local function init()
         config = function ()
             require'gitsigns'.setup()
         end,
+        events = 'BufEnter',
         requires = {
             'nvim-lua/plenary.nvim'
         }
@@ -285,7 +324,16 @@ local function init()
 
     use {
         'mhartington/formatter.nvim',
-        config = [[require('configs.formatter')]]
+        config = [[require('configs.formatter')]],
+        ft = {
+            'python',
+            'json',
+            'javascript',
+            'typescript',
+            'css',
+            'html',
+            'vue',
+        }
     }
 
     use {

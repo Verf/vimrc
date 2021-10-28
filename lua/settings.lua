@@ -102,7 +102,7 @@ opt.foldmethod    = 'expr'
 opt.foldtext      = 'v:lua.myfoldtext()'
 opt.foldexpr      = 'nvim_treesitter#foldexpr()'
 
--- opt.guifont    = 'Sarasa Mono SC Nerd:h14'
+-- opt.guifont    = 'JetBrainsMono NF:h14'
 opt.mouse         = 'a'
 opt.showbreak     = '⮎'
 opt.signcolumn    = 'yes'
