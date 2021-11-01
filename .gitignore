@@ -5,4 +5,4 @@ plugin/
 session/
 Session.vim
 Sessionx.vim
-lua/personal.lua
+./lua/personal.lua
