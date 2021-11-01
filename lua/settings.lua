@@ -3,9 +3,8 @@ local cmd = vim.cmd
 local opt = vim.opt
 
 ----- Init -----
-cmd 'language en_US'
+cmd 'set background=dark'
 cmd 'colorscheme solarized'
-cmd [[call serverstart('\\.\pipe\nvim-pipe-12345')]]
 
 ----- Command  -----
 cmd [[command! Trim :%s/\s\+$//e]]
