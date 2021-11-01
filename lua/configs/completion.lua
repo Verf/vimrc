@@ -17,6 +17,7 @@ cmp.setup({
         end,
     },
     mapping = {
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
         ['<Tab>'] = cmp.mapping(function (_)
             if luasnip.expandable() then
                 luasnip.expand()
@@ -46,13 +47,5 @@ cmp.setup({
         { name = 'path' },
     }
 })
+
 require('nvim-autopairs').setup()
-require('nvim-autopairs.completion.cmp').setup({
-    map_cr = true,
-    map_complete = true,
-    auto_select = true,
-    map_char = {
-        all = '(',
-        tex = '{'
-    }
-})

@@ -46,6 +46,7 @@ local function init()
 
     use {
         'lukas-reineke/indent-blankline.nvim',
+        events = 'BufRead',
         config = function ()
             vim.g.indent_blankline_show_current_context = false
             vim.g.buftype_exclude = {"terminal", 'NvimTree', 'NeogitStatus'}
@@ -59,9 +60,19 @@ local function init()
                 'lua',
                 'css',
                 'javascript',
+                'typescript',
+                'vue',
+                'html',
             }
         end,
-        ft = {'lua', 'css', 'javascript'}
+        ft = {
+            'lua',
+            'css',
+            'javascript',
+            'typescript',
+            'vue',
+            'html'
+        }
     }
 
     use {
@@ -79,8 +90,7 @@ local function init()
 
     use {
         'nvim-lualine/lualine.nvim',
-        config = [[require('configs.statusline')]],
-        requires = {'SmiteshP/nvim-gps'}
+        config = [[require('configs.statusline')]]
     }
 
     use {
@@ -200,6 +210,7 @@ local function init()
     use {
         'andymass/vim-matchup',
         config = function ()
+            vim.cmd [[xmap r% <Plug>(matchup-i%)]]
             vim.g.matchup_matchparen_offscreen = {
                 method = 'popup'
             }
@@ -262,6 +273,7 @@ local function init()
 
     use {
         'nvim-telescope/telescope.nvim',
+        cmd = 'Telescope',
         config = function ()
             require('telescope').setup{
                 defaults = {
@@ -303,10 +315,10 @@ local function init()
 
     use {
         'lewis6991/gitsigns.nvim',
+        events = 'BufRead',
         config = function ()
             require'gitsigns'.setup()
         end,
-        events = 'BufEnter',
         requires = {
             'nvim-lua/plenary.nvim'
         }
@@ -338,6 +350,7 @@ local function init()
 
     use {
         'nvim-treesitter/nvim-treesitter',
+        run = ':TSUpdate',
         config = [[require('configs.treesitter')]],
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
@@ -378,7 +391,13 @@ local function init()
             require'nvim-tree'.setup()
         end,
         requires = 'kyazdani42/nvim-web-devicons',
-        cmd = {'NvimTreeToggle', 'NvimTreeRefresh', 'NvimTreeFindFile'}
+        cmd = {
+            'NvimTreeToggle',
+            'NvimTreeFocus',
+            'NvimTreeOpen',
+            'NvimTreeRefresh',
+            'NvimTreeFindFile',
+        }
     }
 end
 
