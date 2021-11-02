@@ -49,7 +49,8 @@ local function init()
         events = 'BufRead',
         config = function ()
             vim.g.indent_blankline_show_current_context = false
-            vim.g.buftype_exclude = {"terminal", 'NvimTree', 'NeogitStatus'}
+            vim.g.indent_blankline_buftype_exclude = {"terminal", 'NvimTree', 'NeogitStatus'}
+            vim.g.indent_blankline_filetype_exclude = {'help', 'conf', 'txt'}
         end
     }
 
