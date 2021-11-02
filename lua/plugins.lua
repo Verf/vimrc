@@ -139,9 +139,6 @@ local function init()
                 map_insert_mode = false,
             }
         end,
-        keys = {
-            {'n', 's'}
-        }
     }
 
     use {
@@ -184,9 +181,6 @@ local function init()
                 ['Toggle Multiline']   = 'M',
             }
         end,
-        keys = {
-            {'n', '<C-s>'}
-        }
     }
 
     -- enhance

@@ -1,8 +1,3 @@
-vim.api.nvim_set_keymap('i', '<C-d>', [[:lua require'luasnip'.jump(1)<CR>]], {noremap=false, silent=true})
-vim.api.nvim_set_keymap('s', '<C-d>', [[:lua require'luasnip'.jump(1)<CR>]], {noremap=false, silent=true})
-vim.api.nvim_set_keymap('i', '<C-u>', [[:lua require'luasnip'.jump(-1)<CR>]], {noremap=false, silent=true})
-vim.api.nvim_set_keymap('s', '<C-u>', [[:lua require'luasnip'.jump(-1)<CR>]], {noremap=false, silent=true})
-
 local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
