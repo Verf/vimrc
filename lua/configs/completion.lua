@@ -1,9 +1,6 @@
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
 local cmp = require('cmp')
 local luasnip = require('luasnip')
+local tabout = require('tabout')
 
 cmp.setup({
     snippet = {
@@ -13,15 +10,17 @@ cmp.setup({
     },
     mapping = {
         ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ['<Tab>'] = cmp.mapping(function (_)
+        ['<Tab>'] = cmp.mapping(function (fallback)
             if luasnip.expandable() then
                 luasnip.expand()
             elseif cmp.visible() then
                 cmp.select_next_item()
             elseif luasnip.jumpable(1) then
                 luasnip.jump(1)
+            elseif vim.api.nvim_get_mode().mode == 'i' then
+                tabout.tabout()
             else
-                feedkey('<Plug>(Tabout)', '')
+                fallback()
             end
         end, {'i', 's'}),
         ['<S-Tab>'] = cmp.mapping(function (fallback)

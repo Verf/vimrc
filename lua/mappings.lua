@@ -96,10 +96,10 @@ map('x', 'H', 'P')
 map('i', '<C-a>', '<Esc>^i')
 map('i', '<C-e>', '<Esc>$a')
 
-map('i', '<C-d>', [[:lua require'luasnip'.jump(1)<CR>]])
-map('s', '<C-d>', [[:lua require'luasnip'.jump(1)<CR>]])
-map('i', '<C-u>', [[:lua require'luasnip'.jump(-1)<CR>]])
-map('s', '<C-u>', [[:lua require'luasnip'.jump(-1)<CR>]])
+map('i', '<C-d>', [[<Cmd>lua require'luasnip'.jump(1)<CR>]])
+map('s', '<C-d>', [[<Cmd>lua require'luasnip'.jump(1)<CR>]])
+map('i', '<C-u>', [[<Cmd>lua require'luasnip'.jump(-1)<CR>]])
+map('s', '<C-u>', [[<Cmd>lua require'luasnip'.jump(-1)<CR>]])
 
 -- normal
 map('n', ']z', 'zj')

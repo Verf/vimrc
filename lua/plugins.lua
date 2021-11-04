@@ -4,6 +4,7 @@ local function init()
     if packer == nil then
         packer = require('packer')
         packer.init({
+            max_jobs = 8,
             disable_commands = true
         })
     end
