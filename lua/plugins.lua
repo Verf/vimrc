@@ -50,7 +50,7 @@ local function init()
         events = 'BufRead',
         config = function ()
             vim.g.indent_blankline_show_current_context = false
-            vim.g.indent_blankline_buftype_exclude = {"terminal", 'NvimTree', 'NeogitStatus'}
+            vim.g.indent_blankline_buftype_exclude = {'terminal', 'NvimTree', 'NeogitStatus'}
             vim.g.indent_blankline_filetype_exclude = {'help', 'conf', 'txt'}
         end
     }
@@ -239,8 +239,7 @@ local function init()
     use {
         'Pocco81/AutoSave.nvim',
         config = function ()
-            require'autosave'.setup(
-                {
+            require'autosave'.setup({
                     enabled = true,
                     execution_message = '',
                     events = {'InsertLeave', 'TextChanged'},
@@ -253,8 +252,7 @@ local function init()
                     on_off_commands = true,
                     clean_command_line_interval = 0,
                     debounce_delay = 135
-                }
-            )
+                })
         end
     }
 
@@ -268,14 +266,24 @@ local function init()
     }
 
     use {
+        "AckslD/nvim-neoclip.lua",
+        requires = {'tami5/sqlite.lua', module = 'sqlite'},
+        config = function()
+            require('neoclip').setup()
+        end,
+    }
+
+    use {
         'nvim-telescope/telescope.nvim',
         cmd = 'Telescope',
+        module = 'Telescope',
         config = function ()
             require('telescope').setup{
                 defaults = {
                     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                 },
             }
+            require'telescope'.load_extension('neoclip')
             require'telescope'.load_extension('projects')
         end,
         requires = {
@@ -313,7 +321,11 @@ local function init()
         'lewis6991/gitsigns.nvim',
         events = 'BufRead',
         config = function ()
-            require'gitsigns'.setup()
+            require'gitsigns'.setup({
+                keymaps = {
+                    noremap = true,
+                }
+            })
         end,
         requires = {
             'nvim-lua/plenary.nvim'

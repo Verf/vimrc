@@ -149,6 +149,7 @@ map('n', 'sc', [[<Cmd>lua require'surround'.surround_replace()<CR>]])
 
 -- Leader
 map('n', '<leader>g', ':Neogit<CR>')
+map('n', '<leader>h', [[:lua require('telescope').extensions.neoclip.default()]])
 map('n', '<leader><space>', ':BufferLinePick<CR>')
 
 map('n', '<leader>qa', ':qa!<CR>')

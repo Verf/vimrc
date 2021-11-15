@@ -11,13 +11,14 @@ local cmd = vim.cmd
 
 -- Disable builtin module
 local disabled_builtin = {
-    'matchit', 'matchparen','gzip', 'man', 'tarPlugin', 'tar','zipPlugin', 'zip', 'netrw', 'netrwPlugin', '2html_plugin',
+   'ftPlugin', 'matchit', 'matchparen','gzip', 'man', 'tarPlugin', 'tar','zipPlugin', 'zip', 'netrw', 'netrwPlugin', '2html_plugin',
 }
 
 for i = 1, 9 do g['loaded_' .. disabled_builtin[i]] = 1 end
 
 -- disable default filetype.vim
 vim.g.did_load_filetypes = 1
+
 
 -- packer
 cmd [[command! PackerInstall packadd packer.nvim | lua require('plugins').install()]]
