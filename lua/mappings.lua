@@ -149,7 +149,7 @@ map('n', 'sc', [[<Cmd>lua require'surround'.surround_replace()<CR>]])
 
 -- Leader
 map('n', '<leader>g', ':Neogit<CR>')
-map('n', '<leader>h', [[:lua require('telescope').extensions.neoclip.default()]])
+map('n', '<leader>h', [[:lua require('telescope').extensions.neoclip.default()<CR>]])
 map('n', '<leader><space>', ':BufferLinePick<CR>')
 
 map('n', '<leader>qa', ':qa!<CR>')
@@ -180,6 +180,7 @@ map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>bb', ':Telescope buffers<CR>')
 map('n', '<leader>ft', ':TodoTelescope<CR>')
 map('n', '<leader>fp', ':Telescope projects<CR>')
+map('n', '<leader>fs', ':Telescope sessions<CR>')
 
 map('n', '<leader>fm', ':Format<CR>')
 

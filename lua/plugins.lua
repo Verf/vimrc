@@ -257,12 +257,21 @@ local function init()
     }
 
     use {
-        'ahmedkhalf/project.nvim',
+        'nvim-telescope/telescope.nvim',
         config = function ()
-            require'project_nvim'.setup{
-                patterns = { '.git', '.root', '.project', '.svn', 'make*', 'pom.xml' }
+            require('telescope').setup{
+                defaults = {
+                    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+                },
             }
-        end
+            require'telescope'.load_extension('neoclip')
+            require'telescope'.load_extension('projects')
+            require('telescope').load_extension('sessions')
+        end,
+        requires = {
+            'nvim-lua/popup.nvim',
+            'nvim-lua/plenary.nvim',
+        }
     }
 
     use {
@@ -274,22 +283,30 @@ local function init()
     }
 
     use {
-        'nvim-telescope/telescope.nvim',
-        cmd = 'Telescope',
-        module = 'Telescope',
+        'ahmedkhalf/project.nvim',
         config = function ()
-            require('telescope').setup{
-                defaults = {
-                    borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-                },
-            }
-            require'telescope'.load_extension('neoclip')
-            require'telescope'.load_extension('projects')
-        end,
-        requires = {
-            'nvim-lua/popup.nvim',
-            'nvim-lua/plenary.nvim',
-        }
+            require'project_nvim'.setup({
+                detection_methods = {'lsp', '.git', '.project', '.root', 'Makefile'},
+                patterns = {'.git', '.root', '.project', '.svn', 'make*', 'pom.xml'},
+                exclude_dirs = {'c:', 'C:'}
+            })
+        end
+    }
+
+    use {
+        'Shatur/neovim-session-manager',
+        config = function ()
+            local Path = require('plenary.path')
+            require('session_manager').setup({
+                sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'),
+                path_replacer = '__',
+                colon_replacer = '++',
+                -- Disabled, CurrentDir, LastSession
+                autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
+                autosave_last_session = true,
+                autosave_ignore_not_normal = true,
+            })
+        end
     }
 
     -- integration
@@ -390,13 +407,20 @@ local function init()
     use {
         'kyazdani42/nvim-tree.lua',
         config = function ()
+            vim.g.nvim_tree_respect_buf_cwd = 1
             vim.g.nvim_tree_show_icons = {
                 git = 0,
                 folders = 1,
                 files = 1,
                 folder_arrows = 1,
             }
-            require'nvim-tree'.setup()
+            require'nvim-tree'.setup({
+                update_cwd = true,
+                update_focused_file = {
+                    enable = true,
+                    update_cwd = true,
+                }
+            })
         end,
         requires = 'kyazdani42/nvim-web-devicons',
         cmd = {
