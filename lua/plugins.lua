@@ -286,8 +286,8 @@ local function init()
         'ahmedkhalf/project.nvim',
         config = function ()
             require'project_nvim'.setup({
-                detection_methods = {'lsp', '.git', '.project', '.root', 'Makefile'},
-                patterns = {'.git', '.root', '.project', '.svn', 'make*', 'pom.xml'},
+                detection_methods = {'pattern'},
+                patterns = {'.git', '.root', '.project', 'make*', 'Makefile', 'pom.xml', 'pyproject.toml'},
                 exclude_dirs = {'c:', 'C:'}
             })
         end
