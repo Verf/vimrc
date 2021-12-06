@@ -71,4 +71,11 @@ require'lspconfig'.tsserver.setup{
     capabilities = capabilities,
 }
 
+-- bash setup
+require'lspconfig'.bashls.setup{
+    cmd = { "bash-language-server.cmd", "start" },
+    filetypes = { "sh", "sql" },
+}
+
 require('lspkind').init()
+

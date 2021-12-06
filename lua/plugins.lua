@@ -79,6 +79,7 @@ local function init()
 
     use {
         'folke/todo-comments.nvim',
+        event = 'BufRead',
         requires = 'nvim-lua/plenary.nvim',
         config = function ()
             require('todo-comments').setup {
@@ -87,7 +88,6 @@ local function init()
                 }
             }
         end,
-        ft = {'python', 'java', 'vue', 'html', 'javascript', 'sh', 'ps1'}
     }
 
     use {
@@ -240,19 +240,19 @@ local function init()
         'Pocco81/AutoSave.nvim',
         config = function ()
             require'autosave'.setup({
-                    enabled = true,
-                    execution_message = '',
-                    events = {'InsertLeave', 'TextChanged'},
-                    conditions = {
-                        exists = true,
-                        filetype_is_not = {},
-                        modifiable = true
-                    },
-                    write_all_buffers = true,
-                    on_off_commands = true,
-                    clean_command_line_interval = 0,
-                    debounce_delay = 135
-                })
+                enabled = true,
+                execution_message = '',
+                events = {'InsertLeave', 'TextChanged'},
+                conditions = {
+                    exists = true,
+                    filetype_is_not = {},
+                    modifiable = true
+                },
+                write_all_buffers = true,
+                on_off_commands = true,
+                clean_command_line_interval = 0,
+                debounce_delay = 135
+            })
         end
     }
 
@@ -301,12 +301,31 @@ local function init()
                 sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'),
                 path_replacer = '__',
                 colon_replacer = '++',
-                -- Disabled, CurrentDir, LastSession
                 autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
                 autosave_last_session = true,
                 autosave_ignore_not_normal = true,
             })
         end
+    }
+
+    use {
+        'nvim-neorg/neorg',
+        config = function ()
+            require('neorg').setup {
+                load = {
+                    ["core.defaults"] = {},
+                    ["core.norg.concealer"] = {},
+                    ["core.norg.dirman"] = {
+                        config = {
+                            workspaces = {
+                                notes = "~/Dropbox/Notes"
+                            }
+                        }
+                    }
+                },
+            }
+        end,
+        requires = "nvim-lua/plenary.nvim"
     }
 
     -- integration
@@ -370,6 +389,7 @@ local function init()
             'css',
             'html',
             'vue',
+            'markdown',
         }
     }
 
@@ -391,44 +411,6 @@ local function init()
         requires = {
             'onsails/lspkind-nvim',
             'ray-x/lsp_signature.nvim',
-        }
-    }
-
-    use {
-        'voldikss/vim-floaterm',
-        config = function ()
-            vim.g.shell = vim.o.shell
-            vim.g.floaterm_weight = 0.9
-            vim.g.floaterm_height = 0.8
-        end,
-        cmd = {'FloatermToggle'}
-    }
-
-    use {
-        'kyazdani42/nvim-tree.lua',
-        config = function ()
-            vim.g.nvim_tree_respect_buf_cwd = 1
-            vim.g.nvim_tree_show_icons = {
-                git = 0,
-                folders = 1,
-                files = 1,
-                folder_arrows = 1,
-            }
-            require'nvim-tree'.setup({
-                update_cwd = true,
-                update_focused_file = {
-                    enable = true,
-                    update_cwd = true,
-                }
-            })
-        end,
-        requires = 'kyazdani42/nvim-web-devicons',
-        cmd = {
-            'NvimTreeToggle',
-            'NvimTreeFocus',
-            'NvimTreeOpen',
-            'NvimTreeRefresh',
-            'NvimTreeFindFile',
         }
     }
 end

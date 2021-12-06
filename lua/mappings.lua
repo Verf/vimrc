@@ -109,12 +109,6 @@ map('n', '[z', 'zk')
 map('v', '<', '<gv')
 map('v', '>', '>gv')
 
--- terminal
-map('t', '<C-o>', '<C-\\><C-n>')
-map('t', '<C-t>', [[<C-\><C-n>:FloatermNew<CR>]])
-map('t', '<C-n>', [[<C-\><C-n>:FloatermNext<CR>]])
-map('t', '<C-p>', [[<C-\><C-n>:FloatermPrev<CR>]])
-
 -- Plugin
 map('n', '<TAB>', ':BufferLineCycleNext<CR>')
 map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>')
@@ -134,8 +128,8 @@ map('n', 'B', '<Plug>WordMotion_B', {noremap=false})
 map('n', 'd', '<Plug>WordMotion_e', {noremap=false})
 map('n', 'D', '<Plug>WordMotion_d', {noremap=false})
 
-map('n', ']d', '<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>')
-map('n', '[d', '<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>')
+map('n', ']d', '<Cmd>lua vim.diagnostic.goto_next()<CR>')
+map('n', '[d', '<Cmd>lua vim.diagnostic.goto_prev()<CR>')
 
 map('n', 'gw', ':HopWord<CR>')
 map('n', 'gl', ':HopLine<CR>')
@@ -183,10 +177,6 @@ map('n', '<leader>fp', ':Telescope projects<CR>')
 map('n', '<leader>fs', ':Telescope sessions<CR>')
 
 map('n', '<leader>fm', ':Format<CR>')
-
-map('', '<F1>', '<Esc>:FloatermToggle<CR>')
-map('t', '<F1>', [[<C-\><C-n>:FloatermToggle<CR>]])
-map('', '<F2>', '<Esc>:NvimTreeToggle<CR>')
 
 map('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
 map('n', '<F6>', [[:lua require'dap'.close()<CR>]])

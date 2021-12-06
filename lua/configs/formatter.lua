@@ -82,5 +82,14 @@ require('formatter').setup({
                 }
             end
         },
+        markdown = {
+            function ()
+                return {
+                    exe = "prettier.cmd",
+                    args = {'--stdin-filepath', vim.fn.shellescape(vim.api.nvim_buf_get_name(0)),},
+                    stdin = true,
+                }
+            end
+        },
     }
 })

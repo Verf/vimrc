@@ -64,6 +64,7 @@ cmd [[autocmd FileType css setlocal shiftwidth=2 tabstop=2]]
 cmd [[autocmd FileType javascript setlocal shiftwidth=2 tabstop=2]]
 cmd [[autocmd FileType vue setlocal shiftwidth=2 tabstop=2]]
 cmd [[autocmd FileType json setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType markdown setlocal shiftwidth=2 tabstop=2]]
 
 ----- settings -----
 opt.wrap           = false
@@ -71,7 +72,7 @@ opt.hidden         = true
 opt.showmatch      = true
 opt.ignorecase     = true
 opt.smartcase      = true
-opt.autochdir      = false
+opt.autochdir      = true
 opt.termguicolors  = true
 opt.foldenable     = true
 opt.backup         = false
