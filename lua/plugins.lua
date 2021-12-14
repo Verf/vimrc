@@ -29,16 +29,10 @@ local function init()
     }
 
     use {
-        "projekt0n/circles.nvim",
-        module = 'circles',
-        requires = {'kyazdani42/nvim-web-devicons'}
-    }
-
-    use {
         'rcarriga/nvim-notify',
         config = function ()
             require('notify').setup({
-                stages = "fade",
+                stages = 'fade',
                 timeout = 5000,
             })
             vim.notify = require('notify')
@@ -101,18 +95,22 @@ local function init()
     }
 
     -- edit
-    use 'windwp/nvim-autopairs'
+    use {
+        'windwp/nvim-autopairs',
+        after = 'nvim-cmp',
+        config = [[require('nvim-autopairs').setup()]],
+    }
 
     use {
         'junegunn/vim-easy-align',
-        keys = "<Plug>(EasyAlign)"
+        keys = '<Plug>(EasyAlign)'
     }
 
     use {
         'L3MON4D3/LuaSnip',
         config = function ()
             require('luasnip.loaders.from_vscode').lazy_load {
-                paths = vim.fn.stdpath('config') .. "/vsnip",
+                paths = vim.fn.stdpath('config') .. '/vsnip',
             }
         end,
         events = 'InsertEnter'
@@ -135,7 +133,7 @@ local function init()
         'blackCauldron7/surround.nvim',
         config = function ()
             require'surround'.setup{
-                brackets = {"(", "{", "[", "<"},
+                brackets = {'(', '{', '[', '<'},
                 load_keymaps = false,
                 map_insert_mode = false,
             }
@@ -144,12 +142,7 @@ local function init()
 
     use {
         'abecodes/tabout.nvim',
-        config = function ()
-            require'tabout'.setup{
-                tabkey = '',
-                backwards_tabkey = '',
-            }
-        end,
+        config = [[require'tabout'.setup()]],
         events = 'InsertEnter'
     }
 
@@ -189,7 +182,7 @@ local function init()
 
     use {
         'nvim-lua/plenary.nvim',
-        module = "plenary"
+        module = 'plenary'
     }
     use {
         'mhinz/vim-sayonara',
@@ -275,7 +268,7 @@ local function init()
     }
 
     use {
-        "AckslD/nvim-neoclip.lua",
+        'AckslD/nvim-neoclip.lua',
         requires = {'tami5/sqlite.lua', module = 'sqlite'},
         config = function()
             require('neoclip').setup()
@@ -309,25 +302,24 @@ local function init()
     }
 
     use {
-        'nvim-neorg/neorg',
+        'nvim-orgmode/orgmode',
+        after = 'nvim-treesitter',
         config = function ()
-            require('neorg').setup {
-                load = {
-                    ["core.defaults"] = {},
-                    ["core.norg.concealer"] = {},
-                    ["core.norg.dirman"] = {
-                        config = {
-                            workspaces = {
-                                notes = "~/Dropbox/Notes"
-                            }
-                        }
-                    }
-                },
+            require'orgmode'.setup{
+                org_agenda_files = require'personal'.org_agenda_files,
+                org_default_notes_file = require'personal'.org_default_notes_file
             }
         end,
-        requires = "nvim-lua/plenary.nvim"
+        requires = {
+            {'akinsho/org-bullets.nvim',
+                config = function ()
+                    require("org-bullets").setup {
+                        symbols = { "◉", "○", "✸", "✿" }
+                    }
+                end
+            }
+        }
     }
-
     -- integration
     use {
         'TimUntersberger/neogit',
