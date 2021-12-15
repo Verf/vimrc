@@ -322,30 +322,6 @@ local function init()
     }
     -- integration
     use {
-        'TimUntersberger/neogit',
-        config = function ()
-            require'neogit'.setup({
-                disable_signs = false,
-                disable_context_highlighting = true,
-                integrations = {
-                    diffview = true,
-                },
-            })
-        end,
-        cmd = {'Neogit'},
-        requires = {
-            'nvim-lua/plenary.nvim',
-            'sindrets/diffview.nvim'
-        },
-    }
-
-    use {
-        'sindrets/diffview.nvim',
-        module = 'diffview',
-        cmd = {'DiffviewOpen', 'DiffviewToggleFiles'}
-    }
-
-    use {
         'lewis6991/gitsigns.nvim',
         events = 'BufRead',
         config = function ()
