@@ -20,24 +20,13 @@ require'lspconfig'.pyright.setup{
 }
 
 -- lua setup
-local system_name
-if vim.fn.has('mac') == 1 then
-    system_name = 'macOS'
-elseif vim.fn.has('unix') == 1 then
-    system_name = 'Linux'
-elseif vim.fn.has('win32') == 1 then
-    system_name = 'Windows'
-else
-    print('Unsupported system for lua-language-server')
-end
-
 local lua_lsp_path = os.getenv('LUA_LANGUAGE_SERVER')
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
 require'lspconfig'.sumneko_lua.setup {
-    cmd = {lua_lsp_path .. '/bin/' .. system_name .. '/lua-language-server'},
+    cmd = {lua_lsp_path .. '/bin/lua-language-server'},
     settings = {
         Lua = {
             runtime = {
