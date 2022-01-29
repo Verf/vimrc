@@ -1,6 +1,8 @@
 local function map(mode, lhs, rhs, opts)
-    local options = {noremap = true, silent = true}
-    if opts then options = vim.tbl_extend('force', options, opts) end
+    local options = { noremap = true, silent = true }
+    if opts then
+        options = vim.tbl_extend('force', options, opts)
+    end
     vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
@@ -113,20 +115,20 @@ map('v', '>', '>gv')
 map('n', '<TAB>', ':BufferLineCycleNext<CR>')
 map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>')
 
-map('x', 'ga', '<Plug>(EasyAlign)', {noremap=false})
-map('n', 'ga', '<Plug>(EasyAlign)', {noremap=false})
+map('x', 'ga', '<Plug>(EasyAlign)', { noremap = false })
+map('n', 'ga', '<Plug>(EasyAlign)', { noremap = false })
 
 map('n', 'gd', ':Telescope lsp_definitions<CR>')
 map('n', 'gr', ':Telescope lsp_references<CR>')
 map('n', 'gi', ':Telescope lsp_implementations<CR>')
 map('n', 'gh', ':Telescope registers<CR>')
 
-map('n', 'w', '<Plug>WordMotion_w', {noremap=false})
-map('n', 'W', '<Plug>WordMotion_W', {noremap=false})
-map('n', 'b', '<Plug>WordMotion_b', {noremap=false})
-map('n', 'B', '<Plug>WordMotion_B', {noremap=false})
-map('n', 'd', '<Plug>WordMotion_e', {noremap=false})
-map('n', 'D', '<Plug>WordMotion_d', {noremap=false})
+map('n', 'w', '<Plug>WordMotion_w', { noremap = false })
+map('n', 'W', '<Plug>WordMotion_W', { noremap = false })
+map('n', 'b', '<Plug>WordMotion_b', { noremap = false })
+map('n', 'B', '<Plug>WordMotion_B', { noremap = false })
+map('n', 'd', '<Plug>WordMotion_e', { noremap = false })
+map('n', 'D', '<Plug>WordMotion_d', { noremap = false })
 
 map('n', ']d', '<Cmd>lua vim.diagnostic.goto_next()<CR>')
 map('n', '[d', '<Cmd>lua vim.diagnostic.goto_prev()<CR>')
@@ -162,8 +164,8 @@ map('n', '<leader>wN', '<C-w>J')
 map('n', '<leader>wI', '<C-w>K')
 map('n', '<leader>wO', '<C-w>L')
 
-map('n', '<leader>w+','<C-w>+')
-map('n', '<leader>w-','<C-w>-')
+map('n', '<leader>w+', '<C-w>+')
+map('n', '<leader>w-', '<C-w>-')
 map('n', '<leader>w=', '<C-w>=')
 
 map('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>')
@@ -175,8 +177,7 @@ map('n', '<leader>bb', ':Telescope buffers<CR>')
 map('n', '<leader>ft', ':TodoTelescope<CR>')
 map('n', '<leader>fp', ':Telescope projects<CR>')
 map('n', '<leader>fs', ':Telescope sessions<CR>')
-
-map('n', '<leader>fm', ':Format<CR>')
+map('n', '<leader>fm', '<Cmd>lua vim.lsp.buf.formatting_sync(nil, 2000)<CR>')
 
 map('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
 map('n', '<F6>', [[:lua require'dap'.close()<CR>]])

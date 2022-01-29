@@ -2,11 +2,11 @@ local packer = nil
 
 local function init()
     if packer == nil then
-        packer = require('packer')
-        packer.init({
+        packer = require 'packer'
+        packer.init {
             max_jobs = 8,
-            disable_commands = true
-        })
+            disable_commands = true,
+        }
     end
 
     local use = packer.use
@@ -14,45 +14,42 @@ local function init()
 
     use {
         'wbthomason/packer.nvim',
-        opt = true
+        opt = true,
     }
 
-    -- themes
-    use 'ishan9299/nvim-solarized-lua'
-
     -- ui
-    use 'yamatsum/nvim-cursorline'
+    use 'rebelot/kanagawa.nvim'
 
     use {
         'kyazdani42/nvim-web-devicons',
-        module = 'nvim-web-devicons'
+        module = 'nvim-web-devicons',
     }
 
     use {
         'rcarriga/nvim-notify',
-        config = function ()
-            require('notify').setup({
+        config = function()
+            require('notify').setup {
                 stages = 'fade',
                 timeout = 5000,
-            })
-            vim.notify = require('notify')
-        end
+            }
+            vim.notify = require 'notify'
+        end,
     }
 
     use {
         'lukas-reineke/indent-blankline.nvim',
         events = 'BufRead',
-        config = function ()
+        config = function()
             vim.g.indent_blankline_show_current_context = false
-            vim.g.indent_blankline_buftype_exclude = {'terminal', 'NvimTree', 'NeogitStatus'}
-            vim.g.indent_blankline_filetype_exclude = {'help', 'conf', 'txt'}
-        end
+            vim.g.indent_blankline_buftype_exclude = { 'terminal', 'NvimTree', 'NeogitStatus' }
+            vim.g.indent_blankline_filetype_exclude = { 'help', 'conf', 'txt' }
+        end,
     }
 
     use {
         'norcalli/nvim-colorizer.lua',
-        config = function ()
-            require 'colorizer'.setup{
+        config = function()
+            require('colorizer').setup {
                 'lua',
                 'css',
                 'javascript',
@@ -67,31 +64,31 @@ local function init()
             'javascript',
             'typescript',
             'vue',
-            'html'
-        }
+            'html',
+        },
     }
 
     use {
         'folke/todo-comments.nvim',
         event = 'BufRead',
         requires = 'nvim-lua/plenary.nvim',
-        config = function ()
+        config = function()
             require('todo-comments').setup {
                 search = {
                     pattern = [[\b(KEYWORDS)\b]],
-                }
+                },
             }
         end,
     }
 
     use {
         'nvim-lualine/lualine.nvim',
-        config = [[require('configs.statusline')]]
+        config = [[require('configs.statusline')]],
     }
 
     use {
         'akinsho/nvim-bufferline.lua',
-        config = [[require('configs.bufferline')]]
+        config = [[require('configs.bufferline')]],
     }
 
     -- edit
@@ -103,17 +100,17 @@ local function init()
 
     use {
         'junegunn/vim-easy-align',
-        keys = '<Plug>(EasyAlign)'
+        keys = '<Plug>(EasyAlign)',
     }
 
     use {
         'L3MON4D3/LuaSnip',
-        config = function ()
+        config = function()
             require('luasnip.loaders.from_vscode').lazy_load {
-                paths = vim.fn.stdpath('config') .. '/vsnip',
+                paths = vim.fn.stdpath 'config' .. '/vsnip',
             }
         end,
-        events = 'InsertEnter'
+        events = 'InsertEnter',
     }
 
     use {
@@ -126,14 +123,14 @@ local function init()
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lua',
-        }
+        },
     }
 
     use {
         'blackCauldron7/surround.nvim',
-        config = function ()
-            require'surround'.setup{
-                brackets = {'(', '{', '[', '<'},
+        config = function()
+            require('surround').setup {
+                brackets = { '(', '{', '[', '<' },
                 load_keymaps = false,
                 map_insert_mode = false,
             }
@@ -143,36 +140,36 @@ local function init()
     use {
         'abecodes/tabout.nvim',
         config = [[require'tabout'.setup()]],
-        events = 'InsertEnter'
+        events = 'InsertEnter',
     }
 
     use {
         'terrortylor/nvim-comment',
-        config = function ()
+        config = function()
             require('nvim_comment').setup()
         end,
-        ft = {'python', 'java', 'vue', 'html', 'javascript', 'lua', 'sh', 'ps1'}
+        ft = { 'python', 'java', 'vue', 'html', 'javascript', 'lua', 'sh', 'ps1' },
     }
 
     use {
         'mg979/vim-visual-multi',
-        config = function ()
+        config = function()
             vim.g.VM_maps = {
-                ['Find Under']         = '<C-s>',
+                ['Find Under'] = '<C-s>',
                 ['Find Subword Under'] = '<C-s>',
-                ['Add Cursor Down']    = '<M-Down>',
-                ['Add Cursor Up']      = '<M-Up>',
-                ['Find Next']          = '<C-s>',
-                ['Find Prev']          = '<C-S-s>',
-                ['Goto Next']          = ']',
-                ['Goto Prev']          = '[',
-                ['Seek Next']          = '<C-f>',
-                ['Seek Prev']          = '<C-b>',
-                ['Skip Region']        = '<C-x>',
-                ['Remove Region']      = '<C-S-x>',
-                ['Replace']            = 'R',
-                ['Surround']           = 'S',
-                ['Toggle Multiline']   = 'M',
+                ['Add Cursor Down'] = '<M-Down>',
+                ['Add Cursor Up'] = '<M-Up>',
+                ['Find Next'] = '<C-s>',
+                ['Find Prev'] = '<C-S-s>',
+                ['Goto Next'] = ']',
+                ['Goto Prev'] = '[',
+                ['Seek Next'] = '<C-f>',
+                ['Seek Prev'] = '<C-b>',
+                ['Skip Region'] = '<C-x>',
+                ['Remove Region'] = '<C-S-x>',
+                ['Replace'] = 'R',
+                ['Surround'] = 'S',
+                ['Toggle Multiline'] = 'M',
             }
         end,
     }
@@ -180,96 +177,111 @@ local function init()
     -- enhance
     use 'nathom/filetype.nvim'
 
+    use 'stevearc/dressing.nvim'
+
     use {
         'nvim-lua/plenary.nvim',
-        module = 'plenary'
+        module = 'plenary',
     }
+
     use {
         'mhinz/vim-sayonara',
-        cmd = 'Sayonara'
+        cmd = 'Sayonara',
     }
 
     use {
         'chaoren/vim-wordmotion',
-        config = function ()
+        config = function()
             vim.g.wordmotion_nomap = 1
-        end
+        end,
     }
 
     use {
         'andymass/vim-matchup',
-        config = function ()
+        config = function()
             vim.cmd [[xmap r% <Plug>(matchup-i%)]]
             vim.g.matchup_matchparen_offscreen = {
-                method = 'popup'
+                method = 'popup',
             }
-        end
+        end,
     }
 
     use {
         'phaazon/hop.nvim',
-        config = function ()
-            require'hop'.setup { keys = 'tfvnumdecriwsxloqazh' }
+        config = function()
+            require('hop').setup { keys = 'tfvnumdecriwsxloqazh' }
         end,
         cmd = {
             'HopWord',
             'HopLine',
             'HopChar2',
-        }
+        },
     }
 
     use {
         'ethanholz/nvim-lastplace',
-        config = function ()
-            require'nvim-lastplace'.setup {
-                lastplace_ignore_buftype = {'quickfix', 'nofile', 'help'},
-                lastplace_ignore_filetype = {'gitcommit', 'gitrebase', 'svn', 'hgcommit'},
-                lastplace_open_folds = true
+        config = function()
+            require('nvim-lastplace').setup {
+                lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help' },
+                lastplace_ignore_filetype = { 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
+                lastplace_open_folds = true,
             }
-        end
+        end,
     }
 
     use {
         'Pocco81/AutoSave.nvim',
-        config = function ()
-            require'autosave'.setup({
+        config = function()
+            require('autosave').setup {
                 enabled = true,
                 execution_message = '',
-                events = {'InsertLeave', 'TextChanged'},
+                events = { 'InsertLeave', 'TextChanged' },
                 conditions = {
                     exists = true,
                     filetype_is_not = {},
-                    modifiable = true
+                    modifiable = true,
                 },
                 write_all_buffers = true,
                 on_off_commands = true,
                 clean_command_line_interval = 0,
-                debounce_delay = 135
-            })
-        end
+                debounce_delay = 135,
+            }
+        end,
     }
 
     use {
         'nvim-telescope/telescope.nvim',
-        config = function ()
-            require('telescope').setup{
+        config = function()
+            require('telescope').setup {
                 defaults = {
                     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                 },
+                extensions = {
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                        case_mode = 'smart_case',
+                    },
+                },
             }
-            require'telescope'.load_extension('neoclip')
-            require'telescope'.load_extension('projects')
-            require('telescope').load_extension('sessions')
+            require('telescope').load_extension 'fzf'
+            require('telescope').load_extension 'neoclip'
+            require('telescope').load_extension 'projects'
         end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
-        }
+        },
+    }
+    use {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        run = 'make',
     }
 
     use {
         'AckslD/nvim-neoclip.lua',
-        requires = {'tami5/sqlite.lua', module = 'sqlite'},
+        requires = { 'tami5/sqlite.lua', module = 'sqlite' },
         config = function()
             require('neoclip').setup()
         end,
@@ -277,88 +289,55 @@ local function init()
 
     use {
         'ahmedkhalf/project.nvim',
-        config = function ()
-            require'project_nvim'.setup({
-                detection_methods = {'pattern'},
-                patterns = {'.git', '.root', '.project', 'make*', 'Makefile', 'pom.xml', 'pyproject.toml'},
-                exclude_dirs = {'c:', 'C:'}
-            })
-        end
+        config = function()
+            require('project_nvim').setup {
+                detection_methods = { 'pattern' },
+                patterns = { '.git', '.root', '.project', 'make*', 'Makefile', 'pom.xml', 'pyproject.toml' },
+                exclude_dirs = { 'c:', 'C:' },
+            }
+        end,
     }
 
     use {
         'Shatur/neovim-session-manager',
-        config = function ()
-            local Path = require('plenary.path')
-            require('session_manager').setup({
-                sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'),
+        config = function()
+            local Path = require 'plenary.path'
+            require('session_manager').setup {
+                sessions_dir = Path:new(vim.fn.stdpath 'data', 'sessions'),
                 path_replacer = '__',
                 colon_replacer = '++',
                 autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
                 autosave_last_session = true,
                 autosave_ignore_not_normal = true,
-            })
-        end
-    }
-
-    use {
-        'nvim-orgmode/orgmode',
-        after = 'nvim-treesitter',
-        config = function ()
-            require'orgmode'.setup{
-                org_agenda_files = require'personal'.org_agenda_files,
-                org_default_notes_file = require'personal'.org_default_notes_file
             }
         end,
-        requires = {
-            {'akinsho/org-bullets.nvim',
-                config = function ()
-                    require("org-bullets").setup {
-                        symbols = { "◉", "○", "✸", "✿" }
-                    }
-                end
-            }
-        }
     }
     -- integration
+    use 'rktjmp/lush.nvim'
+
     use {
         'lewis6991/gitsigns.nvim',
         events = 'BufRead',
-        config = function ()
-            require'gitsigns'.setup({
+        config = function()
+            require('gitsigns').setup {
                 keymaps = {
                     noremap = true,
-                }
-            })
+                },
+            }
         end,
         requires = {
-            'nvim-lua/plenary.nvim'
-        }
+            'nvim-lua/plenary.nvim',
+        },
     }
 
     use {
         'mfussenegger/nvim-dap',
-        requires = {'mfussenegger/nvim-dap-python', 'rcarriga/nvim-dap-ui'},
-        config = function ()
-            require'dapui'.setup()
-            require'dap-python'.setup('python')
+        requires = { 'mfussenegger/nvim-dap-python', 'rcarriga/nvim-dap-ui' },
+        config = function()
+            require('dapui').setup()
+            require('dap-python').setup 'python'
         end,
-        ft = {'python'}
-    }
-
-    use {
-        'mhartington/formatter.nvim',
-        config = [[require('configs.formatter')]],
-        ft = {
-            'python',
-            'json',
-            'javascript',
-            'typescript',
-            'css',
-            'html',
-            'vue',
-            'markdown',
-        }
+        ft = { 'python' },
     }
 
     use {
@@ -369,8 +348,8 @@ local function init()
             'nvim-treesitter/nvim-treesitter-textobjects',
             'RRethy/nvim-treesitter-textsubjects',
             'p00f/nvim-ts-rainbow',
-            'windwp/nvim-ts-autotag'
-        }
+            'windwp/nvim-ts-autotag',
+        },
     }
 
     use {
@@ -379,7 +358,18 @@ local function init()
         requires = {
             'onsails/lspkind-nvim',
             'ray-x/lsp_signature.nvim',
-        }
+        },
+    }
+
+    use {
+        'jose-elias-alvarez/null-ls.nvim',
+        config = [[require('configs.null-ls')]],
+    }
+    use {
+        'j-hui/fidget.nvim',
+        config = function()
+            require('fidget').setup {}
+        end,
     }
 end
 
@@ -387,7 +377,7 @@ local plugins = setmetatable({}, {
     __index = function(_, key)
         init()
         return packer[key]
-    end
+    end,
 })
 
 return plugins

@@ -1,6 +1,6 @@
-require'lualine'.setup{
+require('lualine').setup {
     options = {
-        theme = 'solarized'
+        theme = 'auto',
     },
     sections = {
         lualine_b = {
@@ -9,6 +9,6 @@ require'lualine'.setup{
         lualine_c = {
             'filename',
             'diff',
-        }
-    }
+        },
+    },
 }

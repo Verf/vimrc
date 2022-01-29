@@ -1,15 +1,15 @@
-local cmp = require('cmp')
-local luasnip = require('luasnip')
+local cmp = require 'cmp'
+local luasnip = require 'luasnip'
 
-cmp.setup({
+cmp.setup {
     snippet = {
-        expand = function (args)
+        expand = function(args)
             luasnip.lsp_expand(args.body)
         end,
     },
     mapping = {
-        ['<CR>'] = cmp.mapping.confirm({ select = true }),
-        ['<Tab>'] = cmp.mapping(function (fallback)
+        ['<CR>'] = cmp.mapping.confirm { select = true },
+        ['<Tab>'] = cmp.mapping(function(fallback)
             if luasnip.expandable() then
                 luasnip.expand()
             elseif cmp.visible() then
@@ -19,8 +19,8 @@ cmp.setup({
             else
                 fallback()
             end
-        end, {'i', 's'}),
-        ['<S-Tab>'] = cmp.mapping(function (fallback)
+        end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
             elseif luasnip.jumpable(-1) then
@@ -28,7 +28,7 @@ cmp.setup({
             else
                 fallback()
             end
-        end, {'i', 's'})
+        end, { 'i', 's' }),
     },
     sources = {
         { name = 'luasnip' },
@@ -36,7 +36,5 @@ cmp.setup({
         { name = 'nvim_lua' },
         { name = 'buffer' },
         { name = 'path' },
-        { name = 'orgmode' },
-    }
-})
-
+    },
+}
