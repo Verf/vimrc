@@ -267,7 +267,6 @@ local function init()
             }
             require('telescope').load_extension 'fzf'
             require('telescope').load_extension 'neoclip'
-            require('telescope').load_extension 'projects'
         end,
         requires = {
             'nvim-lua/popup.nvim',
@@ -288,12 +287,12 @@ local function init()
     }
 
     use {
-        'ahmedkhalf/project.nvim',
+        'jedi2610/nvim-rooter.lua',
         config = function()
-            require('project_nvim').setup {
-                detection_methods = { 'pattern' },
-                patterns = { '.git', '.root', '.project', 'make*', 'Makefile', 'pom.xml', 'pyproject.toml' },
-                exclude_dirs = { 'c:', 'C:' },
+            require('nvim-rooter').setup {
+                rooter_patterns = { '.git', '.root', '.project', 'Makefile', 'pom.xml', 'pyproject.toml' },
+                trigger_patterns = { '*' },
+                manual = false,
             }
         end,
     }
@@ -301,19 +300,20 @@ local function init()
     use {
         'Shatur/neovim-session-manager',
         config = function()
-            local Path = require 'plenary.path'
             require('session_manager').setup {
-                sessions_dir = Path:new(vim.fn.stdpath 'data', 'sessions'),
-                path_replacer = '__',
-                colon_replacer = '++',
                 autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
-                autosave_last_session = true,
-                autosave_ignore_not_normal = true,
+                autosave_only_in_session = true,
             }
         end,
     }
     -- integration
     use 'rktjmp/lush.nvim'
+
+    use {
+        'mhartington/formatter.nvim',
+        config = [[require 'configs.formatter']],
+        cmd = 'Format',
+    }
 
     use {
         'lewis6991/gitsigns.nvim',
@@ -349,6 +349,7 @@ local function init()
             'RRethy/nvim-treesitter-textsubjects',
             'p00f/nvim-ts-rainbow',
             'windwp/nvim-ts-autotag',
+            'yioneko/nvim-yati',
         },
     }
 
@@ -361,10 +362,6 @@ local function init()
         },
     }
 
-    use {
-        'jose-elias-alvarez/null-ls.nvim',
-        config = [[require('configs.null-ls')]],
-    }
     use {
         'j-hui/fidget.nvim',
         config = function()

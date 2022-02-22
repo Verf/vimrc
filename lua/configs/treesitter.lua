@@ -1,11 +1,10 @@
 require('nvim-treesitter.configs').setup {
-    ensure_installed = { 'python', 'java', 'lua', 'html', 'vue', 'javascript', 'typescript' },
+    ensure_installed = { 'python', 'java', 'lua', 'html', 'vue', 'javascript', 'typescript', 'css', 'json', 'go' },
     highlight = {
         enable = true,
     },
     indent = {
-        enable = true,
-        disable = { 'python' },
+        enable = false,
     },
     incremental_selection = {
         enable = false,
@@ -62,4 +61,5 @@ require('nvim-treesitter.configs').setup {
     matchup = {
         enable = true,
     },
+    yati = { enable = true },
 }

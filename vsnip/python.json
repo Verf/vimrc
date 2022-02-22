@@ -7,6 +7,16 @@
         ],
         "description": "coding: utf-8"
     },
+    "enc_all": {
+        "prefix": "#a",
+        "body": [
+            "# -*- coding: utf-8 -*-",
+            "# @Auther: Verf",
+            "# @Emal: verf@protonmail.com",
+            "$0"
+        ],
+        "description": "coding: utf-8"
+    }, 
     "import": {
         "prefix": ["im", "imp"],
         "body": [
