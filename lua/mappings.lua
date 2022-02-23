@@ -140,18 +140,13 @@ map('v', 'gw', ':HopWord<CR>')
 map('v', 'gl', ':HopLine<CR>')
 map('v', 'gs', ':HopChar2<CR>')
 
-map('n', 'sa', [[<Cmd>lua require'surround'.surround_add(true)<CR>]])
-map('n', 'sd', [[<Cmd>lua require'surround'.surround_delete()<CR>]])
-map('n', 'sc', [[<Cmd>lua require'surround'.surround_replace()<CR>]])
-map('n', 'ss', [[<Cmd>lua require'surround'.repeat_last()<CR>]])
-
 -- Leader
 map('n', '<leader>g', ':Neogit<CR>')
 map('n', '<leader>h', [[:lua require('telescope').extensions.neoclip.default()<CR>]])
 map('n', '<leader><space>', ':BufferLinePick<CR>')
 
 map('n', '<leader>qa', ':qa!<CR>')
-map('n', '<leader>qq', ':Sayonara!<CR>')
+map('n', '<leader>qq', ':bd<CR>')
 
 map('n', '<leader>wc', '<C-w>o')
 map('n', '<leader>wq', '<C-w>c')
@@ -178,11 +173,7 @@ map('n', '<leader>fg', ':Telescope live_grep<CR>')
 map('n', '<leader>bb', ':Telescope buffers<CR>')
 map('n', '<leader>ft', ':TodoTelescope<CR>')
 map('n', '<leader>fp', ':Telescope projects<CR>')
-map('n', '<leader>fs', ':SessionManager load_session<CR>')
 map('n', '<leader>fm', ':Format<CR>')
-
-map('n', '<leader>ss', ':SessionManager save_current_session<CR>')
-map('n', '<leader>sl', ':SessionManager load_current_dir_session<CR>')
 
 map('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
 map('n', '<F6>', [[:lua require'dap'.close()<CR>]])

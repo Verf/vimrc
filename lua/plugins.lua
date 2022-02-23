@@ -37,16 +37,6 @@ local function init()
     }
 
     use {
-        'lukas-reineke/indent-blankline.nvim',
-        events = 'BufRead',
-        config = function()
-            vim.g.indent_blankline_show_current_context = false
-            vim.g.indent_blankline_buftype_exclude = { 'terminal', 'NvimTree', 'NeogitStatus' }
-            vim.g.indent_blankline_filetype_exclude = { 'help', 'conf', 'txt' }
-        end,
-    }
-
-    use {
         'norcalli/nvim-colorizer.lua',
         config = function()
             require('colorizer').setup {
@@ -127,28 +117,9 @@ local function init()
     }
 
     use {
-        'blackCauldron7/surround.nvim',
-        config = function()
-            require('surround').setup {
-                brackets = { '(', '{', '[', '<' },
-                load_keymaps = false,
-                map_insert_mode = false,
-            }
-        end,
-    }
-
-    use {
         'abecodes/tabout.nvim',
         config = [[require'tabout'.setup()]],
         events = 'InsertEnter',
-    }
-
-    use {
-        'terrortylor/nvim-comment',
-        config = function()
-            require('nvim_comment').setup()
-        end,
-        ft = { 'python', 'java', 'vue', 'html', 'javascript', 'lua', 'sh', 'ps1' },
     }
 
     use {
@@ -185,8 +156,39 @@ local function init()
     }
 
     use {
-        'mhinz/vim-sayonara',
-        cmd = 'Sayonara',
+        'echasnovski/mini.nvim',
+        config = function()
+            require('mini.bufremove').setup()
+            require('mini.comment').setup()
+            require('mini.cursorword').setup()
+            require('mini.indentscope').setup {
+                draw = {
+                    delay = 100,
+                    animation = require('mini.indentscope').gen_animation 'none',
+                },
+            }
+            require('mini.jump').setup {
+                mappings = {
+                    forward = 't',
+                    backward = 'T',
+                    forward_till = 'k',
+                    backward_till = 'K',
+                    repeat_jump = ';',
+                },
+                highlight_delay = 250,
+            }
+            require('mini.sessions').setup()
+            require('mini.starter').setup()
+            require('mini.surround').setup {
+                mappings = {
+                    find = '', -- Find surrounding (to the right)
+                    find_left = '', -- Find surrounding (to the left)
+                    highlight = '', -- Highlight surrounding
+                    replace = 'sc', -- Replace surrounding
+                    update_n_lines = '', -- Update `n_lines`
+                },
+            }
+        end,
     }
 
     use {
@@ -297,15 +299,6 @@ local function init()
         end,
     }
 
-    use {
-        'Shatur/neovim-session-manager',
-        config = function()
-            require('session_manager').setup {
-                autoload_mode = require('session_manager.config').AutoloadMode.Disabled,
-                autosave_only_in_session = true,
-            }
-        end,
-    }
     -- integration
     use 'rktjmp/lush.nvim'
 
