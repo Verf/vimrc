@@ -42,6 +42,7 @@ local function init()
             require('colorizer').setup {
                 'lua',
                 'css',
+                'scss',
                 'javascript',
                 'typescript',
                 'vue',
@@ -51,6 +52,7 @@ local function init()
         ft = {
             'lua',
             'css',
+            'scss',
             'javascript',
             'typescript',
             'vue',
@@ -166,6 +168,12 @@ local function init()
                     delay = 100,
                     animation = require('mini.indentscope').gen_animation 'none',
                 },
+                mappings = {
+                    object_scope = 'ri',
+                    object_scope_with_border = 'ai',
+                    goto_top = '[i',
+                    goto_bottom = ']i',
+                },
             }
             require('mini.jump').setup {
                 mappings = {
@@ -175,9 +183,10 @@ local function init()
                     backward_till = 'K',
                     repeat_jump = ';',
                 },
-                highlight_delay = 250,
             }
-            require('mini.sessions').setup()
+            require('mini.sessions').setup {
+                file = '',
+            }
             require('mini.starter').setup()
             require('mini.surround').setup {
                 mappings = {

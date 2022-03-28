@@ -146,7 +146,7 @@ map('n', '<leader>h', [[:lua require('telescope').extensions.neoclip.default()<C
 map('n', '<leader><space>', ':BufferLinePick<CR>')
 
 map('n', '<leader>qa', ':qa!<CR>')
-map('n', '<leader>qq', ':bd<CR>')
+map('n', '<leader>qq', ':lua MiniBufremove.delete()<CR>')
 
 map('n', '<leader>wc', '<C-w>o')
 map('n', '<leader>wq', '<C-w>c')
@@ -174,6 +174,8 @@ map('n', '<leader>bb', ':Telescope buffers<CR>')
 map('n', '<leader>ft', ':TodoTelescope<CR>')
 map('n', '<leader>fp', ':Telescope projects<CR>')
 map('n', '<leader>fm', ':Format<CR>')
+
+map('n', '<leader>ss', ':lua MiniSessions.write()<CR>')
 
 map('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
 map('n', '<F6>', [[:lua require'dap'.close()<CR>]])

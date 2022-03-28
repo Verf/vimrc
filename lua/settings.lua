@@ -11,13 +11,6 @@ cmd [[command! Trim :%s/\s\+$//e]]
 cmd [[command! Trimline :%d/^$/g]]
 cmd [[command! Editrc :e $MYVIMRC]]
 
--- Functions
-function _G.myfoldtext()
-    local line = vim.fn.getline(vim.v.foldstart)
-    local line_count = vim.v.foldend - vim.v.foldstart + 1
-    return string.format('%s        並×%d', line, line_count)
-end
-
 function _G.print_tb(t)
     local print_r_cache = {}
     local function sub_print_r(t, indent)
@@ -97,11 +90,6 @@ opt.tabstop = 4
 opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.synmaxcol = 200
-
-opt.foldlevel = 99
-opt.foldmethod = 'expr'
-opt.foldtext = 'v:lua.myfoldtext()'
-opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
 opt.mouse = 'a'
 opt.showbreak = '⮎'
