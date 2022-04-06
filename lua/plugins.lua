@@ -152,6 +152,8 @@ local function init()
 
     use 'stevearc/dressing.nvim'
 
+    use 'fedepujol/move.nvim'
+
     use {
         'nvim-lua/plenary.nvim',
         module = 'plenary',

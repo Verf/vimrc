@@ -115,6 +115,15 @@ map('v', '>', '>gv')
 map('n', '<TAB>', ':BufferLineCycleNext<CR>')
 map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>')
 
+map('n', '<A-n>', ":MoveLine(1)<CR>")
+map('n', '<A-i>', ":MoveLine(-1)<CR>")
+map('v', '<A-n>', ":MoveBlock(1)<CR>")
+map('v', '<A-i>', ":MoveBlock(-1)<CR>")
+map('n', '<A-o>', ":MoveHChar(1)<CR>")
+map('n', '<A-y>', ":MoveHChar(-1)<CR>")
+map('v', '<A-o>', ":MoveHBlock(1)<CR>")
+map('v', '<A-y>', ":MoveHBlock(-1)<CR>")
+
 map('x', 'ga', '<Plug>(EasyAlign)', { noremap = false })
 map('n', 'ga', '<Plug>(EasyAlign)', { noremap = false })
 
