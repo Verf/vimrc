@@ -29,9 +29,6 @@ for i = 1, 9 do
     g['loaded_' .. disabled_builtin[i]] = 1
 end
 
--- disable default filetype.vim
-vim.g.did_load_filetypes = 1
-
 -- packer
 cmd [[command! PackerInstall packadd packer.nvim | lua require('plugins').install()]]
 cmd [[command! PackerUpdate packadd packer.nvim | lua require('plugins').update()]]

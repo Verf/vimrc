@@ -79,7 +79,7 @@ local function init()
     }
 
     use {
-        'akinsho/nvim-bufferline.lua',
+        'akinsho/bufferline.nvim',
         config = [[require('configs.bufferline')]],
     }
 
@@ -148,8 +148,6 @@ local function init()
     }
 
     -- enhance
-    use 'nathom/filetype.nvim'
-
     use 'stevearc/dressing.nvim'
 
     use 'fedepujol/move.nvim'
@@ -279,7 +277,6 @@ local function init()
                 },
             }
             require('telescope').load_extension 'fzf'
-            require('telescope').load_extension 'neoclip'
         end,
         requires = {
             'nvim-lua/popup.nvim',
@@ -289,14 +286,6 @@ local function init()
     use {
         'nvim-telescope/telescope-fzf-native.nvim',
         run = 'make',
-    }
-
-    use {
-        'AckslD/nvim-neoclip.lua',
-        requires = { 'tami5/sqlite.lua', module = 'sqlite' },
-        config = function()
-            require('neoclip').setup()
-        end,
     }
 
     use {
@@ -311,8 +300,14 @@ local function init()
     }
 
     -- integration
-    use 'rktjmp/lush.nvim'
-
+    use {
+        'numToStr/FTerm.nvim',
+        config = function()
+            require('FTerm').setup {
+                cmd = vim.opt.shell:get(),
+            }
+        end,
+    }
     use {
         'mhartington/formatter.nvim',
         config = [[require 'configs.formatter']],
@@ -336,12 +331,13 @@ local function init()
 
     use {
         'mfussenegger/nvim-dap',
-        requires = { 'mfussenegger/nvim-dap-python', 'rcarriga/nvim-dap-ui' },
+        requires = { 'rcarriga/nvim-dap-ui', 'leoluz/nvim-dap-go', 'mfussenegger/nvim-dap-python' },
         config = function()
             require('dapui').setup()
             require('dap-python').setup 'python'
+            require('dap-go').setup()
         end,
-        ft = { 'python' },
+        ft = { 'python', 'go' },
     }
 
     use {
