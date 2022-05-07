@@ -115,7 +115,7 @@ require('formatter').setup {
             function()
                 return {
                     exe = 'yapf',
-                    args = { '--style={column_limit: 120}' },
+                    args = { '--quiet' },
                     stdin = true,
                 }
             end,

@@ -18,7 +18,7 @@ local function init()
     }
 
     -- ui
-    use 'rebelot/kanagawa.nvim'
+    use 'rebelot/kanagawa.nvim' -- color theme
 
     use {
         'kyazdani42/nvim-web-devicons',
@@ -148,7 +148,9 @@ local function init()
     }
 
     -- enhance
-    use 'stevearc/dressing.nvim'
+    use 'lewis6991/impatient.nvim'
+
+    use 'stevearc/dressing.nvim' -- improve default ui interface
 
     use 'fedepujol/move.nvim'
 
