@@ -182,6 +182,7 @@ keymap.set('n', '<leader>ss', ':lua MiniSessions.write()<CR>')
 
 keymap.set('n', '<F1>', '<Cmd>lua require("FTerm").toggle()<CR>')
 keymap.set('t', '<F1>', '<C-\\><C-n><Cmd>lua require("FTerm").toggle()<CR>')
+keymap.set('t', '<C-o>', '<C-\\><C-n>')
 
 keymap.set('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
 keymap.set('n', '<F6>', [[:lua require'dap'.close()<CR>]])
