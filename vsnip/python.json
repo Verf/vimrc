@@ -1,34 +1,101 @@
 {
-    "enc": {
-        "prefix": "#u",
-        "body": [
-            "# -*- coding: utf-8 -*-",
-            "$0"
-        ],
-        "description": "coding: utf-8"
-    },
-    "enc_all": {
-        "prefix": "#a",
-        "body": [
-            "# -*- coding: utf-8 -*-",
-            "# @Auther: Verf",
-            "# @Emal: verf@protonmail.com",
-            "$0"
-        ],
-        "description": "coding: utf-8"
-    }, 
-    "import": {
-        "prefix": ["im", "imp"],
-        "body": [
-            "import ${0:package}"
-        ],
-        "description": "import package"
-    },
-    "from import": {
-        "prefix": "fi",
-        "body": [
-            "from ${1:package} import ${0:module}"
-        ],
-        "description": "from package import module"
-    }
+  "enc": {
+    "prefix": "#u",
+    "body": ["# -*- coding: utf-8 -*-", "$0"],
+    "description": "coding: utf-8"
+  },
+  "enca": {
+    "prefix": "#a",
+    "body": [
+      "# -*- coding: utf-8 -*-",
+      "# @Auther: Verf",
+      "# @Email: verf@protonmail.com",
+      "$0"
+    ],
+    "description": "coding with information"
+  },
+  "import": {
+    "prefix": ["im", "imp"],
+    "body": ["import ${0:package}"],
+    "description": "import package"
+  },
+  "from import": {
+    "prefix": ["fi", "from"],
+    "body": ["from ${1:package} import ${0:module}"],
+    "description": "from package import module"
+  },
+  "class": {
+    "prefix": ["class", "cl"],
+    "body": [
+      "class ${1:name}:",
+      "\tdef __init__(self, ${2:args}) -> None:",
+      "\t\t${0:pass}"
+    ],
+    "description": "class defined"
+  },
+  "function": {
+    "prefix": "def",
+    "body": ["def ${1:name}($2) -> ${3:None}:", "\t${0:pass}"],
+    "description": "def function"
+  },
+  "class function": {
+    "prefix": "defc",
+    "body": ["def ${1:name}(self, $2) -> ${3:None}:", "\t${0:pass}"],
+    "description": "def class function"
+  },
+  "try except": {
+    "prefix": "try",
+    "body": ["try:", "\t${1:pass}", "except ${2:Exception}:", "\t${0:pass}"],
+    "description": "try except"
+  },
+  "try except finally": {
+    "prefix": "try",
+    "body": [
+      "try:",
+      "\t${1:pass}",
+      "except ${2:Exception}:",
+      "\t${3:pass}",
+      "finally:",
+      "\t${0:pass}"
+    ],
+    "description": "try except finally"
+  },
+  "self": {
+    "prefix": "s.",
+    "body": "self.$0",
+    "description": "self abbr"
+  },
+  "f-expr-double": {
+    "prefix": "f\"",
+    "body": "f\"$0\"",
+    "description": "f-fomat-double"
+  },
+  "f-expr-single": {
+    "prefix": "f'",
+    "body": "f'$0'",
+    "description": "f-fomat-single"
+  },
+  "property": {
+    "prefix": ["@property", "@p"],
+    "body": [
+      "@property",
+      "def ${1:name}(self) -> $2:",
+      "\t${3:pass}",
+      "\n",
+      "@${1:name}.setter",
+      "def ${1:name}(self, ${4:value}) -> None:",
+      "\t${0:pass}"
+    ],
+    "description": "def property"
+  },
+  "if main": {
+    "prefix": "ifm",
+    "body": ["if __name__ == '__main__':", "\t${0:main()}"],
+    "description": "if main"
+  },
+  "raise": {
+    "prefix": ["rai", "raise"],
+    "body": "raise ${1:Error}(f'$0')",
+    "description": "raise Error"
+  }
 }

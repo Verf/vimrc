@@ -101,6 +101,7 @@ opt.mouse = 'a'
 opt.showbreak = '⮎'
 opt.signcolumn = 'yes'
 opt.virtualedit = 'all'
+opt.fileformats = 'unix'
 opt.clipboard = 'unnamed'
 opt.shell = 'pwsh -nol'
 opt.shellcmdflag =
