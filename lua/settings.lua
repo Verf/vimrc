@@ -93,6 +93,10 @@ opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.synmaxcol = 200
 
+opt.foldmethod = 'expr'
+opt.foldexpr = 'nvim_treesitter#foldexpr()'
+opt.foldlevelstart = 20
+
 opt.mouse = 'a'
 opt.showbreak = '⮎'
 opt.signcolumn = 'yes'
