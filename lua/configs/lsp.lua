@@ -1,4 +1,8 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+}
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local on_attach = function(client, _)
@@ -7,6 +11,7 @@ local on_attach = function(client, _)
     client.resolved_capabilities.document_range_formatting = false
 end
 
+require('ufo').setup()
 -- python setup
 require('lspconfig').pyright.setup {
     on_attach = on_attach,

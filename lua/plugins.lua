@@ -91,11 +91,6 @@ local function init()
     }
 
     use {
-        'junegunn/vim-easy-align',
-        keys = '<Plug>(EasyAlign)',
-    }
-
-    use {
         'L3MON4D3/LuaSnip',
         config = function()
             require('luasnip.loaders.from_vscode').lazy_load {
@@ -188,6 +183,7 @@ local function init()
             }
             require('mini.sessions').setup {
                 file = '',
+                autowrite = false,
             }
             require('mini.starter').setup()
             require('mini.surround').setup {
@@ -200,6 +196,11 @@ local function init()
                 },
             }
         end,
+    }
+
+    use {
+        'junegunn/vim-easy-align',
+        keys = '<Plug>(EasyAlign)',
     }
 
     use {
@@ -291,13 +292,10 @@ local function init()
     }
 
     use {
-        'notjedi/nvim-rooter.lua',
+        'airblade/vim-rooter',
         config = function()
-            require('nvim-rooter').setup {
-                rooter_patterns = { '.git', '.root', '.project', 'Makefile', 'pom.xml', 'pyproject.toml' },
-                trigger_patterns = { '*' },
-                manual = false,
-            }
+            vim.g.rooter_patterns = { '.git', 'make.sh', 'MakeFile', 'pom.xml', 'package.json' }
+            vim.g.rooter_change_directory_for_non_project_files = 'current'
         end,
     }
 
@@ -362,6 +360,11 @@ local function init()
             'onsails/lspkind-nvim',
             'ray-x/lsp_signature.nvim',
         },
+    }
+
+    use {
+        'kevinhwang91/nvim-ufo',
+        requires = 'kevinhwang91/promise-async',
     }
 
     use {

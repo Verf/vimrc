@@ -110,6 +110,9 @@ keymap.set('v', '>', '>gv')
 keymap.set('n', '<TAB>', ':BufferLineCycleNext<CR>')
 keymap.set('n', '<S-TAB>', ':BufferLineCyclePrev<CR>')
 
+keymap.set('x', 'ga', '<Plug>(EasyAlign)')
+keymap.set('n', 'ga', '<Plug>(EasyAlign)')
+
 keymap.set('n', '<A-n>', ':MoveLine(1)<CR>')
 keymap.set('n', '<A-i>', ':MoveLine(-1)<CR>')
 keymap.set('v', '<A-n>', ':MoveBlock(1)<CR>')
@@ -118,9 +121,6 @@ keymap.set('n', '<A-o>', ':MoveHChar(1)<CR>')
 keymap.set('n', '<A-y>', ':MoveHChar(-1)<CR>')
 keymap.set('v', '<A-o>', ':MoveHBlock(1)<CR>')
 keymap.set('v', '<A-y>', ':MoveHBlock(-1)<CR>')
-
-keymap.set('x', 'ga', '<Plug>(EasyAlign)')
-keymap.set('n', 'ga', '<Plug>(EasyAlign)')
 
 keymap.set('n', 'gd', ':Telescope lsp_definitions<CR>')
 keymap.set('n', 'gr', ':Telescope lsp_references<CR>')

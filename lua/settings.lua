@@ -82,6 +82,7 @@ opt.number = true
 opt.relativenumber = true
 opt.linebreak = true
 opt.cursorline = true
+opt.lazyredraw = true
 
 opt.updatetime = 300
 opt.scrolloff = 999
@@ -93,8 +94,8 @@ opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.synmaxcol = 200
 
-opt.foldmethod = 'expr'
-opt.foldexpr = 'nvim_treesitter#foldexpr()'
+opt.foldcolumn = '1'
+opt.foldlevel = 99
 opt.foldlevelstart = 20
 
 opt.mouse = 'a'
