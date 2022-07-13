@@ -107,8 +107,8 @@ keymap.set('v', '<', '<gv')
 keymap.set('v', '>', '>gv')
 
 -- Plugin
-keymap.set('n', '<TAB>', ':BufferLineCycleNext<CR>')
-keymap.set('n', '<S-TAB>', ':BufferLineCyclePrev<CR>')
+keymap.set('n', '<Tab>', ':BufferLineCycleNext<CR>')
+keymap.set('n', '<S-Tab>', ':BufferLineCyclePrev<CR>')
 
 keymap.set('x', 'ga', '<Plug>(EasyAlign)')
 keymap.set('n', 'ga', '<Plug>(EasyAlign)')
@@ -192,3 +192,17 @@ keymap.set('n', '<F9>', [[:lua require'dap'.step_over()<CR>]])
 keymap.set('n', '<F10>', [[:lua require'dap'.step_into()<CR>]])
 keymap.set('n', '<F11>', [[:lua require'dap'.step_out()<CR>]])
 keymap.set('n', '<F12>', [[:lua require'dap'.run_to_cursor()<CR>]])
+
+vim.api.nvim_create_autocmd('filetype', {
+  pattern = 'netrw',
+  callback = function()
+    local bind = function(lhs, rhs)
+      vim.keymap.set('n', lhs, rhs, {buffer = true})
+    end
+
+    bind('n', 'j')
+    bind('i', 'k')
+    bind('y', 'h')
+    bind('o', 'l')
+  end
+})

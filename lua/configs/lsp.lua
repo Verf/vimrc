@@ -11,7 +11,6 @@ local on_attach = function(client, _)
     client.resolved_capabilities.document_range_formatting = false
 end
 
-require('ufo').setup()
 -- python setup
 require('lspconfig').pyright.setup {
     on_attach = on_attach,

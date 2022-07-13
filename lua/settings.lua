@@ -8,7 +8,7 @@ cmd 'colorscheme kanagawa'
 
 ----- Command  -----
 cmd [[command! Trim :%s/\s\+$//e]]
-cmd [[command! Trimline :%d/^$/g]]
+cmd [[command! Trimline :%g/^$/d]]
 cmd [[command! Editrc :e $MYVIMRC]]
 
 function _G.print_tb(t)
@@ -62,6 +62,7 @@ cmd [[autocmd FileType markdown setlocal shiftwidth=2 tabstop=2]]
 ----- settings -----
 g.do_filetype_lua = 1 -- use new filetype.lua
 g.did_load_filetypes = 0 -- disable filetype.vim
+g.netrw_usetab = false
 opt.wrap = false
 opt.hidden = true
 opt.showmatch = true
@@ -94,7 +95,6 @@ opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.synmaxcol = 200
 
-opt.foldcolumn = '1'
 opt.foldlevel = 99
 opt.foldlevelstart = 20
 

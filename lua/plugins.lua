@@ -37,6 +37,15 @@ local function init()
     }
 
     use {
+        'jinh0/eyeliner.nvim',
+        config = function()
+            require('eyeliner').setup {
+                bold = true,
+            }
+        end,
+    }
+
+    use {
         'norcalli/nvim-colorizer.lua',
         config = function()
             require('colorizer').setup {
@@ -84,12 +93,6 @@ local function init()
     }
 
     -- edit
-    use {
-        'windwp/nvim-autopairs',
-        after = 'nvim-cmp',
-        config = [[require('nvim-autopairs').setup()]],
-    }
-
     use {
         'L3MON4D3/LuaSnip',
         config = function()
@@ -149,6 +152,8 @@ local function init()
 
     use 'fedepujol/move.nvim'
 
+    use 'tpope/vim-vinegar'
+
     use {
         'nvim-lua/plenary.nvim',
         module = 'plenary',
@@ -160,6 +165,7 @@ local function init()
             require('mini.bufremove').setup()
             require('mini.comment').setup()
             require('mini.cursorword').setup()
+            require('mini.pairs').setup()
             require('mini.indentscope').setup {
                 draw = {
                     delay = 100,
@@ -180,6 +186,10 @@ local function init()
                     backward_till = 'K',
                     repeat_jump = ';',
                 },
+                delay = {
+                    highlight = 250,
+                    idle_stop = 2000,
+                },
             }
             require('mini.sessions').setup {
                 file = '',
@@ -188,11 +198,7 @@ local function init()
             require('mini.starter').setup()
             require('mini.surround').setup {
                 mappings = {
-                    find = '', -- Find surrounding (to the right)
-                    find_left = '', -- Find surrounding (to the left)
-                    highlight = '', -- Highlight surrounding
-                    replace = 'sc', -- Replace surrounding
-                    update_n_lines = '', -- Update `n_lines`
+                    replace = 'sc',
                 },
             }
         end,
@@ -360,11 +366,6 @@ local function init()
             'onsails/lspkind-nvim',
             'ray-x/lsp_signature.nvim',
         },
-    }
-
-    use {
-        'kevinhwang91/nvim-ufo',
-        requires = 'kevinhwang91/promise-async',
     }
 
     use {
