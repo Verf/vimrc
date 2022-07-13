@@ -15,13 +15,13 @@
     "description": "coding with information"
   },
   "import": {
-    "prefix": ["im", "imp"],
+    "prefix": "im",
     "body": ["import ${0:package}"],
     "description": "import package"
   },
   "from import": {
-    "prefix": ["fi", "from"],
-    "body": ["from ${1:package} import ${0:module}"],
+    "prefix": "fim",
+    "body": "from ${1:package} import ${0:module}",
     "description": "from package import module"
   },
   "class": {
@@ -97,5 +97,20 @@
     "prefix": ["rai", "raise"],
     "body": "raise ${1:Error}(f'$0')",
     "description": "raise Error"
+  },
+  "with": {
+    "prefix": "with",
+    "body": "with ${1:open}($2) as ${3:f}:\n\t$0",
+    "description": "with statement"
+  },
+  "with open": {
+    "prefix": "wo",
+    "body": ["with open($1, '${2:r}', encoding='utf-8') as f:", "\t$0"],
+    "description": "with open file"
+  },
+  "path expenduser": {
+    "prefix": "pathexp",
+    "body": "pathlib.Path($1).expanduser()$0",
+    "description": "pathlib.Path.expanduser"
   }
 }

@@ -1,0 +1,125 @@
+{
+  "console log": {
+    "prefix": "csl",
+    "body": "console.log($0)",
+    "description": "console.log"
+  },
+  "vue base": {
+    "prefix": "<v",
+    "body": [
+      "<template>",
+      "\t<div>",
+      "",
+      "\t</div>",
+      "</template>",
+      "",
+      "<script>",
+      "\texport default {",
+      "\t\t${0}",
+      "\t}",
+      "</script>",
+      "",
+      "<style lang=\"scss\" scoped>",
+      "",
+      "</style>"
+    ],
+    "description": "Base for Vue File with SCSS"
+  },
+  "vue data": {
+    "prefix": "vdata",
+    "body": ["data() {", "\treturn {", "\t\t${1:key}: ${2:value}", "\t}", "},"],
+    "description": "Vue Component Data"
+  },
+  "vue methods": {
+    "prefix": "vmethod",
+    "body": ["methods: {", "\t${1:name}() {", "\t\t${0}", "\t}", "},"],
+    "description": "vue method"
+  },
+  "vue computed": {
+    "prefix": "vcomputed",
+    "body": [
+      "computed: {",
+      "\t${1:name}() {",
+      "\t\treturn this.${2:data} ${0}",
+      "\t}",
+      "},"
+    ],
+    "description": "computed value"
+  },
+  "vue lifecycle beforecreate": {
+    "prefix": "vbeforecreate",
+    "body": ["beforeCreate () {", "\t${0};", "},"],
+    "description": "beforeCreate lifecycle method"
+  },
+  "vue lifecycle created": {
+    "prefix": "vcreated",
+    "body": ["created () {", "\t${0};", "},"],
+    "description": "created lifecycle method"
+  },
+  "vue lifecycle beforemount": {
+    "prefix": "vbeforemount",
+    "body": ["beforeMount () {", "\t${0};", "},"],
+    "description": "beforeMount lifecycle method"
+  },
+  "vue lifecycle mounted": {
+    "prefix": "vmounted",
+    "body": ["mounted () {", "\t${0};", "},"],
+    "description": "mounted lifecycle method"
+  },
+  "vue lifecycle beforeupdate": {
+    "prefix": "vbeforeupdate",
+    "body": ["beforeUpdate () {", "\t${0};", "},"],
+    "description": "beforeUpdate lifecycle method"
+  },
+  "vue lifecycle updated": {
+    "prefix": "vupdated",
+    "body": ["updated () {", "\t${0};", "},"],
+    "description": "updated lifecycle method"
+  },
+  "vue lifecycle beforedestroy": {
+    "prefix": "vbeforedestroy",
+    "body": ["beforeDestroy () {", "\t${0};", "},"],
+    "description": "beforeDestroy lifecycle method"
+  },
+  "vue lifecycle destroyed": {
+    "prefix": "vdestroyed",
+    "body": ["destroyed () {", "\t${0};", "},"],
+    "description": "destroyed lifecycle method"
+  },
+  "vue watchers": {
+    "prefix": "vwatch",
+    "body": [
+      "watch: {",
+      "\t${1:data}(${2:newValue}, ${3:oldValue}) {",
+      "\t\t${0}",
+      "\t}",
+      "},"
+    ],
+    "description": "vue watcher"
+  },
+  "vue v-for": {
+    "prefix": "vfor",
+    "body": "v-for=\"${1:item} in ${0:items}\" :key=\"${1:item}.id\"",
+    "description": "vfor statement"
+  },
+  "import from": {
+    "prefix": "imf",
+    "body": "import $1 from '@/$0';",
+    "description": "import from"
+  },
+  "call api": {
+    "prefix": "calla",
+    "body": ["$1(${2:data}).then((res) => {", "\t$0", "})"],
+    "description": "call api function"
+  },
+  "setInterval": {
+    "prefix": "sti",
+    "body": "setInterval(() => {\n\t${1}\n}, ${0:intervalInms});",
+    "description": "Executes the given function at specified intervals"
+  },
+  "setTimeout": {
+    "prefix": "sto",
+    "body": "setTimeout(() => {\n\t${1}\n}, ${0:delayInms});",
+    "description": "Executes the given function after the specified delay"
+  }
+}
