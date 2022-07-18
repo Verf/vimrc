@@ -152,8 +152,6 @@ local function init()
 
     use 'fedepujol/move.nvim'
 
-    use 'tpope/vim-vinegar'
-
     use {
         'nvim-lua/plenary.nvim',
         module = 'plenary',
@@ -372,6 +370,19 @@ local function init()
         'j-hui/fidget.nvim',
         config = function()
             require('fidget').setup {}
+        end,
+    }
+
+    use {
+        'kyazdani42/nvim-tree.lua',
+        requires = {
+            'kyazdani42/nvim-web-devicons',
+        },
+        tag = 'nightly',
+        config = function()
+            require('nvim-tree').setup {
+                auto_reload_on_write = false,
+            }
         end,
     }
 end

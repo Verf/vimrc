@@ -11,40 +11,6 @@ cmd [[command! Trim :%s/\s\+$//e]]
 cmd [[command! Trimline :%g/^$/d]]
 cmd [[command! Editrc :e $MYVIMRC]]
 
-function _G.print_tb(t)
-    local print_r_cache = {}
-    local function sub_print_r(t, indent)
-        if print_r_cache[tostring(t)] then
-            print(indent .. '*' .. tostring(t))
-        else
-            print_r_cache[tostring(t)] = true
-            if type(t) == 'table' then
-                for pos, val in pairs(t) do
-                    if type(val) == 'table' then
-                        print(indent .. '[' .. pos .. '] => ' .. tostring(t) .. ' {')
-                        sub_print_r(val, indent .. string.rep(' ', string.len(pos) + 8))
-                        print(indent .. string.rep(' ', string.len(pos) + 6) .. '}')
-                    elseif type(val) == 'string' then
-                        print(indent .. '[' .. pos .. '] => "' .. val .. '"')
-                    else
-                        print(indent .. '[' .. pos .. '] => ' .. tostring(val))
-                    end
-                end
-            else
-                print(indent .. tostring(t))
-            end
-        end
-    end
-    if type(t) == 'table' then
-        print(tostring(t) .. ' {')
-        sub_print_r(t, '  ')
-        print '}'
-    else
-        sub_print_r(t, '  ')
-    end
-    print()
-end
-
 -- global
 g.mapleader = ' '
 g.maplocalleader = ','
@@ -62,7 +28,6 @@ cmd [[autocmd FileType markdown setlocal shiftwidth=2 tabstop=2]]
 ----- settings -----
 g.do_filetype_lua = 1 -- use new filetype.lua
 g.did_load_filetypes = 0 -- disable filetype.vim
-g.netrw_usetab = false
 opt.wrap = false
 opt.hidden = true
 opt.showmatch = true
