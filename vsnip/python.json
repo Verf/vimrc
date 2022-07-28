@@ -109,8 +109,13 @@
     "description": "with open file"
   },
   "path expenduser": {
-    "prefix": "pathexp",
+    "prefix": "pex",
     "body": "pathlib.Path($1).expanduser()$0",
     "description": "pathlib.Path.expanduser"
-  }
+  },
+  "path iterdir": {
+    "prefix": "pit",
+    "body": ["for fp in pathlib.Path($1).iterdir():", "\t$0"]
+    "description": "pathlib.Path.iterdir"
+  } 
 }

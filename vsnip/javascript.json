@@ -22,8 +22,8 @@
     ],
     "description": "export axios api"
   },
-  "call api": {
-    "prefix": "calla",
+  "call api function": {
+    "prefix": "caf",
     "body": ["$1(${2:data}).then((res) => {", "\t$0", "})"],
     "description": "call api function"
   },

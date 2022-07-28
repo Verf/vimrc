@@ -102,6 +102,8 @@ keymap.set('s', '<C-u>', [[<Cmd>lua require'luasnip'.jump(-1)<CR>]])
 keymap.set('n', ']z', 'zj')
 keymap.set('n', '[z', 'zk')
 
+keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true})
+
 -- visual
 keymap.set('v', '<', '<gv')
 keymap.set('v', '>', '>gv')
@@ -179,11 +181,19 @@ keymap.set('n', '<leader>fp', ':Telescope projects<CR>')
 keymap.set('n', '<leader>fm', ':Format<CR>')
 
 keymap.set('n', '<leader>ss', ':lua MiniSessions.write()<CR>')
+keymap.set('n', '<leader>so', ':lua MiniStarter.open()<CR>')
 
-keymap.set('n', '<F1>', '<Cmd>lua require("FTerm").toggle()<CR>')
-keymap.set('t', '<F1>', '<C-\\><C-n><Cmd>lua require("FTerm").toggle()<CR>')
+keymap.set('n', '<leader>tt', ':Neorg journal today<CR>')
+keymap.set('n', '<leader>tm', ':Neorg journal tomorrow<CR>')
+keymap.set('n', '<leader>ty', ':Neorg journal yesterday<CR>')
+keymap.set('n', '<leader>tv', ':Neorg gtd views<CR>')
+keymap.set('n', '<leader>tw', ':Neorg workspace ')
+
+keymap.set('n', '<F1>', ':ToggleTerm<CR>')
+keymap.set('t', '<F1>', '<C-\\><C-n>:ToggleTermToggleAll<CR>')
 keymap.set('t', '<Esc>', '<C-\\><C-n>')
 keymap.set('n', '<F2>', ':NvimTreeToggle<CR>')
+keymap.set('n', '<F3>', ':Neorg kanban toggle<CR>')
 
 keymap.set('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
 keymap.set('n', '<F6>', [[:lua require'dap'.close()<CR>]])
@@ -195,15 +205,15 @@ keymap.set('n', '<F11>', [[:lua require'dap'.step_out()<CR>]])
 keymap.set('n', '<F12>', [[:lua require'dap'.run_to_cursor()<CR>]])
 
 vim.api.nvim_create_autocmd('filetype', {
-  pattern = 'netrw',
-  callback = function()
-    local bind = function(lhs, rhs)
-      vim.keymap.set('n', lhs, rhs, {buffer = true})
-    end
+    pattern = 'netrw',
+    callback = function()
+        local bind = function(lhs, rhs)
+            vim.keymap.set('n', lhs, rhs, { buffer = true })
+        end
 
-    bind('n', 'j')
-    bind('i', 'k')
-    bind('y', 'h')
-    bind('o', 'l')
-  end
+        bind('n', 'j')
+        bind('i', 'k')
+        bind('y', 'h')
+        bind('o', 'l')
+    end,
 })

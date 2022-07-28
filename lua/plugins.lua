@@ -305,11 +305,10 @@ local function init()
 
     -- integration
     use {
-        'numToStr/FTerm.nvim',
+        'akinsho/toggleterm.nvim',
+        tag = 'v2.*',
         config = function()
-            require('FTerm').setup {
-                cmd = vim.opt.shell:get(),
-            }
+            require('toggleterm').setup()
         end,
     }
     use {
@@ -384,6 +383,72 @@ local function init()
                 auto_reload_on_write = false,
             }
         end,
+    }
+
+    use {
+        'nvim-neorg/neorg',
+        config = function()
+            require('neorg').setup {
+                load = {
+                    ['core.defaults'] = {},
+                    ['core.keybinds'] = {
+                        config = {
+                            neorg_leader = '<leader>',
+                        },
+                    },
+                    ['core.norg.concealer'] = {},
+                    ['core.norg.dirman'] = {
+                        config = {
+                            workspaces = {
+                                home = vim.g.neorg_home_path,
+                                daily = vim.g.neorg_daily_path,
+                            },
+                        },
+                    },
+                    ['core.norg.journal'] = {
+                        config = {
+                            workspace = 'daily',
+                            journal_folder = '',
+                            strategy = 'flat',
+                        },
+                    },
+                    ['core.norg.completion'] = {
+                        config = {
+                            engine = 'nvim-cmp',
+                        },
+                    },
+                    ['core.gtd.base'] = {
+                        config = {
+                            workspace = 'daily',
+                            default_lists = {
+                                inbox = 'inbox.norg',
+                                someday = 'someday.norg',
+                            },
+                        },
+                    },
+                    ['core.integrations.telescope'] = {},
+                    ['external.kanban'] = {
+                        config = {
+                            task_states = {
+                                'urgent',
+                                'undone',
+                                'done',
+                                'pending',
+                                'cancelled',
+                            },
+                        },
+                    },
+                },
+            }
+            local neorg_callbacks = require 'neorg.callbacks'
+            neorg_callbacks.on_event('core.keybinds.events.enable_keybinds', function(_, keybinds)
+                keybinds.map_event_to_mode('norg', {
+                    n = { { '<leader>fl', 'core.integrations.telescope.find_linkable' } },
+                    i = { { '<C-l>', 'core.integrations.telescope.insert_link' } },
+                }, { silent = true, noremap = true })
+            end)
+        end,
+        requires = { 'nvim-neorg/neorg-telescope', 'max397574/neorg-kanban' },
     }
 end
 
