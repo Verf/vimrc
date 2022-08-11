@@ -26,6 +26,11 @@ local function init()
     }
 
     use {
+        'yamatsum/nvim-nonicons',
+        requires = { 'kyazdani42/nvim-web-devicons' },
+    }
+
+    use {
         'rcarriga/nvim-notify',
         config = function()
             require('notify').setup {
@@ -37,10 +42,11 @@ local function init()
     }
 
     use {
-        'jinh0/eyeliner.nvim',
+        'Verf/eyeliner.nvim',
         config = function()
+            vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg = '#FF5D62' })
             require('eyeliner').setup {
-                bold = true,
+                highlight_on_key = true,
             }
         end,
     }
@@ -176,19 +182,6 @@ local function init()
                     goto_bottom = ']i',
                 },
             }
-            require('mini.jump').setup {
-                mappings = {
-                    forward = 't',
-                    backward = 'T',
-                    forward_till = 'k',
-                    backward_till = 'K',
-                    repeat_jump = ';',
-                },
-                delay = {
-                    highlight = 250,
-                    idle_stop = 2000,
-                },
-            }
             require('mini.sessions').setup {
                 file = '',
                 autowrite = false,
@@ -248,22 +241,9 @@ local function init()
     }
 
     use {
-        'Pocco81/AutoSave.nvim',
+        'Pocco81/auto-save.nvim',
         config = function()
-            require('autosave').setup {
-                enabled = true,
-                execution_message = '',
-                events = { 'InsertLeave', 'TextChanged' },
-                conditions = {
-                    exists = true,
-                    filetype_is_not = {},
-                    modifiable = true,
-                },
-                write_all_buffers = true,
-                on_off_commands = true,
-                clean_command_line_interval = 0,
-                debounce_delay = 135,
-            }
+            require('auto-save').setup()
         end,
     }
 
@@ -305,12 +285,13 @@ local function init()
 
     -- integration
     use {
-        'akinsho/toggleterm.nvim',
-        tag = 'v2.*',
+        'voldikss/vim-floaterm',
         config = function()
-            require('toggleterm').setup()
+            vim.g.floaterm_width = 0.8
+            vim.g.floaterm_height = 0.8
         end,
     }
+
     use {
         'mhartington/formatter.nvim',
         config = [[require 'configs.formatter']],
@@ -400,9 +381,9 @@ local function init()
                     ['core.norg.dirman'] = {
                         config = {
                             workspaces = {
-                                home = vim.g.neorg_home_path,
                                 daily = vim.g.neorg_daily_path,
                             },
+                            index = 'inbox.norg',
                         },
                     },
                     ['core.norg.journal'] = {
@@ -426,6 +407,11 @@ local function init()
                             },
                         },
                     },
+                    ['core.presenter'] = {
+                        config = {
+                            zen_mode = 'truezen',
+                        },
+                    },
                     ['core.integrations.telescope'] = {},
                     ['external.kanban'] = {
                         config = {
@@ -447,8 +433,16 @@ local function init()
                     i = { { '<C-l>', 'core.integrations.telescope.insert_link' } },
                 }, { silent = true, noremap = true })
             end)
+            require('neorg').org_file_entered(true, 'silent=true')
         end,
         requires = { 'nvim-neorg/neorg-telescope', 'max397574/neorg-kanban' },
+    }
+
+    use {
+        'Pocco81/true-zen.nvim',
+        config = function()
+            require('true-zen').setup {}
+        end,
     }
 end
 

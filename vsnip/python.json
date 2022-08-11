@@ -103,10 +103,15 @@
     "body": "with ${1:open}($2) as ${3:f}:\n\t$0",
     "description": "with statement"
   },
-  "with open": {
-    "prefix": "wo",
+  "with open read": {
+    "prefix": "wr",
     "body": ["with open($1, '${2:r}', encoding='utf-8') as f:", "\t$0"],
-    "description": "with open file"
+    "description": "with open file in read mode"
+  },
+  "with open write": {
+    "prefix": "ww",
+    "body": ["with open($1, '${2:w}', encoding='utf-8', newline='\\n') as f:", "\t$0"],
+    "description": "with open file in write mode"
   },
   "path expenduser": {
     "prefix": "pex",
@@ -115,7 +120,7 @@
   },
   "path iterdir": {
     "prefix": "pit",
-    "body": ["for fp in pathlib.Path($1).iterdir():", "\t$0"]
+    "body": ["for fp in pathlib.Path($1).iterdir():", "\t$0"],
     "description": "pathlib.Path.iterdir"
-  } 
+  }
 }

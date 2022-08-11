@@ -70,6 +70,7 @@ opt.virtualedit = 'all'
 opt.fileformats = 'unix,dos'
 opt.clipboard = 'unnamed'
 opt.shell = 'pwsh -nol'
+opt.guifont = 'FiraCode NF:h13'
 opt.shellcmdflag =
     '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
 opt.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'

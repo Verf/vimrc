@@ -102,7 +102,7 @@ keymap.set('s', '<C-u>', [[<Cmd>lua require'luasnip'.jump(-1)<CR>]])
 keymap.set('n', ']z', 'zj')
 keymap.set('n', '[z', 'zk')
 
-keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true})
+keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
 
 -- visual
 keymap.set('v', '<', '<gv')
@@ -152,6 +152,7 @@ keymap.set('n', '<leader><space>', ':BufferLinePick<CR>')
 
 keymap.set('n', '<leader>qa', ':qa!<CR>')
 keymap.set('n', '<leader>qq', ':lua MiniBufremove.delete()<CR>')
+keymap.set('n', '<leader>qc', ':w|%bd!|e#|bd#<CR>')
 
 keymap.set('n', '<leader>wc', '<C-w>o')
 keymap.set('n', '<leader>wq', '<C-w>c')
@@ -183,15 +184,20 @@ keymap.set('n', '<leader>fm', ':Format<CR>')
 keymap.set('n', '<leader>ss', ':lua MiniSessions.write()<CR>')
 keymap.set('n', '<leader>so', ':lua MiniStarter.open()<CR>')
 
-keymap.set('n', '<leader>tt', ':Neorg journal today<CR>')
+keymap.set('n', '<leader>td', ':Neorg journal today<CR>')
 keymap.set('n', '<leader>tm', ':Neorg journal tomorrow<CR>')
 keymap.set('n', '<leader>ty', ':Neorg journal yesterday<CR>')
 keymap.set('n', '<leader>tv', ':Neorg gtd views<CR>')
-keymap.set('n', '<leader>tw', ':Neorg workspace ')
+keymap.set('n', '<leader>tc', ':Neorg gtd capture<CR>')
+keymap.set('n', '<leader>tw', ':Neorg workspace daily<CR>')
 
-keymap.set('n', '<F1>', ':ToggleTerm<CR>')
-keymap.set('t', '<F1>', '<C-\\><C-n>:ToggleTermToggleAll<CR>')
+keymap.set('n', '<F1>', ':FloatermToggle<CR>')
+keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
 keymap.set('t', '<Esc>', '<C-\\><C-n>')
+keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermNew<CR>')
+keymap.set('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
+keymap.set('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
+
 keymap.set('n', '<F2>', ':NvimTreeToggle<CR>')
 keymap.set('n', '<F3>', ':Neorg kanban toggle<CR>')
 
