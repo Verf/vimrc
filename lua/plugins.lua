@@ -261,13 +261,18 @@ local function init()
                         override_file_sorter = true,
                         case_mode = 'smart_case',
                     },
+                    everything = {
+                        max_results = 100,
+                    }
                 },
             }
             require('telescope').load_extension 'fzf'
+            require('telescope').load_extension 'everything'
         end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
+            'Verf/telescope-everything.nvim',
         },
     }
     use {
@@ -381,14 +386,15 @@ local function init()
                     ['core.norg.dirman'] = {
                         config = {
                             workspaces = {
-                                daily = vim.g.neorg_daily_path,
+                                gtd = vim.g.neorg_gtd_path,
+                                journal = vim.g.neorg_journal_path,
                             },
                             index = 'inbox.norg',
                         },
                     },
                     ['core.norg.journal'] = {
                         config = {
-                            workspace = 'daily',
+                            workspace = 'journal',
                             journal_folder = '',
                             strategy = 'flat',
                         },
@@ -398,9 +404,10 @@ local function init()
                             engine = 'nvim-cmp',
                         },
                     },
+                    ['core.norg.qol.toc'] = {},
                     ['core.gtd.base'] = {
                         config = {
-                            workspace = 'daily',
+                            workspace = 'gtd',
                             default_lists = {
                                 inbox = 'inbox.norg',
                                 someday = 'someday.norg',
