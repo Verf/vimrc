@@ -180,17 +180,12 @@ keymap.set('n', '<leader>fg', ':Telescope live_grep<CR>')
 keymap.set('n', '<leader>bb', ':Telescope buffers<CR>')
 keymap.set('n', '<leader>ft', ':TodoTelescope<CR>')
 keymap.set('n', '<leader>fp', ':Telescope projects<CR>')
-keymap.set('n', '<leader>fm', ':Format<CR>')
+
+keymap.set('n', '<leader>fm', ':lua vim.lsp.buf.formatting_sync(nil, 10000)<CR>')
+keymap.set('n', '<leader>ca', ':lua vim.lsp.buf.code_action()<CR>')
 
 keymap.set('n', '<leader>ss', ':lua MiniSessions.write()<CR>')
 keymap.set('n', '<leader>so', ':lua MiniStarter.open()<CR>')
-
-keymap.set('n', '<leader>td', ':Neorg journal today<CR>')
-keymap.set('n', '<leader>tm', ':Neorg journal tomorrow<CR>')
-keymap.set('n', '<leader>ty', ':Neorg journal yesterday<CR>')
-keymap.set('n', '<leader>tv', ':Neorg gtd views<CR>')
-keymap.set('n', '<leader>tc', ':Neorg gtd capture<CR>')
-keymap.set('n', '<leader>tw', ':Neorg workspace gtd<CR>')
 
 keymap.set('n', '<F1>', ':FloatermToggle<CR>')
 keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
@@ -200,7 +195,6 @@ keymap.set('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
 keymap.set('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
 
 keymap.set('n', '<F2>', ':NvimTreeToggle<CR>')
-keymap.set('n', '<F3>', ':Neorg kanban toggle<CR>')
 
 keymap.set('n', '<F5>', [[:lua require'dap'.continue()<CR>]])
 keymap.set('n', '<F6>', [[:lua require'dap'.close()<CR>]])

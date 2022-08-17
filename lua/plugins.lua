@@ -124,8 +124,10 @@ local function init()
 
     use {
         'abecodes/tabout.nvim',
-        config = [[require'tabout'.setup()]],
-        events = 'InsertEnter',
+        config = function()
+            require('tabout').setup {}
+        end,
+        after = { 'nvim-cmp' },
     }
 
     use {
@@ -168,7 +170,6 @@ local function init()
         config = function()
             require('mini.bufremove').setup()
             require('mini.comment').setup()
-            require('mini.cursorword').setup()
             require('mini.pairs').setup()
             require('mini.indentscope').setup {
                 draw = {
@@ -261,9 +262,6 @@ local function init()
                         override_file_sorter = true,
                         case_mode = 'smart_case',
                     },
-                    everything = {
-                        max_results = 100,
-                    }
                 },
             }
             require('telescope').load_extension 'fzf'
@@ -297,10 +295,16 @@ local function init()
         end,
     }
 
+    -- use {
+    --     'mhartington/formatter.nvim',
+    --     config = [[require 'configs.formatter']],
+    --     cmd = 'Format',
+    -- }
+
     use {
-        'mhartington/formatter.nvim',
-        config = [[require 'configs.formatter']],
-        cmd = 'Format',
+        'jose-elias-alvarez/null-ls.nvim',
+        config = [[require 'configs.nullls']],
+        requires = { 'nvim-lua/plenary.nvim' },
     }
 
     use {
@@ -346,6 +350,8 @@ local function init()
         'neovim/nvim-lspconfig',
         config = [[require('configs.lsp')]],
         requires = {
+            'williamboman/mason.nvim',
+            'williamboman/mason-lspconfig.nvim',
             'onsails/lspkind-nvim',
             'ray-x/lsp_signature.nvim',
         },
@@ -369,80 +375,6 @@ local function init()
                 auto_reload_on_write = false,
             }
         end,
-    }
-
-    use {
-        'nvim-neorg/neorg',
-        config = function()
-            require('neorg').setup {
-                load = {
-                    ['core.defaults'] = {},
-                    ['core.keybinds'] = {
-                        config = {
-                            neorg_leader = '<leader>',
-                        },
-                    },
-                    ['core.norg.concealer'] = {},
-                    ['core.norg.dirman'] = {
-                        config = {
-                            workspaces = {
-                                gtd = vim.g.neorg_gtd_path,
-                                journal = vim.g.neorg_journal_path,
-                            },
-                            index = 'inbox.norg',
-                        },
-                    },
-                    ['core.norg.journal'] = {
-                        config = {
-                            workspace = 'journal',
-                            journal_folder = '',
-                            strategy = 'flat',
-                        },
-                    },
-                    ['core.norg.completion'] = {
-                        config = {
-                            engine = 'nvim-cmp',
-                        },
-                    },
-                    ['core.norg.qol.toc'] = {},
-                    ['core.gtd.base'] = {
-                        config = {
-                            workspace = 'gtd',
-                            default_lists = {
-                                inbox = 'inbox.norg',
-                                someday = 'someday.norg',
-                            },
-                        },
-                    },
-                    ['core.presenter'] = {
-                        config = {
-                            zen_mode = 'truezen',
-                        },
-                    },
-                    ['core.integrations.telescope'] = {},
-                    ['external.kanban'] = {
-                        config = {
-                            task_states = {
-                                'urgent',
-                                'undone',
-                                'done',
-                                'pending',
-                                'cancelled',
-                            },
-                        },
-                    },
-                },
-            }
-            local neorg_callbacks = require 'neorg.callbacks'
-            neorg_callbacks.on_event('core.keybinds.events.enable_keybinds', function(_, keybinds)
-                keybinds.map_event_to_mode('norg', {
-                    n = { { '<leader>fl', 'core.integrations.telescope.find_linkable' } },
-                    i = { { '<C-l>', 'core.integrations.telescope.insert_link' } },
-                }, { silent = true, noremap = true })
-            end)
-            require('neorg').org_file_entered(true, 'silent=true')
-        end,
-        requires = { 'nvim-neorg/neorg-telescope', 'max397574/neorg-kanban' },
     }
 
     use {

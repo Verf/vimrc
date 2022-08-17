@@ -1,43 +1,43 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
+    documentationFormat = { 'markdown', 'plaintext' },
+    snippetSupport = true,
+    preselectSupport = true,
+    insertReplaceSupport = true,
+    labelDetailsSupport = true,
+    deprecatedSupport = true,
+    commitCharactersSupport = true,
+    tagSupport = { valueSet = { 1 } },
+    resolveSupport = {
+        properties = {
+            'documentation',
+            'detail',
+            'additionalTextEdits',
+        },
+    },
 }
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local on_attach = function(client, _)
     -- disable default formatting
-    client.resolved_capabilities.document_formatting = false
-    client.resolved_capabilities.document_range_formatting = false
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
 end
 
--- python setup
-require('lspconfig').pyright.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
 -- lua setup
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
-
 require('lspconfig').sumneko_lua.setup {
-    cmd = { 'lua-language-server' },
     settings = {
         Lua = {
-            runtime = {
-                version = 'LuaJIT',
-                path = runtime_path,
-            },
             diagnostics = {
                 globals = { 'vim' },
             },
             workspace = {
-                library = vim.api.nvim_get_runtime_file('', true),
-            },
-            telemetry = {
-                enable = false,
+                library = {
+                    [vim.fn.expand '$VIMRUNTIME/lua'] = true,
+                    [vim.fn.expand '$VIMRUNTIME/lua/vim/lsp'] = true,
+                },
+                maxPreload = 100000,
+                preloadFileSize = 10000,
             },
         },
     },
@@ -45,36 +45,32 @@ require('lspconfig').sumneko_lua.setup {
     capabilities = capabilities,
 }
 
--- vue setup
-require('lspconfig').vuels.setup {
-    cmd = { 'vls.cmd' },
-    on_attach = on_attach,
-    capabilities = capabilities,
+-- mason
+require('mason').setup {
+    ui = {
+        check_outdated_packages_on_open = false,
+        icons = {
+            package_installed = '✓',
+            package_pending = '➜',
+            package_uninstalled = '✗',
+        },
+        keymaps = {
+            install_package = 'r',
+        },
+    },
 }
+require('mason-lspconfig').setup()
+local mason_lsp = require 'mason-lspconfig'
+for _, name in pairs(mason_lsp.get_installed_servers()) do
+    if name ~= 'sumneko_lua' then
+        require('lspconfig')[name].setup {
+            on_attach = on_attach,
+            capabilities = capabilities,
+        }
+    end
+end
 
--- ts setup
-require('lspconfig').tsserver.setup {
-    cmd = { 'typescript-language-server.cmd', '--stdio' },
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
--- bash setup
-require('lspconfig').bashls.setup {
-    cmd = { 'bash-language-server.cmd', 'start' },
-    filetypes = { 'sh', 'sql' },
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
--- go setup
-require('lspconfig').gopls.setup {
-    on_attach = on_attach,
-    capabilities = capabilities,
-}
-
-require('lspkind').init()
-
+-- ui enhance
 require('lsp_signature').setup {
     bind = true,
     hint_prefix = ' ',

@@ -1,6 +1,5 @@
 require('nvim-treesitter.configs').setup {
     ensure_installed = {
-        'norg',
         'python',
         'java',
         'lua',
