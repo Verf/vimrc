@@ -1,3 +1,11 @@
+vim.diagnostic.config {
+    virtual_text = false,
+    float = {
+        source = 'always',
+        border = 'rounded',
+    },
+}
+-- capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.foldingRange = {
     documentationFormat = { 'markdown', 'plaintext' },
@@ -18,12 +26,6 @@ capabilities.textDocument.foldingRange = {
 }
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local on_attach = function(client, _)
-    -- disable default formatting
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
-end
-
 -- lua setup
 require('lspconfig').sumneko_lua.setup {
     settings = {
@@ -41,7 +43,6 @@ require('lspconfig').sumneko_lua.setup {
             },
         },
     },
-    on_attach = on_attach,
     capabilities = capabilities,
 }
 
@@ -64,7 +65,6 @@ local mason_lsp = require 'mason-lspconfig'
 for _, name in pairs(mason_lsp.get_installed_servers()) do
     if name ~= 'sumneko_lua' then
         require('lspconfig')[name].setup {
-            on_attach = on_attach,
             capabilities = capabilities,
         }
     end

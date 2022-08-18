@@ -104,9 +104,17 @@ keymap.set('n', '[z', 'zk')
 
 keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
 
+keymap.set('n', '<C-a>', '<Plug>(dial-increment)')
+keymap.set('n', '<C-e>', '<Plug>(dial-decrement)')
+
 -- visual
 keymap.set('v', '<', '<gv')
 keymap.set('v', '>', '>gv')
+
+keymap.set('v', '<C-a>', '<Plug>(dial-increment)')
+keymap.set('v', '<C-e>', '<Plug>(dial-decrement)')
+keymap.set('v', 'g<C-a>', '<Plug>(dial-increment-additonal)')
+keymap.set('v', 'g<C-e>', '<Plug>(dial-decrement-additonal)')
 
 -- Plugin
 keymap.set('n', '<Tab>', ':BufferLineCycleNext<CR>')
@@ -186,6 +194,8 @@ keymap.set('n', '<leader>ca', ':lua vim.lsp.buf.code_action()<CR>')
 
 keymap.set('n', '<leader>ss', ':lua MiniSessions.write()<CR>')
 keymap.set('n', '<leader>so', ':lua MiniStarter.open()<CR>')
+
+keymap.set('n', '<leader>S', [[<cmd>lua require('spectre').open()<CR>]])
 
 keymap.set('n', '<F1>', ':FloatermToggle<CR>')
 keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')

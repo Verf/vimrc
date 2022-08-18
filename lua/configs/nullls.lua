@@ -2,7 +2,9 @@ local nls = require 'null-ls'
 nls.setup {
     sources = {
         -- formatting
-        nls.builtins.formatting.blue,
+        nls.builtins.formatting.yapf.with {
+            args = { '--quiet' },
+        },
         nls.builtins.formatting.isort,
         nls.builtins.formatting.shfmt,
         nls.builtins.formatting.prettier,

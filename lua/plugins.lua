@@ -197,6 +197,51 @@ local function init()
     }
 
     use {
+        'windwp/nvim-spectre',
+        event = 'BufRead',
+        coinfig = function()
+            require('spectre').setup {
+                mapping = {
+                    ['toggle_line'] = {
+                        map = 'ee',
+                        cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
+                        desc = 'toggle current item',
+                    },
+                },
+            }
+        end,
+        requires = { 'nvim-lua/plenary.nvim' },
+    }
+
+    use {
+        'monaqa/dial.nvim',
+        event = 'BufRead',
+        config = function()
+            local augend = require 'dial.augend'
+            local config = require 'dial.config'
+            config.augends:register_group {
+                default = {
+                    augend.constant.alias.bool,
+                    augend.constant.new {
+                        elements = { 'and', 'or' },
+                        word = true,
+                        cyclic = true,
+                    },
+                    augend.constant.new {
+                        elements = { 'True', 'False' },
+                        word = true,
+                        cyclic = true,
+                    },
+                    augend.constant.new {
+                        elements = { '&&', '||' },
+                        cyclic = true,
+                    },
+                },
+            }
+        end,
+    }
+
+    use {
         'junegunn/vim-easy-align',
         keys = '<Plug>(EasyAlign)',
     }
@@ -294,12 +339,6 @@ local function init()
             vim.g.floaterm_height = 0.8
         end,
     }
-
-    -- use {
-    --     'mhartington/formatter.nvim',
-    --     config = [[require 'configs.formatter']],
-    --     cmd = 'Format',
-    -- }
 
     use {
         'jose-elias-alvarez/null-ls.nvim',
