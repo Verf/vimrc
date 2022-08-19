@@ -189,7 +189,7 @@ keymap.set('n', '<leader>bb', ':Telescope buffers<CR>')
 keymap.set('n', '<leader>ft', ':TodoTelescope<CR>')
 keymap.set('n', '<leader>fp', ':Telescope projects<CR>')
 
-keymap.set('n', '<leader>fm', ':lua vim.lsp.buf.formatting_sync(nil, 10000)<CR>')
+keymap.set('n', '<leader>fm', ':Format<CR>')
 keymap.set('n', '<leader>ca', ':lua vim.lsp.buf.code_action()<CR>')
 
 keymap.set('n', '<leader>ss', ':lua MiniSessions.write()<CR>')

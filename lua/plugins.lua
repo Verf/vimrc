@@ -341,9 +341,9 @@ local function init()
     }
 
     use {
-        'jose-elias-alvarez/null-ls.nvim',
-        config = [[require 'configs.nullls']],
-        requires = { 'nvim-lua/plenary.nvim' },
+        'mhartington/formatter.nvim',
+        event = 'BufRead',
+        config = [[require 'configs.formatter']],
     }
 
     use {
