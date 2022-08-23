@@ -89,28 +89,24 @@ keymap.set('x', 'O', 'L')
 keymap.set('x', 'P', 'N')
 keymap.set('x', 'H', 'P')
 
--- insert
-keymap.set('i', '<C-a>', '<Esc>^i')
-keymap.set('i', '<C-e>', '<Esc>$a')
+keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
+
+keymap.set('n', ']z', 'zj')
+keymap.set('n', '[z', 'zk')
+
+keymap.set('v', '<', '<gv')
+keymap.set('v', '>', '>gv')
 
 keymap.set('i', '<C-d>', [[<Cmd>lua require'luasnip'.jump(1)<CR>]])
 keymap.set('s', '<C-d>', [[<Cmd>lua require'luasnip'.jump(1)<CR>]])
 keymap.set('i', '<C-u>', [[<Cmd>lua require'luasnip'.jump(-1)<CR>]])
 keymap.set('s', '<C-u>', [[<Cmd>lua require'luasnip'.jump(-1)<CR>]])
 
--- normal
-keymap.set('n', ']z', 'zj')
-keymap.set('n', '[z', 'zk')
-
-keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
+keymap.set('i', '<C-a>', '<Esc>^i')
+keymap.set('i', '<C-e>', '<Esc>$a')
 
 keymap.set('n', '<C-a>', '<Plug>(dial-increment)')
 keymap.set('n', '<C-e>', '<Plug>(dial-decrement)')
-
--- visual
-keymap.set('v', '<', '<gv')
-keymap.set('v', '>', '>gv')
-
 keymap.set('v', '<C-a>', '<Plug>(dial-increment)')
 keymap.set('v', '<C-e>', '<Plug>(dial-decrement)')
 keymap.set('v', 'g<C-a>', '<Plug>(dial-increment-additonal)')
@@ -120,9 +116,6 @@ keymap.set('v', 'g<C-e>', '<Plug>(dial-decrement-additonal)')
 keymap.set('n', '<Tab>', ':BufferLineCycleNext<CR>')
 keymap.set('n', '<S-Tab>', ':BufferLineCyclePrev<CR>')
 
-keymap.set('x', 'ga', '<Plug>(EasyAlign)')
-keymap.set('n', 'ga', '<Plug>(EasyAlign)')
-
 keymap.set('n', '<A-n>', ':MoveLine(1)<CR>')
 keymap.set('n', '<A-i>', ':MoveLine(-1)<CR>')
 keymap.set('v', '<A-n>', ':MoveBlock(1)<CR>')
@@ -131,11 +124,6 @@ keymap.set('n', '<A-o>', ':MoveHChar(1)<CR>')
 keymap.set('n', '<A-y>', ':MoveHChar(-1)<CR>')
 keymap.set('v', '<A-o>', ':MoveHBlock(1)<CR>')
 keymap.set('v', '<A-y>', ':MoveHBlock(-1)<CR>')
-
-keymap.set('n', 'gd', ':Telescope lsp_definitions<CR>')
-keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
-keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
-keymap.set('n', 'gh', ':Telescope registers<CR>')
 
 keymap.set('n', 'w', '<Plug>WordMotion_w')
 keymap.set('n', 'W', '<Plug>WordMotion_W')
@@ -147,55 +135,20 @@ keymap.set('n', 'D', '<Plug>WordMotion_d')
 keymap.set('n', ']d', '<Cmd>lua vim.diagnostic.goto_next()<CR>')
 keymap.set('n', '[d', '<Cmd>lua vim.diagnostic.goto_prev()<CR>')
 
+keymap.set('x', 'ga', '<Plug>(EasyAlign)')
+keymap.set('n', 'ga', '<Plug>(EasyAlign)')
+
+keymap.set('n', 'gd', ':Telescope lsp_definitions<CR>')
+keymap.set('n', 'gr', ':Telescope lsp_references<CR>')
+keymap.set('n', 'gi', ':Telescope lsp_implementations<CR>')
+keymap.set('n', 'gh', ':Telescope registers<CR>')
+
 keymap.set('n', 'gw', ':HopWord<CR>')
 keymap.set('n', 'gl', ':HopLine<CR>')
 keymap.set('n', 'gs', ':HopChar2<CR>')
 keymap.set('v', 'gw', ':HopWord<CR>')
 keymap.set('v', 'gl', ':HopLine<CR>')
 keymap.set('v', 'gs', ':HopChar2<CR>')
-
--- Leader
-keymap.set('n', '<leader>g', ':Neogit<CR>')
-keymap.set('n', '<leader><space>', ':BufferLinePick<CR>')
-
-keymap.set('n', '<leader>qa', ':qa!<CR>')
-keymap.set('n', '<leader>qq', ':lua MiniBufremove.delete()<CR>')
-keymap.set('n', '<leader>qc', ':w|%bd!|e#|bd#<CR>')
-
-keymap.set('n', '<leader>wc', '<C-w>o')
-keymap.set('n', '<leader>wq', '<C-w>c')
-keymap.set('n', '<leader>wh', '<C-w>s')
-keymap.set('n', '<leader>wv', '<C-w>v')
-keymap.set('n', '<leader>wy', '<C-w>h')
-keymap.set('n', '<leader>wn', '<C-w>j')
-keymap.set('n', '<leader>wi', '<C-w>k')
-keymap.set('n', '<leader>wo', '<C-w>l')
-keymap.set('n', '<leader>wY', '<C-w>H')
-keymap.set('n', '<leader>wN', '<C-w>J')
-keymap.set('n', '<leader>wI', '<C-w>K')
-keymap.set('n', '<leader>wO', '<C-w>L')
-
-keymap.set('n', '<leader>w+', '<C-w>+')
-keymap.set('n', '<leader>w-', '<C-w>-')
-keymap.set('n', '<leader>w=', '<C-w>=')
-
-keymap.set('n', '<leader>rn', '<Cmd>lua vim.lsp.buf.rename()<CR>')
-
-keymap.set('n', '<leader>ff', ':Telescope find_files<CR>')
-keymap.set('n', '<leader>fh', ':Telescope oldfiles<CR>')
-keymap.set('n', '<leader>fe', ':Telescope everything<CR>')
-keymap.set('n', '<leader>fg', ':Telescope live_grep<CR>')
-keymap.set('n', '<leader>bb', ':Telescope buffers<CR>')
-keymap.set('n', '<leader>ft', ':TodoTelescope<CR>')
-keymap.set('n', '<leader>fp', ':Telescope projects<CR>')
-
-keymap.set('n', '<leader>fm', ':Format<CR>')
-keymap.set('n', '<leader>ca', ':lua vim.lsp.buf.code_action()<CR>')
-
-keymap.set('n', '<leader>ss', ':lua MiniSessions.write()<CR>')
-keymap.set('n', '<leader>so', ':lua MiniStarter.open()<CR>')
-
-keymap.set('n', '<leader>S', [[<cmd>lua require('spectre').open()<CR>]])
 
 keymap.set('n', '<F1>', ':FloatermToggle<CR>')
 keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
@@ -214,6 +167,8 @@ keymap.set('n', '<F9>', [[:lua require'dap'.step_over()<CR>]])
 keymap.set('n', '<F10>', [[:lua require'dap'.step_into()<CR>]])
 keymap.set('n', '<F11>', [[:lua require'dap'.step_out()<CR>]])
 keymap.set('n', '<F12>', [[:lua require'dap'.run_to_cursor()<CR>]])
+
+-- Leader Key config in lua/configs/whichkey.lua
 
 vim.api.nvim_create_autocmd('filetype', {
     pattern = 'netrw',

@@ -103,7 +103,7 @@ local function init()
         'L3MON4D3/LuaSnip',
         config = function()
             require('luasnip.loaders.from_vscode').lazy_load {
-                paths = vim.fn.stdpath 'config' .. '/vsnip',
+                paths = { vim.fn.stdpath 'config' .. '/vsnip' },
             }
         end,
         events = 'InsertEnter',
@@ -183,11 +183,6 @@ local function init()
                     goto_bottom = ']i',
                 },
             }
-            require('mini.sessions').setup {
-                file = '',
-                autowrite = false,
-            }
-            require('mini.starter').setup()
             require('mini.surround').setup {
                 mappings = {
                     replace = 'sc',
@@ -196,6 +191,18 @@ local function init()
         end,
     }
 
+    use {
+        'folke/which-key.nvim',
+        config = [[require('configs.whichkey')]],
+    }
+
+    use {
+        'jedrzejboczar/possession.nvim',
+        config = function()
+            require('possession').setup {}
+        end,
+        requires = { 'nvim-lua/plenary.nvim' },
+    }
     use {
         'windwp/nvim-spectre',
         event = 'BufRead',
@@ -221,6 +228,12 @@ local function init()
             local config = require 'dial.config'
             config.augends:register_group {
                 default = {
+                    augend.integer.alias.decimal,
+                    augend.integer.alias.hex,
+                    augend.semver.alias.semver,
+                    augend.date.alias['%Y/%m/%d'],
+                    augend.date.alias['%Y-%m-%d'],
+                    augend.date.alias['%Y年%-m月%-d日'],
                     augend.constant.alias.bool,
                     augend.constant.new {
                         elements = { 'and', 'or' },
@@ -289,7 +302,11 @@ local function init()
     use {
         'Pocco81/auto-save.nvim',
         config = function()
-            require('auto-save').setup()
+            require('auto-save').setup {
+                auto_session_allowed_dirs = {
+                    vim.g.WORKSPACE_PATH .. '/*',
+                },
+            }
         end,
     }
 
@@ -311,6 +328,7 @@ local function init()
             }
             require('telescope').load_extension 'fzf'
             require('telescope').load_extension 'everything'
+            require('telescope').load_extension 'possession'
         end,
         requires = {
             'nvim-lua/popup.nvim',
@@ -417,9 +435,9 @@ local function init()
     }
 
     use {
-        'Pocco81/true-zen.nvim',
+        'phaazon/mind.nvim',
         config = function()
-            require('true-zen').setup {}
+            -- require('mind').setup()
         end,
     }
 end

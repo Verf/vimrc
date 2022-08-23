@@ -49,7 +49,7 @@ require('lspconfig').sumneko_lua.setup {
 -- mason
 require('mason').setup {
     ui = {
-        check_outdated_packages_on_open = false,
+        check_outdated_packages_on_open = true,
         icons = {
             package_installed = '✓',
             package_pending = '➜',

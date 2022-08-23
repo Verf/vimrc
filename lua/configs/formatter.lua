@@ -1,21 +1,20 @@
-local formatter = require 'formatter.filetypes'
 local defaults = require 'formatter.defaults'
 local util = require 'formatter.util'
 
 require('formatter').setup {
     filetype = {
-        javascript = formatter.javascript.prettier,
-        typescript = formatter.typescript.prettier,
-        html = formatter.html.prettier,
-        css = formatter.css.prettier,
-        json = formatter.json.prettier,
+        javascript = require('formatter.filetypes.javascript').prettier,
+        typescript = require('formatter.filetypes.typescript').prettier,
+        html = require('formatter.filetypes.html').prettier,
+        css = require('formatter.filetypes.css').prettier,
+        json = require('formatter.filetypes.json').prettier,
         vue = util.withl(defaults.prettier, 'vue'),
         less = util.withl(defaults.prettier, 'less'),
         scss = util.withl(defaults.prettier, 'scss'),
         markdown = util.withl(defaults.prettier, 'markdown'),
         yaml = util.withl(defaults.prettier, 'yaml'),
-        lua = formatter.lua.stylua,
-        sh = formatter.sh.shfmt,
+        lua = require('formatter.filetypes.lua').stylua,
+        sh = require('formatter.filetypes.sh').shfmt,
         python = {
             function()
                 return {
@@ -25,6 +24,6 @@ require('formatter').setup {
                 }
             end,
         },
-        go = formatter.go.goimports,
+        go = require('formatter.filetypes.go').goimports,
     },
 }

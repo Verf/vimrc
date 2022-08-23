@@ -6,5 +6,14 @@ require('bufferline').setup {
         separator_style = 'thin',
         enforce_regular_tabs = false,
         sort_by = 'id',
+
+        offsets = {
+            {
+                filetype = 'NvimTree',
+                text = 'File Explorer',
+                highlight = 'Directory',
+                text_align = 'left',
+            },
+        },
     },
 }
