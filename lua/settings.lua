@@ -2,10 +2,6 @@ local g = vim.g
 local cmd = vim.cmd
 local opt = vim.opt
 
------ Init -----
-cmd 'set background=dark'
-cmd 'colorscheme kanagawa'
-
 ----- Command  -----
 cmd [[command! Trim :%s/\s\+$//e]]
 cmd [[command! Trimline :%g/^$/d]]
@@ -82,4 +78,4 @@ opt.whichwrap = ''
 opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menuone', 'noselect' }
 opt.fillchars:append { eob = ' ', fold = ' ' }
-opt.sessionoptions='blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal'
+opt.sessionoptions='buffers,curdir,folds,help,tabpages,winsize,winpos'

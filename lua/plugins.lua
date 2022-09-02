@@ -18,16 +18,21 @@ local function init()
     }
 
     -- ui
-    use 'rebelot/kanagawa.nvim' -- color theme
+    use {
+        'rebelot/kanagawa.nvim',
+        config = function()
+            require('kanagawa').setup {
+                commentStyle = { italic = false },
+                keywordStyle = { italic = false, bold = true },
+                statementStyle = { bold = false },
+            }
+            vim.cmd 'colorscheme kanagawa'
+        end,
+    }
 
     use {
         'kyazdani42/nvim-web-devicons',
         module = 'nvim-web-devicons',
-    }
-
-    use {
-        'yamatsum/nvim-nonicons',
-        requires = { 'kyazdani42/nvim-web-devicons' },
     }
 
     use {
@@ -199,10 +204,14 @@ local function init()
     use {
         'jedrzejboczar/possession.nvim',
         config = function()
-            require('possession').setup {}
+            require('possession').setup {
+                session_dir = vim.fn.stdpath 'data' .. '/sessions/',
+                prompt_no_cr = true,
+            }
         end,
         requires = { 'nvim-lua/plenary.nvim' },
     }
+
     use {
         'windwp/nvim-spectre',
         event = 'BufRead',
@@ -303,9 +312,8 @@ local function init()
         'Pocco81/auto-save.nvim',
         config = function()
             require('auto-save').setup {
-                auto_session_allowed_dirs = {
-                    vim.g.WORKSPACE_PATH .. '/*',
-                },
+                trigger_events = { 'FocusLost', 'InsertLeave', 'TabLeave', 'BufLeave', 'UILeave', 'VimLeave' },
+                debounce_delay = 1000,
             }
         end,
     }
@@ -435,9 +443,17 @@ local function init()
     }
 
     use {
-        'phaazon/mind.nvim',
+        'renerocksai/telekasten.nvim',
         config = function()
-            -- require('mind').setup()
+            require('telekasten').setup {
+                home = vim.g.notes_home,
+                dailies = vim.g.notes_daily,
+                weeklies = vim.g.notes_weekly,
+                templates = vim.g.notes_template,
+                template_new_note = vim.g.notes_home .. '\\note_template.md',
+                template_new_daily = vim.g.notes_daily .. '\\daily_template.md',
+                template_new_weekly = vim.g.notes_weekly .. '\\weekly_template.md',
+            }
         end,
     }
 end

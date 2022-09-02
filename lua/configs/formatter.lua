@@ -1,4 +1,3 @@
-local defaults = require 'formatter.defaults'
 local util = require 'formatter.util'
 
 require('formatter').setup {
@@ -8,13 +7,26 @@ require('formatter').setup {
         html = require('formatter.filetypes.html').prettier,
         css = require('formatter.filetypes.css').prettier,
         json = require('formatter.filetypes.json').prettier,
-        vue = util.withl(defaults.prettier, 'vue'),
-        less = util.withl(defaults.prettier, 'less'),
-        scss = util.withl(defaults.prettier, 'scss'),
-        markdown = util.withl(defaults.prettier, 'markdown'),
-        yaml = util.withl(defaults.prettier, 'yaml'),
+        less = require('formatter.filetypes.css').prettier,
+        scss = require('formatter.filetypes.css').prettier,
+        markdown = require('formatter.filetypes.markdown').prettier,
+        yaml = require('formatter.filetypes.yaml').prettier,
         lua = require('formatter.filetypes.lua').stylua,
         sh = require('formatter.filetypes.sh').shfmt,
+        vue = {
+            function()
+                return {
+                    exe = 'prettier',
+                    args = {
+                        '--stdin-filepath',
+                        util.escape_path(util.get_current_buffer_file_path()),
+                        '--single-quote',
+                    },
+                    stdin = true,
+                    try_node_module = true,
+                }
+            end,
+        },
         python = {
             function()
                 return {
