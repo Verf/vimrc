@@ -78,4 +78,4 @@ opt.whichwrap = ''
 opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menuone', 'noselect' }
 opt.fillchars:append { eob = ' ', fold = ' ' }
-opt.sessionoptions='buffers,curdir,folds,help,tabpages,winsize,winpos'
+opt.sessionoptions='buffers,curdir,folds,tabpages,winsize,winpos'

@@ -37,5 +37,14 @@ require('formatter').setup {
             end,
         },
         go = require('formatter.filetypes.go').goimports,
+        sql = {
+            function ()
+                return {
+                    exe = 'sql-formatter',
+                    args = {},
+                    stdin = true,
+                }
+            end
+        }
     },
 }

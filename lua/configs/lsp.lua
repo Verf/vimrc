@@ -1,9 +1,6 @@
+-- disable diagnostic virtual text
 vim.diagnostic.config {
     virtual_text = false,
-    float = {
-        source = 'always',
-        border = 'rounded',
-    },
 }
 -- capabilities
 local capabilities = vim.lsp.protocol.make_client_capabilities()

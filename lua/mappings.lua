@@ -113,8 +113,8 @@ keymap.set('v', 'g<C-a>', '<Plug>(dial-increment-additonal)')
 keymap.set('v', 'g<C-e>', '<Plug>(dial-decrement-additonal)')
 
 -- Plugin
-keymap.set('n', '<Tab>', ':BufferLineCycleNext<CR>')
-keymap.set('n', '<S-Tab>', ':BufferLineCyclePrev<CR>')
+keymap.set('n', '<Tab>', ':tabn<CR>')
+keymap.set('n', '<S-Tab>', ':tabp<CR>')
 
 keymap.set('n', '<A-n>', '<CMD>MoveLine(1)<CR>')
 keymap.set('n', '<A-i>', '<CMD>MoveLine(-1)<CR>')
@@ -158,6 +158,8 @@ keymap.set('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
 keymap.set('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
 
 keymap.set('n', '<F2>', ':NvimTreeToggle<CR>')
+keymap.set('n', '<F3>', '<CMD>LSoutlineToggle<CR>')
+
 
 keymap.set('n', '<F5>', [[<CMD>lua require('dap').continue()<CR>]])
 keymap.set('n', '<F6>', [[<CMD>lua require('dap').close()<CR>]])

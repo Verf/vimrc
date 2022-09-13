@@ -99,8 +99,12 @@ local function init()
     }
 
     use {
-        'akinsho/bufferline.nvim',
-        config = [[require('configs.bufferline')]],
+        'nanozuki/tabby.nvim',
+        config = function()
+            require('tabby').setup {
+                tabline = require('tabby.presets').active_wins_at_tail,
+            }
+        end,
     }
 
     -- edit
@@ -161,8 +165,6 @@ local function init()
     -- enhance
     use 'lewis6991/impatient.nvim'
 
-    use 'stevearc/dressing.nvim' -- improve default ui interface
-
     use 'fedepujol/move.nvim'
 
     use {
@@ -202,14 +204,35 @@ local function init()
     }
 
     use {
-        'jedrzejboczar/possession.nvim',
+        'beauwilliams/focus.nvim',
         config = function()
-            require('possession').setup {
-                session_dir = vim.fn.stdpath 'data' .. '/sessions/',
-                prompt_no_cr = true,
+            require('focus').setup()
+        end,
+    }
+
+    use {
+        'Pocco81/auto-save.nvim',
+        config = function()
+            trigger_events = { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'UILeave', 'VimLeave', 'FocusLost' }
+            debounce_delay = 500
+        end,
+    }
+
+    use {
+        'rmagatti/auto-session',
+        config = function()
+            require('auto-session').setup {
+                auto_session_create_enabled = false,
             }
         end,
-        requires = { 'nvim-lua/plenary.nvim' },
+    }
+
+    use {
+        'rmagatti/session-lens',
+        requires = { 'rmagatti/auto-session', 'nvim-telescope/telescope.nvim' },
+        config = function()
+            require('session-lens').setup()
+        end,
     }
 
     use {
@@ -309,16 +332,6 @@ local function init()
     }
 
     use {
-        'Pocco81/auto-save.nvim',
-        config = function()
-            require('auto-save').setup {
-                trigger_events = { 'FocusLost', 'InsertLeave', 'TabLeave', 'BufLeave', 'UILeave', 'VimLeave' },
-                debounce_delay = 1000,
-            }
-        end,
-    }
-
-    use {
         'nvim-telescope/telescope.nvim',
         config = function()
             require('telescope').setup {
@@ -336,7 +349,7 @@ local function init()
             }
             require('telescope').load_extension 'fzf'
             require('telescope').load_extension 'everything'
-            require('telescope').load_extension 'possession'
+            require('telescope').load_extension 'session-lens'
         end,
         requires = {
             'nvim-lua/popup.nvim',
@@ -376,11 +389,7 @@ local function init()
         'lewis6991/gitsigns.nvim',
         events = 'BufRead',
         config = function()
-            require('gitsigns').setup {
-                keymaps = {
-                    noremap = true,
-                },
-            }
+            require('gitsigns').setup()
         end,
         requires = {
             'nvim-lua/plenary.nvim',
