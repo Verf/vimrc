@@ -113,8 +113,8 @@ keymap.set('v', 'g<C-a>', '<Plug>(dial-increment-additonal)')
 keymap.set('v', 'g<C-e>', '<Plug>(dial-decrement-additonal)')
 
 -- Plugin
-keymap.set('n', '<Tab>', ':tabn<CR>')
-keymap.set('n', '<S-Tab>', ':tabp<CR>')
+keymap.set('n', '<Tab>', '<CMD>BufferLineCycleNext<CR>')
+keymap.set('n', '<S-Tab>', '<CMD>BufferLineCyclePrev<CR>')
 
 keymap.set('n', '<A-n>', '<CMD>MoveLine(1)<CR>')
 keymap.set('n', '<A-i>', '<CMD>MoveLine(-1)<CR>')
@@ -134,9 +134,6 @@ keymap.set('n', 'D', '<Plug>WordMotion_d')
 
 keymap.set('n', ']d', '<CMD>lua vim.diagnostic.goto_next()<CR>')
 keymap.set('n', '[d', '<CMD>lua vim.diagnostic.goto_prev()<CR>')
-
-keymap.set('x', 'ga', '<Plug>(EasyAlign)')
-keymap.set('n', 'ga', '<Plug>(EasyAlign)')
 
 keymap.set('n', 'gd', '<CMD>Telescope lsp_definitions<CR>')
 keymap.set('n', 'gr', '<CMD>Telescope lsp_references<CR>')

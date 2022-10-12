@@ -22,8 +22,6 @@ cmd [[autocmd FileType json setlocal shiftwidth=2 tabstop=2]]
 cmd [[autocmd FileType markdown setlocal shiftwidth=2 tabstop=2]]
 
 ----- settings -----
-g.do_filetype_lua = 1 -- use new filetype.lua
-g.did_load_filetypes = 0 -- disable filetype.vim
 opt.wrap = false
 opt.hidden = true
 opt.showmatch = true

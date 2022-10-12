@@ -99,157 +99,8 @@ local function init()
     }
 
     use {
-        'nanozuki/tabby.nvim',
-        config = function()
-            require('tabby').setup {
-                tabline = require('tabby.presets').active_wins_at_tail,
-            }
-        end,
-    }
-
-    -- edit
-    use {
-        'L3MON4D3/LuaSnip',
-        config = function()
-            require('luasnip.loaders.from_vscode').lazy_load {
-                paths = { vim.fn.stdpath 'config' .. '/vsnip' },
-            }
-        end,
-        events = 'InsertEnter',
-    }
-
-    use {
-        'hrsh7th/nvim-cmp',
-        config = [[require('configs.completion')]],
-        events = 'InsertEnter',
-        requires = {
-            'saadparwaiz1/cmp_luasnip',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-nvim-lua',
-        },
-    }
-
-    use {
-        'abecodes/tabout.nvim',
-        config = function()
-            require('tabout').setup {}
-        end,
-        after = { 'nvim-cmp' },
-    }
-
-    use {
-        'mg979/vim-visual-multi',
-        config = function()
-            vim.g.VM_maps = {
-                ['Find Under'] = '<C-s>',
-                ['Find Subword Under'] = '<C-s>',
-                ['Add Cursor Down'] = '<M-Down>',
-                ['Add Cursor Up'] = '<M-Up>',
-                ['Find Next'] = '<C-s>',
-                ['Find Prev'] = '<C-S-s>',
-                ['Goto Next'] = ']',
-                ['Goto Prev'] = '[',
-                ['Seek Next'] = '<C-f>',
-                ['Seek Prev'] = '<C-b>',
-                ['Skip Region'] = '<C-x>',
-                ['Remove Region'] = '<C-S-x>',
-                ['Replace'] = 'R',
-                ['Surround'] = 'S',
-                ['Toggle Multiline'] = 'M',
-            }
-        end,
-    }
-
-    -- enhance
-    use 'lewis6991/impatient.nvim'
-
-    use 'fedepujol/move.nvim'
-
-    use {
-        'nvim-lua/plenary.nvim',
-        module = 'plenary',
-    }
-
-    use {
-        'echasnovski/mini.nvim',
-        config = function()
-            require('mini.bufremove').setup()
-            require('mini.comment').setup()
-            require('mini.pairs').setup()
-            require('mini.indentscope').setup {
-                draw = {
-                    delay = 100,
-                    animation = require('mini.indentscope').gen_animation 'none',
-                },
-                mappings = {
-                    object_scope = 'ri',
-                    object_scope_with_border = 'ai',
-                    goto_top = '[i',
-                    goto_bottom = ']i',
-                },
-            }
-            require('mini.surround').setup {
-                mappings = {
-                    replace = 'sc',
-                },
-            }
-        end,
-    }
-
-    use {
-        'folke/which-key.nvim',
-        config = [[require('configs.whichkey')]],
-    }
-
-    use {
-        'beauwilliams/focus.nvim',
-        config = function()
-            require('focus').setup()
-        end,
-    }
-
-    use {
-        'Pocco81/auto-save.nvim',
-        config = function()
-            trigger_events = { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'UILeave', 'VimLeave', 'FocusLost' }
-            debounce_delay = 500
-        end,
-    }
-
-    use {
-        'rmagatti/auto-session',
-        config = function()
-            require('auto-session').setup {
-                auto_session_create_enabled = false,
-            }
-        end,
-    }
-
-    use {
-        'rmagatti/session-lens',
-        requires = { 'rmagatti/auto-session', 'nvim-telescope/telescope.nvim' },
-        config = function()
-            require('session-lens').setup()
-        end,
-    }
-
-    use {
-        'windwp/nvim-spectre',
-        event = 'BufRead',
-        coinfig = function()
-            require('spectre').setup {
-                mapping = {
-                    ['toggle_line'] = {
-                        map = 'ee',
-                        cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
-                        desc = 'toggle current item',
-                    },
-                },
-            }
-        end,
-        requires = { 'nvim-lua/plenary.nvim' },
+        'akinsho/bufferline.nvim',
+        config = [[require('configs.bufferline')]],
     }
 
     use {
@@ -286,9 +137,152 @@ local function init()
         end,
     }
 
+    -- edit
+    use 'fedepujol/move.nvim'
+
     use {
-        'junegunn/vim-easy-align',
-        keys = '<Plug>(EasyAlign)',
+        'L3MON4D3/LuaSnip',
+        config = function()
+            require('luasnip.loaders.from_vscode').lazy_load {
+                paths = { vim.fn.stdpath 'config' .. '/vsnip' },
+            }
+        end,
+        events = 'InsertEnter',
+    }
+
+    use {
+        'hrsh7th/nvim-cmp',
+        config = [[require('configs.completion')]],
+        events = 'InsertEnter',
+        requires = {
+            'saadparwaiz1/cmp_luasnip',
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-cmdline',
+        },
+    }
+
+    use {
+        'abecodes/tabout.nvim',
+        config = function()
+            require('tabout').setup {}
+        end,
+        after = { 'nvim-cmp' },
+    }
+
+    use {
+        'mg979/vim-visual-multi',
+        config = function()
+            vim.g.VM_maps = {
+                ['Find Under'] = '<C-s>',
+                ['Find Subword Under'] = '<C-s>',
+                ['Add Cursor Down'] = '<M-Down>',
+                ['Add Cursor Up'] = '<M-Up>',
+                ['Find Next'] = '<C-s>',
+                ['Find Prev'] = '<C-S-s>',
+                ['Goto Next'] = ']',
+                ['Goto Prev'] = '[',
+                ['Seek Next'] = '<C-f>',
+                ['Seek Prev'] = '<C-b>',
+                ['Skip Region'] = '<C-x>',
+                ['Remove Region'] = '<C-S-x>',
+                ['Replace'] = 'R',
+                ['Surround'] = 'S',
+                ['Toggle Multiline'] = 'M',
+            }
+        end,
+    }
+
+    use {
+        'echasnovski/mini.nvim',
+        config = function()
+            require('mini.bufremove').setup()
+            require('mini.comment').setup()
+            require('mini.pairs').setup()
+            require('mini.align').setup()
+            require('mini.indentscope').setup {
+                draw = {
+                    delay = 100,
+                    animation = require('mini.indentscope').gen_animation 'none',
+                },
+                mappings = {
+                    object_scope = 'ri',
+                    object_scope_with_border = 'ai',
+                    goto_top = '[i',
+                    goto_bottom = ']i',
+                },
+            }
+            require('mini.surround').setup {
+                mappings = {
+                    replace = 'sc',
+                },
+            }
+        end,
+    }
+
+    -- enhance
+    use 'lewis6991/impatient.nvim'
+
+    use {
+        'nvim-lua/plenary.nvim',
+        module = 'plenary',
+    }
+
+    use {
+        'folke/which-key.nvim',
+        config = [[require('configs.whichkey')]],
+    }
+
+    use {
+        'beauwilliams/focus.nvim',
+        config = function()
+            require('focus').setup()
+        end,
+    }
+
+    use {
+        '907th/vim-auto-save',
+        config = function()
+            vim.g.auto_save = true
+            vim.g.auto_save_events =
+                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'UILeave', 'VimLeave', 'FocusLost', 'CursorHold' }
+        end,
+    }
+
+    use {
+        'rmagatti/auto-session',
+        config = function()
+            require('auto-session').setup {
+                auto_session_create_enabled = false,
+            }
+        end,
+    }
+
+    use {
+        'rmagatti/session-lens',
+        requires = { 'rmagatti/auto-session', 'nvim-telescope/telescope.nvim' },
+        config = function()
+            require('session-lens').setup()
+        end,
+    }
+
+    use {
+        'windwp/nvim-spectre',
+        event = 'BufRead',
+        coinfig = function()
+            require('spectre').setup {
+                mapping = {
+                    ['toggle_line'] = {
+                        map = 'ee',
+                        cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
+                        desc = 'toggle current item',
+                    },
+                },
+            }
+        end,
+        requires = { 'nvim-lua/plenary.nvim' },
     }
 
     use {

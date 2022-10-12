@@ -2,17 +2,17 @@ local util = require 'formatter.util'
 
 require('formatter').setup {
     filetype = {
-        javascript = require('formatter.filetypes.javascript').prettier,
-        typescript = require('formatter.filetypes.typescript').prettier,
-        html = require('formatter.filetypes.html').prettier,
-        css = require('formatter.filetypes.css').prettier,
-        json = require('formatter.filetypes.json').prettier,
-        less = require('formatter.filetypes.css').prettier,
-        scss = require('formatter.filetypes.css').prettier,
-        markdown = require('formatter.filetypes.markdown').prettier,
-        yaml = require('formatter.filetypes.yaml').prettier,
-        lua = require('formatter.filetypes.lua').stylua,
-        sh = require('formatter.filetypes.sh').shfmt,
+        javascript = { require('formatter.filetypes.javascript').prettie },
+        typescript = { require('formatter.filetypes.typescript').prettier },
+        html = { require('formatter.filetypes.html').prettier },
+        css = { require('formatter.filetypes.css').prettier },
+        json = { require('formatter.filetypes.json').prettier },
+        less = { require('formatter.filetypes.css').prettier },
+        scss = { require('formatter.filetypes.css').prettier },
+        markdown = { require('formatter.filetypes.markdown').prettier },
+        yaml = { require('formatter.filetypes.yaml').prettier },
+        lua = { require('formatter.filetypes.lua').stylua },
+        sh = { require('formatter.filetypes.sh').shfmt },
         vue = {
             function()
                 return {
@@ -35,16 +35,17 @@ require('formatter').setup {
                     stdin = true,
                 }
             end,
+            require('formatter.filetypes.python').isort,
         },
         go = require('formatter.filetypes.go').goimports,
         sql = {
-            function ()
+            function()
                 return {
                     exe = 'sql-formatter',
                     args = {},
                     stdin = true,
                 }
-            end
-        }
+            end,
+        },
     },
 }

@@ -8,6 +8,9 @@ cmp.setup {
             luasnip.lsp_expand(args.body)
         end,
     },
+    completion = {
+        keyword_length = 2,
+    },
     formatting = {
         format = lspkind.cmp_format {
             mode = 'symbol',
@@ -45,3 +48,21 @@ cmp.setup {
         { name = 'path' },
     },
 }
+
+-- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline({ '/', '?' }, {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = 'buffer' },
+    },
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = 'path' },
+    }, {
+        { name = 'cmdline' },
+    }),
+})

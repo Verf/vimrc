@@ -20,6 +20,16 @@ local presets = require 'which-key.plugins.presets'
 presets.operators = {}
 
 wk.register({
+    ['<SPACE>'] = { '<CMD>BufferLinePick<CR>', 'pick buffer' },
+    ['1'] = { '<CMD>lua require("bufferline").go_to_buffer(1, true)<CR>', 'goto buffer 1'},
+    ['2'] = { '<CMD>lua require("bufferline").go_to_buffer(2, true)<CR>', 'goto buffer 2'},
+    ['3'] = { '<CMD>lua require("bufferline").go_to_buffer(3, true)<CR>', 'goto buffer 3'},
+    ['4'] = { '<CMD>lua require("bufferline").go_to_buffer(4, true)<CR>', 'goto buffer 4'},
+    ['5'] = { '<CMD>lua require("bufferline").go_to_buffer(5, true)<CR>', 'goto buffer 5'},
+    ['6'] = { '<CMD>lua require("bufferline").go_to_buffer(6, true)<CR>', 'goto buffer 6'},
+    ['7'] = { '<CMD>lua require("bufferline").go_to_buffer(7, true)<CR>', 'goto buffer 7'},
+    ['8'] = { '<CMD>lua require("bufferline").go_to_buffer(8, true)<CR>', 'goto buffer 8'},
+    ['9'] = { '<CMD>lua require("bufferline").go_to_buffer(9, true)<CR>', 'goto buffer 9'},
     f = {
         name = '+find',
         f = { '<CMD>Telescope find_files<CR>', 'files' },
@@ -27,9 +37,9 @@ wk.register({
         e = { '<CMD>Telescope everything<CR>', 'everything' },
         g = { '<CMD>Telescope live_grep<CR>', 'grep' },
         b = { '<CMD>Telescope buffers<CR>', 'buffers' },
-        s = { '<CMD>Telescope session-lens search_session<CR>', 'sessions' },
         d = { '<CMD>Telescope diagnostics<CR>', 'diagnostics' },
         t = { '<CMD>TodoTelescope<CR>', 'todo' },
+        s = { '<CMD>Telescope lsp_document_symbols<CR>', 'symbols' },
         n = {
             n = { [[<CMD>lua require('telekasten').find_notes()<CR>]], 'notes' },
             d = { [[<CMD>lua require('telekasten').find_daily_notes()<CR>]], 'dailies' },
@@ -60,12 +70,12 @@ wk.register({
     q = {
         name = '+quit',
         a = { ':qa!<CR>', 'all' },
+        q = { '<CMD>lua MiniBufremove.delete(0, true)<CR>', 'current' },
     },
     b = {
         name = '+buffer',
-        b = { '<CMD>Telescope buffers<CR>', 'list' },
-        q = { '<CMD>lua MiniBufremove.delete()<CR>', 'close' },
-        c = { ':%bd|e#<CR>', 'only' },
+        q = { ':bd!<CR>', 'close' },
+        c = { ':%bd!|e#<CR>', 'only' },
         n = { ':vnew<CR>', 'new' },
     },
     t = {
@@ -89,6 +99,11 @@ wk.register({
         t = { [[<CMD>lua require('telekasten').toggle_todo()<CR>]], 'toggle todo' },
         ['#'] = { [[<CMD>lua require('telekasten').show_tags()<CR>]], 'tags' },
     },
-    ['<SPACE>'] = { '<CMD>BufferLinePick<CR>', 'pick buffer' },
+    s = {
+        name = '+session',
+        s = { '<CMD>Telescope session-lens search_session<CR>', 'search' },
+        w = { '<CMD>SaveSession<CR>', 'write' },
+        d = { '<CMD>Autosession delete<CR>', 'delete' },
+    },
     m = { '<CMD>Format<CR>', 'format' },
 }, { prefix = '<leader>' })
