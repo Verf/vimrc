@@ -47,16 +47,6 @@ local function init()
     }
 
     use {
-        'Verf/eyeliner.nvim',
-        config = function()
-            vim.api.nvim_set_hl(0, 'EyelinerPrimary', { fg = '#FF5D62' })
-            require('eyeliner').setup {
-                highlight_on_key = true,
-            }
-        end,
-    }
-
-    use {
         'norcalli/nvim-colorizer.lua',
         config = function()
             require('colorizer').setup {
@@ -388,6 +378,18 @@ local function init()
         requires = {
             'nvim-lua/plenary.nvim',
         },
+    }
+
+    use {
+        'TimUntersberger/neogit',
+        config = function()
+            require('neogit').setup()
+        end,
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'sindrets/diffview.nvim',
+        },
+        cmd = 'Neogit',
     }
 
     use {

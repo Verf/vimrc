@@ -35,7 +35,6 @@ require('formatter').setup {
                     stdin = true,
                 }
             end,
-            require('formatter.filetypes.python').isort,
         },
         go = require('formatter.filetypes.go').goimports,
         sql = {
