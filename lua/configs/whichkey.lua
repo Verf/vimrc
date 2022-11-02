@@ -89,22 +89,5 @@ wk.register({
         n = { '<CMD>lua vim.lsp.buf.rename<CR>', 'rename' },
         s = { '<CMD>lua require("spectre").open()<CR>', 'spectre' },
     },
-    n = {
-        name = '+notes',
-        n = { [[<CMD>lua require('telekasten').new_note()<CR>]], 'new note' },
-        N = { [[<CMD>lua require('telekasten').new_templated_note()<CR>]], 'new templated note' },
-        d = { [[<CMD>lua require('telekasten').goto_today()<CR>]], 'today' },
-        w = { [[<CMD>lua require('telekasten').goto_thisweek()<CR>]], 'thisweek' },
-        r = { [[<CMD>lua require('telekasten').rename_note()<CR>]], 'rename' },
-        t = { [[<CMD>lua require('telekasten').toggle_todo()<CR>]], 'toggle todo' },
-        ['#'] = { [[<CMD>lua require('telekasten').show_tags()<CR>]], 'tags' },
-    },
-    s = {
-        name = '+session',
-        s = { '<CMD>Telescope session-lens search_session<CR>', 'search' },
-        w = { '<CMD>SaveSession<CR>', 'write' },
-        d = { '<CMD>Autosession delete<CR>', 'delete' },
-    },
     m = { '<CMD>Format<CR>', 'format' },
-    g = { '<CMD>Neogit<CR>', 'neogit' },
 }, { prefix = '<leader>' })

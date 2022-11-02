@@ -140,13 +140,6 @@ keymap.set('n', 'gr', '<CMD>Telescope lsp_references<CR>')
 keymap.set('n', 'gi', '<CMD>Telescope lsp_implementations<CR>')
 keymap.set('n', 'gh', '<CMD>Telescope registers<CR>')
 
-keymap.set('n', 'gw', '<CMD>HopWord<CR>')
-keymap.set('n', 'gl', '<CMD>HopLine<CR>')
-keymap.set('n', 'gs', '<CMD>HopChar2<CR>')
-keymap.set('v', 'gw', '<CMD>HopWord<CR>')
-keymap.set('v', 'gl', '<CMD>HopLine<CR>')
-keymap.set('v', 'gs', '<CMD>HopChar2<CR>')
-
 keymap.set('n', '<F1>', ':FloatermToggle<CR>')
 keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
 keymap.set('t', '<Esc>', '<C-\\><C-n>')

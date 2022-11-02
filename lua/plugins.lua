@@ -19,14 +19,9 @@ local function init()
 
     -- ui
     use {
-        'rebelot/kanagawa.nvim',
+        'Mofiqul/dracula.nvim',
         config = function()
-            require('kanagawa').setup {
-                commentStyle = { italic = false },
-                keywordStyle = { italic = false, bold = true },
-                statementStyle = { bold = false },
-            }
-            vim.cmd 'colorscheme kanagawa'
+            vim.cmd 'colorscheme dracula'
         end,
     }
 
@@ -71,8 +66,16 @@ local function init()
     }
 
     use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function()
+            require('indent_blankline').setup {
+                show_current_context = true,
+            }
+        end,
+    }
+
+    use {
         'folke/todo-comments.nvim',
-        event = 'BufRead',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
             require('todo-comments').setup {
@@ -192,21 +195,17 @@ local function init()
             require('mini.comment').setup()
             require('mini.pairs').setup()
             require('mini.align').setup()
-            require('mini.indentscope').setup {
-                draw = {
-                    delay = 100,
-                    animation = require('mini.indentscope').gen_animation 'none',
-                },
-                mappings = {
-                    object_scope = 'ri',
-                    object_scope_with_border = 'ai',
-                    goto_top = '[i',
-                    goto_bottom = ']i',
-                },
-            }
             require('mini.surround').setup {
                 mappings = {
-                    replace = 'sc',
+                    add = '<leader>sa', -- Add surrounding in Normal and Visual modes
+                    delete = '<leader>sd', -- Delete surrounding
+                    find = '<leader>sf', -- Find surrounding (to the right)
+                    find_left = '<leader>sF', -- Find surrounding (to the left)
+                    highlight = '<leader>sh', -- Highlight surrounding
+                    replace = '<leader>sc',
+                    update_n_lines = '', -- Update `n_lines`
+                    suffix_last = 'l', -- Suffix to search with "prev" method
+                    suffix_next = 'n', -- Suffix to search with "next" method
                 },
             }
         end,
@@ -251,14 +250,6 @@ local function init()
     }
 
     use {
-        'rmagatti/session-lens',
-        requires = { 'rmagatti/auto-session', 'nvim-telescope/telescope.nvim' },
-        config = function()
-            require('session-lens').setup()
-        end,
-    }
-
-    use {
         'windwp/nvim-spectre',
         event = 'BufRead',
         coinfig = function()
@@ -293,15 +284,17 @@ local function init()
     }
 
     use {
-        'phaazon/hop.nvim',
+        'ggandor/leap.nvim',
         config = function()
-            require('hop').setup { keys = 'tfvnumdecriwsxloqazh' }
+            require('leap').setup {}
+            vim.keymap.set('n', 's', '<Plug>(leap-forward-to)')
+            vim.keymap.set('n', 'S', '<Plug>(leap-backward-to)')
+            vim.keymap.set('n', 'gs', '<Plug>(leap-cross-window)')
+            require('flit').setup {
+                keys = { f = 't', F = 'T', t = 'k', T = 'K' },
+            }
         end,
-        cmd = {
-            'HopWord',
-            'HopLine',
-            'HopChar2',
-        },
+        requires = { 'ggandor/flit.nvim' },
     }
 
     use {
@@ -333,7 +326,6 @@ local function init()
             }
             require('telescope').load_extension 'fzf'
             require('telescope').load_extension 'everything'
-            require('telescope').load_extension 'session-lens'
         end,
         requires = {
             'nvim-lua/popup.nvim',
@@ -378,18 +370,6 @@ local function init()
         requires = {
             'nvim-lua/plenary.nvim',
         },
-    }
-
-    use {
-        'TimUntersberger/neogit',
-        config = function()
-            require('neogit').setup()
-        end,
-        requires = {
-            'nvim-lua/plenary.nvim',
-            'sindrets/diffview.nvim',
-        },
-        cmd = 'Neogit',
     }
 
     use {
@@ -443,21 +423,6 @@ local function init()
         config = function()
             require('nvim-tree').setup {
                 auto_reload_on_write = false,
-            }
-        end,
-    }
-
-    use {
-        'renerocksai/telekasten.nvim',
-        config = function()
-            require('telekasten').setup {
-                home = vim.g.notes_home,
-                dailies = vim.g.notes_daily,
-                weeklies = vim.g.notes_weekly,
-                templates = vim.g.notes_template,
-                template_new_note = vim.g.notes_home .. '\\note_template.md',
-                template_new_daily = vim.g.notes_daily .. '\\daily_template.md',
-                template_new_weekly = vim.g.notes_weekly .. '\\weekly_template.md',
             }
         end,
     }
