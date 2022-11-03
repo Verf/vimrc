@@ -97,6 +97,11 @@ keymap.set('n', '[z', 'zk')
 keymap.set('v', '<', '<gv')
 keymap.set('v', '>', '>gv')
 
+keymap.set('n', '/', ':Telescope current_buffer_fuzzy_find<CR>')
+
+keymap.set('n', '<C-s>', '#*')
+keymap.set('n', '<C-S-s>', '*#')
+
 keymap.set('i', '<C-d>', [[<CMD>lua require'luasnip'.jump(1)<CR>]])
 keymap.set('s', '<C-d>', [[<CMD>lua require'luasnip'.jump(1)<CR>]])
 keymap.set('i', '<C-u>', [[<CMD>lua require'luasnip'.jump(-1)<CR>]])
@@ -104,6 +109,7 @@ keymap.set('s', '<C-u>', [[<CMD>lua require'luasnip'.jump(-1)<CR>]])
 
 keymap.set('i', '<C-a>', '<Esc>^i')
 keymap.set('i', '<C-e>', '<Esc>$a')
+
 
 keymap.set('n', '<C-a>', '<Plug>(dial-increment)')
 keymap.set('n', '<C-e>', '<Plug>(dial-decrement)')
@@ -148,17 +154,7 @@ keymap.set('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
 keymap.set('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
 
 keymap.set('n', '<F2>', ':NvimTreeToggle<CR>')
-keymap.set('n', '<F3>', '<CMD>LSoutlineToggle<CR>')
-
-
-keymap.set('n', '<F5>', [[<CMD>lua require('dap').continue()<CR>]])
-keymap.set('n', '<F6>', [[<CMD>lua require('dap').close()<CR>]])
-keymap.set('n', '<F7>', [[<CMD>lua require('dapui').toggle()<CR>]])
-keymap.set('n', '<F8>', [[<CMD>lua require('dap').toggle_breakpoint()<CR>]])
-keymap.set('n', '<F9>', [[<CMD>lua require('dap').step_over()<CR>]])
-keymap.set('n', '<F10>', [[<CMD>lua require('dap').step_into()<CR>]])
-keymap.set('n', '<F11>', [[<CMD>lua require('dap').step_out()<CR>]])
-keymap.set('n', '<F12>', [[<CMD>lua require('dap').run_to_cursor()<CR>]])
+keymap.set('n', '<F3>', ':UndotreeToggle<CR>')
 
 -- Leader Key config in lua/configs/whichkey.lua
 

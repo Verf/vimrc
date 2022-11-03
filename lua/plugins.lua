@@ -166,29 +166,6 @@ local function init()
     }
 
     use {
-        'mg979/vim-visual-multi',
-        config = function()
-            vim.g.VM_maps = {
-                ['Find Under'] = '<C-s>',
-                ['Find Subword Under'] = '<C-s>',
-                ['Add Cursor Down'] = '<M-Down>',
-                ['Add Cursor Up'] = '<M-Up>',
-                ['Find Next'] = '<C-s>',
-                ['Find Prev'] = '<C-S-s>',
-                ['Goto Next'] = ']',
-                ['Goto Prev'] = '[',
-                ['Seek Next'] = '<C-f>',
-                ['Seek Prev'] = '<C-b>',
-                ['Skip Region'] = '<C-x>',
-                ['Remove Region'] = '<C-S-x>',
-                ['Replace'] = 'R',
-                ['Surround'] = 'S',
-                ['Toggle Multiline'] = 'M',
-            }
-        end,
-    }
-
-    use {
         'echasnovski/mini.nvim',
         config = function()
             require('mini.bufremove').setup()
@@ -236,34 +213,8 @@ local function init()
         config = function()
             vim.g.auto_save = true
             vim.g.auto_save_events =
-                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'UILeave', 'VimLeave', 'FocusLost', 'CursorHold' }
+                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
         end,
-    }
-
-    use {
-        'rmagatti/auto-session',
-        config = function()
-            require('auto-session').setup {
-                auto_session_create_enabled = false,
-            }
-        end,
-    }
-
-    use {
-        'windwp/nvim-spectre',
-        event = 'BufRead',
-        coinfig = function()
-            require('spectre').setup {
-                mapping = {
-                    ['toggle_line'] = {
-                        map = 'ee',
-                        cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
-                        desc = 'toggle current item',
-                    },
-                },
-            }
-        end,
-        requires = { 'nvim-lua/plenary.nvim' },
     }
 
     use {
@@ -372,11 +323,19 @@ local function init()
         },
     }
 
+    use 'mbbill/undotree'
+
     use {
         'mfussenegger/nvim-dap',
-        requires = { 'rcarriga/nvim-dap-ui', 'leoluz/nvim-dap-go', 'mfussenegger/nvim-dap-python' },
+        requires = {
+            'rcarriga/nvim-dap-ui',
+            'theHamsta/nvim-dap-virtual-text',
+            'leoluz/nvim-dap-go',
+            'mfussenegger/nvim-dap-python',
+        },
         config = function()
             require('dapui').setup()
+            require('nvim-dap-virtual-text').setup()
             require('dap-python').setup 'python'
             require('dap-go').setup()
         end,
@@ -405,13 +364,6 @@ local function init()
             'onsails/lspkind-nvim',
             'ray-x/lsp_signature.nvim',
         },
-    }
-
-    use {
-        'j-hui/fidget.nvim',
-        config = function()
-            require('fidget').setup {}
-        end,
     }
 
     use {

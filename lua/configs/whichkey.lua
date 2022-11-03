@@ -20,6 +20,7 @@ local presets = require 'which-key.plugins.presets'
 presets.operators = {}
 
 wk.register({
+    ['/'] = { '/', 'find'},
     ['<SPACE>'] = { '<CMD>BufferLinePick<CR>', 'pick buffer' },
     ['1'] = { '<CMD>lua require("bufferline").go_to_buffer(1, true)<CR>', 'goto buffer 1' },
     ['2'] = { '<CMD>lua require("bufferline").go_to_buffer(2, true)<CR>', 'goto buffer 2' },
@@ -30,6 +31,18 @@ wk.register({
     ['7'] = { '<CMD>lua require("bufferline").go_to_buffer(7, true)<CR>', 'goto buffer 7' },
     ['8'] = { '<CMD>lua require("bufferline").go_to_buffer(8, true)<CR>', 'goto buffer 8' },
     ['9'] = { '<CMD>lua require("bufferline").go_to_buffer(9, true)<CR>', 'goto buffer 9' },
+    d = {
+        name = '+debug',
+        t = { [[<CMD>lua require('dapui').toggle()<CR>]], 'toggle' },
+        b = { [[<CMD>lua require('dap').toggle_breakpoint()<CR>]], 'breakpoint' },
+        s = { [[<CMD>lua require('dap').continue()<CR>]], 'start' },
+        c = { [[<CMD>lua require('dap').close()<CR>]], 'close' },
+        n = { [[<CMD>lua require('dap').step_over()<CR>]], 'step over' },
+        i = { [[<CMD>lua require('dap').step_into()<CR>]], 'step into' },
+        o = { [[<CMD>lua require('dap').step_out()<CR>]], 'step out' },
+        g = { [[<CMD>lua require('dap').run_to_cursor()<CR>]], 'goto cursor' },
+        r = { [[<CMD>lua require('dap').repl.open()]], 'repl open' },
+    },
     f = {
         name = '+find',
         f = { '<CMD>Telescope find_files<CR>', 'files' },
@@ -40,10 +53,6 @@ wk.register({
         d = { '<CMD>Telescope diagnostics<CR>', 'diagnostics' },
         t = { '<CMD>TodoTelescope<CR>', 'todo' },
         s = { '<CMD>Telescope lsp_document_symbols<CR>', 'symbols' },
-        n = {
-            n = { [[<CMD>lua require('telekasten').find_notes()<CR>]], 'notes' },
-            d = { [[<CMD>lua require('telekasten').find_daily_notes()<CR>]], 'dailies' },
-        },
     },
     w = {
         name = '+window',
@@ -87,7 +96,7 @@ wk.register({
     r = {
         name = '+refact',
         n = { '<CMD>lua vim.lsp.buf.rename<CR>', 'rename' },
-        s = { '<CMD>lua require("spectre").open()<CR>', 'spectre' },
+        l = { _G.recompile, 'reload' },
     },
     m = { '<CMD>Format<CR>', 'format' },
 }, { prefix = '<leader>' })
