@@ -20,7 +20,6 @@ local presets = require 'which-key.plugins.presets'
 presets.operators = {}
 
 wk.register({
-    ['/'] = { '/', 'find'},
     ['<SPACE>'] = { '<CMD>BufferLinePick<CR>', 'pick buffer' },
     ['1'] = { '<CMD>lua require("bufferline").go_to_buffer(1, true)<CR>', 'goto buffer 1' },
     ['2'] = { '<CMD>lua require("bufferline").go_to_buffer(2, true)<CR>', 'goto buffer 2' },
@@ -97,6 +96,11 @@ wk.register({
         name = '+refact',
         n = { '<CMD>lua vim.lsp.buf.rename<CR>', 'rename' },
         l = { _G.recompile, 'reload' },
+    },
+    n = {
+        name = '+note',
+        n = { ':e ' .. vim.g.note_home, 'new note' },
+        d = { ':e ' .. vim.g.note_daily .. '\\2022-', 'new daily' },
     },
     m = { '<CMD>Format<CR>', 'format' },
 }, { prefix = '<leader>' })

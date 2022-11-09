@@ -55,7 +55,8 @@ opt.shiftwidth = 4
 opt.synmaxcol = 200
 
 opt.foldlevel = 99
-opt.foldlevelstart = 20
+opt.foldlevelstart = 99
+opt.foldcolumn = '0'
 
 opt.mouse = 'a'
 opt.showbreak = '⮎'
@@ -75,5 +76,5 @@ opt.shortmess = 'filnxtToOFc'
 opt.whichwrap = ''
 opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menuone', 'noselect' }
-opt.fillchars:append { eob = ' ', fold = ' ' }
+opt.fillchars:append { eob = ' ', fold = ' ',  foldopen = '', foldclose = '', foldsep = ' ' }
 opt.sessionoptions='buffers,curdir,folds,tabpages,winsize,winpos'

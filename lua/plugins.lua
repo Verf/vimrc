@@ -172,17 +172,46 @@ local function init()
             require('mini.comment').setup()
             require('mini.pairs').setup()
             require('mini.align').setup()
+            require('mini.fuzzy').setup()
             require('mini.surround').setup {
                 mappings = {
                     add = '<leader>sa', -- Add surrounding in Normal and Visual modes
                     delete = '<leader>sd', -- Delete surrounding
-                    find = '<leader>sf', -- Find surrounding (to the right)
-                    find_left = '<leader>sF', -- Find surrounding (to the left)
-                    highlight = '<leader>sh', -- Highlight surrounding
+                    find = '', -- Find surrounding (to the right)
+                    find_left = '', -- Find surrounding (to the left)
+                    highlight = '', -- Highlight surrounding
                     replace = '<leader>sc',
                     update_n_lines = '', -- Update `n_lines`
                     suffix_last = 'l', -- Suffix to search with "prev" method
                     suffix_next = 'n', -- Suffix to search with "next" method
+                },
+            }
+            require('mini.jump').setup {
+                mappings = {
+                    forward = 't',
+                    backward = 'T',
+                    forward_till = 'k',
+                    backword_till = 'K',
+                    repeat_jump = ';',
+                },
+            }
+            require('mini.jump2d').setup {
+                spotter = nil,
+                labels = 'tnfuvmdreicwlsogykjb',
+                -- Which lines are used for computing spots
+                allowed_lines = {
+                    blank = false,
+                    cursor_before = true,
+                    cursor_at = false,
+                    cursor_after = true,
+                    fold = true,
+                },
+                allowed_windows = {
+                    current = true,
+                    not_current = true,
+                },
+                mappings = {
+                    start_jumping = 's',
                 },
             }
         end,
@@ -235,20 +264,6 @@ local function init()
     }
 
     use {
-        'ggandor/leap.nvim',
-        config = function()
-            require('leap').setup {}
-            vim.keymap.set('n', 's', '<Plug>(leap-forward-to)')
-            vim.keymap.set('n', 'S', '<Plug>(leap-backward-to)')
-            vim.keymap.set('n', 'gs', '<Plug>(leap-cross-window)')
-            require('flit').setup {
-                keys = { f = 't', F = 'T', t = 'k', T = 'K' },
-            }
-        end,
-        requires = { 'ggandor/flit.nvim' },
-    }
-
-    use {
         'ethanholz/nvim-lastplace',
         config = function()
             require('nvim-lastplace').setup {
@@ -266,16 +281,7 @@ local function init()
                 defaults = {
                     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                 },
-                extensions = {
-                    fzf = {
-                        fuzzy = true,
-                        override_generic_sorter = true,
-                        override_file_sorter = true,
-                        case_mode = 'smart_case',
-                    },
-                },
             }
-            require('telescope').load_extension 'fzf'
             require('telescope').load_extension 'everything'
         end,
         requires = {
@@ -284,10 +290,6 @@ local function init()
             'Verf/telescope-everything.nvim',
         },
     }
-    use {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        run = 'make',
-    }
 
     use {
         'airblade/vim-rooter',
@@ -295,6 +297,20 @@ local function init()
             vim.g.rooter_patterns = { '.git', 'make.sh', 'MakeFile', 'pom.xml', 'package.json' }
             vim.g.rooter_change_directory_for_non_project_files = 'current'
         end,
+    }
+
+    use { 'preservim/vim-markdown', ft = 'markdown' }
+
+    use {
+        'kevinhwang91/nvim-ufo',
+        config = function()
+            require('ufo').setup {
+                provider_selector = function()
+                    return { 'treesitter', 'indent' }
+                end,
+            }
+        end,
+        requires = 'kevinhwang91/promise-async',
     }
 
     -- integration
@@ -316,7 +332,9 @@ local function init()
         'lewis6991/gitsigns.nvim',
         events = 'BufRead',
         config = function()
-            require('gitsigns').setup()
+            require('gitsigns').setup {
+                update_debounce = 500
+            }
         end,
         requires = {
             'nvim-lua/plenary.nvim',

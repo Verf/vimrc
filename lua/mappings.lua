@@ -89,6 +89,7 @@ keymap.set('x', 'O', 'L')
 keymap.set('x', 'P', 'N')
 keymap.set('x', 'H', 'P')
 
+keymap.set('n', 'U', ':redo<CR>')
 keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
 
 keymap.set('n', ']z', 'zj')
@@ -97,10 +98,11 @@ keymap.set('n', '[z', 'zk')
 keymap.set('v', '<', '<gv')
 keymap.set('v', '>', '>gv')
 
-keymap.set('n', '/', ':Telescope current_buffer_fuzzy_find<CR>')
-
 keymap.set('n', '<C-s>', '#*')
 keymap.set('n', '<C-S-s>', '*#')
+
+keymap.set('n', 'gU', 'VU')
+keymap.set('n', 'gu', 'Vu')
 
 keymap.set('i', '<C-d>', [[<CMD>lua require'luasnip'.jump(1)<CR>]])
 keymap.set('s', '<C-d>', [[<CMD>lua require'luasnip'.jump(1)<CR>]])
