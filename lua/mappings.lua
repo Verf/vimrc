@@ -4,7 +4,6 @@ local keymap = vim.keymap
 keymap.set('n', 'd', 'e')
 keymap.set('n', 'f', 'r')
 keymap.set('n', 'k', 't')
-
 keymap.set('n', 'j', 'y')
 keymap.set('n', 'r', 'i')
 keymap.set('n', 'l', 'o')
@@ -91,6 +90,7 @@ keymap.set('x', 'H', 'P')
 
 keymap.set('n', 'U', ':redo<CR>')
 keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
+keymap.set('x', '@', _G.visual_at, { noremap = true, expr = true })
 
 keymap.set('n', ']z', 'zj')
 keymap.set('n', '[z', 'zk')
@@ -111,7 +111,6 @@ keymap.set('s', '<C-u>', [[<CMD>lua require'luasnip'.jump(-1)<CR>]])
 
 keymap.set('i', '<C-a>', '<Esc>^i')
 keymap.set('i', '<C-e>', '<Esc>$a')
-
 
 keymap.set('n', '<C-a>', '<Plug>(dial-increment)')
 keymap.set('n', '<C-e>', '<Plug>(dial-decrement)')
@@ -157,22 +156,3 @@ keymap.set('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
 
 keymap.set('n', '<F2>', ':NvimTreeToggle<CR>')
 keymap.set('n', '<F3>', ':UndotreeToggle<CR>')
-
--- Leader Key config in lua/configs/whichkey.lua
-
-vim.api.nvim_create_autocmd('filetype', {
-    pattern = 'netrw',
-    callback = function()
-        keymap.set('n', 'n', 'j', { buffer = true })
-        keymap.set('n', 'i', 'k', { buffer = true })
-        keymap.set('n', 'y', 'h', { buffer = true })
-        keymap.set('n', 'o', 'l', { buffer = true })
-    end,
-})
-
-vim.api.nvim_create_autocmd('filetype', {
-    pattern = 'markdown',
-    callback = function()
-        keymap.set('n', '<CR>', [[:lua require('telekasten').follow_link()<CR>]])
-    end,
-})

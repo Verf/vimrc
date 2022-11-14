@@ -195,25 +195,17 @@ local function init()
                     repeat_jump = ';',
                 },
             }
-            require('mini.jump2d').setup {
-                spotter = nil,
-                labels = 'tnfuvmdreicwlsogykjb',
-                -- Which lines are used for computing spots
-                allowed_lines = {
-                    blank = false,
-                    cursor_before = true,
-                    cursor_at = false,
-                    cursor_after = true,
-                    fold = true,
-                },
-                allowed_windows = {
-                    current = true,
-                    not_current = true,
-                },
-                mappings = {
-                    start_jumping = 's',
-                },
+        end,
+    }
+
+    use {
+        'woosaaahh/sj.nvim',
+        config = function()
+            local sj = require 'sj'
+            sj.setup {
+                separator = ' ',
             }
+            vim.keymap.set('n', 's', sj.run)
         end,
     }
 
@@ -333,7 +325,7 @@ local function init()
         events = 'BufRead',
         config = function()
             require('gitsigns').setup {
-                update_debounce = 500
+                update_debounce = 500,
             }
         end,
         requires = {

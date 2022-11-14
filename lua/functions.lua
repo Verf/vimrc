@@ -59,3 +59,8 @@ function _G.recompile()
     vim.notify("Not available in this window/buffer", vim.log.levels.INFO)
   end
 end
+
+function _G.visual_at()
+    print("@" .. vim.fn.getcmdline())
+    vim.fn.execute(":'<,'>normal @" .. vim.fn.nr2char(vim.fn.getchar()))
+end
