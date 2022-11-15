@@ -48,10 +48,11 @@ wk.register({
         h = { '<CMD>Telescope oldfiles<CR>', 'history' },
         e = { '<CMD>Telescope everything<CR>', 'everything' },
         g = { '<CMD>Telescope live_grep<CR>', 'grep' },
-        b = { '<CMD>Telescope buffers<CR>', 'buffers' },
+        b = { '<CMD>Telescope file_browser<CR>', 'file browser' },
         d = { '<CMD>Telescope diagnostics<CR>', 'diagnostics' },
         t = { '<CMD>TodoTelescope<CR>', 'todo' },
         s = { '<CMD>Telescope lsp_document_symbols<CR>', 'symbols' },
+        p = { '<CMD>Telescope session-lens search_session<CR>', 'projects' },
     },
     w = {
         name = '+window',
@@ -97,10 +98,10 @@ wk.register({
         n = { '<CMD>lua vim.lsp.buf.rename<CR>', 'rename' },
         l = { _G.recompile, 'reload' },
     },
-    n = {
-        name = '+note',
-        n = { ':e ' .. vim.g.note_home, 'new note' },
-        d = { ':e ' .. vim.g.note_daily .. '\\2022-', 'new daily' },
+    o = {
+        name = '+org',
+        a = { 'Agenda' },
+        c = { 'Capture' },
     },
     m = { '<CMD>Format<CR>', 'format' },
 }, { prefix = '<leader>' })

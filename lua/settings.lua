@@ -43,6 +43,7 @@ opt.relativenumber = true
 opt.linebreak = true
 opt.cursorline = true
 opt.lazyredraw = true
+opt.shellslash = true
 
 opt.updatetime = 300
 opt.scrolloff = 999

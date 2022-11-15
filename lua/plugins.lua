@@ -192,7 +192,7 @@ local function init()
                     backward = 'T',
                     forward_till = 'k',
                     backword_till = 'K',
-                    repeat_jump = ';',
+                    repeat_jump = 'h',
                 },
             }
         end,
@@ -212,10 +212,7 @@ local function init()
     -- enhance
     use 'lewis6991/impatient.nvim'
 
-    use {
-        'nvim-lua/plenary.nvim',
-        module = 'plenary',
-    }
+    use 'nvim-lua/plenary.nvim'
 
     use {
         'folke/which-key.nvim',
@@ -267,18 +264,39 @@ local function init()
     }
 
     use {
+        'Verf/auto-session',
+        config = function()
+            require('auto-session').setup {
+                auto_session_create_enabled = false,
+                auto_save_enabled = true,
+                auto_restore_enabled = true,
+                auto_session_use_git_branch = false,
+                pre_save_cmds = { 'FloatermKill!' },
+            }
+        end,
+    }
+
+    use {
         'nvim-telescope/telescope.nvim',
         config = function()
             require('telescope').setup {
                 defaults = {
                     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
                 },
+                file_browser = {
+                    theme = 'ivy',
+                    hijack_netrw = true,
+                },
             }
+            require('telescope').load_extension 'file_browser'
+            require('telescope').load_extension 'session-lens'
             require('telescope').load_extension 'everything'
         end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-file-browser.nvim',
+            'rmagatti/session-lens',
             'Verf/telescope-everything.nvim',
         },
     }
@@ -303,6 +321,19 @@ local function init()
             }
         end,
         requires = 'kevinhwang91/promise-async',
+    }
+
+    use {
+        'nvim-orgmode/orgmode',
+        config = function()
+            require('orgmode').setup_ts_grammar()
+            require('orgmode').setup {
+                org_agenda_files = { vim.g.org_agenda_files },
+                org_default_notes_file = vim.g.org_refile_file,
+            }
+            require('org-bullets').setup()
+        end,
+        requires = { 'akinsho/org-bullets.nvim' },
     }
 
     -- integration
@@ -336,23 +367,6 @@ local function init()
     use 'mbbill/undotree'
 
     use {
-        'mfussenegger/nvim-dap',
-        requires = {
-            'rcarriga/nvim-dap-ui',
-            'theHamsta/nvim-dap-virtual-text',
-            'leoluz/nvim-dap-go',
-            'mfussenegger/nvim-dap-python',
-        },
-        config = function()
-            require('dapui').setup()
-            require('nvim-dap-virtual-text').setup()
-            require('dap-python').setup 'python'
-            require('dap-go').setup()
-        end,
-        ft = { 'python', 'go' },
-    }
-
-    use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
         config = [[require('configs.treesitter')]],
@@ -374,19 +388,6 @@ local function init()
             'onsails/lspkind-nvim',
             'ray-x/lsp_signature.nvim',
         },
-    }
-
-    use {
-        'kyazdani42/nvim-tree.lua',
-        requires = {
-            'kyazdani42/nvim-web-devicons',
-        },
-        tag = 'nightly',
-        config = function()
-            require('nvim-tree').setup {
-                auto_reload_on_write = false,
-            }
-        end,
     }
 end
 

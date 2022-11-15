@@ -44,6 +44,7 @@ cmp.setup {
         { name = 'luasnip' },
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
+        { name = 'orgmode' },
         { name = 'buffer' },
         { name = 'path' },
     },

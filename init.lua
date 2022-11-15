@@ -22,7 +22,7 @@ local disabled_builtin = {
     'zip',
     'netrw',
     'netrwPlugin',
-    '2html_plugin',
+    'html_plugin',
 }
 
 for i = 1, 9 do

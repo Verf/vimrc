@@ -11,9 +11,11 @@ require('nvim-treesitter.configs').setup {
         'json',
         'go',
         'markdown',
+        'org',
     },
     highlight = {
         enable = true,
+        additional_vim_regex_highlighting = { 'org' },
     },
     indent = {
         enable = false,
