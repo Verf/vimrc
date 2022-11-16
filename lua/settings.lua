@@ -54,6 +54,7 @@ opt.tabstop = 4
 opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.synmaxcol = 200
+opt.winblend = 20
 
 opt.foldlevel = 99
 opt.foldlevelstart = 99
