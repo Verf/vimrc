@@ -98,10 +98,5 @@ wk.register({
         n = { '<CMD>lua vim.lsp.buf.rename<CR>', 'rename' },
         l = { _G.recompile, 'reload' },
     },
-    o = {
-        name = '+org',
-        a = { 'Agenda' },
-        c = { 'Capture' },
-    },
     m = { '<CMD>Format<CR>', 'format' },
 }, { prefix = '<leader>' })

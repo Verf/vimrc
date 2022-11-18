@@ -42,46 +42,11 @@ keymap.set('n', '[z', 'zk')
 keymap.set('v', '<', '<gv')
 keymap.set('v', '>', '>gv')
 
-keymap.set('n', '<C-s>', '#*')
-keymap.set('n', '<C-S-s>', '*#')
-
-keymap.set('n', 'gU', 'VU')
-keymap.set('n', 'gu', 'Vu')
-
-keymap.set('i', '<C-d>', [[<CMD>lua require'luasnip'.jump(1)<CR>]])
-keymap.set('s', '<C-d>', [[<CMD>lua require'luasnip'.jump(1)<CR>]])
-keymap.set('i', '<C-u>', [[<CMD>lua require'luasnip'.jump(-1)<CR>]])
-keymap.set('s', '<C-u>', [[<CMD>lua require'luasnip'.jump(-1)<CR>]])
+keymap.set('n', '<C-s>', '#*cgn')
+keymap.set('n', '<C-S-s>', '*#cgn')
 
 keymap.set('i', '<C-a>', '<Esc>^i')
 keymap.set('i', '<C-e>', '<Esc>$a')
-
-keymap.set('n', '<C-a>', '<Plug>(dial-increment)')
-keymap.set('n', '<C-e>', '<Plug>(dial-decrement)')
-keymap.set('v', '<C-a>', '<Plug>(dial-increment)')
-keymap.set('v', '<C-e>', '<Plug>(dial-decrement)')
-keymap.set('v', 'g<C-a>', '<Plug>(dial-increment-additonal)')
-keymap.set('v', 'g<C-e>', '<Plug>(dial-decrement-additonal)')
-
--- Plugin
-keymap.set('n', '<Tab>', '<CMD>BufferLineCycleNext<CR>')
-keymap.set('n', '<S-Tab>', '<CMD>BufferLineCyclePrev<CR>')
-
-keymap.set('n', '<A-n>', '<CMD>MoveLine(1)<CR>')
-keymap.set('n', '<A-i>', '<CMD>MoveLine(-1)<CR>')
-keymap.set('v', '<A-n>', '<CMD>MoveBlock(1)<CR>')
-keymap.set('v', '<A-i>', '<CMD>MoveBlock(-1)<CR>')
-keymap.set('n', '<A-o>', '<CMD>MoveHChar(1)<CR>')
-keymap.set('n', '<A-y>', '<CMD>MoveHChar(-1)<CR>')
-keymap.set('v', '<A-o>', '<CMD>MoveHBlock(1)<CR>')
-keymap.set('v', '<A-y>', '<CMD>MoveHBlock(-1)<CR>')
-
-keymap.set('n', 'w', '<Plug>WordMotion_w')
-keymap.set('n', 'W', '<Plug>WordMotion_W')
-keymap.set('n', 'b', '<Plug>WordMotion_b')
-keymap.set('n', 'B', '<Plug>WordMotion_B')
-keymap.set('n', 'd', '<Plug>WordMotion_e')
-keymap.set('n', 'D', '<Plug>WordMotion_d')
 
 keymap.set('n', ']d', '<CMD>lua vim.diagnostic.goto_next()<CR>')
 keymap.set('n', '[d', '<CMD>lua vim.diagnostic.goto_prev()<CR>')
@@ -91,11 +56,11 @@ keymap.set('n', 'gr', '<CMD>Telescope lsp_references<CR>')
 keymap.set('n', 'gi', '<CMD>Telescope lsp_implementations<CR>')
 keymap.set('n', 'gh', '<CMD>Telescope registers<CR>')
 
-keymap.set('n', '<F1>', ':FloatermToggle<CR>')
 keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
 keymap.set('t', '<Esc>', '<C-\\><C-n>')
 keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermNew<CR>')
 keymap.set('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
 keymap.set('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
 
+keymap.set('n', '<F1>', ':FloatermToggle<CR>')
 keymap.set('n', '<F2>', ':UndotreeToggle<CR>')

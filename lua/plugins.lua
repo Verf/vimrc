@@ -88,12 +88,12 @@ local function init()
 
     use {
         'nvim-lualine/lualine.nvim',
-        config = [[require('configs.statusline')]],
+        config = [[require 'configs.statusline']],
     }
 
     use {
         'akinsho/bufferline.nvim',
-        config = [[require('configs.bufferline')]],
+        config = [[require 'configs.bufferline']],
     }
 
     use {
@@ -127,11 +127,36 @@ local function init()
                     },
                 },
             }
+            vim.keymap.set({ 'n', 'v' }, '<C-a>', '<Plug>(dial-increment)')
+            vim.keymap.set({ 'n', 'v' }, '<C-e>', '<Plug>(dial-decrement)')
+            vim.keymap.set('v', 'g<C-a>', '<Plug>(dial-increment-additonal)')
+            vim.keymap.set('v', 'g<C-e>', '<Plug>(dial-decrement-additonal)')
+        end,
+    }
+
+    use {
+        'lukas-reineke/headlines.nvim',
+        config = function()
+            require('headlines').setup {
+                markdown = {
+                    fat_headlines = true,
+                    fat_headline_upper_string = '▁',
+                    fat_headline_lower_string = '▔',
+                },
+            }
         end,
     }
 
     -- edit
-    use 'fedepujol/move.nvim'
+    use {
+        'fedepujol/move.nvim',
+        config = function()
+            vim.keymap.set({ 'n', 'v' }, '<A-n>', '<CMD>MoveLine(1)<CR>')
+            vim.keymap.set({ 'n', 'v' }, '<A-i>', '<CMD>MoveLine(-1)<CR>')
+            vim.keymap.set({ 'n', 'v' }, '<A-o>', '<CMD>MoveHChar(1)<CR>')
+            vim.keymap.set({ 'n', 'v' }, '<A-y>', '<CMD>MoveHChar(-1)<CR>')
+        end,
+    }
 
     use {
         'L3MON4D3/LuaSnip',
@@ -145,7 +170,7 @@ local function init()
 
     use {
         'hrsh7th/nvim-cmp',
-        config = [[require('configs.completion')]],
+        config = [[require 'configs.completion']],
         events = 'InsertEnter',
         requires = {
             'saadparwaiz1/cmp_luasnip',
@@ -168,24 +193,10 @@ local function init()
     use {
         'echasnovski/mini.nvim',
         config = function()
+            require('mini.align').setup()
             require('mini.bufremove').setup()
             require('mini.comment').setup()
-            require('mini.pairs').setup()
-            require('mini.align').setup()
             require('mini.fuzzy').setup()
-            require('mini.surround').setup {
-                mappings = {
-                    add = '<leader>sa', -- Add surrounding in Normal and Visual modes
-                    delete = '<leader>sd', -- Delete surrounding
-                    find = '', -- Find surrounding (to the right)
-                    find_left = '', -- Find surrounding (to the left)
-                    highlight = '', -- Highlight surrounding
-                    replace = '<leader>sc',
-                    update_n_lines = '', -- Update `n_lines`
-                    suffix_last = 'l', -- Suffix to search with "prev" method
-                    suffix_next = 'n', -- Suffix to search with "next" method
-                },
-            }
             require('mini.jump').setup {
                 mappings = {
                     forward = 't',
@@ -193,6 +204,20 @@ local function init()
                     forward_till = 'k',
                     backword_till = 'K',
                     repeat_jump = 'h',
+                },
+            }
+            require('mini.pairs').setup()
+            require('mini.surround').setup {
+                mappings = {
+                    add = '<leader>sa',
+                    delete = '<leader>sd',
+                    find = '',
+                    find_left = '',
+                    highlight = '',
+                    replace = '<leader>sc',
+                    update_n_lines = '',
+                    suffix_last = '',
+                    suffix_next = '',
                 },
             }
         end,
@@ -216,7 +241,7 @@ local function init()
 
     use {
         'folke/which-key.nvim',
-        config = [[require('configs.whichkey')]],
+        config = [[require 'configs.whichkey']],
     }
 
     use {
@@ -239,6 +264,12 @@ local function init()
         'chaoren/vim-wordmotion',
         config = function()
             vim.g.wordmotion_nomap = 1
+            vim.keymap.set('n', 'w', '<Plug>WordMotion_w')
+            vim.keymap.set('n', 'W', '<Plug>WordMotion_W')
+            vim.keymap.set('n', 'b', '<Plug>WordMotion_b')
+            vim.keymap.set('n', 'B', '<Plug>WordMotion_B')
+            vim.keymap.set('n', 'd', '<Plug>WordMotion_e')
+            vim.keymap.set('n', 'D', '<Plug>WordMotion_d')
         end,
     }
 
@@ -323,19 +354,6 @@ local function init()
         requires = 'kevinhwang91/promise-async',
     }
 
-    use {
-        'nvim-orgmode/orgmode',
-        config = function()
-            require('orgmode').setup_ts_grammar()
-            require('orgmode').setup {
-                org_agenda_files = { vim.g.org_agenda_files },
-                org_default_notes_file = vim.g.org_refile_file,
-            }
-            require('org-bullets').setup()
-        end,
-        requires = { 'akinsho/org-bullets.nvim' },
-    }
-
     -- integration
     use {
         'voldikss/vim-floaterm',
@@ -369,10 +387,11 @@ local function init()
     use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
-        config = [[require('configs.treesitter')]],
+        config = [[require 'configs.treesitter']],
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
             'RRethy/nvim-treesitter-textsubjects',
+            'nvim-treesitter/nvim-treesitter-context',
             'p00f/nvim-ts-rainbow',
             'windwp/nvim-ts-autotag',
             'yioneko/nvim-yati',
@@ -381,7 +400,7 @@ local function init()
 
     use {
         'neovim/nvim-lspconfig',
-        config = [[require('configs.lsp')]],
+        config = [[require 'configs.lsp']],
         requires = {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',

@@ -2,6 +2,9 @@ local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 local lspkind = require 'lspkind'
 
+vim.keymap.set({ 'i', 's' }, '<C-d>', [[require('luasnip').jump(1)]])
+vim.keymap.set({ 'i', 's' }, '<C-u>', [[require('luasnip').jump(-1)]])
+
 cmp.setup {
     snippet = {
         expand = function(args)
@@ -44,7 +47,6 @@ cmp.setup {
         { name = 'luasnip' },
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
-        { name = 'orgmode' },
         { name = 'buffer' },
         { name = 'path' },
     },
