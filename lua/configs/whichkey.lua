@@ -20,16 +20,7 @@ local presets = require 'which-key.plugins.presets'
 presets.operators = {}
 
 wk.register({
-    ['<SPACE>'] = { '<CMD>BufferLinePick<CR>', 'pick buffer' },
-    ['1'] = { '<CMD>lua require("bufferline").go_to_buffer(1, true)<CR>', 'goto buffer 1' },
-    ['2'] = { '<CMD>lua require("bufferline").go_to_buffer(2, true)<CR>', 'goto buffer 2' },
-    ['3'] = { '<CMD>lua require("bufferline").go_to_buffer(3, true)<CR>', 'goto buffer 3' },
-    ['4'] = { '<CMD>lua require("bufferline").go_to_buffer(4, true)<CR>', 'goto buffer 4' },
-    ['5'] = { '<CMD>lua require("bufferline").go_to_buffer(5, true)<CR>', 'goto buffer 5' },
-    ['6'] = { '<CMD>lua require("bufferline").go_to_buffer(6, true)<CR>', 'goto buffer 6' },
-    ['7'] = { '<CMD>lua require("bufferline").go_to_buffer(7, true)<CR>', 'goto buffer 7' },
-    ['8'] = { '<CMD>lua require("bufferline").go_to_buffer(8, true)<CR>', 'goto buffer 8' },
-    ['9'] = { '<CMD>lua require("bufferline").go_to_buffer(9, true)<CR>', 'goto buffer 9' },
+    ['<TAB>'] = {'<CMD>b#<CR>', 'last buffer'},
     d = {
         name = '+debug',
         t = { [[<CMD>lua require('dapui').toggle()<CR>]], 'toggle' },
@@ -83,8 +74,9 @@ wk.register({
     },
     b = {
         name = '+buffer',
-        q = { ':bd!<CR>', 'close' },
+        b = { '<CMD>Telescope buffers<CR>', 'list' },
         c = { ':%bd!|e#<CR>', 'only' },
+        q = { ':bd!<CR>', 'close' },
         n = { ':vnew<CR>', 'new' },
     },
     t = {

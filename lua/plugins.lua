@@ -92,45 +92,39 @@ local function init()
     }
 
     use {
-        'akinsho/bufferline.nvim',
-        config = [[require 'configs.bufferline']],
-    }
-
-    use {
-        'monaqa/dial.nvim',
-        event = 'BufRead',
+        'nanozuki/tabby.nvim',
         config = function()
-            local augend = require 'dial.augend'
-            local config = require 'dial.config'
-            config.augends:register_group {
-                default = {
-                    augend.integer.alias.decimal,
-                    augend.integer.alias.hex,
-                    augend.semver.alias.semver,
-                    augend.date.alias['%Y/%m/%d'],
-                    augend.date.alias['%Y-%m-%d'],
-                    augend.date.alias['%Y年%-m月%-d日'],
-                    augend.constant.alias.bool,
-                    augend.constant.new {
-                        elements = { 'and', 'or' },
-                        word = true,
-                        cyclic = true,
-                    },
-                    augend.constant.new {
-                        elements = { 'True', 'False' },
-                        word = true,
-                        cyclic = true,
-                    },
-                    augend.constant.new {
-                        elements = { '&&', '||' },
-                        cyclic = true,
-                    },
-                },
+            local theme = {
+                fill = 'Tabline',
+                sel = 'lualine_a_normal',
             }
-            vim.keymap.set({ 'n', 'v' }, '<C-a>', '<Plug>(dial-increment)')
-            vim.keymap.set({ 'n', 'v' }, '<C-e>', '<Plug>(dial-decrement)')
-            vim.keymap.set('v', 'g<C-a>', '<Plug>(dial-increment-additonal)')
-            vim.keymap.set('v', 'g<C-e>', '<Plug>(dial-decrement-additonal)')
+            require('tabby.tabline').set(function(line)
+                return {
+                    line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
+                        return {
+                            line.sep(' ', theme.sel, theme.fill),
+                            win.is_current() and '' or '',
+                            win.buf_name(),
+                            line.sep(' ', theme.sel, theme.fill),
+                            hl = theme.sel,
+                            margin = ' ',
+                        }
+                    end),
+                    line.spacer(),
+                    line.tabs().foreach(function(tab)
+                        local hl = tab.is_current() and theme.sel or theme.fill
+                        return {
+                            line.sep(' ', hl, theme.fill),
+                            tab.is_current() and '' or '',
+                            tab.number(),
+                            line.sep(' ', hl, theme.fill),
+                            hl = hl,
+                            margin = ' ',
+                        }
+                    end),
+                    hl = theme.fill,
+                }
+            end)
         end,
     }
 
@@ -234,6 +228,44 @@ local function init()
         end,
     }
 
+    use {
+        'monaqa/dial.nvim',
+        event = 'BufRead',
+        config = function()
+            local augend = require 'dial.augend'
+            local config = require 'dial.config'
+            config.augends:register_group {
+                default = {
+                    augend.integer.alias.decimal,
+                    augend.integer.alias.hex,
+                    augend.semver.alias.semver,
+                    augend.date.alias['%Y/%m/%d'],
+                    augend.date.alias['%Y-%m-%d'],
+                    augend.date.alias['%Y年%-m月%-d日'],
+                    augend.constant.alias.bool,
+                    augend.constant.new {
+                        elements = { 'and', 'or' },
+                        word = true,
+                        cyclic = true,
+                    },
+                    augend.constant.new {
+                        elements = { 'True', 'False' },
+                        word = true,
+                        cyclic = true,
+                    },
+                    augend.constant.new {
+                        elements = { '&&', '||' },
+                        cyclic = true,
+                    },
+                },
+            }
+            vim.keymap.set({ 'n', 'v' }, '<C-a>', '<Plug>(dial-increment)')
+            vim.keymap.set({ 'n', 'v' }, '<C-e>', '<Plug>(dial-decrement)')
+            vim.keymap.set('v', 'g<C-a>', '<Plug>(dial-increment-additonal)')
+            vim.keymap.set('v', 'g<C-e>', '<Plug>(dial-decrement-additonal)')
+        end,
+    }
+
     -- enhance
     use 'lewis6991/impatient.nvim'
 
@@ -305,6 +337,7 @@ local function init()
                 pre_save_cmds = { 'FloatermKill!' },
             }
         end,
+        requires = { 'nvim-lua/plenary.nvim' },
     }
 
     use {
@@ -391,7 +424,6 @@ local function init()
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
             'RRethy/nvim-treesitter-textsubjects',
-            'nvim-treesitter/nvim-treesitter-context',
             'p00f/nvim-ts-rainbow',
             'windwp/nvim-ts-autotag',
             'yioneko/nvim-yati',

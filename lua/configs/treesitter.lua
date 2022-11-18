@@ -26,7 +26,6 @@ require('nvim-treesitter.configs').setup {
         select = {
             enable = true,
             keymaps = {
-                -- You can use the capture groups defined in textobjects.scm
                 ['af'] = '@function.outer',
                 ['rf'] = '@function.inner',
                 ['ac'] = '@class.outer',
