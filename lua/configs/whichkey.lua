@@ -20,7 +20,8 @@ local presets = require 'which-key.plugins.presets'
 presets.operators = {}
 
 wk.register({
-    ['<TAB>'] = {'<CMD>b#<CR>', 'last buffer'},
+    ['<TAB>'] = { '<CMD>b#<CR>', 'last buffer' },
+    ['<SPACE>'] = { '<CMD>Telescope buffers<CR>', 'Find buffer' },
     d = {
         name = '+debug',
         t = { [[<CMD>lua require('dapui').toggle()<CR>]], 'toggle' },

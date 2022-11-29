@@ -43,7 +43,7 @@ opt.relativenumber = true
 opt.linebreak = true
 opt.cursorline = true
 opt.lazyredraw = true
-opt.shellslash = true
+opt.shellslash = false
 
 opt.updatetime = 300
 opt.scrolloff = 999
@@ -80,3 +80,5 @@ opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menuone', 'noselect' }
 opt.fillchars:append { eob = ' ', fold = ' ',  foldopen = '', foldclose = '', foldsep = ' ' }
 opt.sessionoptions='buffers,curdir,folds,tabpages,winsize,winpos'
+opt.runtimepath:append(vim.fn.stdpath 'data' .. '\\tsparser')
+opt.runtimepath:append(vim.fn.stdpath 'config' .. '\\snippets')

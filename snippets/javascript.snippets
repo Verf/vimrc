@@ -1,0 +1,10 @@
+snippet csl "console log"
+	console.log(${0})
+snippet expf "export function"
+	export function ${1:name}(data) {
+	    return request({
+		    url: '${0}',
+			method: 'post',
+			data: data,
+		})
+	}

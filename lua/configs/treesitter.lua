@@ -1,4 +1,5 @@
 require('nvim-treesitter.configs').setup {
+    parser_install_dir = vim.fn.stdpath 'data' .. '\\tsparser',
     ensure_installed = {
         'python',
         'java',
@@ -10,10 +11,10 @@ require('nvim-treesitter.configs').setup {
         'css',
         'json',
         'go',
-        'markdown',
     },
     highlight = {
         enable = true,
+        disable = {'lua'},
     },
     indent = {
         enable = false,

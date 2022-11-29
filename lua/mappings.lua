@@ -36,6 +36,9 @@ keymap.set('n', 'U', ':redo<CR>')
 keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
 keymap.set('x', '@', _G.visual_at, { noremap = true, expr = true })
 
+keymap.set('n', '<TAB>', '<CMD>bn<CR>')
+keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
+
 keymap.set('n', ']z', 'zj')
 keymap.set('n', '[z', 'zk')
 
