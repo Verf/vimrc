@@ -22,18 +22,6 @@ presets.operators = {}
 wk.register({
     ['<TAB>'] = { '<CMD>b#<CR>', 'last buffer' },
     ['<SPACE>'] = { '<CMD>Telescope buffers<CR>', 'Find buffer' },
-    d = {
-        name = '+debug',
-        t = { [[<CMD>lua require('dapui').toggle()<CR>]], 'toggle' },
-        b = { [[<CMD>lua require('dap').toggle_breakpoint()<CR>]], 'breakpoint' },
-        s = { [[<CMD>lua require('dap').continue()<CR>]], 'start' },
-        c = { [[<CMD>lua require('dap').close()<CR>]], 'close' },
-        n = { [[<CMD>lua require('dap').step_over()<CR>]], 'step over' },
-        i = { [[<CMD>lua require('dap').step_into()<CR>]], 'step into' },
-        o = { [[<CMD>lua require('dap').step_out()<CR>]], 'step out' },
-        g = { [[<CMD>lua require('dap').run_to_cursor()<CR>]], 'goto cursor' },
-        r = { [[<CMD>lua require('dap').repl.open()]], 'repl open' },
-    },
     f = {
         name = '+find',
         f = { '<CMD>Telescope find_files<CR>', 'files' },
