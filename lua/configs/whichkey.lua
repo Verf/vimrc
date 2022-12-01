@@ -79,5 +79,5 @@ wk.register({
         n = { '<CMD>lua vim.lsp.buf.rename<CR>', 'rename' },
         l = { _G.recompile, 'reload' },
     },
-    m = { '<CMD>Format<CR>', 'format' },
+    m = { '<CMD>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>', 'format' },
 }, { prefix = '<leader>' })

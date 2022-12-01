@@ -6,8 +6,10 @@ vim.keymap.set({ 'i', 's' }, '<C-d>', snippy.next)
 vim.keymap.set({ 'i', 's' }, '<C-u>', snippy.previous)
 
 cmp.setup {
-    completion = {
-        keyword_length = 2,
+    snippet = {
+        expand = function(args)
+            require('snippy').expand_snippet(args.body)
+        end,
     },
     formatting = {
         format = lspkind.cmp_format {
@@ -38,13 +40,17 @@ cmp.setup {
             end
         end, { 'i', 's' }),
     },
-    sources = {
-        { name = 'snippy' },
+    sources = cmp.config.sources({
         { name = 'nvim_lsp' },
+        { name = 'snippy' },
+        { name = 'path', option = {
+            trailing_slash = true,
+        } },
         { name = 'nvim_lua' },
+        { name = 'nvim_lsp_signature_help' },
+    }, {
         { name = 'buffer' },
-        { name = 'path' },
-    },
+    }),
 }
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).

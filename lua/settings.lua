@@ -77,7 +77,7 @@ opt.shellxquote = ''
 opt.shortmess = 'filnxtToOFc'
 opt.whichwrap = ''
 opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
-opt.completeopt = { 'menuone', 'noselect' }
+opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.fillchars:append { eob = ' ', fold = ' ',  foldopen = '', foldclose = '', foldsep = ' ' }
 opt.sessionoptions='buffers,curdir,folds,tabpages,winsize,winpos'
 opt.runtimepath:append(vim.fn.stdpath 'data' .. '\\tsparser')

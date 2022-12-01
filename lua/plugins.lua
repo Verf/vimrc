@@ -159,12 +159,13 @@ local function init()
         config = [[require 'configs.completion']],
         events = 'InsertEnter',
         requires = {
-            'saadparwaiz1/cmp_luasnip',
+            'dcampos/cmp-snippy',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-cmdline',
+            'hrsh7th/cmp-nvim-lsp-signature-help',
         },
     }
 
@@ -389,9 +390,8 @@ local function init()
     }
 
     use {
-        'mhartington/formatter.nvim',
-        event = 'BufRead',
-        config = [[require 'configs.formatter']],
+        'jose-elias-alvarez/null-ls.nvim',
+        config = [[require 'configs.nullls']]
     }
 
     use {
@@ -429,7 +429,6 @@ local function init()
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
             'onsails/lspkind-nvim',
-            'ray-x/lsp_signature.nvim',
         },
     }
 end

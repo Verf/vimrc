@@ -48,12 +48,3 @@ for _, name in pairs(mason_lsp.get_installed_servers()) do
         }
     end
 end
-
--- ui enhance
-require('lsp_signature').setup {
-    bind = true,
-    hint_prefix = ' ',
-    handler_opts = {
-        border = 'rounded',
-    },
-}
