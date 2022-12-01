@@ -10,7 +10,5 @@ nls.setup {
         },
         nls.builtins.formatting.stylua,
         nls.builtins.formatting.sql_formatter,
-        -- linter
-        nls.builtins.formatting.eslint,
     },
 }
