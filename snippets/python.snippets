@@ -1,47 +1,56 @@
 snippet #u "coding: utf-8"
 	# -*- coding: utf-8 -*-
+	$0
 snippet #a "coding with information"
     # -*- coding: utf-8 -*-
     # @Auther: Verf
     # @Email: verf@protonmail.com
-    ${0:${VISUAL}}
+	$0
 snippet im "import"
 	import ${0:package}
 snippet fim "from import"
 	from ${1:package} import ${0:module}
+snippet s. "self abbr"
+	self.$0
+snippet f' "f expr s"
+	f'$0'
+snippet f" "f expr d"
+	f"$0"
 snippet cl "class defination"
-	class ${1:name}:
+	class ${2:name}:
 	   """${2:description}"""
 	   def __init__(self,${3:params}) -> None:
-	       ${0:pass}
+	       $0
 snippet def "function defination"
  	def ${1:name}(${2:`indent('.') ? 'self' : ''`}):
 		"""${3:docs}"""
-		${0}
+		$0
+snippet rai "raise exception"
+	raise ${1:Exception}($0)
 snippet try "try except"
 	try:
-		${1:${VISUAL}}
+	    $1
 	except ${2:Exception} as ${3:e}:
 		${0:raise $3}
 snippet tryf "try except finally"
  	try:
-		${1:${VISUAL}}
+		$1
 	except ${2:Exception} as ${3:e}:
 		${4:raise $3}
 	finally:
-		${0}
+		$0
 snippet ifm "if main"
 	if __name__ == '__main__':
 	    ${0:main()}
 snippet with "with statement"
 	with ${1:expr} as ${2:var}:
-		${0:${VISUAL}}
+	    $0
 snippet wr "with open read"
-	with open('${1}', '${2:r}', encoding='utf-8') as f:
-	    ${0:pass}
+	with open('$1', '${2:r}', encoding='utf-8') as f:
+	    $0
 snippet ww "with open write"
-	with open('${1}', '${2:w}', encoding='utf-8', newline='\n') as f:
-	    ${0:pass}
+	with open('$1', '${2:w}', encoding='utf-8', newline='\n') as f:
+	    $0
 snippet pit "path iterdir"
-	for fp in Path(${1}).iterdir():
-	    ${0:pass}
+	for fp in Path($1).iterdir():
+	    $0

@@ -76,8 +76,8 @@ wk.register({
     },
     r = {
         name = '+refact',
-        n = { '<CMD>lua vim.lsp.buf.rename<CR>', 'rename' },
+        n = { '<CMD>lua vim.lsp.buf.rename()<CR>', 'rename' },
         l = { _G.recompile, 'reload' },
     },
-    m = { '<CMD>lua vim.lsp.buf.format({ timeout_ms = 2000 })<CR>', 'format' },
+    m = { '<CMD>lua vim.lsp.buf.format({ timeout_ms = 5000 })<CR>', 'format' },
 }, { prefix = '<leader>' })

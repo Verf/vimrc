@@ -44,6 +44,7 @@ opt.linebreak = true
 opt.cursorline = true
 opt.lazyredraw = true
 opt.shellslash = false
+opt.spell = true
 
 opt.updatetime = 300
 opt.scrolloff = 999
@@ -76,6 +77,7 @@ opt.shellquote = ''
 opt.shellxquote = ''
 opt.shortmess = 'filnxtToOFc'
 opt.whichwrap = ''
+opt.spelllang = { 'en_us' }
 opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.fillchars:append { eob = ' ', fold = ' ',  foldopen = '', foldclose = '', foldsep = ' ' }

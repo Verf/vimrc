@@ -78,11 +78,7 @@ local function init()
         'folke/todo-comments.nvim',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
-            require('todo-comments').setup {
-                search = {
-                    pattern = [[\b(KEYWORDS)\b]],
-                },
-            }
+            require('todo-comments').setup()
         end,
     }
 
@@ -166,6 +162,7 @@ local function init()
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
+            'f3fora/cmp-spell',
         },
     }
 
@@ -281,7 +278,7 @@ local function init()
         config = function()
             vim.g.auto_save = true
             vim.g.auto_save_events =
-                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
+            { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
         end,
     }
 
@@ -391,7 +388,7 @@ local function init()
 
     use {
         'jose-elias-alvarez/null-ls.nvim',
-        config = [[require 'configs.nullls']]
+        config = [[require 'configs.nullls']],
     }
 
     use {

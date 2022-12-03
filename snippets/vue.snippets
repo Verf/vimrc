@@ -14,3 +14,37 @@ snippet <v "vue base"
 
 	<style scoped>
 	</style>
+snippet vif "v-if"
+	v-if="$0"
+snippet vfor "v-for"
+	v-for="(${1:item}, idx) in ${2:items}" :key="${0:idx}"
+snippet vcl "@click"
+	@click="$0"
+snippet vdat "data()"
+	data() {
+	  return {
+	  	${1:key}: ${2:value}
+	  };
+	},
+snippet vcom "computed"
+	computed: {
+	  ${1:name}() {
+	    $0
+	  },
+	}
+snippet vmet "methods"
+	methods: {
+	  ${1:name}() {
+	  	$0
+	  }
+	},
+snippet oba "Object.assign"
+	Object.assign(${1:\{\}, $0)
+snippet fori "for in"
+	for (let ${1:prop} in ${2:object}) {
+	  $0
+	}
+snippet foro "for of"
+	for (let ${1:prop} of ${2:object}) {
+	  $0
+	}
