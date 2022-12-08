@@ -1,7 +1,7 @@
 local nls = require 'null-ls'
 nls.setup {
     sources = {
-        -- code action
+        -- code actions
         nls.builtins.code_actions.eslint.with {
             prefer_local = true,
         },
