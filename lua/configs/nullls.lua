@@ -18,6 +18,6 @@ nls.setup {
         nls.builtins.diagnostics.eslint.with {
             prefer_local = true,
         },
-        nls.builtins.diagnostics.pylint,
+        -- nls.builtins.diagnostics.pylint,
     },
 }

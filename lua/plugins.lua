@@ -148,20 +148,25 @@ local function init()
         end,
     }
 
-    use 'dcampos/nvim-snippy'
+    use {
+        'L3MON4D3/LuaSnip',
+        config = function()
+            require('luasnip.loaders.from_snipmate').lazy_load(vim.fn.stdpath 'config' .. '\\snippets')
+        end,
+    }
 
     use {
         'hrsh7th/nvim-cmp',
         config = [[require 'configs.completion']],
         events = 'InsertEnter',
         requires = {
-            'dcampos/cmp-snippy',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
+            'saadparwaiz1/cmp_luasnip'
         },
     }
 
@@ -277,7 +282,7 @@ local function init()
         config = function()
             vim.g.auto_save = true
             vim.g.auto_save_events =
-            { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
+                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
         end,
     }
 
