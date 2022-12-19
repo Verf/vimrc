@@ -166,7 +166,7 @@ local function init()
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
-            'saadparwaiz1/cmp_luasnip'
+            'saadparwaiz1/cmp_luasnip',
         },
     }
 
@@ -265,6 +265,8 @@ local function init()
 
     use 'nvim-lua/plenary.nvim'
 
+    use 'tpope/vim-vinegar'
+
     use {
         'folke/which-key.nvim',
         config = [[require 'configs.whichkey']],
@@ -282,7 +284,7 @@ local function init()
         config = function()
             vim.g.auto_save = true
             vim.g.auto_save_events =
-                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
+            { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
         end,
     }
 
