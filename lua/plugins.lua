@@ -265,7 +265,14 @@ local function init()
 
     use 'nvim-lua/plenary.nvim'
 
-    use 'tpope/vim-vinegar'
+    use {
+        'stevearc/oil.nvim',
+        config = function()
+            require('oil').setup {
+                skip_confirm_for_simple_edits = true,
+            }
+        end,
+    }
 
     use {
         'folke/which-key.nvim',
@@ -369,7 +376,12 @@ local function init()
         end,
     }
 
-    use { 'preservim/vim-markdown', ft = 'markdown' }
+    use {
+        'jakewvincent/mkdnflow.nvim',
+        config = function()
+            require('mkdnflow').setup {}
+        end,
+    }
 
     use {
         'kevinhwang91/nvim-ufo',
