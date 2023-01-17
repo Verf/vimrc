@@ -139,16 +139,6 @@ local function init()
 
     -- edit
     use {
-        'fedepujol/move.nvim',
-        config = function()
-            vim.keymap.set({ 'n', 'v' }, '<A-n>', '<CMD>MoveLine(1)<CR>')
-            vim.keymap.set({ 'n', 'v' }, '<A-i>', '<CMD>MoveLine(-1)<CR>')
-            vim.keymap.set({ 'n', 'v' }, '<A-o>', '<CMD>MoveHChar(1)<CR>')
-            vim.keymap.set({ 'n', 'v' }, '<A-y>', '<CMD>MoveHChar(-1)<CR>')
-        end,
-    }
-
-    use {
         'L3MON4D3/LuaSnip',
         config = function()
             require('luasnip.loaders.from_snipmate').lazy_load(vim.fn.stdpath 'config' .. '\\snippets')
@@ -195,6 +185,20 @@ local function init()
                 },
             }
             require('mini.pairs').setup()
+            require('mini.move').setup {
+                {
+                    mappings = {
+                        left = '<M-y>',
+                        right = '<M-o>',
+                        down = '<M-n>',
+                        up = '<M-i>',
+                        line_left = '<M-y>',
+                        line_right = '<M-o>',
+                        line_down = '<M-n>',
+                        line_up = '<M-i>',
+                    },
+                },
+            }
             require('mini.surround').setup {
                 mappings = {
                     add = '<leader>sa',
@@ -266,6 +270,17 @@ local function init()
     use 'nvim-lua/plenary.nvim'
 
     use {
+        'darazaki/indent-o-matic',
+        config = function()
+            require('indent-o-matic').setup {
+                max_lines = 2048,
+                standard_widths = { 2, 4, 8 },
+                skip_multiline = true,
+            }
+        end,
+    }
+
+    use {
         'stevearc/oil.nvim',
         config = function()
             require('oil').setup {
@@ -291,7 +306,7 @@ local function init()
         config = function()
             vim.g.auto_save = true
             vim.g.auto_save_events =
-            { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
+                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
         end,
     }
 
