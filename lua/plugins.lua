@@ -204,11 +204,16 @@ local function init()
     use {
         'woosaaahh/sj.nvim',
         config = function()
-            local sj = require 'sj'
-            sj.setup {
+            require('sj').setup {
+                update_search_register = true,
                 separator = ' ',
+                keymaps = nil,
+                -- stylua: ignore
+                labels = {
+                    "t", "n", "f", "u", "v", "m", "e", "i", "d", "r", "c", "o",
+                    "l", "w", "s", "x", "a", "h", "q", "z", "g", "y", "k", "p",
+                },
             }
-            vim.keymap.set('n', 's', sj.run)
         end,
     }
 

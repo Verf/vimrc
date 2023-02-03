@@ -53,7 +53,7 @@ opt.synmaxcol = 200
 opt.winblend = 10
 
 opt.foldlevel = 99
-opt.foldlevelstart = 1
+opt.foldlevelstart = 99
 
 opt.mouse = 'a'
 opt.foldcolumn = '0'

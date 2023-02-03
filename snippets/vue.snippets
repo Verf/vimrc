@@ -8,11 +8,16 @@ snippet <v "vue base"
 
 	<script>
 		export default{
-			${0}
+			name: '${1}',
+			data() {
+				return {
+						${2:key}: ${0:value},
+				}
+			}
 		}
 	</script>
 
-	<style scoped>
+	<style lang="scss" scoped>
 	</style>
 snippet vif "v-if"
 	v-if="$0"

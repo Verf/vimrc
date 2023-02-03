@@ -39,8 +39,13 @@ keymap.set('x', '@', _G.visual_at, { noremap = true, expr = true })
 keymap.set('n', '<TAB>', '<CMD>bn<CR>')
 keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
 
+keymap.set('n', 's', require('sj').run)
+
 keymap.set('n', ']z', 'zj')
 keymap.set('n', '[z', 'zk')
+
+keymap.set('n', 'zR', require('ufo').openAllFolds)
+keymap.set('n', 'zM', require('ufo').closeAllFolds)
 
 keymap.set('v', '<', '<gv')
 keymap.set('v', '>', '>gv')
