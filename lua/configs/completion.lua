@@ -1,14 +1,14 @@
 local cmp = require 'cmp'
-local luasnip = require 'luasnip'
+local snip = require 'snippy'
 local lspkind = require 'lspkind'
 
-vim.keymap.set({ 'i', 's' }, '<C-d>', [[<CMD>lua require('luasnip').jump(1)<CR>]])
-vim.keymap.set({ 'i', 's' }, '<C-u>', [[<CMD>lua require('luasnip').jump(-1)<CR>]])
+vim.keymap.set({ 'i', 's' }, '<C-d>', '<Plug>(snippy-next)')
+vim.keymap.set({ 'i', 's' }, '<C-u>', '<Plug>(snippy-previous)')
 
 cmp.setup {
     snippet = {
         expand = function(args)
-            luasnip.lsp_expand(args.body)
+            snip.expand_snippet(args.body)
         end,
     },
     formatting = {
@@ -20,12 +20,12 @@ cmp.setup {
     mapping = {
         ['<CR>'] = cmp.mapping.confirm { select = true },
         ['<Tab>'] = cmp.mapping(function(fallback)
-            if luasnip.expandable() then
-                luasnip.expand()
+            if snip.can_expand() then
+                snip.expand()
             elseif cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.jumpable(1) then
-                luasnip.jump(1)
+            elseif snip.can_jump(1) then
+                snip.next()
             else
                 fallback()
             end
@@ -33,8 +33,8 @@ cmp.setup {
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            elseif luasnip.jumpable(-1) then
-                luasnip.jump(-1)
+            elseif snip.can_jump(-1) then
+                snip.previous()
             else
                 fallback()
             end
@@ -42,7 +42,7 @@ cmp.setup {
     },
     sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        { name = 'luasnip' },
+        { name = 'snippy' },
         { name = 'path', option = {
             trailing_slash = true,
         } },

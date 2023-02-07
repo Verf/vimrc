@@ -31,18 +31,24 @@ snippet vdat "data()"
 	  	${1:key}: ${2:value}
 	  };
 	},
+snippet vmou "mounted"
+	mounted() {
+	  $0
+	}
 snippet vcom "computed"
 	computed: {
 	  ${1:name}() {
-	    $0
+	    ${0:return}
 	  },
 	}
 snippet vmet "methods"
 	methods: {
-	  ${1:name}() {
-	  	$0
-	  }
+	  $0
 	},
+snippet vwat "watch"
+	watch: {
+	  $0
+	}
 snippet oba "Object.assign"
 	Object.assign(${1:\{\}, $0)
 snippet fori "for in"

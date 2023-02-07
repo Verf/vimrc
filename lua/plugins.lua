@@ -138,12 +138,7 @@ local function init()
     }
 
     -- edit
-    use {
-        'L3MON4D3/LuaSnip',
-        config = function()
-            require('luasnip.loaders.from_snipmate').lazy_load(vim.fn.stdpath 'config' .. '\\snippets')
-        end,
-    }
+    use 'dcampos/nvim-snippy'
 
     use {
         'hrsh7th/nvim-cmp',
@@ -156,7 +151,7 @@ local function init()
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
-            'saadparwaiz1/cmp_luasnip',
+            'dcampos/cmp-snippy',
         },
     }
 
@@ -265,8 +260,23 @@ local function init()
         config = function()
             require('indent-o-matic').setup {
                 max_lines = 2048,
-                standard_widths = { 2, 4, 8 },
+                standard_widths = { 2, 4 },
                 skip_multiline = true,
+                filetype_javascript = {
+                    standard_widths = { 2 },
+                },
+                filetype_typescript = {
+                    standard_widths = { 2 },
+                },
+                filetype_vue = {
+                    standard_widths = { 2 },
+                },
+                filetype_html = {
+                    standard_widths = { 2 },
+                },
+                filetype_css = {
+                    standard_widths = { 2 },
+                },
             }
         end,
     }
@@ -336,20 +346,6 @@ local function init()
     }
 
     use {
-        'Verf/auto-session',
-        config = function()
-            require('auto-session').setup {
-                auto_session_create_enabled = false,
-                auto_save_enabled = true,
-                auto_restore_enabled = true,
-                auto_session_use_git_branch = false,
-                pre_save_cmds = { 'FloatermKill!' },
-            }
-        end,
-        requires = { 'nvim-lua/plenary.nvim' },
-    }
-
-    use {
         'nvim-telescope/telescope.nvim',
         config = function()
             require('telescope').setup {
@@ -362,14 +358,12 @@ local function init()
                 },
             }
             require('telescope').load_extension 'file_browser'
-            require('telescope').load_extension 'session-lens'
             require('telescope').load_extension 'everything'
         end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
             'nvim-telescope/telescope-file-browser.nvim',
-            'rmagatti/session-lens',
             'Verf/telescope-everything.nvim',
         },
     }
