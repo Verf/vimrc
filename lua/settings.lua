@@ -52,11 +52,11 @@ opt.shiftwidth = 4
 opt.synmaxcol = 200
 opt.winblend = 10
 
+opt.foldcolumn = '1'
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 
 opt.mouse = 'a'
-opt.foldcolumn = '0'
 opt.showbreak = '⮎'
 opt.signcolumn = 'yes'
 opt.virtualedit = 'all'

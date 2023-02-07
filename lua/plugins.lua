@@ -377,13 +377,6 @@ local function init()
     }
 
     use {
-        'jakewvincent/mkdnflow.nvim',
-        config = function()
-            require('mkdnflow').setup {}
-        end,
-    }
-
-    use {
         'kevinhwang91/nvim-ufo',
         config = function()
             require('ufo').setup {
@@ -393,6 +386,15 @@ local function init()
             }
         end,
         requires = 'kevinhwang91/promise-async',
+    }
+    use {
+        'luukvbaal/statuscol.nvim',
+        config = function()
+            require('statuscol').setup {
+                foldfunc = 'builtin',
+                setopt = true,
+            }
+        end,
     }
 
     -- integration
