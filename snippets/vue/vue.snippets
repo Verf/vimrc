@@ -2,28 +2,26 @@ snippet csl "console log"
 	console.log(${0})
 snippet <v "vue base"
 	<template>
-		<div>
-		</div>
+	  <div> </div>
 	</template>
 
 	<script>
-		export default{
-			name: '${1}',
-			data() {
-				return {
-						${2:key}: ${0:value},
-				}
-			}
+	  export default {
+		name: '${1}',
+		data() {
+		  return {
+			${2:key}: ${0:value},
+		  }
 		}
+	  }
 	</script>
 
-	<style lang="scss" scoped>
-	</style>
+	<style lang="scss" scoped> </style>
 snippet vif "v-if"
 	v-if="$0"
 snippet vfor "v-for"
 	v-for="(${1:item}, idx) in ${2:items}" :key="${0:idx}"
-snippet vcl "@click"
+snippet @c "@click"
 	@click="$0"
 snippet vdat "data()"
 	data() {
@@ -31,6 +29,10 @@ snippet vdat "data()"
 	  	${1:key}: ${2:value}
 	  };
 	},
+snippet vcre "created"
+	created() {
+	  $0
+	}
 snippet vmou "mounted"
 	mounted() {
 	  $0

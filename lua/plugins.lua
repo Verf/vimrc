@@ -256,32 +256,6 @@ local function init()
     use 'nvim-lua/plenary.nvim'
 
     use {
-        'darazaki/indent-o-matic',
-        config = function()
-            require('indent-o-matic').setup {
-                max_lines = 2048,
-                standard_widths = { 2, 4 },
-                skip_multiline = true,
-                filetype_javascript = {
-                    standard_widths = { 2 },
-                },
-                filetype_typescript = {
-                    standard_widths = { 2 },
-                },
-                filetype_vue = {
-                    standard_widths = { 2 },
-                },
-                filetype_html = {
-                    standard_widths = { 2 },
-                },
-                filetype_css = {
-                    standard_widths = { 2 },
-                },
-            }
-        end,
-    }
-
-    use {
         'stevearc/oil.nvim',
         config = function()
             require('oil').setup {
@@ -393,6 +367,7 @@ local function init()
             require('statuscol').setup {
                 foldfunc = 'builtin',
                 setopt = true,
+                order = 'SNsFs',
             }
         end,
     }

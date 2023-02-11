@@ -15,6 +15,12 @@ g.maplocalleader = ','
 g.loaded_python_provider = 0
 
 cmd [[autocmd FileType netrw setlocal bufhidden=wipe]]
+cmd [[autocmd FileType html setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType css setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType javascript setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType vue setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType json setlocal shiftwidth=2 tabstop=2]]
+cmd [[autocmd FileType markdown setlocal shiftwidth=2 tabstop=2]]
 
 ----- settings -----
 opt.wrap = false
