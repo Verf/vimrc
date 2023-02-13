@@ -50,7 +50,7 @@ snippet wrb "with open read binary"
 	with open('$1', '${2:rb}') as f:
 	    $0
 snippet ww "with open write"
-	with open('$1', '${2:w}', encoding='${3:utf-8}', newline='${4:\n}') as f:
+	with open('$1', '${2:w}', encoding='${3:utf-8}', newline='${4:\\n}') as f:
 	    $0
 snippet wwb "with open write binary"
 	with open('$1', '${2:wb}') as f:
@@ -60,7 +60,7 @@ snippet fr "file read"
 	$0
 	fr.close()
 snippet fw "file write"
-	${1:fw} = open(${2}, '${3:w}', encoding='${4:utf-8}', newline='${4:\n}')
+	${1:fw} = open(${2}, '${3:w}', encoding='${4:utf-8}', newline='${4:\\n}')
 	$0
 	fw.close()
 snippet pit "path iterdir"
