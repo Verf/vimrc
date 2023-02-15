@@ -22,7 +22,7 @@ snippet wh "while"
 snippet date "date"
 	\$(date "+%Y-%m-%d %H%M%S")
 snippet el "echo log"
-	echo "[\$(date "+%Y-%m-%d %H%M%S")] ${1:ERROR}: $0"
+	echo "[\$(date "+%Y-%m-%d %H%M%S")] ${1:ERROR}: $0"${2: | tee -a \$LOG_FILE}
 snippet frs "function runSQL"
 	${1:runSQL}() {
 	    sql=\$1

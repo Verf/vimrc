@@ -6,7 +6,7 @@ vim.diagnostic.config {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- lua setup
-require('lspconfig').sumneko_lua.setup {
+require('lspconfig').lua_ls.setup {
     settings = {
         Lua = {
             diagnostics = {
@@ -42,7 +42,7 @@ require('mason').setup {
 require('mason-lspconfig').setup()
 local mason_lsp = require 'mason-lspconfig'
 for _, name in pairs(mason_lsp.get_installed_servers()) do
-    if name ~= 'sumneko_lua' then
+    if name ~= 'sumneko_lua' and name ~= 'lua_ls' then
         require('lspconfig')[name].setup {
             capabilities = capabilities,
         }
