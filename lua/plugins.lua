@@ -325,6 +325,10 @@ local function init()
             require('telescope').setup {
                 defaults = {
                     borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+                    layout_strategy = 'vertical',
+                    layout_config = {
+                        width = 0.8,
+                    },
                 },
                 file_browser = {
                     theme = 'ivy',
