@@ -61,3 +61,13 @@ snippet foro "for of"
 	for (let ${1:prop} of ${2:object}) {
 	  $0
 	}
+snippet t. "this."
+	this.$0
+snippet .t ".then promise"
+	.then((res) => {
+	    $0
+	})
+snippet .c ".catch promise"
+	.catch((${1:err}) => {
+	    $0
+	})

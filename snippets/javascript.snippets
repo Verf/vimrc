@@ -2,13 +2,33 @@ snippet csl "console log"
 	console.log($0)
 snippet expf "export function"
 	export function ${1:name}(data) {
-	  return request({
-		url: '$0',
-		method: 'post',
-		data: data,
-	  })
+	    return request({
+	        url: '$0',
+	        method: 'post',
+	        data: data,
+	    })
 	}
 snippet fun "function"
 	function ${1:name}($2) {
-      $0
+        $0
 	}
+snippet oba "Object.assign"
+	Object.assign(${1:\{\}, $0)
+snippet fori "for in"
+	for (let ${1:prop} in ${2:object}) {
+	    $0
+	}
+snippet foro "for of"
+	for (let ${1:prop} of ${2:object}) {
+	    $0
+	}
+snippet t. "this."
+	this.$0
+snippet .t ".then promise"
+	.then((res) => {
+	    $0
+	})
+snippet .c ".catch promise"
+	.catch((${1:err}) => {
+	    $0
+	})

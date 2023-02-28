@@ -1,6 +1,7 @@
 local cmp = require 'cmp'
 local snip = require 'snippy'
 local lspkind = require 'lspkind'
+local compare = require('cmp').config.compare
 
 vim.keymap.set({ 'i', 's' }, '<C-d>', '<Plug>(snippy-next)')
 vim.keymap.set({ 'i', 's' }, '<C-u>', '<Plug>(snippy-previous)')
@@ -33,24 +34,30 @@ cmp.setup {
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            elseif snip.can_jump(-1) then
+            elseif snip.can_jump( -1) then
                 snip.previous()
             else
                 fallback()
             end
         end, { 'i', 's' }),
     },
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'snippy' },
-        { name = 'path', option = {
-            trailing_slash = true,
-        } },
-        { name = 'nvim_lua' },
-        { name = 'nvim_lsp_signature_help' },
-    }, {
-        { name = 'buffer' },
-    }),
+    sources = cmp.config.sources {
+        { name = 'nvim_lsp', priority = 8 },
+        { name = 'snippy',   priority = 7 },
+        { name = 'buffer',   priority = 7 },
+        { name = 'spell',    keyword_length = 3, priority = 5, keyword_pattern = [[\w\+]] },
+        { name = 'nvim_lua', priority = 5 },
+        { name = 'path' },
+    },
+    sorting = {
+        comparators = {
+            compare.locality,
+            compare.recently_used,
+            compare.score,
+            compare.offset,
+            compare.order,
+        },
+    },
 }
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).

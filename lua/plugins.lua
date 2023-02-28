@@ -75,14 +75,6 @@ local function init()
     }
 
     use {
-        'folke/todo-comments.nvim',
-        requires = 'nvim-lua/plenary.nvim',
-        config = function()
-            require('todo-comments').setup()
-        end,
-    }
-
-    use {
         'nvim-lualine/lualine.nvim',
         config = [[require 'configs.statusline']],
     }
@@ -152,6 +144,7 @@ local function init()
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'dcampos/cmp-snippy',
+            'f3fora/cmp-spell',
         },
     }
 
