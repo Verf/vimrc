@@ -45,7 +45,6 @@ cmp.setup {
         { name = 'nvim_lsp', priority = 8 },
         { name = 'snippy',   priority = 7 },
         { name = 'buffer',   priority = 7 },
-        { name = 'spell',    keyword_length = 3, priority = 5, keyword_pattern = [[\w\+]] },
         { name = 'nvim_lua', priority = 5 },
         { name = 'path' },
     },

@@ -45,7 +45,7 @@ opt.linebreak = true
 opt.cursorline = true
 opt.lazyredraw = true
 opt.shellslash = false
-opt.spell = true
+opt.spell = false
 opt.spelllang = { 'en_us' }
 
 opt.updatetime = 300

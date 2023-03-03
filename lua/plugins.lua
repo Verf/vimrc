@@ -144,7 +144,6 @@ local function init()
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'dcampos/cmp-snippy',
-            'f3fora/cmp-spell',
         },
     }
 
@@ -323,18 +322,12 @@ local function init()
                         width = 0.8,
                     },
                 },
-                file_browser = {
-                    theme = 'ivy',
-                    hijack_netrw = true,
-                },
             }
-            require('telescope').load_extension 'file_browser'
             require('telescope').load_extension 'everything'
         end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
-            'nvim-telescope/telescope-file-browser.nvim',
             'Verf/telescope-everything.nvim',
         },
     }
@@ -358,13 +351,21 @@ local function init()
         end,
         requires = 'kevinhwang91/promise-async',
     }
+
     use {
         'luukvbaal/statuscol.nvim',
         config = function()
+            local builtin = require 'statuscol.builtin'
             require('statuscol').setup {
-                foldfunc = 'builtin',
-                setopt = true,
-                order = 'SNsFs',
+                segments = {
+                    { text = { '%s' }, click = 'v:lua.ScSa' },
+                    {
+                        text = { builtin.lnumfunc, ' ' },
+                        condition = { true, builtin.not_empty },
+                        click = 'v:lua.ScLa',
+                    },
+                    { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+                },
             }
         end,
     }
