@@ -30,19 +30,20 @@ snippet <elfi "<el-form-item>"
     </el-form-item>
 snippet <elt "<el-table>"
 	<el-table :data="${1}" style="width: 100%" ${2:stripe border}>
-        <el-table-column prop="${3}" label="${4}"${5: min-width="${6}"}></el-table-column>
+	    ${0}
     </el-table>
+snippet <eltc "<el-table-column>"
+    <el-table-column prop="${0}" label="${1}" ${2:min-width="${3}"}></el-table-column>
 snippet <elp "<el-pagination"
     <el-pagination
         @size-change="${1:handleSizeChange}"
         @current-change="${2:handleCurrentChange}"
         :current-page.sync="${3:current}"
         :page-size="${4:size}"
-        :total="${5:total}">
+        :total="${5:total}"
         layout="total,prev,pager,next"
+    >
     </el-pagination>
-snippet <eltc "<el-table-column>"
-    <el-table-column prop="${1}" label="${2}"${3: min-width="${4}"}></el-table-column>
 snippet <eld "<el-dialog>"
     <el-dialog title="${1}" :visible.sync="${2:dialogVisible}">
 	    ${0}
