@@ -322,6 +322,13 @@ local function init()
                         width = 0.8,
                     },
                 },
+                extensions = {
+                    everything = {
+                        match_path = true,
+                        regex = true,
+                        max_results = 100,
+                    },
+                },
             }
             require('telescope').load_extension 'everything'
         end,
@@ -354,6 +361,7 @@ local function init()
 
     use {
         'luukvbaal/statuscol.nvim',
+        commit = '5269fb1220f0909c82be8a0c9eab657a55a5f1fa',
         config = function()
             local builtin = require 'statuscol.builtin'
             require('statuscol').setup {
