@@ -19,11 +19,7 @@ snippet <elcg "<el-checkbox-group>"
         <el-checkbox label="${2}">${0}</el-checkbox>
     </el-checkbox-group>
 snippet <elf "<el-form>"
-    <el-form :model="${1}" label-width="${2:120px}">
-        <el-form-item label="${3}" prop="${4}">
-            <el-input v-model="${1}.${4}"></el-input>
-        </el-form-item>
-	</el-form>
+    <el-form :model="${1}"${2}>$0</el-form>
 snippet <elfi "<el-form-item>"
     <el-form-item label="${1}" prop="${2}">
         <${3:el-input} v-model="${4}.${2}"$0></${3:el-input}>

@@ -384,6 +384,12 @@ local function init()
         config = function()
             vim.g.floaterm_width = 0.8
             vim.g.floaterm_height = 0.8
+            vim.keymap.set('n', '<F1>', ':FloatermToggle<CR>')
+            vim.keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
+            vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+            vim.keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermNew<CR>')
+            vim.keymap.set('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
+            vim.keymap.set('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
         end,
     }
 
@@ -405,7 +411,19 @@ local function init()
         },
     }
 
-    use 'mbbill/undotree'
+    use {
+        'mbbill/undotree',
+        config = function()
+            vim.keymap.set('n', '<F2>', ':UndotreeToggle<CR>')
+        end,
+    }
+
+    use {
+        'ellisonleao/glow.nvim',
+        config = function()
+            require('glow').setup()
+        end,
+    }
 
     use {
         'nvim-treesitter/nvim-treesitter',
