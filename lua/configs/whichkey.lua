@@ -1,3 +1,4 @@
+local g = vim.g
 local wk = require 'which-key'
 wk.setup {
     key_labels = {
@@ -22,6 +23,13 @@ presets.operators = {}
 wk.register({
     ['<TAB>'] = { '<CMD>b#<CR>', 'last buffer' },
     ['<SPACE>'] = { '<CMD>Telescope buffers<CR>', 'Find buffer' },
+    b = {
+        name = '+buffer',
+        b = { '<CMD>Telescope buffers<CR>', 'list' },
+        c = { ':%bd!|e#<CR>', 'only' },
+        q = { ':bd!<CR>', 'close' },
+        n = { ':vnew<CR>', 'new' },
+    },
     f = {
         name = '+find',
         f = { '<CMD>Telescope find_files<CR>', 'files' },
@@ -33,6 +41,29 @@ wk.register({
         t = { '<CMD>TodoTelescope<CR>', 'todo' },
         s = { '<CMD>Telescope lsp_document_symbols<CR>', 'symbols' },
         p = { '<CMD>Telescope session-lens search_session<CR>', 'projects' },
+    },
+    m = { '<CMD>lua vim.lsp.buf.format({ timeout_ms = 5000 })<CR>', 'format' },
+    n = {
+        name = '+notes',
+        d = { ':e ' .. g.diary_directory .. '\\' .. os.date '%Y-%m-%d' .. '.md<CR>', 'diary' },
+        n = { ':e ' .. g.notes_directory .. '\\', 'notes' },
+        f = { '<CMD>cd ' .. g.notes_directory .. ' | Telescope find_files<CR>', 'find' },
+    },
+    q = {
+        name = '+quit',
+        a = { ':qa!<CR>', 'all' },
+        q = { '<CMD>lua MiniBufremove.delete(0, true)<CR>', 'current' },
+    },
+    r = {
+        name = '+refact',
+        n = { '<CMD>lua vim.lsp.buf.rename()<CR>', 'rename' },
+        l = { _G.recompile, 'reload' },
+    },
+    t = {
+        name = '+tab',
+        n = { ':tabnew<CR>', 'new' },
+        q = { ':tabclose<CR>', 'close' },
+        c = { ':tabonly<CR>', 'only' },
     },
     w = {
         name = '+window',
@@ -56,28 +87,4 @@ wk.register({
         i = { '<CMD>FocusSplitUp<CR>', 'focus up' },
         o = { '<CMD>FocusSplitRight<CR>', 'focus right' },
     },
-    q = {
-        name = '+quit',
-        a = { ':qa!<CR>', 'all' },
-        q = { '<CMD>lua MiniBufremove.delete(0, true)<CR>', 'current' },
-    },
-    b = {
-        name = '+buffer',
-        b = { '<CMD>Telescope buffers<CR>', 'list' },
-        c = { ':%bd!|e#<CR>', 'only' },
-        q = { ':bd!<CR>', 'close' },
-        n = { ':vnew<CR>', 'new' },
-    },
-    t = {
-        name = '+tab',
-        n = { ':tabnew<CR>', 'new' },
-        q = { ':tabclose<CR>', 'close' },
-        c = { ':tabonly<CR>', 'only' },
-    },
-    r = {
-        name = '+refact',
-        n = { '<CMD>lua vim.lsp.buf.rename()<CR>', 'rename' },
-        l = { _G.recompile, 'reload' },
-    },
-    m = { '<CMD>lua vim.lsp.buf.format({ timeout_ms = 5000 })<CR>', 'format' },
 }, { prefix = '<leader>' })
