@@ -273,7 +273,7 @@ local function init()
         config = function()
             vim.g.auto_save = true
             vim.g.auto_save_events =
-            { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
+                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
         end,
     }
 
@@ -366,7 +366,7 @@ local function init()
             local builtin = require 'statuscol.builtin'
             require('statuscol').setup {
                 segments = {
-                    { text = { '%s' },                  click = 'v:lua.ScSa' },
+                    { text = { '%s' }, click = 'v:lua.ScSa' },
                     {
                         text = { builtin.lnumfunc, ' ' },
                         condition = { true, builtin.not_empty },
