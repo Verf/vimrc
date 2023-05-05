@@ -11,9 +11,6 @@ cmd [[command! Editrc :e $MYVIMRC]]
 g.mapleader = ' '
 g.maplocalleader = ','
 
--- language
-g.loaded_python_provider = 0
-
 cmd [[autocmd FileType netrw setlocal bufhidden=wipe]]
 cmd [[autocmd FileType html setlocal shiftwidth=2 tabstop=2]]
 cmd [[autocmd FileType css setlocal shiftwidth=2 tabstop=2]]
