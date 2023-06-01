@@ -150,7 +150,26 @@ local function init()
     use {
         'abecodes/tabout.nvim',
         config = function()
-            require('tabout').setup {}
+            require('tabout').setup {
+                tabkey = '<Tab>',
+                backwards_tabkey = '<S-Tab>',
+                act_as_tab = true,
+                act_as_shift_tab = false,
+                default_tab = '<C-t>',
+                default_shift_tab = '',
+                enable_backwards = true,
+                completion = true,
+                tabouts = {
+                    { open = "'", close = "'" },
+                    { open = '"', close = '"' },
+                    { open = '`', close = '`' },
+                    { open = '(', close = ')' },
+                    { open = '[', close = ']' },
+                    { open = '{', close = '}' },
+                },
+                ignore_beginning = true,
+                exclude = {},
+            }
         end,
         after = { 'nvim-cmp' },
     }

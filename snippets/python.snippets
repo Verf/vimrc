@@ -4,6 +4,8 @@ snippet #a "coding with information"
     # -*- coding: utf-8 -*-
     # @Auther: Verf
     # @Email: verf@protonmail.com
+snippet #! "shebang"
+	#!/usr/bin/env python3
 snippet im "import"
 	import ${0:package}
 snippet fim "from import"
@@ -16,6 +18,9 @@ snippet f" "f-expr-d"
 	f"$0"
 snippet rai "raise exception"
 	raise ${1:Exception}($0)
+snippet fi "for in"
+	for ${1:item} in ${2:items}:
+	    $0
 snippet try "try except"
 	try:
 	    $1
@@ -54,6 +59,14 @@ snippet fw "file write"
 	${1:fw} = open(${2}, '${3:w}', encoding='${4:utf-8}', newline='${4:\\n}')
 	$0
 	fw.close()
+snippet csvr "csv reader"
+	with open(${1}, 'r', encoding='${2:utf-8}', newline='') as ${3:f}:
+	    ${4:reader} = csv.reader(${3}${5})
+		$0
+snippet csvw "csv writer"
+	with open(${1}, 'w', encoding='${2:utf-8}', newline='') as ${3:fw}:
+	    ${4:writer} = csv.writer(${3}, quoting='${5:csv.QUOTE_ALL}', lineterminator='${3}')
+		$0
 snippet pit "path iterdir"
 	for fp in Path($1).iterdir():
 	    $0
