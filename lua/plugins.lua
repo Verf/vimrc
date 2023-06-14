@@ -55,7 +55,6 @@ local function init()
             }
         end,
         ft = {
-            'lua',
             'css',
             'scss',
             'javascript',

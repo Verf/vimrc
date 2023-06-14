@@ -34,7 +34,7 @@ cmp.setup {
         ['<S-Tab>'] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_prev_item()
-            elseif snip.can_jump( -1) then
+            elseif snip.can_jump(-1) then
                 snip.previous()
             else
                 fallback()
@@ -43,15 +43,15 @@ cmp.setup {
     },
     sources = cmp.config.sources {
         { name = 'nvim_lsp', priority = 8 },
-        { name = 'snippy',   priority = 7 },
-        { name = 'buffer',   priority = 7 },
+        { name = 'snippy', priority = 7 },
+        { name = 'buffer', priority = 7 },
         { name = 'nvim_lua', priority = 5 },
         { name = 'path' },
     },
     sorting = {
         comparators = {
-            compare.locality,
             compare.recently_used,
+            compare.locality,
             compare.score,
             compare.offset,
             compare.order,
