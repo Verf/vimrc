@@ -29,6 +29,9 @@ for i = 1, 9 do
     g['loaded_' .. disabled_builtin[i]] = 1
 end
 
+-- enable lua loader
+vim.loader.enable()
+
 -- packer
 cmd [[command! PackerInstall packadd packer.nvim | lua require('plugins').install()]]
 cmd [[command! PackerUpdate packadd packer.nvim | lua require('plugins').update()]]
@@ -39,6 +42,5 @@ cmd [[command! PackerCompile packadd packer.nvim | lua require('plugins').compil
 -- require
 require 'functions'
 require 'settings'
-require 'impatient'
 require 'personal'
 require 'mappings'

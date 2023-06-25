@@ -2,12 +2,10 @@ local g = vim.g
 local cmd = vim.cmd
 local opt = vim.opt
 
------ Command  -----
 cmd [[command! Trim :%s/\s\+$//e]]
 cmd [[command! Trimline :%g/^$/d]]
 cmd [[command! Editrc :e $MYVIMRC]]
 
--- global
 g.mapleader = ' '
 g.maplocalleader = ','
 

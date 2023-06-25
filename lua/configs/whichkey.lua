@@ -41,6 +41,7 @@ wk.register({
         t = { '<CMD>TodoTelescope<CR>', 'todo' },
         s = { '<CMD>Telescope lsp_document_symbols<CR>', 'symbols' },
         p = { '<CMD>Telescope session-lens search_session<CR>', 'projects' },
+        u = { '<CMD>Telescope undo<CR>', 'undotree' },
     },
     m = { '<CMD>lua vim.lsp.buf.format({ timeout_ms = 5000 })<CR>', 'format' },
     n = {

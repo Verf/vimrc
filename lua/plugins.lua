@@ -85,13 +85,14 @@ local function init()
                 fill = 'Tabline',
                 sel = 'lualine_a_normal',
             }
+            local filename = require 'tabby.module.filename'
             require('tabby.tabline').set(function(line)
                 return {
                     line.wins_in_tab(line.api.get_current_tab()).foreach(function(win)
                         return {
                             line.sep(' ', theme.sel, theme.fill),
                             win.is_current() and '' or '',
-                            win.buf_name(),
+                            filename.relative(win.id),
                             line.sep(' ', theme.sel, theme.fill),
                             hl = theme.sel,
                             margin = ' ',
@@ -261,8 +262,6 @@ local function init()
     }
 
     -- enhance
-    use 'lewis6991/impatient.nvim'
-
     use 'nvim-lua/plenary.nvim'
 
     use {
@@ -291,7 +290,7 @@ local function init()
         config = function()
             vim.g.auto_save = true
             vim.g.auto_save_events =
-            { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
+                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
         end,
     }
 
@@ -341,6 +340,11 @@ local function init()
                     },
                 },
                 extensions = {
+                    undo = {
+                        use_delta = false,
+                        side_by_side = false,
+                        diff_context_lines = 3,
+                    },
                     everything = {
                         match_path = true,
                         regex = true,
@@ -348,11 +352,15 @@ local function init()
                     },
                 },
             }
+            require('telescope').load_extension 'zf-native'
+            require('telescope').load_extension 'undo'
             require('telescope').load_extension 'everything'
         end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
+            'natecraddock/telescope-zf-native.nvim',
+            'debugloop/telescope-undo.nvim',
             'Verf/telescope-everything.nvim',
         },
     }
@@ -384,7 +392,7 @@ local function init()
             local builtin = require 'statuscol.builtin'
             require('statuscol').setup {
                 segments = {
-                    { text = { '%s' },                  click = 'v:lua.ScSa' },
+                    { text = { '%s' }, click = 'v:lua.ScSa' },
                     {
                         text = { builtin.lnumfunc, ' ' },
                         condition = { true, builtin.not_empty },
@@ -430,13 +438,6 @@ local function init()
     }
 
     use {
-        'mbbill/undotree',
-        config = function()
-            vim.keymap.set('n', '<F2>', ':UndotreeToggle<CR>')
-        end,
-    }
-
-    use {
         'ellisonleao/glow.nvim',
         config = function()
             require('glow').setup()
@@ -449,10 +450,8 @@ local function init()
         config = [[require 'configs.treesitter']],
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
-            'RRethy/nvim-treesitter-textsubjects',
             'p00f/nvim-ts-rainbow',
             'windwp/nvim-ts-autotag',
-            'yioneko/nvim-yati',
         },
     }
 

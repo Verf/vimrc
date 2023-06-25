@@ -17,11 +17,16 @@ require('nvim-treesitter.configs').setup {
         additional_vim_regex_highlighting = false,
     },
     indent = {
-        enable = false,
-        disable = { 'python' },
+        enable = true,
     },
     incremental_selection = {
-        enable = false,
+        enable = true,
+        keymaps = {
+            init_selection = '<CR>',
+            node_incremental = '<CR>',
+            scope_incremental = false,
+            node_decremental = '<S-CR>',
+        },
     },
     textobjects = {
         select = {
@@ -56,13 +61,6 @@ require('nvim-treesitter.configs').setup {
             },
         },
     },
-    textsubjects = {
-        enable = true,
-        keymaps = {
-            ['<CR>'] = 'textsubjects-smart',
-            ['<S-CR>'] = 'textsubjects-container-outer',
-        },
-    },
     rainbow = {
         enable = true,
         extended_mode = true,
@@ -74,5 +72,4 @@ require('nvim-treesitter.configs').setup {
     matchup = {
         enable = true,
     },
-    yati = { enable = true },
 }
