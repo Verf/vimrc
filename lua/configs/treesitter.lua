@@ -2,7 +2,6 @@ require('nvim-treesitter.configs').setup {
     parser_install_dir = vim.fn.stdpath 'data' .. '\\tsparser',
     ensure_installed = {
         'python',
-        'java',
         'html',
         'vue',
         'javascript',
@@ -63,8 +62,6 @@ require('nvim-treesitter.configs').setup {
     },
     rainbow = {
         enable = true,
-        extended_mode = true,
-        max_file_lines = 2000,
     },
     autotag = {
         enable = true,

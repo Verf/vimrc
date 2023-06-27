@@ -17,6 +17,15 @@ cmd [[autocmd FileType vue setlocal shiftwidth=2 tabstop=2]]
 cmd [[autocmd FileType json setlocal shiftwidth=2 tabstop=2]]
 cmd [[autocmd FileType markdown setlocal shiftwidth=2 tabstop=2]]
 
+-- autocmd
+vim.api.nvim_create_autocmd({ 'InsertLeave', 'CursorHold', 'BufLeave', 'FocusLost' }, {
+    callback = function()
+        if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
+            vim.api.nvim_command 'silent update'
+        end
+    end,
+})
+
 ----- settings -----
 opt.wrap = false
 opt.hidden = true
@@ -43,7 +52,7 @@ opt.shellslash = false
 opt.spell = false
 opt.spelllang = { 'en_us' }
 
-opt.updatetime = 300
+opt.updatetime = 1000
 opt.scrolloff = 999
 opt.timeoutlen = 1500
 opt.updatecount = 100
@@ -67,7 +76,7 @@ opt.clipboard = 'unnamed'
 opt.shell = 'pwsh -nol'
 opt.guifont = 'FiraCode NF:h13'
 opt.shellcmdflag =
-'-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
+    '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
 opt.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 opt.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
 opt.shellquote = ''

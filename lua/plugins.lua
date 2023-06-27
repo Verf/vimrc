@@ -75,7 +75,13 @@ local function init()
 
     use {
         'nvim-lualine/lualine.nvim',
-        config = [[require 'configs.statusline']],
+        config = function()
+            require('lualine').setup {
+                options = {
+                    theme = 'dracula-nvim',
+                },
+            }
+        end,
     }
 
     use {
@@ -116,19 +122,6 @@ local function init()
         end,
     }
 
-    use {
-        'lukas-reineke/headlines.nvim',
-        config = function()
-            require('headlines').setup {
-                markdown = {
-                    fat_headlines = true,
-                    fat_headline_upper_string = '▁',
-                    fat_headline_lower_string = '▔',
-                },
-            }
-        end,
-    }
-
     -- edit
     use 'dcampos/nvim-snippy'
 
@@ -140,7 +133,6 @@ local function init()
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'dcampos/cmp-snippy',
@@ -148,39 +140,13 @@ local function init()
     }
 
     use {
-        'abecodes/tabout.nvim',
-        config = function()
-            require('tabout').setup {
-                tabkey = '<Tab>',
-                backwards_tabkey = '<S-Tab>',
-                act_as_tab = true,
-                act_as_shift_tab = false,
-                default_tab = '<C-t>',
-                default_shift_tab = '',
-                enable_backwards = true,
-                completion = true,
-                tabouts = {
-                    { open = "'", close = "'" },
-                    { open = '"', close = '"' },
-                    { open = '`', close = '`' },
-                    { open = '(', close = ')' },
-                    { open = '[', close = ']' },
-                    { open = '{', close = '}' },
-                },
-                ignore_beginning = true,
-                exclude = {},
-            }
-        end,
-        after = { 'nvim-cmp' },
-    }
-
-    use {
         'echasnovski/mini.nvim',
         config = function()
             require('mini.align').setup()
-            require('mini.bufremove').setup()
+            require('mini.bufremove').setup {
+                set_vim_settings = false,
+            }
             require('mini.comment').setup()
-            require('mini.fuzzy').setup()
             require('mini.jump').setup {
                 mappings = {
                     forward = 't',
@@ -262,8 +228,6 @@ local function init()
     }
 
     -- enhance
-    use 'nvim-lua/plenary.nvim'
-
     use {
         'stevearc/oil.nvim',
         config = function()
@@ -282,15 +246,6 @@ local function init()
         'beauwilliams/focus.nvim',
         config = function()
             require('focus').setup()
-        end,
-    }
-
-    use {
-        '907th/vim-auto-save',
-        config = function()
-            vim.g.auto_save = true
-            vim.g.auto_save_events =
-                { 'InsertLeave', 'BufLeave', 'TabLeave', 'WinLeave', 'VimLeave', 'FocusLost', 'CursorHold' }
         end,
     }
 
@@ -316,15 +271,25 @@ local function init()
             }
         end,
     }
+    use {
+        'axkirillov/hbac.nvim',
+        config = function()
+            require('hbac').setup {
+                autoclose = true,
+                threshold = 5,
+            }
+        end,
+        requires = {
+            'nvim-telescope/telescope.nvim',
+            'nvim-lua/plenary.nvim',
+            'nvim-tree/nvim-web-devicons',
+        },
+    }
 
     use {
         'ethanholz/nvim-lastplace',
         config = function()
-            require('nvim-lastplace').setup {
-                lastplace_ignore_buftype = { 'quickfix', 'nofile', 'help' },
-                lastplace_ignore_filetype = { 'gitcommit', 'gitrebase', 'svn', 'hgcommit' },
-                lastplace_open_folds = true,
-            }
+            require('nvim-lastplace').setup()
         end,
     }
 
@@ -353,14 +318,12 @@ local function init()
                 },
             }
             require('telescope').load_extension 'zf-native'
-            require('telescope').load_extension 'undo'
             require('telescope').load_extension 'everything'
         end,
         requires = {
             'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
             'natecraddock/telescope-zf-native.nvim',
-            'debugloop/telescope-undo.nvim',
             'Verf/telescope-everything.nvim',
         },
     }
@@ -370,37 +333,6 @@ local function init()
         config = function()
             vim.g.rooter_patterns = { '.git', 'make.sh', 'MakeFile', 'pom.xml', 'package.json' }
             vim.g.rooter_change_directory_for_non_project_files = 'current'
-        end,
-    }
-
-    use {
-        'kevinhwang91/nvim-ufo',
-        config = function()
-            require('ufo').setup {
-                provider_selector = function()
-                    return { 'treesitter', 'indent' }
-                end,
-            }
-        end,
-        requires = 'kevinhwang91/promise-async',
-    }
-
-    use {
-        'luukvbaal/statuscol.nvim',
-        commit = '5269fb1220f0909c82be8a0c9eab657a55a5f1fa',
-        config = function()
-            local builtin = require 'statuscol.builtin'
-            require('statuscol').setup {
-                segments = {
-                    { text = { '%s' }, click = 'v:lua.ScSa' },
-                    {
-                        text = { builtin.lnumfunc, ' ' },
-                        condition = { true, builtin.not_empty },
-                        click = 'v:lua.ScLa',
-                    },
-                    { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
-                },
-            }
         end,
     }
 
@@ -420,8 +352,30 @@ local function init()
     }
 
     use {
-        'jose-elias-alvarez/null-ls.nvim',
-        config = [[require 'configs.nullls']],
+        'mhartington/formatter.nvim',
+        config = function()
+            require('formatter').setup {
+                logging = true,
+                log_level = vim.log.levels.WARN,
+                filetype = {
+                    lua = {
+                        require('formatter.filetypes.lua').stylua,
+                    },
+                    vue = {
+                        require('formatter.filetypes.vue').prettier,
+                    },
+                    json = {
+                        require('formatter.filetypes.json').prettier,
+                    },
+                    javascript = {
+                        require('formatter.filetypes.json').prettier,
+                    },
+                    python = {
+                        require('formatter.filetypes.python').blue,
+                    },
+                },
+            }
+        end,
     }
 
     use {
@@ -429,7 +383,7 @@ local function init()
         events = 'BufRead',
         config = function()
             require('gitsigns').setup {
-                update_debounce = 500,
+                update_debounce = 1000,
             }
         end,
         requires = {
@@ -438,19 +392,12 @@ local function init()
     }
 
     use {
-        'ellisonleao/glow.nvim',
-        config = function()
-            require('glow').setup()
-        end,
-    }
-
-    use {
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate',
         config = [[require 'configs.treesitter']],
         requires = {
             'nvim-treesitter/nvim-treesitter-textobjects',
-            'p00f/nvim-ts-rainbow',
+            'HiPhish/nvim-ts-rainbow2',
             'windwp/nvim-ts-autotag',
         },
     }
