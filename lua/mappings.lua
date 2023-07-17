@@ -49,6 +49,7 @@ keymap.set('v', '>', '>gv')
 
 keymap.set('n', '<C-s>', '#*cgn')
 keymap.set('n', '<C-S-s>', '*#cgn')
+keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]])
 
 keymap.set('i', '<C-a>', '<Esc>^i')
 keymap.set('i', '<C-e>', '<Esc>$a')
