@@ -231,6 +231,7 @@ local function init()
     use {
         'stevearc/oil.nvim',
         config = function()
+            vim.keymap.set('n', '<F2>', ':Oil<CR>')
             require('oil').setup {
                 skip_confirm_for_simple_edits = true,
             }
