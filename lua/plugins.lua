@@ -42,29 +42,6 @@ local function init()
     }
 
     use {
-        'norcalli/nvim-colorizer.lua',
-        config = function()
-            require('colorizer').setup {
-                'lua',
-                'css',
-                'scss',
-                'javascript',
-                'typescript',
-                'vue',
-                'html',
-            }
-        end,
-        ft = {
-            'css',
-            'scss',
-            'javascript',
-            'typescript',
-            'vue',
-            'html',
-        },
-    }
-
-    use {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
             require('indent_blankline').setup {
@@ -170,6 +147,30 @@ local function init()
                     suffix_next = '',
                 },
             }
+            vim.keymap.set('n', '<F2>', ':lua MiniFiles.open()<CR>')
+            require('mini.files').setup {
+                mappings = {
+                    close = 'q',
+                    go_in = 'o',
+                    go_in_plus = 'O',
+                    go_out = 'y',
+                    go_out_plus = 'Y',
+                    reset = '<BS>',
+                    reveal_cwd = '@',
+                    show_help = 'g?',
+                    synchronize = '=',
+                    trim_left = '<',
+                    trim_right = '>',
+                },
+            }
+            local hipatterns = require 'mini.hipatterns'
+            hipatterns.setup {
+                highlighters = {
+                    fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+                    todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+                    hex_color = hipatterns.gen_highlighter.hex_color(),
+                },
+            }
         end,
     }
 
@@ -228,16 +229,6 @@ local function init()
     }
 
     -- enhance
-    use {
-        'stevearc/oil.nvim',
-        config = function()
-            vim.keymap.set('n', '<F2>', ':Oil<CR>')
-            require('oil').setup {
-                skip_confirm_for_simple_edits = true,
-            }
-        end,
-    }
-
     use {
         'folke/which-key.nvim',
         config = [[require 'configs.whichkey']],

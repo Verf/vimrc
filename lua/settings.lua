@@ -18,10 +18,11 @@ cmd [[autocmd FileType json setlocal shiftwidth=2 tabstop=2]]
 cmd [[autocmd FileType markdown setlocal shiftwidth=2 tabstop=2]]
 
 -- autocmd
-vim.api.nvim_create_autocmd({ 'InsertLeave', 'CursorHold', 'BufLeave', 'FocusLost' }, {
+vim.api.nvim_create_autocmd({ 'InsertLeave', 'BufLeave', 'FocusLost' }, {
     callback = function()
         if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
             vim.api.nvim_command 'silent update'
+            vim.api.nvim_command [[ echo strftime('%X', localtime()) "autosave"]]
         end
     end,
 })
@@ -50,6 +51,8 @@ opt.cursorline = true
 opt.lazyredraw = true
 opt.shellslash = false
 opt.spell = false
+opt.autoread = true
+opt.autowrite = true
 opt.spelllang = { 'en_us' }
 
 opt.updatetime = 1000

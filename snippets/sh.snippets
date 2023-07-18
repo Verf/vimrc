@@ -23,20 +23,9 @@ snippet $date "date"
 	\$(date '+%Y-%m-%d %T')
 snippet el "echo log"
 	echo "[\$(date '+%Y-%m-%d %T')] ${1:ERROR}: $0"${2: | tee -a \$LOG_FILE}
-snippet frs "function runSQL"
-	${1:runSQL}() {
-	    sql=\$1
-		${2:sql_resuslt}=\$(${3:mysql} -u${4:\$\{DB_USER\}} -p${5:\$\{DB_PSWD\}} -h${6:\$\{DB_IP\}} -P${7:\$\{DB_PORT\}} -sre \${sql})
-		if [ $? -ne 0 ]; then
-	        echo "[\$(date '+%Y-%m-%d %T')] ERROR: mysql error"
-			exit 1
-		fi
-		echo \$$2
-	}
 snippet if$? "return code check"
 	if [ $? -eq 0 ]; then
-	    echo "[\$(date '+%Y-%m-%d %T')] INFO: $1成功"${2: | tee -a \$LOG_FILE}
+	    loginfo "$1成功"
 	else
-	    echo "[\$(date '+%Y-%m-%d %T')] ERROR: $1失败"$2
-	    $0
+		logerror "$1失败"$0
 	fi
