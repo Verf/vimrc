@@ -86,7 +86,7 @@ local function init()
                         local hl = tab.is_current() and theme.sel or theme.fill
                         return {
                             line.sep(' ', hl, theme.fill),
-                            tab.is_current() and '' or '',
+                            tab.is_current() and '' or '',
                             tab.number(),
                             line.sep(' ', hl, theme.fill),
                             hl = hl,
