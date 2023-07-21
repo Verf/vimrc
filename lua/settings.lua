@@ -9,6 +9,16 @@ cmd [[command! Editrc :e $MYVIMRC]]
 g.mapleader = ' '
 g.maplocalleader = ','
 
+-- autocmd
+vim.api.nvim_create_autocmd({ 'InsertLeave', 'BufLeave', 'FocusLost' }, {
+    callback = function()
+        if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
+            vim.api.nvim_command 'silent update'
+            vim.api.nvim_command [[ echo strftime('%X', localtime()) "autosave"]]
+        end
+    end,
+})
+
 ----- settings -----
 opt.wrap = false
 opt.showmatch = true

@@ -42,5 +42,4 @@ cmd [[command! PackerCompile packadd packer.nvim | lua require('plugins').compil
 -- require
 require 'functions'
 require 'settings'
-require 'personal'
 require 'mappings'

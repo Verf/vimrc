@@ -363,7 +363,13 @@ local function init()
                         require('formatter.filetypes.json').prettier,
                     },
                     python = {
-                        require('formatter.filetypes.python').blue,
+                        function()
+                            return {
+                                exe = 'blue',
+                                args = { '-q', '-' },
+                                stdin = true,
+                            }
+                        end,
                     },
                 },
             }
