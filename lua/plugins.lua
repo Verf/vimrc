@@ -41,6 +41,8 @@ local function init()
         end,
     }
 
+    use { 'stevearc/dressing.nvim' }
+
     use {
         'lukas-reineke/indent-blankline.nvim',
         config = function()
