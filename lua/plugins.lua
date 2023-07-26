@@ -154,9 +154,9 @@ local function init()
                 mappings = {
                     close = 'q',
                     go_in = 'o',
-                    go_in_plus = 'O',
+                    go_in_plus = '<CR>',
                     go_out = 'y',
-                    go_out_plus = 'Y',
+                    go_out_plus = '-',
                     reset = '<BS>',
                     reveal_cwd = '@',
                     show_help = 'g?',
