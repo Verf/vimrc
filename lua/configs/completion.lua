@@ -42,9 +42,10 @@ cmp.setup {
         end, { 'i', 's' }),
     },
     sources = cmp.config.sources {
-        { name = 'nvim_lsp', priority = 7 },
-        { name = 'snippy', priority = 6 },
-        { name = 'buffer', priority = 5 },
+        { name = 'nvim_lsp' },
+        { name = 'nvim_lsp_signature_help' },
+        { name = 'buffer' },
+        { name = 'snippy' },
         { name = 'path' },
     },
     sorting = {
