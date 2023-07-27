@@ -379,6 +379,15 @@ local function init()
     }
 
     use {
+        'mfussenegger/nvim-lint',
+        config = function()
+            require('lint').linters_by_ft = {
+                python = { 'mypy' },
+            }
+        end,
+    }
+
+    use {
         'lewis6991/gitsigns.nvim',
         events = 'BufRead',
         config = function()

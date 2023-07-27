@@ -26,3 +26,7 @@ for _, name in pairs(mason_lsp.get_installed_servers()) do
         capabilities = capabilities,
     }
 end
+
+require('lspconfig').jedi_language_server.setup {
+    capabilities = capabilities,
+}
