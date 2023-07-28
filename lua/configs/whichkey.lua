@@ -23,6 +23,7 @@ presets.operators = {}
 wk.register({
     ['<TAB>'] = { '<CMD>b#<CR>', 'Last buffer' },
     ['<SPACE>'] = { '<CMD>Telescope buffers<CR>', 'Find buffer' },
+    a = { '<CMD>lua vim.lsp.buf.code_action()<CR>', 'Code Action' },
     b = {
         name = '+ Buffer',
         b = { '<CMD>Telescope buffers<CR>', 'list' },
@@ -39,7 +40,7 @@ wk.register({
         d = { '<CMD>Telescope diagnostics<CR>', 'diagnostics' },
         s = { '<CMD>Telescope lsp_document_symbols<CR>', 'symbols' },
     },
-    m = { '<CMD>Format<CR>', 'Format' },
+    m = { '<CMD>GuardFmt<CR>', 'Format' },
     q = {
         name = '+ Quit',
         a = { ':qa!<CR>', 'all' },

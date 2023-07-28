@@ -1,7 +1,8 @@
--- disable diagnostic virtual text
+-- diagnostic config
 vim.diagnostic.config {
     virtual_text = false,
 }
+
 -- capabilities
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -28,5 +29,8 @@ for _, name in pairs(mason_lsp.get_installed_servers()) do
 end
 
 require('lspconfig').jedi_language_server.setup {
+    capabilities = capabilities,
+}
+require('lspconfig').ruff_lsp.setup {
     capabilities = capabilities,
 }

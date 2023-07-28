@@ -185,8 +185,30 @@ local function init()
                 keymaps = nil,
                 -- stylua: ignore
                 labels = {
-                    "t", "n", "f", "u", "v", "m", "e", "i", "d", "r", "c", "o",
-                    "l", "w", "s", "x", "a", "h", "q", "z", "g", "y", "k", "p",
+                    't',
+                    'n',
+                    'f',
+                    'u',
+                    'v',
+                    'm',
+                    'e',
+                    'i',
+                    'd',
+                    'r',
+                    'c',
+                    'o',
+                    'l',
+                    'w',
+                    's',
+                    'x',
+                    'a',
+                    'h',
+                    'q',
+                    'z',
+                    'g',
+                    'y',
+                    'k',
+                    'p',
                 },
             }
         end,
@@ -346,43 +368,20 @@ local function init()
     }
 
     use {
-        'mhartington/formatter.nvim',
+        'nvimdev/guard.nvim',
         config = function()
-            require('formatter').setup {
-                logging = true,
-                log_level = vim.log.levels.WARN,
-                filetype = {
-                    lua = {
-                        require('formatter.filetypes.lua').stylua,
-                    },
-                    vue = {
-                        require('formatter.filetypes.vue').prettier,
-                    },
-                    json = {
-                        require('formatter.filetypes.json').prettier,
-                    },
-                    javascript = {
-                        require('formatter.filetypes.json').prettier,
-                    },
-                    python = {
-                        function()
-                            return {
-                                exe = 'blue',
-                                args = { '-q', '-' },
-                                stdin = true,
-                            }
-                        end,
-                    },
-                },
+            local ft = require 'guard.filetype'
+            ft('lua'):fmt 'stylua'
+            ft('typescript,javascript,typescriptreact'):fmt 'prettier'
+            ft('vue'):fmt 'prettier'
+            ft('python'):fmt {
+                cmd = 'blue.cmd',
+                args = { '-q', '-' },
+                stdin = true,
             }
-        end,
-    }
-
-    use {
-        'mfussenegger/nvim-lint',
-        config = function()
-            require('lint').linters_by_ft = {
-                python = { 'mypy' },
+            require('guard').setup {
+                fmt_on_save = false,
+                lsp_as_default_formatter = false,
             }
         end,
     }

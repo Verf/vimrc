@@ -15,8 +15,6 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
         if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
             vim.api.nvim_command 'silent update'
             vim.api.nvim_command [[ echo strftime('%X', localtime()) "autosave"]]
-            -- lint trigger
-            require('lint').try_lint()
         end
     end,
 })
