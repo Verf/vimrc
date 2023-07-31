@@ -324,8 +324,8 @@ local plugins = {
                 args = { '-' },
                 stdin = true,
             }
-            ft('typescript,javascript,typescriptreact,vue'):fmt {
-                cmd = 'prettier',
+            ft('typescript,javascript,typescriptreact,vue,json'):fmt {
+                cmd = 'prettier.cmd',
                 args = { '-' },
                 stdin = true,
             }
