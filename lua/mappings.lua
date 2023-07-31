@@ -39,8 +39,6 @@ keymap.set('x', '@', _G.visual_at, { noremap = true, expr = true })
 keymap.set('n', '<TAB>', '<CMD>bn<CR>')
 keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
 
-keymap.set('n', 's', require('sj').run)
-
 keymap.set('n', ']z', 'zj')
 keymap.set('n', '[z', 'zk')
 
@@ -54,11 +52,21 @@ keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]])
 keymap.set('i', '<C-a>', '<Esc>^i')
 keymap.set('i', '<C-e>', '<Esc>$a')
 
-keymap.set('n', ']d', '<CMD>lua vim.diagnostic.goto_next()<CR>')
-keymap.set('n', '[d', '<CMD>lua vim.diagnostic.goto_prev()<CR>')
+keymap.set('n', '<TAB>', '<CMD>b#<CR>')
 
-keymap.set('n', 'gd', '<CMD>Telescope lsp_definitions<CR>')
-keymap.set('n', 'gr', '<CMD>Telescope lsp_references<CR>')
-keymap.set('n', 'gi', '<CMD>Telescope lsp_implementations<CR>')
-keymap.set('n', 'gh', '<CMD>Telescope registers<CR>')
+keymap.set('n', '<leader>qa', '<CMD>qa!<CR>')
 
+keymap.set('n', '<leader>bc', ':%bd!|e#<CR>')
+keymap.set('n', '<leader>bq', ':bd!<CR>')
+keymap.set('n', '<leader>bn', ':vnew<CR>')
+
+keymap.set('n', '<leader>tn', ':tabnew<CR>')
+keymap.set('n', '<leader>tq', ':tabclose<CR>')
+keymap.set('n', '<leader>tc', ':tabonly<CR>')
+
+keymap.set('n', '<leader>wc', '<C-w>o')
+keymap.set('n', '<leader>wq', '<C-w>c')
+keymap.set('n', '<leader>wY', '<C-w>H')
+keymap.set('n', '<leader>wN', '<C-w>J')
+keymap.set('n', '<leader>wI', '<C-w>K')
+keymap.set('n', '<leader>wO', '<C-w>L')

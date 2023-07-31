@@ -37,6 +37,7 @@ opt.cursorline = true
 opt.shellslash = false
 opt.spell = false
 opt.autowrite = true
+opt.confirm = true
 
 opt.updatetime = 750
 opt.scrolloff = 999
@@ -47,12 +48,14 @@ opt.tabstop = 4
 opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.synmaxcol = 200
+opt.pumheight = 10
 
 opt.mouse = 'a'
 opt.showbreak = '⮎'
 opt.virtualedit = 'all'
 opt.fileformats = 'unix,dos'
-opt.clipboard = 'unnamed'
+opt.clipboard = 'unnamedplus'
+opt.splitkeep = 'screen'
 opt.shell = 'pwsh -nol'
 opt.shellcmdflag =
     '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
@@ -65,5 +68,4 @@ opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.fillchars:append { eob = ' ', fold = ' ', foldopen = '󰅀', foldclose = '', foldsep = ' ' }
 opt.sessionoptions = 'buffers,curdir,folds,tabpages,winsize,winpos'
-opt.runtimepath:append(vim.fn.stdpath 'data' .. '\\tsparser')
 opt.runtimepath:append(vim.fn.stdpath 'config' .. '\\snippets')
