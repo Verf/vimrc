@@ -549,8 +549,6 @@ local plugins = {
         keys = {
             { '<leader>a', '<CMD>lua vim.lsp.buf.code_action()<CR>', 'CodeAction' },
             { '<leader>rn', '<CMD>lua vim.lsp.buf.rename()<CR>', 'Rename' },
-            { ']d', '<CMD>lua vim.diagnostic.goto_next()<CR>', 'Next Diagnostic' },
-            { '[d', '<CMD>lua vim.diagnostic.goto_prev()<CR>', 'Next Diagnostic' },
         },
         config = function()
             -- diagnostic config
