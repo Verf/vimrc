@@ -19,6 +19,12 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
     end,
 })
 
+vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})
+
 ----- settings -----
 opt.wrap = false
 opt.showmatch = true

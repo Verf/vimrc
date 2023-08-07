@@ -15,12 +15,12 @@ local plugins = {
     -- ui & theme
     { 'kyazdani42/nvim-web-devicons', lazy = true },
     {
-        'folke/tokyonight.nvim',
+        'themercorp/themer.lua',
         lazy = false,
         priority = 1000,
-        opts = function(_, opts)
-            vim.cmd [[colorscheme tokyonight]]
-        end,
+        opts = {
+            colorscheme = 'dracula',
+        },
     },
     { 'stevearc/dressing.nvim', event = 'VeryLazy' },
     {
@@ -48,27 +48,8 @@ local plugins = {
         },
     },
     -- enhance
-    {
-        'echasnovski/mini.align',
-        keys = { 'ga', 'gA' },
-        opts = {},
-    },
-    {
-        'echasnovski/mini.basics',
-        opts = {
-            options = {
-                basic = true,
-                extra_ui = true,
-                win_borders = 'default',
-            },
-            mappings = {
-                basic = false,
-                option_toggle_prefix = '',
-                windows = false,
-                move_with_alt = false,
-            },
-        },
-    },
+    { 'echasnovski/mini.align', keys = { 'ga', 'gA' }, opts = {} },
+    { 'echasnovski/mini.bracketed', event = 'VeryLazy', opts = {} },
     {
         'echasnovski/mini.bufremove',
         keys = {
@@ -154,15 +135,15 @@ local plugins = {
             },
         },
     },
+    { 'echasnovski/mini.pairs', event = 'VeryLazy', opts = {} },
+    { 'echasnovski/mini.tabline', opts = {} },
     {
-        'echasnovski/mini.pairs',
-        event = 'VeryLazy',
-        opts = {},
-    },
-    { 'echasnovski/mini.statusline', opts = {} },
-    {
-        'echasnovski/mini.tabline',
-        opts = {},
+        'nvim-lualine/lualine.nvim',
+        opts = {
+            options = {
+                theme = 'dracula',
+            },
+        },
     },
     {
         'echasnovski/mini.surround',
@@ -192,7 +173,6 @@ local plugins = {
         },
         opts = {
             update_search_register = true,
-            search_scope = 'buffer',
             separator = ' ',
             keymaps = nil,
             -- stylua: ignore
@@ -320,18 +300,23 @@ local plugins = {
         config = function()
             local ft = require 'guard.filetype'
             ft('lua'):fmt {
-                cmd = 'stylua.cmd',
+                cmd = 'stylua',
                 args = { '-' },
                 stdin = true,
             }
             ft('typescript,javascript,typescriptreact,vue,json'):fmt {
                 cmd = 'prettier.cmd',
-                args = { '-' },
+                args = { '--stdin-filepath' },
+                fname = true,
                 stdin = true,
             }
             ft('python'):fmt {
-                cmd = 'blue.cmd',
+                cmd = 'blue',
                 args = { '-q', '-' },
+                stdin = true,
+            }
+            ft('go'):fmt {
+                cmd = 'gofmt',
                 stdin = true,
             }
             require('guard').setup {
@@ -343,6 +328,10 @@ local plugins = {
     {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPre', 'BufNewFile' },
+        keys = {
+            { ']h', ':Gitsigns next_hunk<CR>', 'Next Hunk' },
+            { '[h', ':Gitsigns prev_hunk<CR>', 'Next Hunk' },
+        },
         opts = {
             update_debounce = 1000,
             signs = {
@@ -358,7 +347,7 @@ local plugins = {
     {
         'voldikss/vim-floaterm',
         keys = {
-            { '<F1>', '<ESC>:FloatermToggle<CR>', 'Toggle Term', mode = { 'i', 'n' } },
+            { '<F1>', '<ESC>:FloatermToggle<CR>', 'Toggle Term', mode = { 'i', 'n', 'x' } },
         },
         config = function()
             vim.g.floaterm_width = 0.8
@@ -549,6 +538,7 @@ local plugins = {
 
     {
         'neovim/nvim-lspconfig',
+        event = { 'BufReadPre', 'BufNewFile' },
         keys = {
             { '<leader>a', '<CMD>lua vim.lsp.buf.code_action()<CR>', 'CodeAction' },
             { '<leader>rn', '<CMD>lua vim.lsp.buf.rename()<CR>', 'Rename' },
@@ -564,28 +554,6 @@ local plugins = {
             -- capabilities
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-            -- mason
-            require('mason').setup {
-                ui = {
-                    check_outdated_packages_on_open = true,
-                    icons = {
-                        package_installed = '✓',
-                        package_pending = '➜',
-                        package_uninstalled = '✗',
-                    },
-                    keymaps = {
-                        install_package = 'r',
-                    },
-                },
-            }
-            require('mason-lspconfig').setup()
-            local mason_lsp = require 'mason-lspconfig'
-            for _, name in pairs(mason_lsp.get_installed_servers()) do
-                require('lspconfig')[name].setup {
-                    capabilities = capabilities,
-                }
-            end
-
             require('lspconfig').jedi_language_server.setup {
                 capabilities = capabilities,
             }
@@ -594,8 +562,6 @@ local plugins = {
             }
         end,
         dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
             'onsails/lspkind-nvim',
         },
     },
