@@ -12,4 +12,5 @@ vim.loader.enable()
 require 'functions'
 require 'settings'
 require 'mappings'
+require 'personal'
 require 'plugins'

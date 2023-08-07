@@ -135,7 +135,15 @@ local plugins = {
             },
         },
     },
-    { 'echasnovski/mini.pairs', event = 'VeryLazy', opts = {} },
+    {
+        'windwp/nvim-autopairs',
+        event = 'InsertEnter',
+        opts = {
+            disable_in_macro = true,
+            disable_in_visualblock = true,
+            disable_in_replace_mode = true,
+        },
+    },
     { 'echasnovski/mini.tabline', opts = {} },
     {
         'nvim-lualine/lualine.nvim',
@@ -535,7 +543,6 @@ local plugins = {
             'windwp/nvim-ts-autotag',
         },
     },
-
     {
         'neovim/nvim-lspconfig',
         event = { 'BufReadPre', 'BufNewFile' },
