@@ -62,11 +62,8 @@ opt.virtualedit = 'all'
 opt.fileformats = 'unix,dos'
 opt.clipboard = 'unnamedplus'
 opt.splitkeep = 'screen'
-opt.shell = 'pwsh -nol'
-opt.shellcmdflag =
-    '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;'
-opt.shellredir = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
-opt.shellpipe = '2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode'
+opt.shell = 'nu'
+opt.shellcmdflag = '-c'
 opt.shellxquote = ''
 opt.whichwrap = ''
 opt.spelllang = { 'en_us' }
