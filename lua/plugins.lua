@@ -15,12 +15,12 @@ local plugins = {
     -- ui & theme
     { 'kyazdani42/nvim-web-devicons', lazy = true },
     {
-        'themercorp/themer.lua',
+        'Verf/deepwhite.nvim',
         lazy = false,
         priority = 1000,
-        opts = {
-            colorscheme = 'dracula',
-        },
+        config = function()
+            vim.cmd [[colorscheme deepwhite]]
+        end,
     },
     { 'stevearc/dressing.nvim', event = 'VeryLazy' },
     {
@@ -149,7 +149,7 @@ local plugins = {
         'nvim-lualine/lualine.nvim',
         opts = {
             options = {
-                theme = 'dracula',
+                theme = 'auto',
             },
         },
     },
@@ -342,14 +342,6 @@ local plugins = {
         },
         opts = {
             update_debounce = 1000,
-            signs = {
-                add = { text = '▎' },
-                change = { text = '▎' },
-                delete = { text = '' },
-                topdelete = { text = '' },
-                changedelete = { text = '▎' },
-                untracked = { text = '▎' },
-            },
         },
     },
     {
