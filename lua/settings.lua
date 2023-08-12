@@ -34,6 +34,8 @@ opt.autochdir = false
 opt.termguicolors = true
 opt.foldenable = false
 opt.showmode = false
+opt.showcmd = false
+opt.ruler = false
 opt.hlsearch = false
 opt.expandtab = true
 opt.smartindent = true
@@ -55,6 +57,7 @@ opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.synmaxcol = 200
 opt.pumheight = 10
+opt.laststatus = 0
 
 opt.mouse = 'a'
 opt.showbreak = '⮎'

@@ -144,15 +144,20 @@ local plugins = {
             disable_in_replace_mode = true,
         },
     },
-    { 'echasnovski/mini.tabline', opts = {} },
     {
-        'nvim-lualine/lualine.nvim',
+        'echasnovski/mini.tabline',
         opts = {
-            options = {
-                theme = 'auto',
-            },
+            tabpage_section = 'right',
         },
     },
+    -- {
+    --     'nvim-lualine/lualine.nvim',
+    --     opts = {
+    --         options = {
+    --             theme = 'auto',
+    --         },
+    --     },
+    -- },
     {
         'echasnovski/mini.surround',
         keys = { '<leader>sa', '<leader>sd', '<leader>sc' },
@@ -377,9 +382,12 @@ local plugins = {
                         snip.expand_snippet(args.body)
                     end,
                 },
+                window = {
+                    completion = cmp.config.window.bordered(),
+                    documentation = cmp.config.window.bordered(),
+                },
                 formatting = {
                     format = lspkind.cmp_format {
-                        mode = 'symbol',
                         maxwidth = 50,
                     },
                 },
@@ -416,8 +424,8 @@ local plugins = {
                 sorting = {
                     comparators = {
                         compare.recently_used,
-                        compare.locality,
                         compare.score,
+                        compare.locality,
                         compare.offset,
                         compare.order,
                     },
