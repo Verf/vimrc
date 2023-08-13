@@ -45,16 +45,15 @@ keymap.set('n', '<C-s>', '#*cgn')
 keymap.set('n', '<C-S-s>', '*#cgn')
 keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]])
 
-
 keymap.set('n', '<leader>qa', ':qa!<CR>')
 
-keymap.set('n', '<leader>bo', ':%bd!|e#<CR>')
-keymap.set('n', '<leader>bd', ':bd!<CR>')
+keymap.set('n', '<leader>bc', ':%bd!|e#<CR>')
+keymap.set('n', '<leader>bq', ':bd!<CR>')
 keymap.set('n', '<leader>bn', ':vnew<CR>')
 
 keymap.set('n', '<leader>tn', ':tabnew<CR>')
-keymap.set('n', '<leader>tc', ':tabclose<CR>')
-keymap.set('n', '<leader>to', ':tabonly<CR>')
+keymap.set('n', '<leader>tq', ':tabclose<CR>')
+keymap.set('n', '<leader>tc', ':tabonly<CR>')
 
 keymap.set('n', '<leader>wc', '<C-w>o')
 keymap.set('n', '<leader>wq', '<C-w>c')

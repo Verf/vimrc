@@ -57,7 +57,6 @@ opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.synmaxcol = 200
 opt.pumheight = 10
-opt.laststatus = 0
 
 opt.mouse = 'a'
 opt.showbreak = '⮎'
@@ -72,6 +71,6 @@ opt.whichwrap = ''
 opt.spelllang = { 'en_us' }
 opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
-opt.fillchars:append { eob = ' ', fold = ' ', foldopen = '󰅀', foldclose = '', foldsep = ' ' }
+opt.fillchars:append { eob = ' ', stl = '─', stlnc = '─' }
 opt.sessionoptions = 'buffers,curdir,folds,tabpages,winsize,winpos'
 opt.runtimepath:append(vim.fn.stdpath 'config' .. '\\snippets')
