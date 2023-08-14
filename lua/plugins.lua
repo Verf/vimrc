@@ -16,6 +16,7 @@ local plugins = {
     { 'kyazdani42/nvim-web-devicons', lazy = true },
     {
         'Verf/deepwhite.nvim',
+        branch = 'main',
         lazy = false,
         priority = 1000,
         config = function()
@@ -724,6 +725,9 @@ local opts = {
     install = {
         -- try to load one of these colorschemes when starting an installation during startup
         colorscheme = { 'desert' },
+    },
+    ui = {
+        border = 'single',
     },
     checker = {
         -- automatically check for plugin updates
