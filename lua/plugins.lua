@@ -696,8 +696,9 @@ local plugins = {
         'neovim/nvim-lspconfig',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
-            { '<leader>a', '<CMD>lua vim.lsp.buf.code_action()<CR>', 'CodeAction' },
-            { '<leader>rn', '<CMD>lua vim.lsp.buf.rename()<CR>', 'Rename' },
+            { '<leader>a', vim.lsp.buf.code_action, 'CodeAction' },
+            { '<leader>rn', vim.lsp.buf.rename, 'Rename' },
+            { 'K', vim.lsp.buf.hover, 'help' },
         },
         config = function()
             -- diagnostic config
