@@ -13,7 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
     -- ui & theme
-    { 'kyazdani42/nvim-web-devicons', lazy = true },
     {
         'Verf/deepwhite.nvim',
         branch = 'main',
@@ -24,7 +23,57 @@ local plugins = {
         end,
     },
     { 'Shatur/neovim-ayu' },
-    { 'stevearc/dressing.nvim', event = 'VeryLazy' },
+    {
+        'nvimdev/lspsaga.nvim',
+        event = 'LspAttach',
+        keys = {
+            { '<F3>', '<CMD>Lspsaga outline<CR>', 'Outline' },
+            { '<leader>a', '<CMD>Lspsaga hover_doc<CR>', 'Code Action' },
+            { '<leader>rn', '<CMD>Lspsaga rename<CR>', 'Rename' },
+            { 'gd', '<CMD>Lspsaga goto_definition<CR>', 'Goto Definition' },
+            { 'gr', '<CMD>Lspsaga finder<CR>', 'Goto References' },
+            { 'gi', '<CMD>Lspsaga finder imp<CR>', 'Goto Implementation' },
+            { 'gk', '<CMD>Lspsaga hover_doc<CR>', 'Hover Doc' },
+        },
+        opts = {
+            code_action = {
+                extend_gitsigns = true,
+            },
+            lightbulb = {
+                enable = false,
+            },
+            symbol_in_winbar = {
+                enable = false,
+            },
+            outline = {
+                close_after_jump = true,
+                win_width = 35,
+                left_width = 0.5,
+                keys = {
+                    toggle_or_jump = 'l',
+                    jump = '<CR>',
+                },
+            },
+            finder = {
+                default = 'ref',
+                silent = false,
+                keys = {
+                    shuttle = '[w',
+                    toggle_or_open = '<CR>',
+                    vsplit = 'v',
+                    split = 's',
+                    tabe = 't',
+                    tabnew = 'T',
+                    quit = 'q',
+                    close = '<ESC>',
+                },
+            },
+        },
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter', -- optional
+            'nvim-tree/nvim-web-devicons', -- optional
+        },
+    },
     {
         'rcarriga/nvim-notify',
         init = function()
@@ -409,10 +458,8 @@ local plugins = {
             { '<leader>fg', '<CMD>Telescope live_grep<CR>', 'grep' },
             { '<leader>fd', '<CMD>Telescope diagnostics<CR>', 'diagnostics' },
             { '<leader>fs', '<CMD>Telescope lsp_document_symbols<CR>', 'symbols' },
-            { 'gd', '<CMD>Telescope lsp_definitions<CR>', 'Goto Definitions' },
-            { 'gr', '<CMD>Telescope lsp_references<CR>', 'Goto References' },
-            { 'gi', '<CMD>Telescope lsp_implementations<CR>', 'Goto Implementations' },
             { 'gh', '<CMD>Telescope registers<CR>', 'Goto Registers' },
+            { 'gm', '<CMD>Telescope marks<CR>', 'Goto Marks' },
         },
         opts = function(_, opts)
             vim.cmd [[au FileType Telescope setlocal nocursorline]]
@@ -625,6 +672,8 @@ local plugins = {
                     'json',
                     'go',
                     'lua',
+                    'markdown',
+                    'markdown_inline',
                 },
                 highlight = {
                     enable = true,
@@ -695,11 +744,6 @@ local plugins = {
     {
         'neovim/nvim-lspconfig',
         event = { 'BufReadPre', 'BufNewFile' },
-        keys = {
-            { '<leader>a', vim.lsp.buf.code_action, 'CodeAction' },
-            { '<leader>rn', vim.lsp.buf.rename, 'Rename' },
-            { 'K', vim.lsp.buf.hover, 'help' },
-        },
         config = function()
             -- diagnostic config
             vim.diagnostic.config {
