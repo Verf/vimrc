@@ -28,7 +28,7 @@ local plugins = {
         event = 'LspAttach',
         keys = {
             { '<F3>', '<CMD>Lspsaga outline<CR>', 'Outline' },
-            { '<leader>a', '<CMD>Lspsaga hover_doc<CR>', 'Code Action' },
+            { '<leader>a', '<CMD>Lspsaga code_action<CR>', 'Code Action' },
             { '<leader>rn', '<CMD>Lspsaga rename<CR>', 'Rename' },
             { 'gd', '<CMD>Lspsaga goto_definition<CR>', 'Goto Definition' },
             { 'gr', '<CMD>Lspsaga finder<CR>', 'Goto References' },
