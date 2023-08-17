@@ -42,7 +42,6 @@ keymap.set('n', ']z', 'zj')
 keymap.set('n', '[z', 'zk')
 
 keymap.set('n', '<C-s>', '#*cgn')
-keymap.set('n', '<C-S-s>', '*#cgn')
 keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]])
 
 keymap.set('n', '<leader>qa', ':qa!<CR>')

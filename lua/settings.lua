@@ -6,6 +6,7 @@ cmd [[command! Trim :%s/\s\+$//e]]
 cmd [[command! Trimline :%g/^$/d]]
 cmd [[command! Editrc :e $MYVIMRC]]
 
+-- leader
 g.mapleader = ' '
 g.maplocalleader = ','
 
@@ -25,7 +26,7 @@ vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
     end,
 })
 
------ settings -----
+-- settings
 opt.wrap = false
 opt.showmatch = true
 opt.ignorecase = true
@@ -71,6 +72,11 @@ opt.whichwrap = ''
 opt.spelllang = { 'en_us' }
 opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
+opt.sessionoptions = { 'buffers', 'curdir', 'folds', 'tabpages', 'winsize', 'winpos' }
 opt.fillchars:append { eob = ' ', stl = '─', stlnc = '─' }
-opt.sessionoptions = 'buffers,curdir,folds,tabpages,winsize,winpos'
 opt.runtimepath:append(vim.fn.stdpath 'config' .. '\\snippets')
+
+-- gui settings
+opt.guifont = 'JetBrainsMono Nerd Font Mono:h12'
+-- neovide
+g.neovide_hide_mouse_when_typing = true

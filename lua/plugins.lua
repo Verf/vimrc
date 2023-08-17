@@ -101,7 +101,10 @@ local plugins = {
     -- enhance
     {
         'echasnovski/mini.align',
-        keys = { { 'ga', mode = 'x' }, { 'gA', mode = 'x' } },
+        keys = {
+            { 'ga', mode = { 'n', 'x' } },
+            { 'gA', mode = { 'n', 'x' } },
+        },
         opts = {},
     },
     { 'echasnovski/mini.bracketed', event = 'VeryLazy', opts = {} },
@@ -671,7 +674,6 @@ local plugins = {
                     'css',
                     'json',
                     'go',
-                    'lua',
                     'markdown',
                     'markdown_inline',
                 },
