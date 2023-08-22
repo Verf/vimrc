@@ -25,7 +25,6 @@ local plugins = {
             vim.cmd [[colorscheme deepwhite]]
         end,
     },
-    { 'Shatur/neovim-ayu' },
     {
         'nvimdev/lspsaga.nvim',
         event = 'LspAttach',
