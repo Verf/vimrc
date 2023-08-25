@@ -66,8 +66,8 @@ local plugins = {
                     split = 's',
                     tabe = 't',
                     tabnew = 'T',
-                    quit = 'q',
-                    close = '<ESC>',
+                    quit = '<ESC>',
+                    close = nil,
                 },
             },
         },
@@ -505,6 +505,26 @@ local plugins = {
             vim.g.rooter_change_directory_for_non_project_files = 'current'
         end,
     },
+    {
+        'kevinhwang91/nvim-ufo',
+        dependencies = 'kevinhwang91/promise-async',
+        event = 'BufReadPost',
+        keys = {
+            { 'zR', [[<CMD>lua require('ufo').openAllFolds()<CR>]], 'Open All Folds' },
+            { 'zM', [[<CMD>lua require('ufo').closeAllFolds()<CR>]], 'Close All Folds' },
+        },
+        init = function()
+            vim.o.foldcolumn = '0'
+            vim.o.foldlevel = 99
+            vim.o.foldlevelstart = 99
+            vim.o.foldenable = true
+        end,
+        opts = {
+            provider_selector = function(bufnr, filetype, buftype)
+                return { 'treesitter', 'indent' }
+            end,
+        },
+    },
     -- integration
     {
         'nvimdev/guard.nvim',
@@ -568,19 +588,25 @@ local plugins = {
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
-        opts = function()
+        config = function()
             local cmp = require 'cmp'
-            local snip = require 'snippy'
+            local snip = require 'luasnip'
+            require('luasnip.loaders.from_snipmate').lazy_load { paths = { './snippets' } }
             local lspkind = require 'lspkind'
             local compare = require('cmp').config.compare
+            local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
 
-            vim.keymap.set({ 'i', 's' }, '<C-d>', '<Plug>(snippy-next)')
-            vim.keymap.set({ 'i', 's' }, '<C-u>', '<Plug>(snippy-previous)')
+            local has_words_before = function()
+                unpack = unpack or table.unpack
+                local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+                return col ~= 0
+                    and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+            end
 
             cmp.setup {
                 snippet = {
                     expand = function(args)
-                        snip.expand_snippet(args.body)
+                        snip.lsp_expand(args.body)
                     end,
                 },
                 window = {
@@ -595,12 +621,12 @@ local plugins = {
                 mapping = {
                     ['<CR>'] = cmp.mapping.confirm { select = true },
                     ['<Tab>'] = cmp.mapping(function(fallback)
-                        if snip.can_expand() then
-                            snip.expand()
+                        if snip.expand_or_locally_jumpable() then
+                            snip.expand_or_jump()
                         elseif cmp.visible() then
                             cmp.select_next_item()
-                        elseif snip.can_jump(1) then
-                            snip.next()
+                        elseif has_words_before() then
+                            cmp.complete()
                         else
                             fallback()
                         end
@@ -608,8 +634,8 @@ local plugins = {
                     ['<S-Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_prev_item()
-                        elseif snip.can_jump(-1) then
-                            snip.previous()
+                        elseif snip.jumpable(-1) then
+                            snip.jump(-1)
                         else
                             fallback()
                         end
@@ -618,8 +644,8 @@ local plugins = {
                 sources = cmp.config.sources {
                     { name = 'nvim_lsp' },
                     { name = 'nvim_lsp_signature_help' },
+                    { name = 'luasnip' },
                     { name = 'buffer' },
-                    { name = 'snippy' },
                     { name = 'path' },
                 },
                 sorting = {
@@ -632,6 +658,7 @@ local plugins = {
                     },
                 },
             }
+            cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
             -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
             cmp.setup.cmdline({ '/', '?' }, {
@@ -652,13 +679,16 @@ local plugins = {
             })
         end,
         dependencies = {
-            'dcampos/nvim-snippy',
+            {
+                'L3MON4D3/LuaSnip',
+                version = '2.*',
+            },
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
-            'dcampos/cmp-snippy',
+            'saadparwaiz1/cmp_luasnip',
         },
     },
     {

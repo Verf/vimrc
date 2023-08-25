@@ -2,16 +2,16 @@ snippet csl "console log"
 	console.log(${0})
 snippet <v "vue base"
 	<template>
-	  <div> </div>
+	    <div> </div>
 	</template>
 
 	<script>
 	  export default {
 		name: '${1}',
 		data() {
-		  return {
-			${2:key}: ${0:value},
-		  }
+		    return {
+		        ${2:key}: ${0:value},
+		    }
 		}
 	  }
 	</script>
@@ -25,41 +25,41 @@ snippet @c "@click"
 	@click="$0"
 snippet vdat "data()"
 	data() {
-	  return {
-	  	${1:key}: ${2:value}
-	  };
+	    return {
+	    	${1:key}: ${2:value}
+	    };
 	},
 snippet vcre "created"
 	created() {
-	  $0
+	    $0
 	}
 snippet vmou "mounted"
 	mounted() {
-	  $0
+	    $0
 	}
 snippet vcom "computed"
 	computed: {
-	  ${1:name}() {
-	    ${0:return}
-	  },
+	    ${1:name}() {
+	        ${0:return}
+	    },
 	}
 snippet vmet "methods"
 	methods: {
-	  $0
+	    $0
 	},
 snippet vwat "watch"
 	watch: {
-	  $0
+	    $0
 	}
 snippet oba "Object.assign"
 	Object.assign(${1:\{\}}, $0)
 snippet fori "for in"
 	for (let ${1:prop} in ${2:object}) {
-	  $0
+	    $0
 	}
 snippet foro "for of"
 	for (let ${1:prop} of ${2:object}) {
-	  $0
+	    $0
 	}
 snippet t. "this."
 	this.$0

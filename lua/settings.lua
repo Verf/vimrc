@@ -73,7 +73,7 @@ opt.spelllang = { 'en_us' }
 opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.sessionoptions = { 'buffers', 'curdir', 'folds', 'tabpages', 'winsize', 'winpos' }
-opt.fillchars:append { eob = ' ', stl = '─', stlnc = '─' }
+opt.fillchars:append { eob = ' ', stl = '─', stlnc = '─', fold = ' ', foldopen = '', foldsep = ' ', foldclose = '' }
 opt.runtimepath:append(vim.fn.stdpath 'config' .. '\\snippets')
 
 -- gui settings

@@ -12,7 +12,7 @@ snippet fim "from import"
 	from ${1:package} import ${0:module}
 snippet s. "self abbr"
 	self.$0
-snippet rai "raise exception"
+snippet ra "raise exception"
 	raise ${1:Exception}($0)
 snippet fi "for in"
 	for ${1:item} in ${2:items}:
@@ -22,7 +22,7 @@ snippet try "try except"
 	    $1
 	except ${2:Exception} as ${3:e}:
 		${0:raise $3}
-snippet tryf "try except finally"
+snippet tef "try except finally"
  	try:
 		$1
 	except ${2:Exception} as ${3:e}:
@@ -32,37 +32,15 @@ snippet tryf "try except finally"
 snippet ifm "if main"
 	if __name__ == '__main__':
 	    ${0:main()}
-snippet with "with statement"
+snippet wi "with statement"
 	with ${1:expr} as ${2:var}:
 	    $0
 snippet wr "with open read"
 	with open('$1', '${2:r}', encoding='${3:utf-8}') as ${4:f}:
 	    $0
-snippet wrb "with open read binary"
-	with open('$1', '${2:rb}') as ${3:f}:
-	    $0
 snippet ww "with open write"
 	with open('$1', '${2:w}', encoding='${3:utf-8}', newline='${4:\\n}') as ${5:fw}:
 	    $0
-snippet wwb "with open write binary"
-	with open('$1', '${2:wb}') as ${5:fw}:
-	    $0
-snippet fr "file read"
-	${1:fr} = open(${2}, '${3:r}', encoding='${4:utf-8}')
-	$0
-	fr.close()
-snippet fw "file write"
-	${1:fw} = open(${2}, '${3:w}', encoding='${4:utf-8}', newline='${4:\\n}')
-	$0
-	fw.close()
-snippet csvr "csv reader"
-	with open(${1}, 'r', encoding='${2:utf-8}', newline='') as ${3:f}:
-	    ${4:reader} = csv.reader(${3}${5})
-		$0
-snippet csvw "csv writer"
-	with open(${1}, 'w', encoding='${2:utf-8}', newline='') as ${3:fw}:
-	    ${4:writer} = csv.writer(${3}, quoting='${5:csv.QUOTE_ALL}', lineterminator='${3}')
-		$0
-snippet pit "path iterdir"
-	for fp in Path($1).iterdir():
-	    $0
+snippet fts "for line split"
+	for ${1:line} in ${2:f}:
+		${3:tokens} = ${1}.strip().split(${4})

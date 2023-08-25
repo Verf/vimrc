@@ -1,7 +1,7 @@
 snippet <elb "<el-button>"
-	<el-button ${1:type="${2:primary}"} ${3:@click="${4}"}>${0}</el-button>
+	<el-button type="${1:primary}" @click="${2}">${0}</el-button>
 snippet <eli "<el-input>"
-	<el-input v-model="${1}" ${0}></el-input>
+	<el-input v-model="${1}"${0}></el-input>
 snippet <els "<el-select>"
 	<el-select v-model="${1}" $2>
         <el-option ${1:label="${2}" value="${3}"}></el-option>
@@ -30,16 +30,6 @@ snippet <elt "<el-table>"
     </el-table>
 snippet <eltc "<el-table-column>"
     <el-table-column prop="${0}" label="${1}" ${2:min-width="${3}"}></el-table-column>
-snippet <elp "<el-pagination"
-    <el-pagination
-        @size-change="${1:handleSizeChange}"
-        @current-change="${2:handleCurrentChange}"
-        :current-page.sync="${3:current}"
-        :page-size="${4:size}"
-        :total="${5:total}"
-        layout="total,prev,pager,next"
-    >
-    </el-pagination>
 snippet <eld "<el-dialog>"
     <el-dialog title="${1}" :visible.sync="${2:dialogVisible}">
 	    ${0}
