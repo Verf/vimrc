@@ -642,17 +642,18 @@ local plugins = {
                     end, { 'i', 's' }),
                 },
                 sources = cmp.config.sources {
-                    { name = 'nvim_lsp' },
                     { name = 'nvim_lsp_signature_help' },
-                    { name = 'luasnip' },
-                    { name = 'buffer' },
-                    { name = 'path' },
+                    { name = 'nvim_lsp', priority = 8 },
+                    { name = 'luasnip', priority = 7 },
+                    { name = 'buffer', priority = 7 },
+                    { name = 'path', priority = 5 },
                 },
                 sorting = {
+                    priority_weight = 1.0,
                     comparators = {
+                        compare.locality,
                         compare.recently_used,
                         compare.score,
-                        compare.locality,
                         compare.offset,
                         compare.order,
                     },
