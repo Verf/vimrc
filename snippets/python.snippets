@@ -1,3 +1,4 @@
+# #
 snippet #u "coding: utf-8"
 	# -*- coding: utf-8 -*-
 snippet #a "coding with information"
@@ -6,18 +7,82 @@ snippet #a "coding with information"
     # @Email: verf@protonmail.com
 snippet #! "shebang"
 	#!/usr/bin/env python3
-snippet im "import"
-	import ${0:package}
-snippet fim "from import"
-	from ${1:package} import ${0:module}
-snippet s. "self abbr"
-	self.$0
-snippet ra "raise exception"
-	raise ${1:Exception}($0)
-snippet fi "for in"
+# a
+snippet a "assert"
+	assert
+# b
+snippet b "break"
+	break
+# c
+snippet c "continue"
+	continue
+snippet cl "class"
+	class $1:
+		def __init__(self$2) -> None:
+			${0:pass}
+# d
+snippet d "def"
+	def $1($2) -> ${3:None}:
+		${0:pass}
+# e
+# f
+snippet f "False" i
+	False
+snippet fo "for in"
 	for ${1:item} in ${2:items}:
 	    $0
-snippet try "try except"
+snippet fim "from import"
+	from ${1:package} import ${0:module}
+snippet fls "for line split"
+	for ${1:line} in ${2:f}:
+		${3:tokens} = ${1}.strip().split(${4})
+# g
+snippet g "global"
+	global
+# h
+# i
+snippet if "if"
+	if $1:
+		$0
+snippet im "import"
+	import ${0:package}
+snippet ifm "if main"
+	if __name__ == '__main__':
+	    ${0:main()}
+# j
+# k
+# l
+snippet l "lambda"
+	lambda $1: $0
+snippet li "logging.info"
+	logging.info($0)
+snippet lw "logging.warning"
+	logging.warning($0)
+snippet le "logging.error"
+	logging.error($0)
+# m
+# n
+snippet n "None" i
+	None
+# o
+# p
+snippet p "pass"
+	pass
+snippet pr "print"
+	print($0)
+# q
+# r
+snippet r "return"
+	return
+snippet ra "raise exception"
+	raise ${1:Exception}($0)
+# s
+snippet s. "self abbr" i
+	self.$0
+# t
+snippet t "true" i
+	True
+snippet te "try except"
 	try:
 	    $1
 	except ${2:Exception} as ${3:e}:
@@ -29,10 +94,13 @@ snippet tef "try except finally"
 		${4:raise $3}
 	finally:
 		$0
-snippet ifm "if main"
-	if __name__ == '__main__':
-	    ${0:main()}
-snippet wi "with statement"
+# u
+# v
+# w
+snippet w "while"
+	while $1:
+		$0
+snippet wa "with statement"
 	with ${1:expr} as ${2:var}:
 	    $0
 snippet wr "with open read"
@@ -41,6 +109,8 @@ snippet wr "with open read"
 snippet ww "with open write"
 	with open('$1', '${2:w}', encoding='${3:utf-8}', newline='${4:\\n}') as ${5:fw}:
 	    $0
-snippet fts "for line split"
-	for ${1:line} in ${2:f}:
-		${3:tokens} = ${1}.strip().split(${4})
+# x
+# y
+snippet y "yield"
+	yield
+# z

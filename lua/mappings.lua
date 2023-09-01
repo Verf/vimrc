@@ -31,6 +31,8 @@ keymap.set({ 'n', 'o', 'x' }, 'O', 'L')
 keymap.set({ 'n', 'o', 'x' }, 'P', 'N')
 keymap.set({ 'n', 'o', 'x' }, 'H', ':')
 keymap.set({ 'n', 'o', 'x' }, ':', 'P')
+keymap.set({ 'n', 'o', 'x' }, [[']], [["]])
+keymap.set({ 'n', 'o', 'x' }, [["]], [[']])
 
 keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
 

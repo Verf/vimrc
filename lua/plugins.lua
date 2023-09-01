@@ -491,7 +491,6 @@ local plugins = {
             require('telescope').load_extension 'everything'
         end,
         dependencies = {
-            'nvim-lua/popup.nvim',
             'nvim-lua/plenary.nvim',
             'natecraddock/telescope-zf-native.nvim',
             'Verf/telescope-everything.nvim',
@@ -510,8 +509,8 @@ local plugins = {
         dependencies = 'kevinhwang91/promise-async',
         event = 'BufReadPost',
         keys = {
-            { 'zR', [[<CMD>lua require('ufo').openAllFolds()<CR>]], 'Open All Folds' },
-            { 'zM', [[<CMD>lua require('ufo').closeAllFolds()<CR>]], 'Close All Folds' },
+            { 'zR', "<CMD>lua require('ufo').openAllFolds()<CR>", 'Open All Folds' },
+            { 'zM', "<CMD>lua require('ufo').closeAllFolds()<CR>", 'Close All Folds' },
         },
         init = function()
             vim.o.foldcolumn = '0'
@@ -525,37 +524,179 @@ local plugins = {
             end,
         },
     },
+    { 'NMAC427/guess-indent.nvim', opts = {} },
     -- integration
     {
-        'nvimdev/guard.nvim',
+        'mhartington/formatter.nvim',
         keys = {
-            { '<leader>m', '<CMD>GuardFmt<CR>', 'Format' },
+            { '<leader>m', '<CMD>FormatWrite<CR>', 'Format' },
         },
-        config = function()
-            local ft = require 'guard.filetype'
-            ft('lua'):fmt {
-                cmd = 'stylua',
-                args = { '-' },
-                stdin = true,
-            }
-            ft('typescript,javascript,typescriptreact,vue,json'):fmt {
-                cmd = 'prettier.cmd',
-                args = { '--stdin-filepath' },
-                fname = true,
-                stdin = true,
-            }
-            ft('python'):fmt {
-                cmd = 'blue',
-                args = { '-q', '-' },
-                stdin = true,
-            }
-            ft('go'):fmt {
-                cmd = 'gofmt',
-                stdin = true,
-            }
-            require('guard').setup {
-                fmt_on_save = false,
-                lsp_as_default_formatter = false,
+        opts = function(_, opts)
+            local util = require 'formatter.util'
+            opts.filetype = {
+                lua = {
+                    function()
+                        return {
+                            exe = 'stylua',
+                            args = {
+                                '--search-parent-directories',
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                                '--',
+                                '-',
+                            },
+                            stdin = true,
+                        }
+                    end,
+                },
+                python = {
+                    function()
+                        return {
+                            exe = 'black',
+                            args = {
+                                '-t',
+                                'py36',
+                                '--stdin-filename',
+                                util.get_current_buffer_file_path(),
+                                '-S',
+                                '--preview',
+                                '-q',
+                                '-',
+                            },
+                            stdin = true,
+                        }
+                    end,
+                },
+                vue = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
+                javascript = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
+                typescript = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
+                css = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
+                scss = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
+                html = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
+                json = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
+                yaml = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
+                toml = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
+                markdown = {
+                    function()
+                        return {
+                            exe = 'prettier',
+                            args = {
+                                '--stdin-filepath',
+                                util.get_current_buffer_file_path(),
+                            },
+                            stdin = true,
+                            try_node_modules = true,
+                        }
+                    end,
+                },
             }
         end,
     },
@@ -571,27 +712,22 @@ local plugins = {
         },
     },
     {
-        'voldikss/vim-floaterm',
+        'numToStr/FTerm.nvim',
         keys = {
-            { '<F1>', '<ESC>:FloatermToggle<CR>', 'Toggle Term', mode = { 'i', 'n', 'x' } },
+            { '<F1>', "<CMD>lua require('FTerm').toggle()<CR>", 'Toggle Term', mode = { 'i', 'n', 'x' } },
+            { '<F1>', "<C-\\><C-n><CMD>lua require('FTerm').toggle()<CR>", 'Toggle Term', mode = { 't' } },
         },
-        config = function()
-            vim.g.floaterm_width = 0.8
-            vim.g.floaterm_height = 0.8
-            vim.keymap.set('t', '<F1>', '<C-\\><C-n>:FloatermToggle<CR>')
-            vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
-            vim.keymap.set('t', '<C-t>', '<C-\\><C-n>:FloatermNew<CR>')
-            vim.keymap.set('t', '<C-n>', '<C-\\><C-n>:FloatermNext<CR>')
-            vim.keymap.set('t', '<C-p>', '<C-\\><C-n>:FloatermPrev<CR>')
-        end,
+        opts = {
+            ft = 'terminal',
+            cmd = 'nu',
+        },
     },
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
         config = function()
             local cmp = require 'cmp'
-            local snip = require 'luasnip'
-            require('luasnip.loaders.from_snipmate').lazy_load { paths = { './snippets' } }
+            local snip = require 'snippy'
             local lspkind = require 'lspkind'
             local compare = require('cmp').config.compare
             local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
@@ -603,10 +739,13 @@ local plugins = {
                     and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
             end
 
+            vim.keymap.set('i', '<C-d>', snip.next)
+            vim.keymap.set('i', '<C-u>', snip.previous)
+
             cmp.setup {
                 snippet = {
                     expand = function(args)
-                        snip.lsp_expand(args.body)
+                        snip.expand_snippet(args.body)
                     end,
                 },
                 window = {
@@ -621,10 +760,12 @@ local plugins = {
                 mapping = {
                     ['<CR>'] = cmp.mapping.confirm { select = true },
                     ['<Tab>'] = cmp.mapping(function(fallback)
-                        if snip.expand_or_locally_jumpable() then
-                            snip.expand_or_jump()
+                        if snip.can_expand() then
+                            snip.expand()
                         elseif cmp.visible() then
                             cmp.select_next_item()
+                        elseif snip.can_jump(1) then
+                            snip.next()
                         elseif has_words_before() then
                             cmp.complete()
                         else
@@ -634,8 +775,8 @@ local plugins = {
                     ['<S-Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_prev_item()
-                        elseif snip.jumpable(-1) then
-                            snip.jump(-1)
+                        elseif snip.can_jump(-1) then
+                            snip.previous()
                         else
                             fallback()
                         end
@@ -643,10 +784,9 @@ local plugins = {
                 },
                 sources = cmp.config.sources {
                     { name = 'nvim_lsp_signature_help' },
-                    { name = 'nvim_lsp', priority = 8 },
-                    { name = 'luasnip', priority = 7 },
-                    { name = 'buffer', priority = 7 },
-                    { name = 'path', priority = 5 },
+                    { name = 'snippy' },
+                    { name = 'buffer' },
+                    { name = 'path' },
                 },
                 sorting = {
                     priority_weight = 1.0,
@@ -680,16 +820,13 @@ local plugins = {
             })
         end,
         dependencies = {
-            {
-                'L3MON4D3/LuaSnip',
-                version = '2.*',
-            },
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-cmdline',
             'hrsh7th/cmp-nvim-lsp-signature-help',
-            'saadparwaiz1/cmp_luasnip',
+            'dcampos/nvim-snippy',
+            'dcampos/cmp-snippy',
         },
     },
     {
@@ -705,10 +842,23 @@ local plugins = {
                     'javascript',
                     'typescript',
                     'css',
-                    'json',
+                    'scss',
                     'go',
                     'markdown',
                     'markdown_inline',
+                    'bash',
+                    'sql',
+                    'lua',
+                    'ini',
+                    'xml',
+                    'csv',
+                    'json',
+                    'toml',
+                    'yaml',
+                    'git_config',
+                    'git_rebase',
+                    'gitcommit',
+                    'gitignore',
                 },
                 highlight = {
                     enable = true,

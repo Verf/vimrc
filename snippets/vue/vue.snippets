@@ -17,10 +17,16 @@ snippet <v "vue base"
 	</script>
 
 	<style lang="scss" scoped> </style>
-snippet vif "v-if"
+snippet im "import"
+	import { $0 } from '@/$1'
+snippet vi "v-if"
 	v-if="$0"
+snippet vei "v-else-if"
+	v-else-if="$0"
+snippet vel "v-else"
+	v-else
 snippet vfor "v-for"
-	v-for="(${1:item}, idx) in ${2:items}" :key="${0:idx}"
+	v-for="(${1/s$//}, idx) in ${2:items}" :key="${0:idx}"
 snippet @c "@click"
 	@click="$0"
 snippet vdat "data()"
@@ -53,16 +59,16 @@ snippet vwat "watch"
 	}
 snippet oba "Object.assign"
 	Object.assign(${1:\{\}}, $0)
-snippet fori "for in"
+snippet fi "for in"
 	for (let ${1:prop} in ${2:object}) {
 	    $0
 	}
-snippet foro "for of"
-	for (let ${1:prop} of ${2:object}) {
+snippet fo "for of"
+	for (let $1 of $2) {
 	    $0
 	}
-snippet t. "this."
-	this.$0
+snippet t "this"
+	this
 snippet .t ".then promise"
 	.then((res) => {
 	    $0

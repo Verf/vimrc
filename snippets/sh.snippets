@@ -4,28 +4,18 @@ snippet if "if"
 	if [ ${1:$? -ne 0} ]; then
 		$0
 	fi
-snippet elif "elif"
+snippet el "elif"
 	elif [ $1 ]; then
 		$0
-snippet for "for"
+snippet fo "for"
 	for (( ${2:i=0; $2<${1:count}; $2++ )); do
 	    $0
 	done
-snippet fori "for in"
+snippet fi "for in"
 	for $1 in $2 ; do
 	    $0
 	done
-snippet wh "while"
+snippet w "while"
 	while [ $1 ]; do
-		${0:${VISUAL}}
+		$0
 	done
-snippet $date "date"
-	\$(date '+%Y-%m-%d %T')
-snippet el "echo log"
-	echo "[\$(date '+%Y-%m-%d %T')] ${1:ERROR}: $0"${2: | tee -a \$LOG_FILE}
-snippet if$? "return code check"
-	if [ $? -eq 0 ]; then
-	    loginfo "$1成功"
-	else
-		logerror "$1失败"$0
-	fi

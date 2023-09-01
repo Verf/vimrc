@@ -1,7 +1,7 @@
 snippet csl "console log"
 	console.log($0)
 snippet expf "export function"
-	export function ${1:name}(data) {
+	export function $1(data) {
 	    return request({
 	        url: '$0',
 	        method: 'post',
@@ -9,23 +9,23 @@ snippet expf "export function"
 	    })
 	}
 snippet fun "function"
-	function ${1:name}($2) {
+	function $1($2) {
         $0
 	}
 snippet oba "Object.assign"
 	Object.assign(${1:\{\}}, $0)
-snippet fori "for in"
-	for (let ${1:prop} in ${2:object}) {
+snippet fi "for in"
+	for (let $1 in $2) {
 	    $0
 	}
-snippet foro "for of"
-	for (let ${1:prop} of ${2:object}) {
+snippet fo "for of"
+	for (let $1 of $2) {
 	    $0
 	}
-snippet t. "this."
-	this.$0
+snippet t "this"
+	this
 snippet .t ".then promise"
-	.then((res) => {
+	.then((${1:res}) => {
 	    $0
 	})
 snippet .c ".catch promise"
