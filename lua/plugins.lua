@@ -697,6 +697,13 @@ local plugins = {
                         }
                     end,
                 },
+                go = {
+                    require('formatter.filetypes.go').goimports,
+                    require('formatter.filetypes.go').golines,
+                },
+                rust = {
+                    require('formatter.filetypes.rust').rustfmt,
+                },
             }
         end,
     },
@@ -784,7 +791,10 @@ local plugins = {
                 },
                 sources = cmp.config.sources {
                     { name = 'nvim_lsp_signature_help' },
+                    { name = 'nvim_lsp' },
                     { name = 'snippy' },
+                },
+                {
                     { name = 'buffer' },
                     { name = 'path' },
                 },
@@ -822,8 +832,8 @@ local plugins = {
         dependencies = {
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-cmdline',
+            'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'dcampos/nvim-snippy',
             'dcampos/cmp-snippy',
@@ -942,6 +952,12 @@ local plugins = {
                 capabilities = capabilities,
             }
             require('lspconfig').ruff_lsp.setup {
+                capabilities = capabilities,
+            }
+            require('lspconfig').gopls.setup {
+                capabilities = capabilities,
+            }
+            require('lspconfig').rust_analyzer.setup {
                 capabilities = capabilities,
             }
         end,

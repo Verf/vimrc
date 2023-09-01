@@ -6,3 +6,4 @@ session/
 Session.vim
 Sessionx.vim
 lua/personal*
+lazy-lock.json
