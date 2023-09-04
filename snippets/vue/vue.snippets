@@ -26,7 +26,7 @@ snippet vei "v-else-if"
 snippet vel "v-else"
 	v-else
 snippet vfor "v-for"
-	v-for="(${1/s$//}, idx) in ${2:items}" :key="${0:idx}"
+	v-for="(${1/s$//}, idx) in ${1:items}" :key="${0:idx}"
 snippet @c "@click"
 	@click="$0"
 snippet vdat "data()"
@@ -60,7 +60,7 @@ snippet vwat "watch"
 snippet oba "Object.assign"
 	Object.assign(${1:\{\}}, $0)
 snippet fi "for in"
-	for (let ${1:prop} in ${2:object}) {
+	for (let $1 in $2) {
 	    $0
 	}
 snippet fo "for of"
