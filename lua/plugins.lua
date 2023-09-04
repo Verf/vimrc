@@ -793,8 +793,6 @@ local plugins = {
                     { name = 'nvim_lsp_signature_help' },
                     { name = 'nvim_lsp' },
                     { name = 'snippy' },
-                },
-                {
                     { name = 'buffer' },
                     { name = 'path' },
                 },
