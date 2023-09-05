@@ -946,7 +946,6 @@ local plugins = {
         end,
         dependencies = {
             'nvim-treesitter/nvim-treesitter-textobjects',
-            'HiPhish/nvim-ts-rainbow2',
             'windwp/nvim-ts-autotag',
         },
     },
