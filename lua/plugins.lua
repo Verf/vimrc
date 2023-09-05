@@ -205,11 +205,14 @@ local plugins = {
                 disable_in_visualblock = true,
                 disable_in_replace_mode = true,
                 enable_afterquote = false,
+                enable_check_bracket_line = true,
             }
             local rule = require 'nvim-autopairs.rule'
             npairs.add_rules {
                 rule("f'", "'", 'python'),
                 rule('f"', '"', 'python'),
+                rule("r'", "'", 'python'),
+                rule('r"', '"', 'python'),
             }
         end,
     },
@@ -773,8 +776,6 @@ local plugins = {
                             cmp.select_next_item()
                         elseif snip.can_jump(1) then
                             snip.next()
-                        elseif has_words_before() then
-                            cmp.complete()
                         else
                             fallback()
                         end
@@ -786,6 +787,20 @@ local plugins = {
                             snip.previous()
                         else
                             fallback()
+                        end
+                    end, { 'i', 's' }),
+                    ['<C-n>'] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        elseif has_words_before() then
+                            cmp.complete()
+                        end
+                    end, { 'i', 's' }),
+                    ['<C-p>'] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        elseif has_words_before() then
+                            cmp.complete()
                         end
                     end, { 'i', 's' }),
                 },
@@ -835,6 +850,7 @@ local plugins = {
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'dcampos/nvim-snippy',
             'dcampos/cmp-snippy',
+            { 'abecodes/tabout.nvim', opts = {} },
         },
     },
     {
