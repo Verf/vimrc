@@ -62,3 +62,5 @@ keymap.set('n', '<leader>wY', '<C-w>H')
 keymap.set('n', '<leader>wN', '<C-w>J')
 keymap.set('n', '<leader>wI', '<C-w>K')
 keymap.set('n', '<leader>wO', '<C-w>L')
+
+keymap.set('t', '<Esc>', '<C-\\><C-n>')

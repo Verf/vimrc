@@ -198,23 +198,9 @@ local plugins = {
     {
         'windwp/nvim-autopairs',
         event = 'InsertEnter',
-        config = function()
-            local npairs = require 'nvim-autopairs'
-            npairs.setup {
-                disable_in_macro = true,
-                disable_in_visualblock = true,
-                disable_in_replace_mode = true,
-                enable_afterquote = false,
-                enable_check_bracket_line = true,
-            }
-            local rule = require 'nvim-autopairs.rule'
-            npairs.add_rules {
-                rule("f'", "'", 'python'),
-                rule('f"', '"', 'python'),
-                rule("r'", "'", 'python'),
-                rule('r"', '"', 'python'),
-            }
-        end,
+        opts = {
+            disable_in_visualblock = true,
+        },
     },
     {
         'rebelot/heirline.nvim',
@@ -740,7 +726,6 @@ local plugins = {
             local snip = require 'snippy'
             local lspkind = require 'lspkind'
             local compare = require('cmp').config.compare
-            local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
 
             local has_words_before = function()
                 unpack = unpack or table.unpack
@@ -766,6 +751,10 @@ local plugins = {
                     format = lspkind.cmp_format {
                         maxwidth = 50,
                     },
+                },
+                matching = {
+                    disallow_partial_fuzzy_matching = true,
+                    disallow_prefix_unmatching = true,
                 },
                 mapping = {
                     ['<CR>'] = cmp.mapping.confirm { select = true },
@@ -822,7 +811,6 @@ local plugins = {
                     },
                 },
             }
-            cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
             -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
             cmp.setup.cmdline({ '/', '?' }, {
