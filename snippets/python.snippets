@@ -52,6 +52,8 @@ snippet ifm "if main"
 # l
 snippet l "lambda"
 	lambda $1: $0
+snippet li "logging.debug"
+	logging.debug($0)
 snippet li "logging.info"
 	logging.info($0)
 snippet lw "logging.warning"
@@ -60,8 +62,6 @@ snippet le "logging.error"
 	logging.error($0)
 # m
 # n
-snippet n "None" i
-	None
 # o
 # p
 snippet p "pass"
@@ -73,7 +73,7 @@ snippet pr "print"
 snippet r "return"
 	return
 snippet ra "raise exception"
-	raise ${1:Exception}($0)
+	raise ${0:Exception}
 # s
 snippet s. "self." i
 	self.
@@ -96,7 +96,7 @@ snippet tef "try except finally"
 snippet w "while"
 	while $1:
 		$0
-snippet wa "with statement"
+snippet wi "with statement"
 	with ${1:expr} as ${2:var}:
 	    $0
 snippet wr "with open read"

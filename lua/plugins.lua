@@ -56,6 +56,11 @@ local plugins = {
                     jump = '<CR>',
                 },
             },
+            rename = {
+                keys = {
+                    quit = '<ESC>',
+                },
+            },
             finder = {
                 default = 'ref',
                 silent = false,
@@ -165,19 +170,6 @@ local plugins = {
                 },
             }
         end,
-    },
-    {
-        'echasnovski/mini.jump',
-        keys = { 't', 'T', 'k', 'K', 'h' },
-        opts = {
-            mappings = {
-                forward = 't',
-                backward = 'T',
-                forward_till = 'k',
-                backword_till = 'K',
-                repeat_jump = 'h',
-            },
-        },
     },
     {
         'echasnovski/mini.move',
@@ -367,23 +359,20 @@ local plugins = {
         },
     },
     {
-        'woosaaahh/sj.nvim',
-        keys = {
-            {
-                's',
-                '<CMD>lua require("sj").run()<CR>',
-                desc = 'Jump',
-            },
-        },
+        'folke/flash.nvim',
+        event = 'VeryLazy',
         opts = {
-            update_search_register = true,
-            separator = ' ',
-            keymaps = nil,
-            -- stylua: ignore
-            labels = {
-                't', 'n', 'f', 'u', 'v', 'm', 'e', 'i',
-                'd', 'r', 'c', 'o', 'l', 'w', 's', 'x',
-                'a', 'h', 'q', 'z', 'g', 'y', 'k', 'p',
+            modes = {
+                char = {
+                    autohide = true,
+                    jump_labels = true,
+                    keys = {
+                        f = 't',
+                        F = 'T',
+                        t = 'k',
+                        T = 'K',
+                    },
+                },
             },
         },
     },
@@ -921,9 +910,6 @@ local plugins = {
                         },
                     },
                 },
-                rainbow = {
-                    enable = true,
-                },
                 autotag = {
                     enable = true,
                 },
@@ -949,9 +935,20 @@ local plugins = {
             -- capabilities
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-            require('lspconfig').jedi_language_server.setup {
+            require('lspconfig').pyright.setup {
                 capabilities = capabilities,
+                settings = {
+                    python = {
+                        analysis = {
+                            autoImportCompletions = true,
+                            typeCheckingMode = 'off',
+                        },
+                    },
+                },
             }
+            -- require('lspconfig').jedi_language_server.setup {
+            --     capabilities = capabilities,
+            -- }
             require('lspconfig').ruff_lsp.setup {
                 capabilities = capabilities,
             }

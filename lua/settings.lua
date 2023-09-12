@@ -72,7 +72,7 @@ opt.shellxquote = ''
 opt.whichwrap = ''
 opt.spelllang = { 'en_us' }
 opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
-opt.completeopt = { 'menu', 'menuone', 'noselect' }
+opt.completeopt = { 'menu', 'preview' }
 opt.sessionoptions = { 'buffers', 'curdir', 'folds', 'tabpages', 'winsize', 'winpos' }
 opt.fillchars:append {
     eob = ' ',
