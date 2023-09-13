@@ -25,60 +25,17 @@ local plugins = {
             vim.cmd [[colorscheme deepwhite]]
         end,
     },
-    {
-        'nvimdev/lspsaga.nvim',
-        event = 'LspAttach',
-        keys = {
-            { '<F3>', '<CMD>Lspsaga outline<CR>', 'Outline' },
-            { '<leader>a', '<CMD>Lspsaga code_action<CR>', 'Code Action' },
-            { '<leader>rn', '<CMD>Lspsaga rename<CR>', 'Rename' },
-            { 'gd', '<CMD>Lspsaga goto_definition<CR>', 'Goto Definition' },
-            { 'gr', '<CMD>Lspsaga finder<CR>', 'Goto References' },
-            { 'gi', '<CMD>Lspsaga finder imp<CR>', 'Goto Implementation' },
-            { 'gk', '<CMD>Lspsaga hover_doc<CR>', 'Hover Doc' },
-        },
-        opts = {
-            code_action = {
-                extend_gitsigns = true,
-            },
-            lightbulb = {
-                enable = false,
-            },
-            symbol_in_winbar = {
-                enable = false,
-            },
-            outline = {
-                close_after_jump = true,
-                win_width = 35,
-                left_width = 0.5,
-                keys = {
-                    toggle_or_jump = 'l',
-                    jump = '<CR>',
-                },
-            },
-            finder = {
-                default = 'ref',
-                silent = false,
-                keys = {
-                    shuttle = '[w',
-                    toggle_or_open = '<CR>',
-                    vsplit = 'v',
-                    split = 's',
-                    tabe = 't',
-                    tabnew = 'T',
-                },
-            },
-        },
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter', -- optional
-            'nvim-tree/nvim-web-devicons', -- optional
-        },
-    },
+    { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
     {
         'rcarriga/nvim-notify',
         init = function()
             vim.notify = require 'notify'
         end,
+    },
+    {
+        'stevearc/dressing.nvim',
+        event = 'VeryLazy',
+        opts = {},
     },
     {
         'lukas-reineke/indent-blankline.nvim',
@@ -426,14 +383,15 @@ local plugins = {
         'nvim-telescope/telescope.nvim',
         keys = {
             { '<leader><leader>', '<CMD>Telescope buffers<CR>', 'Buffers' },
-            { '<leader>ff', '<CMD>Telescope find_files<CR>', 'files' },
-            { '<leader>fh', '<CMD>Telescope oldfiles<CR>', 'history' },
-            { '<leader>fe', '<CMD>Telescope everything<CR>', 'everything' },
-            { '<leader>fg', '<CMD>Telescope live_grep<CR>', 'grep' },
-            { '<leader>fd', '<CMD>Telescope diagnostics<CR>', 'diagnostics' },
-            { '<leader>fs', '<CMD>Telescope lsp_document_symbols<CR>', 'symbols' },
-            { 'gh', '<CMD>Telescope registers<CR>', 'Goto Registers' },
-            { 'gm', '<CMD>Telescope marks<CR>', 'Goto Marks' },
+            { '<leader>ff', '<CMD>Telescope find_files<CR>', 'Files' },
+            { '<leader>fh', '<CMD>Telescope oldfiles<CR>', 'History' },
+            { '<leader>fe', '<CMD>Telescope everything<CR>', 'Everything' },
+            { '<leader>fg', '<CMD>Telescope live_grep<CR>', 'Grep' },
+            { '<leader>fd', '<CMD>Telescope diagnostics<CR>', 'Diagnostics' },
+            { '<leader>fs', '<CMD>Telescope lsp_document_symbols<CR>', 'Symbols' },
+            { 'gd', '<CMD>Telescope lsp_definitions<CR>', 'Definitions' },
+            { 'gr', '<CMD>Telescope lsp_references<CR>', 'References' },
+            { 'gi', '<CMD>Telescope lsp_implementations<CR>', 'Implementations' },
         },
         opts = function(_, opts)
             vim.cmd [[au FileType Telescope setlocal nocursorline]]
@@ -733,7 +691,6 @@ local plugins = {
                     },
                 },
                 matching = {
-                    disallow_partial_fuzzy_matching = true,
                     disallow_prefix_unmatching = true,
                 },
                 mapping = {
