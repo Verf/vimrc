@@ -56,11 +56,6 @@ local plugins = {
                     jump = '<CR>',
                 },
             },
-            rename = {
-                keys = {
-                    quit = '<ESC>',
-                },
-            },
             finder = {
                 default = 'ref',
                 silent = false,
@@ -71,8 +66,6 @@ local plugins = {
                     split = 's',
                     tabe = 't',
                     tabnew = 'T',
-                    quit = '<ESC>',
-                    close = nil,
                 },
             },
         },
@@ -343,15 +336,15 @@ local plugins = {
     },
     {
         'echasnovski/mini.surround',
-        keys = { '<leader>sa', '<leader>sd', '<leader>sc' },
+        keys = { 'sa', 'sd', 'sc' },
         opts = {
             mappings = {
-                add = '<leader>sa',
-                delete = '<leader>sd',
+                add = 'sa',
+                delete = 'sd',
                 find = '',
                 find_left = '',
                 highlight = '',
-                replace = '<leader>sc',
+                replace = 'sc',
                 update_n_lines = '',
                 suffix_last = '',
                 suffix_next = '',
@@ -364,8 +357,6 @@ local plugins = {
         opts = {
             modes = {
                 char = {
-                    autohide = true,
-                    jump_labels = true,
                     keys = {
                         f = 't',
                         F = 'T',
