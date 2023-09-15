@@ -895,6 +895,7 @@ local plugins = {
         keys = {
             { '<leader>rn', vim.lsp.buf.rename, 'Rename' },
             { '<leader>a', vim.lsp.buf.code_action, 'Code Action' },
+            { 'gk', vim.lsp.buf.hover, 'Hover' },
         },
         config = function()
             -- diagnostic config
