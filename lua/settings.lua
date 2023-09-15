@@ -15,7 +15,7 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
     callback = function()
         if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
             vim.api.nvim_command 'silent update'
-            vim.api.nvim_command [[ echo strftime('%X', localtime()) "autosave"]]
+            vim.api.nvim_command [[ echo strftime('%X', localtime()) .. " save"]]
         end
     end,
 })
@@ -62,16 +62,14 @@ opt.pumheight = 10
 opt.signcolumn = 'yes:1'
 opt.mouse = 'a'
 opt.showbreak = '⮎'
-opt.virtualedit = 'all'
+opt.splitkeep = 'screen'
+opt.virtualedit = 'block'
 opt.fileformats = 'unix,dos'
 opt.clipboard = 'unnamedplus'
-opt.splitkeep = 'screen'
 opt.shell = 'nu'
 opt.shellcmdflag = '-c'
 opt.shellxquote = ''
-opt.whichwrap = ''
 opt.spelllang = { 'en_us' }
-opt.switchbuf = { 'useopen', 'usetab', 'newtab' }
 opt.completeopt = { 'menu', 'preview' }
 opt.sessionoptions = { 'buffers', 'curdir', 'folds', 'tabpages', 'winsize', 'winpos' }
 opt.fillchars:append {

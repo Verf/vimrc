@@ -27,10 +27,32 @@ local plugins = {
     },
     { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
     {
-        'rcarriga/nvim-notify',
-        init = function()
-            vim.notify = require 'notify'
-        end,
+        'folke/noice.nvim',
+        event = 'VeryLazy',
+        opts = {
+            messages = {
+                view = 'mini',
+                view_search = 'mini',
+            },
+            lsp = {
+                override = {
+                    ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+                    ['vim.lsp.util.stylize_markdown'] = true,
+                    ['cmp.entry.get_documentation'] = true,
+                },
+            },
+            presets = {
+                bottom_search = true, -- use a classic bottom cmdline for search
+                command_palette = true, -- position the cmdline and popupmenu together
+                long_message_to_split = true, -- long messages will be sent to a split
+                inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                lsp_doc_border = false, -- add a border to hover docs and signature help
+            },
+        },
+        dependencies = {
+            'MunifTanjim/nui.nvim',
+            'rcarriga/nvim-notify',
+        },
     },
     {
         'stevearc/dressing.nvim',
@@ -136,6 +158,14 @@ local plugins = {
                 line_up = '<M-i>',
             },
         },
+    },
+    {
+        'echasnovski/mini.misc',
+        config = function()
+            require('mini.misc').setup()
+            require('mini.misc').setup_auto_root()
+            require('mini.misc').setup_restore_cursor()
+        end,
     },
     {
         'windwp/nvim-autopairs',
@@ -378,7 +408,6 @@ local plugins = {
             threshold = 5,
         },
     },
-    { 'ethanholz/nvim-lastplace', event = { 'BufReadPost', 'BufNewFile' }, opts = {} },
     {
         'nvim-telescope/telescope.nvim',
         keys = {
@@ -422,14 +451,6 @@ local plugins = {
             'natecraddock/telescope-zf-native.nvim',
             'Verf/telescope-everything.nvim',
         },
-    },
-    {
-        'airblade/vim-rooter',
-        event = 'VeryLazy',
-        config = function()
-            vim.g.rooter_patterns = { '.git', 'make.sh', 'MakeFile', 'pom.xml', 'package.json' }
-            vim.g.rooter_change_directory_for_non_project_files = 'current'
-        end,
     },
     {
         'kevinhwang91/nvim-ufo',
@@ -690,9 +711,6 @@ local plugins = {
                         maxwidth = 50,
                     },
                 },
-                matching = {
-                    disallow_prefix_unmatching = true,
-                },
                 mapping = {
                     ['<CR>'] = cmp.mapping.confirm { select = true },
                     ['<Tab>'] = cmp.mapping(function(fallback)
@@ -874,6 +892,10 @@ local plugins = {
     {
         'neovim/nvim-lspconfig',
         event = { 'BufReadPre', 'BufNewFile' },
+        keys = {
+            { '<leader>rn', vim.lsp.buf.rename, 'Rename' },
+            { '<leader>a', vim.lsp.buf.code_action, 'Code Action' },
+        },
         config = function()
             -- diagnostic config
             vim.diagnostic.config {
@@ -894,9 +916,6 @@ local plugins = {
                     },
                 },
             }
-            -- require('lspconfig').jedi_language_server.setup {
-            --     capabilities = capabilities,
-            -- }
             require('lspconfig').ruff_lsp.setup {
                 capabilities = capabilities,
             }
@@ -904,6 +923,12 @@ local plugins = {
                 capabilities = capabilities,
             }
             require('lspconfig').rust_analyzer.setup {
+                capabilities = capabilities,
+            }
+            require('lspconfig').volar.setup {
+                capabilities = capabilities,
+            }
+            require('lspconfig').tailwindcss.setup {
                 capabilities = capabilities,
             }
         end,

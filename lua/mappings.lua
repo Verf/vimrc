@@ -36,9 +36,9 @@ keymap.set({ 'n', 'o', 'x' }, [["]], [[']])
 
 keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
 
-keymap.set('n', '<TAB>', ':bn<CR>')
-keymap.set('n', '<S-TAB>', ':bp<CR>')
-keymap.set('n', '<leader><TAB>', ':b#<CR>')
+keymap.set('n', '<TAB>', '<CMD>bn<CR>')
+keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
+keymap.set('n', '<leader><TAB>', '<CMD>b#<CR>')
 
 keymap.set('n', ']z', 'zj')
 keymap.set('n', '[z', 'zk')
@@ -46,15 +46,15 @@ keymap.set('n', '[z', 'zk')
 keymap.set('n', '<C-s>', '#*cgn')
 keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]])
 
-keymap.set('n', '<leader>qa', ':qa!<CR>')
+keymap.set('n', '<leader>qa', '<CMD>qa!<CR>')
 
-keymap.set('n', '<leader>bc', ':%bd!|e#<CR>')
-keymap.set('n', '<leader>bq', ':bd!<CR>')
-keymap.set('n', '<leader>bn', ':vnew<CR>')
+keymap.set('n', '<leader>bc', '<CMD>%bd!|e#<CR>')
+keymap.set('n', '<leader>bq', '<CMD>bd!<CR>')
+keymap.set('n', '<leader>bn', '<CMD>vnew<CR>')
 
-keymap.set('n', '<leader>tn', ':tabnew<CR>')
-keymap.set('n', '<leader>tq', ':tabclose<CR>')
-keymap.set('n', '<leader>tc', ':tabonly<CR>')
+keymap.set('n', '<leader>tn', '<CMD>tabnew<CR>')
+keymap.set('n', '<leader>tq', '<CMD>tabclose<CR>')
+keymap.set('n', '<leader>tc', '<CMD>tabonly<CR>')
 
 keymap.set('n', '<leader>wc', '<C-w>o')
 keymap.set('n', '<leader>wq', '<C-w>c')
