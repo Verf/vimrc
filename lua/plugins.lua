@@ -221,6 +221,11 @@ local plugins = {
                     provider = ' ',
                 },
             }
+            local Noice = {
+                provider = require('noice').api.statusline.mode.get,
+                condition = require('noice').api.statusline.mode.has,
+                hl = 'Normal',
+            }
             local FileFormat = {
                 provider = function()
                     local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc
@@ -236,6 +241,8 @@ local plugins = {
             -- statusline
             local DefaultStatusline = {
                 Git,
+                Align,
+                Noice,
                 Align,
                 FileFormat,
                 Ruler,

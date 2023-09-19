@@ -52,7 +52,7 @@ snippet ifm "if main"
 # l
 snippet l "lambda"
 	lambda $1: $0
-snippet li "logging.debug"
+snippet ld "logging.debug"
 	logging.debug($0)
 snippet li "logging.info"
 	logging.info($0)
@@ -71,7 +71,7 @@ snippet pr "print"
 # q
 # r
 snippet r "return"
-	return
+	return $0
 snippet ra "raise exception"
 	raise ${0:Exception}
 # s
@@ -81,13 +81,13 @@ snippet s. "self." i
 snippet te "try except"
 	try:
 	    $1
-	except ${2:Exception} as ${3:e}:
-		${0:raise $3}
+	except ${2:Exception}$3:
+		$0
 snippet tef "try except finally"
  	try:
 		$1
-	except ${2:Exception} as ${3:e}:
-		${4:raise $3}
+	except ${2:Exception}$3:
+		$4
 	finally:
 		$0
 # u
@@ -108,5 +108,5 @@ snippet ww "with open write"
 # x
 # y
 snippet y "yield"
-	yield
+	yield $0
 # z
