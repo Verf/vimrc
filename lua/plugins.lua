@@ -347,6 +347,10 @@ local plugins = {
         'folke/flash.nvim',
         event = 'VeryLazy',
         opts = {
+            labels = '1234890567',
+            search = {
+                multi_window = false,
+            },
             modes = {
                 char = {
                     keys = {
@@ -408,10 +412,7 @@ local plugins = {
     {
         'axkirillov/hbac.nvim',
         event = 'VeryLazy',
-        opts = {
-            autoclose = true,
-            threshold = 5,
-        },
+        opts = {},
     },
     {
         'nvim-telescope/telescope.nvim',
