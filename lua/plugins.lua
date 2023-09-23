@@ -55,7 +55,11 @@ local plugins = {
     {
         'stevearc/dressing.nvim',
         event = 'VeryLazy',
-        opts = {},
+        opts = {
+            input = {
+                insert_only = false,
+            }
+        },
     },
     {
         'lukas-reineke/indent-blankline.nvim',
@@ -79,8 +83,8 @@ local plugins = {
     {
         'echasnovski/mini.align',
         keys = {
-            { 'ga', mode = { 'n', 'x' } },
-            { 'gA', mode = { 'n', 'x' } },
+            { 'ga', mode = { 'n', 'x', 'o' } },
+            { 'gA', mode = { 'n', 'x', 'o' } },
         },
         opts = {},
     },
@@ -345,22 +349,15 @@ local plugins = {
         },
     },
     {
-        'folke/flash.nvim',
+        'echasnovski/mini.jump',
         event = 'VeryLazy',
         opts = {
-            labels = '1234890567',
-            search = {
-                multi_window = false,
-            },
-            modes = {
-                char = {
-                    keys = {
-                        f = 't',
-                        F = 'T',
-                        t = 'k',
-                        T = 'K',
-                    },
-                },
+            mappings = {
+                forward = 't',
+                backward = 'T',
+                forward_till = 'k',
+                backward_till = 'K',
+                repeat_jump = '',
             },
         },
     },
@@ -399,6 +396,15 @@ local plugins = {
                 },
             }
         end,
+    },
+    {
+        'chrisgrieser/nvim-spider',
+        keys = {
+            { 'w', "<cmd>lua require('spider').motion('w')<CR>", 'Spider_w', mode = { 'n', 'x', 'o' } },
+            { 'd', "<cmd>lua require('spider').motion('e')<CR>", 'Spider_e', mode = { 'n', 'x', 'o' } },
+            { 'b', "<cmd>lua require('spider').motion('b')<CR>", 'Spider_b', mode = { 'n', 'x', 'o' } },
+            { 'ge', "<cmd>lua require('spider').motion('ge')<CR>", 'Spider_ge', mode = { 'n', 'x', 'o' } },
+        },
     },
     {
         'beauwilliams/focus.nvim',
@@ -676,7 +682,7 @@ local plugins = {
     {
         'numToStr/FTerm.nvim',
         keys = {
-            { '<F1>', "<CMD>lua require('FTerm').toggle()<CR>", 'Toggle Term', mode = { 'i', 'n', 'x' } },
+            { '<F1>', "<CMD>lua require('FTerm').toggle()<CR>", 'Toggle Term', mode = { 'i', 'n', 'v', 'o' } },
             { '<F1>', "<C-\\><C-n><CMD>lua require('FTerm').toggle()<CR>", 'Toggle Term', mode = { 't' } },
         },
         opts = {
@@ -687,6 +693,10 @@ local plugins = {
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
+        keys = {
+            { '<C-d>', [[<CMD>lua require('snippy').next()<CR>]], 'Snip Next', mode = { 'i', 'v' } },
+            { '<C-u>', [[<CMD>lua require('snippy').previous()<CR>]], 'Snip Previous', mode = { 'i', 'v' } },
+        },
         config = function()
             local cmp = require 'cmp'
             local snip = require 'snippy'
@@ -699,9 +709,6 @@ local plugins = {
                 return col ~= 0
                     and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
             end
-
-            vim.keymap.set('i', '<C-d>', snip.next)
-            vim.keymap.set('i', '<C-u>', snip.previous)
 
             cmp.setup {
                 snippet = {
@@ -804,7 +811,6 @@ local plugins = {
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'dcampos/nvim-snippy',
             'dcampos/cmp-snippy',
-            { 'abecodes/tabout.nvim', opts = {} },
         },
     },
     {
@@ -923,7 +929,7 @@ local plugins = {
                     python = {
                         analysis = {
                             autoImportCompletions = true,
-                            typeCheckingMode = 'off',
+                            typeCheckingMode = 'basic',
                         },
                     },
                 },

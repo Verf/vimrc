@@ -34,7 +34,24 @@ keymap.set({ 'n', 'o', 'x' }, ':', 'P')
 keymap.set({ 'n', 'o', 'x' }, [[']], [["]])
 keymap.set({ 'n', 'o', 'x' }, [["]], [[']])
 
-keymap.set('n', 'ee', _G.smart_dd, { noremap = true, expr = true })
+-- don't push to clipboard when delete empty line
+keymap.set('n', 'ee', function()
+    if vim.api.nvim_get_current_line():match '^%s*$' then
+        return '"_dd'
+    else
+        return 'dd'
+    end
+end, { noremap = true, expr = true })
+
+-- speed up macro running
+keymap.set('n', '@', function()
+    local count = vim.v.count1
+    local register = vim.fn.getcharstr()
+    vim.opt.lazyredraw = true
+    vim.api.nvim_command(string.format('noa norm! %d@%s', count, register))
+    vim.opt.lazyredraw = false
+    vim.api.nvim_command 'silent update'
+end, { noremap = true })
 
 keymap.set('n', '<TAB>', '<CMD>bn<CR>')
 keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
