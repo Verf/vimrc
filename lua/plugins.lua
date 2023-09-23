@@ -58,7 +58,7 @@ local plugins = {
         opts = {
             input = {
                 insert_only = false,
-            }
+            },
         },
     },
     {
@@ -170,11 +170,27 @@ local plugins = {
         end,
     },
     {
-        'windwp/nvim-autopairs',
-        event = 'InsertEnter',
+        'echasnovski/mini.pairs',
+        event = 'VeryLazy',
+        init = function()
+            -- disable auto pairs when block edit
+            vim.api.nvim_create_autocmd({ 'ModeChanged' }, {
+                pattern = '*:[vV\x16]*',
+                callback = function()
+                    vim.b.minipairs_disable = true
+                end,
+            })
+            -- enable auto pairs after block edit finsih
+            vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
+                callback = function()
+                    vim.b.minipairs_disable = false
+                end,
+            })
+        end,
         opts = {
-            map_cr = false,
-            disable_in_visualblock = true,
+            modes = {
+                command = true,
+            },
         },
     },
     {
@@ -798,10 +814,6 @@ local plugins = {
                     { name = 'cmdline' },
                 }),
             })
-
-            -- auto insert paren
-            local pair = require 'nvim-autopairs.completion.cmp'
-            cmp.event:on('confirm_done', pair.on_confirm_done())
         end,
         dependencies = {
             'hrsh7th/cmp-path',
@@ -846,6 +858,10 @@ local plugins = {
                 },
                 highlight = {
                     enable = true,
+                    disable = function(lang, bufnr)
+                        -- disable for a large file
+                        return vim.api.nvim_buf_line_count(bufnr) > 10000
+                    end,
                     additional_vim_regex_highlighting = false,
                 },
                 indent = {

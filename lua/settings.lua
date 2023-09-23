@@ -11,6 +11,7 @@ g.mapleader = ' '
 g.maplocalleader = ','
 
 -- autocmd
+-- auto save
 vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
     callback = function()
         if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
@@ -19,7 +20,7 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
         end
     end,
 })
-
+-- auto highlight yank range
 vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
     callback = function()
         vim.highlight.on_yank()
