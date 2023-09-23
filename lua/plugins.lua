@@ -169,6 +169,7 @@ local plugins = {
         'windwp/nvim-autopairs',
         event = 'InsertEnter',
         opts = {
+            map_cr = false,
             disable_in_visualblock = true,
         },
     },
@@ -790,6 +791,10 @@ local plugins = {
                     { name = 'cmdline' },
                 }),
             })
+
+            -- auto insert paren
+            local pair = require 'nvim-autopairs.completion.cmp'
+            cmp.event:on('confirm_done', pair.on_confirm_done())
         end,
         dependencies = {
             'hrsh7th/cmp-path',
