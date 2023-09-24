@@ -48,8 +48,23 @@ keymap.set('n', '@', function()
     local count = vim.v.count1
     local register = vim.fn.getcharstr()
     vim.opt.lazyredraw = true
-    vim.api.nvim_command(string.format('noa norm! %d@%s', count, register))
+    vim.opt.eventignore = { 'TextChanged', 'TextChangedI' }
+    vim.opt.clipboard = ''
+    vim.api.nvim_command(string.format('norm! %d@%s', count, register))
     vim.opt.lazyredraw = false
+    vim.opt.eventignore = ''
+    vim.opt.clipboard = 'unnamedplus'
+    vim.api.nvim_command 'silent update'
+end, { noremap = true })
+keymap.set('n', 'Q', function()
+    local count = vim.v.count1
+    vim.opt.lazyredraw = true
+    vim.opt.eventignore = { 'TextChanged', 'TextChangedI' }
+    vim.opt.clipboard = ''
+    vim.api.nvim_command(string.format('norm! %dQ', count))
+    vim.opt.lazyredraw = false
+    vim.opt.eventignore = ''
+    vim.opt.clipboard = 'unnamedplus'
     vim.api.nvim_command 'silent update'
 end, { noremap = true })
 
