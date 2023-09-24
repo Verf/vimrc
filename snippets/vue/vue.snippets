@@ -1,6 +1,6 @@
 snippet csl "console log"
 	console.log(${0})
-snippet <v "vue base"
+snippet <v "vue base" b
 	<template>
 	    <div> </div>
 	</template>
@@ -17,63 +17,65 @@ snippet <v "vue base"
 	</script>
 
 	<style lang="scss" scoped> </style>
-snippet im "import"
+snippet im "import" b
 	import { $0 } from '@/$1'
-snippet vi "v-if"
+snippet vi "v-if" i
 	v-if="$0"
-snippet vei "v-else-if"
+snippet vei "v-else-if" i
 	v-else-if="$0"
-snippet vel "v-else"
+snippet vel "v-else" i
 	v-else
-snippet vfor "v-for"
+snippet vf "v-for" i
+	v-for="(${1/s$//}, idx) in ${1:items}" :key="${0:idx}"
+snippet vfor "v-for" i
 	v-for="(${1/s$//}, idx) in ${1:items}" :key="${0:idx}"
 snippet @c "@click"
 	@click="$0"
-snippet vdat "data()"
+snippet vdat "data()" b
 	data() {
 	    return {
 	    	${1:key}: ${2:value}
 	    };
 	},
-snippet vcre "created"
+snippet vcre "created" b
 	created() {
 	    $0
 	}
-snippet vmou "mounted"
+snippet vmou "mounted" b
 	mounted() {
 	    $0
 	}
-snippet vcom "computed"
+snippet vcom "computed" b
 	computed: {
 	    ${1:name}() {
 	        ${0:return}
 	    },
 	}
-snippet vmet "methods"
+snippet vmet "methods" b
 	methods: {
 	    $0
 	},
-snippet vwat "watch"
+snippet vwat "watch" b
 	watch: {
 	    $0
 	}
 snippet oba "Object.assign"
 	Object.assign(${1:\{\}}, $0)
-snippet fi "for in"
+snippet fi "for in" b
 	for (let $1 in $2) {
 	    $0
 	}
-snippet fo "for of"
+snippet fo "for of" b
 	for (let $1 of $2) {
 	    $0
 	}
-snippet t "this"
-	this
-snippet .t ".then promise"
-	.then((res) => {
+snippet t. "this" i
+	this.
+snippet .t ".then promise" i
+	.then((${1:res}) => {
 	    $0
 	})
-snippet .c ".catch promise"
+snippet .c ".catch promise" i
 	.catch((${1:err}) => {
 	    $0
 	})

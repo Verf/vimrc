@@ -6,31 +6,31 @@ snippet <els "<el-select>"
 	<el-select v-model="${1}" $2>
 	  <el-option ${1:label="${2}" value="${3}"}></el-option>
 	</el-select>
-snippet <elr "<el-radio>"
-	<el-radio v-model="${1}" label="${2}">${0}</el-radio>
-snippet <elrg "<el-radio-group>"
+snippet <elrg "<el-radio-group>" b
 	<el-radio-group v-model="${1}">
 	  <el-radio label="${2}">${0}</el-radio>
 	</el-radio-group>
-snippet <elc "<el-checkbox>"
+snippet <elr "<el-radio>"
+	<el-radio v-model="${1}" label="${2}">${0}</el-radio>
+snippet <elc "<el-checkbox>" b
 	<el-checkbox v-model="${1}">${0}</el-checkbox>
 snippet <elcg "<el-checkbox-group>"
 	<el-checkbox-group v-model="${1}">
 	  <el-checkbox label="${2}">${0}</el-checkbox>
 	</el-checkbox-group>
-snippet <elf "<el-form>"
+snippet <elf "<el-form>" b
 	<el-form :model="${1}"${2}>$0</el-form>
 snippet <elfi "<el-form-item>"
 	<el-form-item label="${1}" prop="${2}">
 	  <${3:el-input} v-model="${4}.${2}"$0></${3:el-input}>
 	</el-form-item>
-snippet <elt "<el-table>"
+snippet <elt "<el-table>" b
 	<el-table :data="${1}" style="width: 100%" ${2:stripe border}>
 	  ${0}
 	</el-table>
 snippet <eltc "<el-table-column>"
 	<el-table-column prop="${0}" label="${1}" ${2:min-width="${3}"}></el-table-column>
-snippet <eld "<el-dialog>"
+snippet <eld "<el-dialog>" b
 	<el-dialog title="${1}" :visible.sync="${2:dialogVisible}">
 	  ${0}
 	  <span slot="footer" class="dialog-footer">
@@ -38,7 +38,7 @@ snippet <eld "<el-dialog>"
 	  	<el-button @click="$2 = false">取消</el-button>
 	  </span>
 	</el-dialog>
-snippet elcon "this.$confirm"
+snippet elc "this.$confirm" b
 	this.$confirm('${1:是否继续？}', '${2:警告}', {
 	  confirmButtonText: '${3:确定}',
 	  cancelButtonText: '${4:取消}',
@@ -46,7 +46,7 @@ snippet elcon "this.$confirm"
 	}).then(() => {
 	  ${0}
 	}).catch(() => {${6}});
-snippet eln "this.$notify"
+snippet eln "this.$notify" b
 	this.$notify.${1:success}({ message: '${0}', duration: 5 });
-snippet elm "this.$message"
+snippet elm "this.$message" b
 	this.$message.${1:success}({ message: '${0}', showClose: true });

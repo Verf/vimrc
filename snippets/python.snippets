@@ -1,50 +1,74 @@
 # #
-snippet #u "coding: utf-8"
+snippet #u "coding: utf-8" b
 	# -*- coding: utf-8 -*-
-snippet #a "coding with information"
+snippet #a "coding with information" b
     # -*- coding: utf-8 -*-
     # @Auther: Verf
     # @Email: verf@protonmail.com
-snippet #! "shebang"
+snippet #! "shebang" b
 	#!/usr/bin/env python3
+# [
+snippet [f "list comprehension" i
+	[${1:x} for $1 from $2]
+snippet {f "dict comprehension" i
+	{${1:x}: ${2:y} for $1, $2 from $2}
+# .
+snippet .a "append" i
+	.append($1)$0
+snippet .e "extend" i
+	.extend($1)$0
+snippet .u "update" i
+	.update($1)$0
+snippet .s "strip" i
+	.strip()
+snippet .sp "strip" i
+	.split($1)$0
+snippet .ss "strip" i
+	.strip().split($1)$0
 # a
-snippet a "assert"
+snippet a "assert" b
 	assert
 # b
-snippet b "break"
+snippet b "break" b
 	break
 # c
-snippet c "continue"
+snippet c "continue" b
 	continue
-snippet cl "class"
+snippet cl "class" b
+	class $1:
+		${0:pass}
+snippet cli "class with init" b
 	class $1:
 		def __init__(self$2) -> None:
 			${0:pass}
 # d
-snippet d "def"
-	def $1($2) -> ${3:None}:
-		${0:pass}
+snippet d "def" b
+	def $1(${2:`indent('.') ? 'self' : ''`}) -> ${3:None}:
+		$0
+snippet def "def" b
+	def $1(${2:`indent('.') ? 'self' : ''`}) -> ${3:None}:
+		$0
 # e
 # f
-snippet fo "for in"
+snippet f "for in" b
 	for ${1:item} in ${2:items}:
 	    $0
-snippet fim "from import"
+snippet for "for in" b
+	for ${1:item} in ${2:items}:
+	    $0
+snippet from "from import" b
 	from ${1:package} import ${0:module}
-snippet fls "for line split"
-	for ${1:line} in ${2:f}:
-		${3:tokens} = ${1}.strip().split(${4})
 # g
-snippet g "global"
+snippet g "global" b
 	global
 # h
 # i
-snippet if "if"
+snippet if "if" b
 	if $1:
 		$0
-snippet im "import"
+snippet im "import" b
 	import ${0:package}
-snippet ifm "if main"
+snippet ifm "if main" b
 	if __name__ == '__main__':
 	    ${0:main()}
 # j
@@ -53,37 +77,51 @@ snippet ifm "if main"
 snippet l "lambda"
 	lambda $1: $0
 snippet ld "logging.debug"
-	logging.debug($0)
+	${1:logging}.debug($0)
 snippet li "logging.info"
-	logging.info($0)
+	${1:logging}.info($0)
 snippet lw "logging.warning"
-	logging.warning($0)
+	${1:logging}.warning($0)
 snippet le "logging.error"
-	logging.error($0)
+	${1:logging}.error($0)
 # m
 # n
 # o
 # p
-snippet p "pass"
+snippet p "pass" b
 	pass
-snippet pr "print"
-	print($0)
 # q
 # r
-snippet r "return"
+snippet r "return" b
 	return $0
-snippet ra "raise exception"
+snippet ra "raise exception" b
+	raise ${0:Exception}
+snippet rai "raise exception" b
+	raise ${0:Exception}
+snippet raise "raise exception" b
 	raise ${0:Exception}
 # s
 snippet s. "self." i
 	self.
 # t
-snippet te "try except"
+snippet tr "try except" b
 	try:
 	    $1
 	except ${2:Exception}$3:
 		$0
-snippet tef "try except finally"
+snippet tf "try except finally" b
+ 	try:
+		$1
+	except ${2:Exception}$3:
+		$4
+	finally:
+		$0
+snippet try "try except" b
+	try:
+	    $1
+	except ${2:Exception}$3:
+		$0
+snippet tryf "try except finally" b
  	try:
 		$1
 	except ${2:Exception}$3:
@@ -93,20 +131,23 @@ snippet tef "try except finally"
 # u
 # v
 # w
-snippet w "while"
+snippet w "while" b
 	while $1:
 		$0
-snippet wi "with statement"
+snippet wi "with statement" b
 	with ${1:expr} as ${2:var}:
 	    $0
-snippet wr "with open read"
+snippet wr "with open read" b
 	with open('$1', '${2:r}', encoding='${3:utf-8}') as ${4:f}:
 	    $0
-snippet ww "with open write"
+snippet ww "with open write" b
 	with open('$1', '${2:w}', encoding='${3:utf-8}', newline='${4:\\n}') as ${5:fw}:
 	    $0
+snippet while "while" b
+	while $1:
+		$0
 # x
 # y
-snippet y "yield"
+snippet y "yield" b
 	yield $0
 # z
