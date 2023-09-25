@@ -349,15 +349,15 @@ local plugins = {
     },
     {
         'echasnovski/mini.surround',
-        keys = { 'sa', 'sd', 'sc' },
+        keys = { '<leader>sa', '<leader>sd', '<leader>sc' },
         opts = {
             mappings = {
-                add = 'sa',
-                delete = 'sd',
+                add = '<leader>sa',
+                delete = '<leader>sd',
                 find = '',
                 find_left = '',
                 highlight = '',
-                replace = 'sc',
+                replace = '<leader>sc',
                 update_n_lines = '',
                 suffix_last = '',
                 suffix_next = '',

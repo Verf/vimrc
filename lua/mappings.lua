@@ -44,6 +44,12 @@ keymap.set('n', 'ee', function()
     end
 end, { noremap = true, expr = true })
 
+-- don't add change value to clipboard
+keymap.set({ 'n', 'v' }, 'c', '"_c')
+keymap.set({ 'n', 'v' }, 'C', '"_C')
+keymap.set({ 'n', 'v' }, 's', '"_s')
+keymap.set({ 'n', 'v' }, 'S', '"_S')
+
 -- speed up macro running
 keymap.set('n', '@', function()
     local count = vim.v.count1
