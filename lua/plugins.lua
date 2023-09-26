@@ -191,6 +191,19 @@ local plugins = {
             modes = {
                 command = true,
             },
+            mappings = {
+                ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\][^%a]' },
+                ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\][^%a]' },
+                ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\][^%a]' },
+
+                [')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
+                [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
+                ['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
+
+                ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\][^%a]', register = { cr = false } },
+                ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^\\][^%a]', register = { cr = false } },
+                ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\][^%a]', register = { cr = false } },
+            },
         },
     },
     {
@@ -974,12 +987,7 @@ local plugins = {
         'mfussenegger/nvim-dap',
         keys = {
             { '<F4>', [[<CMD>lua require('dap').continue()<CR>]], 'Continue' },
-            { '<F5>', [[<CMD>lua require('dapui').toggle()<CR>]], 'DapUI' },
-            { '<F6>', [[<CMD>lua require('dap').toggle_breakpoint()<CR>]], 'Breakpoint' },
-            { '<F7>', [[<CMD>lua require('dap').step_into()<CR>]], 'Step Into' },
-            { '<F8>', [[<CMD>lua require('dap').step_over()<CR>]], 'Step Over' },
-            { '<F9>', [[<CMD>lua require('dap').step_out()<CR>]], 'Step Out' },
-            { '<F12>', [[<CMD>lua require('dap').repl.open()<CR>]], 'Breakpoint' },
+            { '<F8>', [[<CMD>lua require('dap').toggle_breakpoint()<CR>]], 'Breakpoint' },
         },
         config = function()
             require('dapui').setup()
