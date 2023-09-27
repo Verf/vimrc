@@ -757,6 +757,10 @@ local plugins = {
     },
     {
         'NeogitOrg/neogit',
+        event = { 'BufReadPre', 'BufNewFile' },
+        keys = {
+            { '<leader>g', '<CMD>Neogit<CR>', 'Neogit' },
+        },
         opts = {},
         dependencies = {
             'nvim-lua/plenary.nvim', -- required
