@@ -998,12 +998,23 @@ local plugins = {
     {
         'mfussenegger/nvim-dap',
         keys = {
-            { '<F4>', [[<CMD>lua require('dapui').toggle()<CR>]], 'DapUI' },
-            { '<F8>', [[<CMD>lua require('dap').toggle_breakpoint()<CR>]], 'Breakpoint' },
+            { '<F7>', [[<CMD>lua require('dap').continue()<CR>]], 'Start Debug' },
+            { '<F8>', [[<CMD>lua require('dap').toggle_breakpoint()<CR>]], 'Set Breakpoint' },
+            { '<F9>', [[<CMD>lua require('dap').terminate()<CR>]], 'Stop Debug' },
         },
         config = function()
             require('dapui').setup()
             require('dap-python').setup 'python'
+            local listeners = require('dap').listeners
+            listeners.after.event_initialized['dapui_config'] = function()
+                require('dapui').open()
+            end
+            listeners.before.event_terminated['dapui_config'] = function()
+                require('dapui').close()
+            end
+            listeners.before.event_exited['dapui_config'] = function()
+                require('dapui').close()
+            end
         end,
         dependencies = {
             'rcarriga/nvim-dap-ui',
