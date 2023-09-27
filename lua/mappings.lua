@@ -75,6 +75,7 @@ keymap.set('n', 'Q', function()
     vim.api.nvim_command 'silent update'
 end, { noremap = true })
 
+-- cycle through buffers
 keymap.set('n', '<TAB>', '<CMD>bn<CR>')
 keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
 keymap.set('n', '<leader><TAB>', '<CMD>b#<CR>')
@@ -82,7 +83,12 @@ keymap.set('n', '<leader><TAB>', '<CMD>b#<CR>')
 keymap.set('n', ']z', 'zj')
 keymap.set('n', '[z', 'zk')
 
-keymap.set('n', '<C-s>', '#*cgn')
+-- change cursor word and set search register
+keymap.set('n', '<C-s>', function()
+    vim.api.nvim_command 'norm! yiw'
+    vim.fn.setreg('/', vim.fn.getreg '+')
+    vim.api.nvim_feedkeys('ciw', 'n', false)
+end)
 keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]])
 
 keymap.set('n', '<leader>qa', '<CMD>qa!<CR>')
