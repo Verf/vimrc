@@ -394,6 +394,30 @@ local plugins = {
         },
     },
     {
+        'echasnovski/mini.jump2d',
+        opts = {
+            labels = 'tneisoahfdurvcpm',
+            allowed_lines = {
+                blank = false,
+                cursor_at = false,
+            },
+            allowed_windows = {
+                not_current = false,
+            },
+        },
+    },
+    {
+        'linty-org/readline.nvim',
+        keys = {
+            { '<M-BS>', [[<CMD>lua require('readline').backward_kill_word()<CR>]], mode = { '!' } },
+            { '<C-a>', [[<CMD>lua require('readline').beginning_of_line()<CR>]], mode = { '!' } },
+            { '<C-e>', [[<CMD>lua require('readline').end_of_line()<CR>]], mode = { '!' } },
+            { '<C-w>', [[<CMD>lua require('readline').unix_word_rubout()<CR>]], mode = { '!' } },
+            { '<C-k>', [[<CMD>lua require('readline').kill_line()<CR>]], mode = { '!' } },
+            { '<C-u>', [[<CMD>lua require('readline').backward_kill_line()<CR>]], mode = { '!' } },
+        },
+    },
+    {
         'monaqa/dial.nvim',
         keys = {
             { '<C-a>', '<Plug>(dial-increment)', 'dial-increment' },
