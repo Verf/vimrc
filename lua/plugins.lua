@@ -395,8 +395,15 @@ local plugins = {
     },
     {
         'echasnovski/mini.jump2d',
+        keys = {
+            { 'gw', '<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>', 'Goto Word' },
+            { 'gs', "<CMD>lua MiniJump2d.start({spotter = MiniJump2d.gen_pattern_spotter('%p+')})<CR>", 'Goto Symbol' },
+        },
         opts = {
             labels = 'tneisoahfdurvcpm',
+            view = {
+                dim = true,
+            },
             allowed_lines = {
                 blank = false,
                 cursor_at = false,
@@ -404,6 +411,10 @@ local plugins = {
             allowed_windows = {
                 not_current = false,
             },
+            mappings = {
+                start_jumping = '',
+            },
+            silent = true,
         },
     },
     {
@@ -743,6 +754,15 @@ local plugins = {
                 },
             }
         end,
+    },
+    {
+        'NeogitOrg/neogit',
+        opts = {},
+        dependencies = {
+            'nvim-lua/plenary.nvim', -- required
+            'nvim-telescope/telescope.nvim', -- optional
+            'sindrets/diffview.nvim', -- optional
+        },
     },
     {
         'lewis6991/gitsigns.nvim',
