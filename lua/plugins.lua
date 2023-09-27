@@ -195,7 +195,6 @@ local plugins = {
                 ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\][^%a]' },
                 ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\][^%a]' },
                 ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\][^%a]' },
-
                 [')'] = { action = 'close', pair = '()', neigh_pattern = '[^\\].' },
                 [']'] = { action = 'close', pair = '[]', neigh_pattern = '[^\\].' },
                 ['}'] = { action = 'close', pair = '{}', neigh_pattern = '[^\\].' },
@@ -256,9 +255,13 @@ local plugins = {
                 },
             }
             local Noice = {
-                provider = require('noice').api.statusline.mode.get,
                 condition = require('noice').api.statusline.mode.has,
-                hl = 'Normal',
+                hl = 'TabLineSel',
+                { provider = ' ' },
+                {
+                    provider = require('noice').api.statusline.mode.get,
+                },
+                { provider = ' ' },
             }
             local FileFormat = {
                 provider = function()
@@ -434,6 +437,9 @@ local plugins = {
             { 'b', "<cmd>lua require('spider').motion('b')<CR>", 'Spider_b', mode = { 'n', 'x', 'o' } },
             { 'ge', "<cmd>lua require('spider').motion('ge')<CR>", 'Spider_ge', mode = { 'n', 'x', 'o' } },
         },
+        opts = {
+            skipInsignificantPunctuation = false,
+        },
     },
     {
         'beauwilliams/focus.nvim',
@@ -443,6 +449,23 @@ local plugins = {
             { '<leader>wi', '<CMD>FocusSplitUp<CR>', 'Split Up' },
             { '<leader>wo', '<CMD>FocusSplitRight<CR>', 'Split Right' },
         },
+        init = function()
+            vim.api.nvim_create_autocmd('WinEnter', {
+                callback = function()
+                    if
+                        vim.tbl_contains({
+                            'nofile',
+                            'prompt',
+                            'popup',
+                        }, vim.bo.buftype)
+                    then
+                        vim.w.focus_disable = true
+                    else
+                        vim.w.focus_disable = false
+                    end
+                end,
+            })
+        end,
         opts = {},
     },
     {
@@ -706,17 +729,6 @@ local plugins = {
         },
         opts = {
             update_debounce = 1000,
-        },
-    },
-    {
-        'numToStr/FTerm.nvim',
-        keys = {
-            { '<F1>', "<CMD>lua require('FTerm').toggle()<CR>", 'Toggle Term', mode = { 'i', 'n', 'v', 'o' } },
-            { '<F1>', "<C-\\><C-n><CMD>lua require('FTerm').toggle()<CR>", 'Toggle Term', mode = { 't' } },
-        },
-        opts = {
-            ft = 'terminal',
-            cmd = 'nu',
         },
     },
     {
@@ -986,7 +998,7 @@ local plugins = {
     {
         'mfussenegger/nvim-dap',
         keys = {
-            { '<F4>', [[<CMD>lua require('dap').continue()<CR>]], 'Continue' },
+            { '<F4>', [[<CMD>lua require('dapui').toggle()<CR>]], 'DapUI' },
             { '<F8>', [[<CMD>lua require('dap').toggle_breakpoint()<CR>]], 'Breakpoint' },
         },
         config = function()
@@ -995,6 +1007,7 @@ local plugins = {
         end,
         dependencies = {
             'rcarriga/nvim-dap-ui',
+            'theHamsta/nvim-dap-virtual-text',
             'mfussenegger/nvim-dap-python',
         },
     },

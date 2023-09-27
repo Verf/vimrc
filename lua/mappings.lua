@@ -102,4 +102,5 @@ keymap.set('n', '<leader>wN', '<C-w>J')
 keymap.set('n', '<leader>wI', '<C-w>K')
 keymap.set('n', '<leader>wO', '<C-w>L')
 
+keymap.set({ 'n', 'v', 'i' }, '<F1>', '<CMD>vs | term<CR>')
 keymap.set('t', '<Esc>', '<C-\\><C-n>')

@@ -2,10 +2,6 @@ local g = vim.g
 local cmd = vim.cmd
 local opt = vim.opt
 
-cmd [[command! Trim :%s/\s\+$//e]]
-cmd [[command! Trimline :%g/^$/d]]
-cmd [[command! Editrc :e $MYVIMRC]]
-
 -- leader
 g.mapleader = ' '
 g.maplocalleader = ','
@@ -15,6 +11,7 @@ g.maplocalleader = ','
 vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
     callback = function()
         if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
+            vim.api.nvim_command [[:%s/\s\+$//e]]
             vim.api.nvim_command 'silent update'
             vim.api.nvim_command [[ echo strftime('%X', localtime()) .. " save"]]
         end
@@ -24,6 +21,12 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
 vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
     callback = function()
         vim.highlight.on_yank()
+    end,
+})
+-- auto close terminal when exit
+vim.api.nvim_create_autocmd('TermClose', {
+    callback = function()
+        vim.api.nvim_command 'bd!'
     end,
 })
 
@@ -69,6 +72,7 @@ opt.fileformats = 'unix,dos'
 opt.clipboard = 'unnamedplus'
 opt.shell = 'nu'
 opt.shellcmdflag = '-c'
+opt.shellquote = ''
 opt.shellxquote = ''
 opt.spelllang = { 'en_us' }
 opt.completeopt = { 'menu', 'preview' }
