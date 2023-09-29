@@ -9,6 +9,7 @@ g.maplocalleader = ','
 -- autocmd
 -- auto save
 vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
+    desc = 'Auto save and trim space',
     callback = function()
         if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
             vim.api.nvim_command [[:%s/\s\+$//e]]
@@ -18,13 +19,15 @@ vim.api.nvim_create_autocmd({ 'InsertLeave', 'TextChanged' }, {
     end,
 })
 -- auto highlight yank range
-vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
+vim.api.nvim_create_autocmd('TextYankPost', {
+    desc = 'Highlight yank range',
     callback = function()
         vim.highlight.on_yank()
     end,
 })
 -- auto close terminal when exit
 vim.api.nvim_create_autocmd('TermClose', {
+    desc = 'Auto close terminal when close',
     callback = function()
         vim.api.nvim_command 'bd!'
     end,
@@ -37,7 +40,6 @@ opt.ignorecase = true
 opt.smartcase = true
 opt.autochdir = false
 opt.termguicolors = true
-opt.foldenable = false
 opt.showmode = false
 opt.showcmd = false
 opt.ruler = false

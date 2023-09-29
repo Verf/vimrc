@@ -12,8 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    -- ui & theme
-    {
+    { -- Verf/deepwhite.nvim
         'Verf/deepwhite.nvim',
         branch = 'main',
         lazy = false,
@@ -26,7 +25,7 @@ local plugins = {
         end,
     },
     { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
-    {
+    { -- folke/noice.nvim
         'folke/noice.nvim',
         event = 'VeryLazy',
         opts = {
@@ -52,7 +51,7 @@ local plugins = {
             'rcarriga/nvim-notify',
         },
     },
-    {
+    { -- stevearc/dressing.nvim
         'stevearc/dressing.nvim',
         event = 'VeryLazy',
         opts = {
@@ -61,26 +60,7 @@ local plugins = {
             },
         },
     },
-    {
-        'lukas-reineke/indent-blankline.nvim',
-        event = { 'BufReadPost', 'BufNewFile' },
-        opts = {
-            char = '│',
-            filetype_exclude = {
-                'help',
-                'lspinfo',
-                'dashboard',
-                'lazy',
-                'mason',
-                'notify',
-                'toggleterm',
-                'lazyterm',
-            },
-            show_current_context = true,
-        },
-    },
-    -- enhance
-    {
+    { -- echasnovski/mini.align
         'echasnovski/mini.align',
         keys = {
             { 'ga', mode = { 'n', 'x', 'o' } },
@@ -89,7 +69,7 @@ local plugins = {
         opts = {},
     },
     { 'echasnovski/mini.bracketed', event = 'VeryLazy', opts = {} },
-    {
+    { -- echasnovski/mini.bufremove
         'echasnovski/mini.bufremove',
         keys = {
             { '<leader>qq', '<CMD>lua MiniBufremove.delete(0, true)<CR>', 'BufRemove' },
@@ -98,7 +78,7 @@ local plugins = {
             set_vim_settings = false,
         },
     },
-    {
+    { -- echasnovski/mini.comment
         'echasnovski/mini.comment',
         keys = { 'gc', 'gcc' },
         opts = {
@@ -107,12 +87,12 @@ local plugins = {
             },
         },
     },
-    {
+    { -- echasnovski/mini.cursorword
         'echasnovski/mini.cursorword',
         event = { 'BufReadPost', 'BufNewFile' },
         opts = {},
     },
-    {
+    { -- echasnovski/mini.files
         'echasnovski/mini.files',
         keys = { { '<F2>', '<CMD>lua MiniFiles.open()<CR>', desc = 'Files' } },
         opts = {
@@ -131,7 +111,7 @@ local plugins = {
             },
         },
     },
-    {
+    { -- echasnovski/mini.hipatterns
         'echasnovski/mini.hipatterns',
         event = { 'BufReadPost', 'BufNewFile' },
         config = function()
@@ -145,7 +125,65 @@ local plugins = {
             }
         end,
     },
-    {
+    { -- echasnovski/mini.indentscope
+        'echasnovski/mini.indentscope',
+        event = { 'BufReadPost', 'BufNewFile' },
+        opts = {
+            draw = {
+                delay = 0,
+                animation = function()
+                    return 0
+                end,
+            },
+            mappings = {
+                object_scope = 'ri',
+            },
+            options = {
+                try_as_border = true,
+            },
+            symbol = '│',
+        },
+    },
+    { -- echasnovski/mini.jump
+        'echasnovski/mini.jump',
+        event = 'VeryLazy',
+        opts = {
+            mappings = {
+                forward = 't',
+                backward = 'T',
+                forward_till = 'k',
+                backward_till = 'K',
+                repeat_jump = '',
+            },
+        },
+    },
+    { -- echasnovski/mini.jump2d
+        'echasnovski/mini.jump2d',
+        keys = {
+            { 'gw', '<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>', 'Goto Word' },
+            { 'gs', "<CMD>lua MiniJump2d.start({spotter = MiniJump2d.gen_pattern_spotter('%p+')})<CR>", 'Goto Symbol' },
+        },
+        opts = {
+            labels = 'tneisoahfdurvcpm',
+            view = {
+                dim = true,
+                n_steps_ahead = 2,
+            },
+            allowed_lines = {
+                blank = false,
+                cursor_at = false,
+                fold = false,
+            },
+            allowed_windows = {
+                not_current = false,
+            },
+            mappings = {
+                start_jumping = '',
+            },
+            silent = true,
+        },
+    },
+    { -- echasnovski/mini.move
         'echasnovski/mini.move',
         keys = { '<M-y>', '<M-n>', '<M-i>', '<M-o>' },
         opts = {
@@ -161,7 +199,7 @@ local plugins = {
             },
         },
     },
-    {
+    { -- echasnovski/mini.misc
         'echasnovski/mini.misc',
         config = function()
             require('mini.misc').setup()
@@ -169,7 +207,7 @@ local plugins = {
             require('mini.misc').setup_restore_cursor()
         end,
     },
-    {
+    { -- echasnovski/mini.pairs
         'echasnovski/mini.pairs',
         event = 'VeryLazy',
         init = function()
@@ -205,7 +243,24 @@ local plugins = {
             },
         },
     },
-    {
+    { -- echasnovski/mini.surround
+        'echasnovski/mini.surround',
+        keys = { '<leader>sa', '<leader>sd', '<leader>sc' },
+        opts = {
+            mappings = {
+                add = '<leader>sa',
+                delete = '<leader>sd',
+                find = '',
+                find_left = '',
+                highlight = '',
+                replace = '<leader>sc',
+                update_n_lines = '',
+                suffix_last = '',
+                suffix_next = '',
+            },
+        },
+    },
+    { -- rebelot/heirline.nvim
         'rebelot/heirline.nvim',
         opts = function(_, opts)
             local conditions = require 'heirline.conditions'
@@ -307,7 +362,6 @@ local plugins = {
             -- tabline
             local TablineFileName = {
                 provider = function(self)
-                    -- self.filename will be defined later, just keep looking at the example!
                     local filename = self.filename
                     filename = filename == '' and '[No Name]' or vim.fn.fnamemodify(filename, ':t')
                     return filename
@@ -363,61 +417,7 @@ local plugins = {
             -- }
         end,
     },
-    {
-        'echasnovski/mini.surround',
-        keys = { '<leader>sa', '<leader>sd', '<leader>sc' },
-        opts = {
-            mappings = {
-                add = '<leader>sa',
-                delete = '<leader>sd',
-                find = '',
-                find_left = '',
-                highlight = '',
-                replace = '<leader>sc',
-                update_n_lines = '',
-                suffix_last = '',
-                suffix_next = '',
-            },
-        },
-    },
-    {
-        'echasnovski/mini.jump',
-        event = 'VeryLazy',
-        opts = {
-            mappings = {
-                forward = 't',
-                backward = 'T',
-                forward_till = 'k',
-                backward_till = 'K',
-                repeat_jump = '',
-            },
-        },
-    },
-    {
-        'echasnovski/mini.jump2d',
-        keys = {
-            { 'gw', '<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>', 'Goto Word' },
-            { 'gs', "<CMD>lua MiniJump2d.start({spotter = MiniJump2d.gen_pattern_spotter('%p+')})<CR>", 'Goto Symbol' },
-        },
-        opts = {
-            labels = 'tneisoahfdurvcpm',
-            view = {
-                dim = true,
-            },
-            allowed_lines = {
-                blank = false,
-                cursor_at = false,
-            },
-            allowed_windows = {
-                not_current = false,
-            },
-            mappings = {
-                start_jumping = '',
-            },
-            silent = true,
-        },
-    },
-    {
+    { -- linty-org/readline.nvim
         'linty-org/readline.nvim',
         keys = {
             { '<M-BS>', [[<CMD>lua require('readline').backward_kill_word()<CR>]], mode = { '!' } },
@@ -428,7 +428,7 @@ local plugins = {
             { '<C-u>', [[<CMD>lua require('readline').backward_kill_line()<CR>]], mode = { '!' } },
         },
     },
-    {
+    { -- monaqa/dial.nvim
         'monaqa/dial.nvim',
         keys = {
             { '<C-a>', '<Plug>(dial-increment)', 'dial-increment' },
@@ -464,7 +464,7 @@ local plugins = {
             }
         end,
     },
-    {
+    { -- chrisgrieser/nvim-spider
         'chrisgrieser/nvim-spider',
         keys = {
             { 'w', "<cmd>lua require('spider').motion('w')<CR>", 'Spider_w', mode = { 'n', 'x', 'o' } },
@@ -476,7 +476,7 @@ local plugins = {
             skipInsignificantPunctuation = false,
         },
     },
-    {
+    { -- beauwilliams/focus.nvim
         'beauwilliams/focus.nvim',
         keys = {
             { '<leader>wy', '<CMD>FocusSplitLeft<CR>', 'Split Left' },
@@ -503,12 +503,12 @@ local plugins = {
         end,
         opts = {},
     },
-    {
+    { -- axkirillov/hbac.nvim
         'axkirillov/hbac.nvim',
         event = 'VeryLazy',
         opts = {},
     },
-    {
+    { -- nvim-telescope/telescope.nvim
         'nvim-telescope/telescope.nvim',
         keys = {
             { '<leader><leader>', '<CMD>Telescope buffers<CR>', 'Buffers' },
@@ -552,9 +552,8 @@ local plugins = {
             'Verf/telescope-everything.nvim',
         },
     },
-    {
+    { -- kevinhwang91/nvim-ufo
         'kevinhwang91/nvim-ufo',
-        dependencies = 'kevinhwang91/promise-async',
         event = 'BufReadPost',
         keys = {
             { 'zR', "<CMD>lua require('ufo').openAllFolds()<CR>", 'Open All Folds' },
@@ -571,191 +570,32 @@ local plugins = {
                 return { 'treesitter', 'indent' }
             end,
         },
+        dependencies = 'kevinhwang91/promise-async',
     },
     { 'NMAC427/guess-indent.nvim', opts = {} },
-    -- integration
-    {
-        'mhartington/formatter.nvim',
+    { -- stevearc/conform.nvim
+        'stevearc/conform.nvim',
         keys = {
-            { '<leader>m', '<CMD>FormatWrite<CR>', 'Format' },
+            { '<leader>m', [[<CMD>lua require('conform').format({async=true, lsp_fallback=true})<CR>]], 'Format' },
         },
-        opts = function(_, opts)
-            local util = require 'formatter.util'
-            opts.filetype = {
-                lua = {
-                    function()
-                        return {
-                            exe = 'stylua',
-                            args = {
-                                '--search-parent-directories',
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                                '--',
-                                '-',
-                            },
-                            stdin = true,
-                        }
-                    end,
-                },
-                python = {
-                    function()
-                        return {
-                            exe = 'black',
-                            args = {
-                                '-t',
-                                'py36',
-                                '--stdin-filename',
-                                util.get_current_buffer_file_path(),
-                                '-S',
-                                '--preview',
-                                '-q',
-                                '-',
-                            },
-                            stdin = true,
-                        }
-                    end,
-                },
-                vue = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                javascript = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                typescript = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                css = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                scss = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                html = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                json = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                yaml = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                toml = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                markdown = {
-                    function()
-                        return {
-                            exe = 'prettier',
-                            args = {
-                                '--stdin-filepath',
-                                util.get_current_buffer_file_path(),
-                            },
-                            stdin = true,
-                            try_node_modules = true,
-                        }
-                    end,
-                },
-                go = {
-                    require('formatter.filetypes.go').goimports,
-                    require('formatter.filetypes.go').golines,
-                },
-                rust = {
-                    require('formatter.filetypes.rust').rustfmt,
-                },
-            }
-        end,
+        opts = {
+            formatters_by_ft = {
+                lua = { 'stylua' },
+                python = { 'black' },
+                javascript = { 'prettier' },
+                typescript = { 'prettier' },
+                vue = { 'prettier' },
+                json = { 'prettier' },
+                markdown = { 'prettier' },
+                css = { 'prettier' },
+                scss = { 'prettier' },
+                html = { 'prettier' },
+                sql = { 'sql_formatter' },
+                sh = { 'shfmt' },
+            },
+        },
     },
-    {
+    { -- NeogitOrg/neogit
         'NeogitOrg/neogit',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
@@ -768,7 +608,7 @@ local plugins = {
             'sindrets/diffview.nvim', -- optional
         },
     },
-    {
+    { -- lewis6991/gitsigns.nvim
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
@@ -779,7 +619,7 @@ local plugins = {
             update_debounce = 1000,
         },
     },
-    {
+    { -- hrsh7th/nvim-cmp
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
         keys = {
@@ -898,7 +738,7 @@ local plugins = {
             'dcampos/cmp-snippy',
         },
     },
-    {
+    { -- nvim-treesitter/nvim-treesitter
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         cmd = 'TSUpdateSync',
@@ -995,7 +835,7 @@ local plugins = {
             'windwp/nvim-ts-autotag',
         },
     },
-    {
+    { -- neovim/nvim-lspconfig
         'neovim/nvim-lspconfig',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
@@ -1043,7 +883,7 @@ local plugins = {
             'onsails/lspkind-nvim',
         },
     },
-    {
+    { -- mfussenegger/nvim-dap
         'mfussenegger/nvim-dap',
         keys = {
             { '<F7>', [[<CMD>lua require('dap').continue()<CR>]], 'Start Debug' },
@@ -1054,6 +894,7 @@ local plugins = {
             require('dapui').setup()
             require('dap-python').setup 'python'
             local listeners = require('dap').listeners
+            -- commit
             listeners.after.event_initialized['dapui_config'] = function()
                 require('dapui').open()
             end

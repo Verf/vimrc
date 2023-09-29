@@ -80,8 +80,8 @@ keymap.set('n', '<TAB>', '<CMD>bn<CR>')
 keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
 keymap.set('n', '<leader><TAB>', '<CMD>b#<CR>')
 
-keymap.set('n', ']z', 'zj')
-keymap.set('n', '[z', 'zk')
+keymap.set('n', 'zn', 'zj')
+keymap.set('n', 'zi', 'zk')
 
 -- change cursor word and set search register
 keymap.set('n', '<C-s>', function()
