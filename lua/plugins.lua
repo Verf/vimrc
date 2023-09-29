@@ -558,11 +558,21 @@ local plugins = {
         keys = {
             { 'zR', "<CMD>lua require('ufo').openAllFolds()<CR>", 'Open All Folds' },
             { 'zM', "<CMD>lua require('ufo').closeAllFolds()<CR>", 'Close All Folds' },
+            { 'zr', "<CMD>lua require('ufo').openFoldsExceptKinds()<CR>", 'Open Folds' },
+            {
+                'zm',
+                function()
+                    local count = vim.v.count1
+                    vim.api.nvim_command [[lua require('ufo').closeFoldsWith(count)]]
+                end,
+                'Close n-level Folds',
+            },
         },
         init = function()
             vim.o.foldcolumn = '0'
             vim.o.foldlevel = 99
             vim.o.foldlevelstart = 99
+            vim.o.foldnestmax = 3
             vim.o.foldenable = true
         end,
         opts = {
