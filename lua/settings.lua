@@ -25,6 +25,15 @@ vim.api.nvim_create_autocmd('TextYankPost', {
         vim.highlight.on_yank()
     end,
 })
+
+-- auto enter insert mode when terminal open
+vim.api.nvim_create_autocmd('TermOpen', {
+    desc = 'Auto enter insert mode when terminal open',
+    callback = function()
+        vim.api.nvim_command 'startinsert'
+    end,
+})
+
 -- auto close terminal when exit
 vim.api.nvim_create_autocmd('TermClose', {
     desc = 'Auto close terminal when close',
