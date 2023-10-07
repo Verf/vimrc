@@ -588,22 +588,31 @@ local plugins = {
         keys = {
             { '<leader>m', [[<CMD>lua require('conform').format({async=true, lsp_fallback=true})<CR>]], 'Format' },
         },
-        opts = {
-            formatters_by_ft = {
-                lua = { 'stylua' },
-                python = { 'black' },
-                javascript = { 'prettier' },
-                typescript = { 'prettier' },
-                vue = { 'prettier' },
-                json = { 'prettier' },
-                markdown = { 'prettier' },
-                css = { 'prettier' },
-                scss = { 'prettier' },
-                html = { 'prettier' },
-                sql = { 'sql_formatter' },
-                sh = { 'shfmt' },
-            },
-        },
+        config = function()
+            require('conform.formatters.black').args = {
+                '--stdin-filename',
+                '$FILENAME',
+                '--preview',
+                '--quiet',
+                '-',
+            }
+            require('conform').setup {
+                formatters_by_ft = {
+                    lua = { 'stylua' },
+                    python = { 'black' },
+                    javascript = { 'prettier' },
+                    typescript = { 'prettier' },
+                    vue = { 'prettier' },
+                    json = { 'prettier' },
+                    markdown = { 'prettier' },
+                    css = { 'prettier' },
+                    scss = { 'prettier' },
+                    html = { 'prettier' },
+                    sql = { 'sql_formatter' },
+                    sh = { 'shfmt' },
+                },
+            }
+        end,
     },
     { -- NeogitOrg/neogit
         'NeogitOrg/neogit',
@@ -902,6 +911,7 @@ local plugins = {
         },
         config = function()
             require('dapui').setup()
+            require('nvim-dap-virtual-text').setup()
             require('dap-python').setup 'python'
             local listeners = require('dap').listeners
             -- commit
