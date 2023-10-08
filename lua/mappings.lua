@@ -61,7 +61,9 @@ keymap.set('n', '@', function()
     vim.opt.lazyredraw = false
     vim.opt.eventignore = ''
     vim.opt.clipboard = 'unnamedplus'
-    vim.api.nvim_command 'silent update'
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
+        vim.api.nvim_command 'silent update'
+    end
 end, { noremap = true })
 keymap.set('n', 'Q', function()
     local count = vim.v.count1
@@ -72,7 +74,9 @@ keymap.set('n', 'Q', function()
     vim.opt.lazyredraw = false
     vim.opt.eventignore = ''
     vim.opt.clipboard = 'unnamedplus'
-    vim.api.nvim_command 'silent update'
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
+        vim.api.nvim_command 'silent update'
+    end
 end, { noremap = true })
 
 -- cycle through buffers
