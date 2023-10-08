@@ -60,11 +60,41 @@ local plugins = {
             },
         },
     },
+    {
+        'folke/which-key.nvim',
+        event = 'VeryLazy',
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end,
+        opts = {
+            plugins = {
+                presets = {
+                    operators = false,
+                    motions = false,
+                    text_objects = false,
+                    windows = false,
+                    nav = false,
+                    z = true,
+                    g = true,
+                },
+            },
+            key_labels = {
+                ['<space>'] = 'SPC',
+                ['<cr>'] = 'RET',
+                ['<tab>'] = 'TAB',
+            },
+            triggers_blacklist = {
+                i = { 'n', 'i', 'y', 'o' },
+                v = { 'n', 'i', 'y', 'o' },
+            },
+        },
+    },
     { -- echasnovski/mini.align
         'echasnovski/mini.align',
         keys = {
-            { 'ga', mode = { 'n', 'x', 'o' } },
-            { 'gA', mode = { 'n', 'x', 'o' } },
+            { 'ga', desc = 'Align', mode = { 'n', 'x', 'o' } },
+            { 'gA', desc = 'Align Preview', mode = { 'n', 'x', 'o' } },
         },
         opts = {},
     },
@@ -72,7 +102,7 @@ local plugins = {
     { -- echasnovski/mini.bufremove
         'echasnovski/mini.bufremove',
         keys = {
-            { '<leader>qq', '<CMD>lua MiniBufremove.delete(0, true)<CR>', 'BufRemove' },
+            { '<leader>qq', '<CMD>lua MiniBufremove.delete(0, true)<CR>', desc = 'Buffer Close' },
         },
         opts = {
             set_vim_settings = false,
@@ -160,8 +190,12 @@ local plugins = {
     { -- echasnovski/mini.jump2d
         'echasnovski/mini.jump2d',
         keys = {
-            { 'gw', '<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>', 'Goto Word' },
-            { 'gs', "<CMD>lua MiniJump2d.start({spotter = MiniJump2d.gen_pattern_spotter('%p+')})<CR>", 'Goto Symbol' },
+            { 'gw', '<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>', desc = 'Goto Word' },
+            {
+                'gs',
+                "<CMD>lua MiniJump2d.start({spotter = MiniJump2d.gen_pattern_spotter('%p+')})<CR>",
+                desc = 'Goto Symbol',
+            },
         },
         opts = {
             labels = 'tneisoahfdurvcpm',
@@ -431,8 +465,8 @@ local plugins = {
     { -- monaqa/dial.nvim
         'monaqa/dial.nvim',
         keys = {
-            { '<C-a>', '<Plug>(dial-increment)', 'dial-increment' },
-            { '<C-x>', '<Plug>(dial-decrement)', 'dial-decrement' },
+            { '<C-a>', '<Plug>(dial-increment)', desc = 'Dial Increment' },
+            { '<C-x>', '<Plug>(dial-decrement)', desc = 'Dial Decrement' },
         },
         config = function()
             local augend = require 'dial.augend'
@@ -467,10 +501,10 @@ local plugins = {
     { -- chrisgrieser/nvim-spider
         'chrisgrieser/nvim-spider',
         keys = {
-            { 'w', "<cmd>lua require('spider').motion('w')<CR>", 'Spider_w', mode = { 'n', 'x', 'o' } },
-            { 'd', "<cmd>lua require('spider').motion('e')<CR>", 'Spider_e', mode = { 'n', 'x', 'o' } },
-            { 'b', "<cmd>lua require('spider').motion('b')<CR>", 'Spider_b', mode = { 'n', 'x', 'o' } },
-            { 'ge', "<cmd>lua require('spider').motion('ge')<CR>", 'Spider_ge', mode = { 'n', 'x', 'o' } },
+            { 'w', "<cmd>lua require('spider').motion('w')<CR>", desc = 'Spider_w', mode = { 'n', 'x', 'o' } },
+            { 'd', "<cmd>lua require('spider').motion('e')<CR>", desc = 'Spider_e', mode = { 'n', 'x', 'o' } },
+            { 'b', "<cmd>lua require('spider').motion('b')<CR>", desc = 'Spider_b', mode = { 'n', 'x', 'o' } },
+            { 'ge', "<cmd>lua require('spider').motion('ge')<CR>", desc = 'Spider_ge', mode = { 'n', 'x', 'o' } },
         },
         opts = {
             skipInsignificantPunctuation = false,
@@ -479,10 +513,10 @@ local plugins = {
     { -- beauwilliams/focus.nvim
         'beauwilliams/focus.nvim',
         keys = {
-            { '<leader>wy', '<CMD>FocusSplitLeft<CR>', 'Split Left' },
-            { '<leader>wn', '<CMD>FocusSplitDown<CR>', 'Split Down' },
-            { '<leader>wi', '<CMD>FocusSplitUp<CR>', 'Split Up' },
-            { '<leader>wo', '<CMD>FocusSplitRight<CR>', 'Split Right' },
+            { '<leader>wy', '<CMD>FocusSplitLeft<CR>', desc = 'Split Left' },
+            { '<leader>wn', '<CMD>FocusSplitDown<CR>', desc = 'Split Down' },
+            { '<leader>wi', '<CMD>FocusSplitUp<CR>', desc = 'Split Up' },
+            { '<leader>wo', '<CMD>FocusSplitRight<CR>', desc = 'Split Right' },
         },
         init = function()
             vim.api.nvim_create_autocmd('WinEnter', {
@@ -511,16 +545,16 @@ local plugins = {
     { -- nvim-telescope/telescope.nvim
         'nvim-telescope/telescope.nvim',
         keys = {
-            { '<leader><leader>', '<CMD>Telescope buffers<CR>', 'Buffers' },
-            { '<leader>ff', '<CMD>Telescope find_files<CR>', 'Files' },
-            { '<leader>fh', '<CMD>Telescope oldfiles<CR>', 'History' },
-            { '<leader>fe', '<CMD>Telescope everything<CR>', 'Everything' },
-            { '<leader>fg', '<CMD>Telescope live_grep<CR>', 'Grep' },
-            { '<leader>fd', '<CMD>Telescope diagnostics<CR>', 'Diagnostics' },
-            { '<leader>fs', '<CMD>Telescope lsp_document_symbols<CR>', 'Symbols' },
-            { 'gd', '<CMD>Telescope lsp_definitions<CR>', 'Definitions' },
-            { 'gr', '<CMD>Telescope lsp_references<CR>', 'References' },
-            { 'gi', '<CMD>Telescope lsp_implementations<CR>', 'Implementations' },
+            { '<leader><leader>', '<CMD>Telescope buffers<CR>', desc = 'Buffers' },
+            { '<leader>ff', '<CMD>Telescope find_files<CR>', desc = 'Files' },
+            { '<leader>fh', '<CMD>Telescope oldfiles<CR>', desc = 'History' },
+            { '<leader>fe', '<CMD>Telescope everything<CR>', desc = 'Everything' },
+            { '<leader>fg', '<CMD>Telescope live_grep<CR>', desc = 'Grep' },
+            { '<leader>fd', '<CMD>Telescope diagnostics<CR>', desc = 'Diagnostics' },
+            { '<leader>fs', '<CMD>Telescope lsp_document_symbols<CR>', desc = 'Symbols' },
+            { 'gd', '<CMD>Telescope lsp_definitions<CR>', desc = 'Definitions' },
+            { 'gr', '<CMD>Telescope lsp_references<CR>', desc = 'References' },
+            { 'gi', '<CMD>Telescope lsp_implementations<CR>', desc = 'Implementations' },
         },
         opts = function(_, opts)
             vim.cmd [[au FileType Telescope setlocal nocursorline]]
@@ -556,16 +590,16 @@ local plugins = {
         'kevinhwang91/nvim-ufo',
         event = 'BufReadPost',
         keys = {
-            { 'zR', "<CMD>lua require('ufo').openAllFolds()<CR>", 'Open All Folds' },
-            { 'zM', "<CMD>lua require('ufo').closeAllFolds()<CR>", 'Close All Folds' },
-            { 'zr', "<CMD>lua require('ufo').openFoldsExceptKinds()<CR>", 'Open Folds' },
+            { 'zR', "<CMD>lua require('ufo').openAllFolds()<CR>", desc = 'Open All Folds' },
+            { 'zM', "<CMD>lua require('ufo').closeAllFolds()<CR>", desc = 'Close All Folds' },
+            { 'zr', "<CMD>lua require('ufo').openFoldsExceptKinds()<CR>", desc = 'Open Folds' },
             {
                 'zm',
                 function()
                     local count = vim.v.count1
                     vim.api.nvim_command [[lua require('ufo').closeFoldsWith(count)]]
                 end,
-                'Close n-level Folds',
+                desc = 'Close n-level Folds',
             },
         },
         init = function()
@@ -586,7 +620,7 @@ local plugins = {
     { -- stevearc/conform.nvim
         'stevearc/conform.nvim',
         keys = {
-            { '<leader>m', [[<CMD>lua require('conform').format({async=true, lsp_fallback=true})<CR>]], 'Format' },
+            { '<leader>m', [[<CMD>lua require('conform').format({async=true, lsp_fallback=true})<CR>]], desc = 'Format' },
         },
         config = function()
             require('conform.formatters.black').args = {
@@ -618,7 +652,7 @@ local plugins = {
         'NeogitOrg/neogit',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
-            { '<leader>g', '<CMD>Neogit<CR>', 'Neogit' },
+            { '<leader>g', '<CMD>Neogit<CR>', desc = 'Neogit' },
         },
         opts = {},
         dependencies = {
@@ -631,8 +665,8 @@ local plugins = {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
-            { ']h', ':Gitsigns next_hunk<CR>', 'Next Hunk' },
-            { '[h', ':Gitsigns prev_hunk<CR>', 'Next Hunk' },
+            { ']h', ':Gitsigns next_hunk<CR>', desc = 'Next Hunk' },
+            { '[h', ':Gitsigns prev_hunk<CR>', desc = 'Next Hunk' },
         },
         opts = {
             update_debounce = 1000,
@@ -642,8 +676,8 @@ local plugins = {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
         keys = {
-            { '<C-d>', [[<CMD>lua require('snippy').next()<CR>]], 'Snip Next', mode = { 'i', 'v' } },
-            { '<C-u>', [[<CMD>lua require('snippy').previous()<CR>]], 'Snip Previous', mode = { 'i', 'v' } },
+            { '<C-d>', [[<CMD>lua require('snippy').next()<CR>]], desc = 'Snip Next', mode = { 'i' } },
+            { '<C-u>', [[<CMD>lua require('snippy').previous()<CR>]], desc = 'Snip Previous', mode = { 'i' } },
         },
         config = function()
             local cmp = require 'cmp'
@@ -858,9 +892,9 @@ local plugins = {
         'neovim/nvim-lspconfig',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
-            { '<leader>rn', vim.lsp.buf.rename, 'Rename' },
-            { '<leader>a', vim.lsp.buf.code_action, 'Code Action' },
-            { 'gk', vim.lsp.buf.hover, 'Hover' },
+            { '<leader>rn', vim.lsp.buf.rename, desc = 'Rename' },
+            { '<leader>a', vim.lsp.buf.code_action, desc = 'Code Action' },
+            { 'gk', vim.lsp.buf.hover, desc = 'Hover' },
         },
         config = function()
             -- diagnostic config
@@ -905,9 +939,17 @@ local plugins = {
     { -- mfussenegger/nvim-dap
         'mfussenegger/nvim-dap',
         keys = {
-            { '<F7>', [[<CMD>lua require('dap').continue()<CR>]], 'Start Debug' },
-            { '<F8>', [[<CMD>lua require('dap').toggle_breakpoint()<CR>]], 'Set Breakpoint' },
-            { '<F9>', [[<CMD>lua require('dap').terminate()<CR>]], 'Stop Debug' },
+            { '<F4>', [[<CMD>lua require('dap').continue()<CR>]], desc = 'Start Debug' },
+            { '<leader>ds', [[<CMD>lua require('dap').continue()<CR>]], desc = 'Start Debug' },
+            { '<leader>db', [[<CMD>lua require('dap').toggle_breakpoint()<CR>]], desc = 'Set Breakpoint' },
+            { '<leader>di', [[<CMD>lua require('dap').step_into()<CR>]], desc = 'Step Into' },
+            { '<leader>dv', [[<CMD>lua require('dap').step_over()<CR>]], desc = 'Step Over' },
+            { '<leader>do', [[<CMD>lua require('dap').step_out()<CR>]], desc = 'Step Out' },
+            { '<leader>dr', [[<CMD>lua require('dap').repl.open()<CR>]], desc = 'Repl Open' },
+            { '<leader>dl', [[<CMD>lua require('dap').run_last()<CR>]], desc = 'Run Last' },
+            { '<leader>dt', [[<CMD>lua require('dap').run_last()<CR>]], desc = 'Goto Cursor' },
+            { '<leader>du', [[<CMD>lua require('dapui').toggle()<CR>]], desc = 'Goto Cursor' },
+            { '<leader>dq', [[<CMD>lua require('dap').terminate()<CR>]], desc = 'Quit Debug' },
         },
         config = function()
             require('dapui').setup()
