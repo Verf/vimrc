@@ -620,7 +620,11 @@ local plugins = {
     { -- stevearc/conform.nvim
         'stevearc/conform.nvim',
         keys = {
-            { '<leader>m', [[<CMD>lua require('conform').format({async=true, lsp_fallback=true})<CR>]], desc = 'Format' },
+            {
+                '<leader>m',
+                [[<CMD>lua require('conform').format({async=true, lsp_fallback=true})<CR>]],
+                desc = 'Format',
+            },
         },
         config = function()
             require('conform.formatters.black').args = {
