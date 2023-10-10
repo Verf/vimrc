@@ -92,7 +92,7 @@ keymap.set('n', '<C-s>', function()
     vim.api.nvim_command 'norm! yiw'
     vim.fn.setreg('/', vim.fn.getreg '+')
     vim.api.nvim_feedkeys('ciw', 'n', false)
-end)
+end, { desc = 'Search & Replace' })
 keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]], { desc = 'Search & Replace' })
 
 keymap.set('n', '<leader>qa', '<CMD>qa!<CR>', { desc = 'Quit All' })
