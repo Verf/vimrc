@@ -25,6 +25,11 @@ local plugins = {
         end,
     },
     { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
+    { -- smjonas/inc-rename.nvim
+        'smjonas/inc-rename.nvim',
+        keys = { { '<leader>rn', ':IncRename ', 'Rename' } },
+        opts = {},
+    },
     { -- folke/noice.nvim
         'folke/noice.nvim',
         event = 'VeryLazy',
@@ -39,25 +44,16 @@ local plugins = {
                 signature = { enabled = false },
             },
             presets = {
-                bottom_search = true, -- use a classic bottom cmdline for search
-                command_palette = true, -- position the cmdline and popupmenu together
-                long_message_to_split = true, -- long messages will be sent to a split
-                inc_rename = false, -- enables an input dialog for inc-rename.nvim
-                lsp_doc_border = true, -- add a border to hover docs and signature help
+                bottom_search = true,
+                command_palette = true,
+                long_message_to_split = true,
+                inc_rename = true,
+                lsp_doc_border = true,
             },
         },
         dependencies = {
             'MunifTanjim/nui.nvim',
             'rcarriga/nvim-notify',
-        },
-    },
-    { -- stevearc/dressing.nvim
-        'stevearc/dressing.nvim',
-        event = 'VeryLazy',
-        opts = {
-            input = {
-                insert_only = false,
-            },
         },
     },
     {
@@ -470,30 +466,13 @@ local plugins = {
         },
         config = function()
             local augend = require 'dial.augend'
-            local config = require 'dial.config'
-            config.augends:register_group {
+            require('dial.config').augends:register_group {
                 default = {
                     augend.integer.alias.decimal,
                     augend.integer.alias.hex,
-                    augend.semver.alias.semver,
-                    augend.date.alias['%Y/%m/%d'],
-                    augend.date.alias['%Y-%m-%d'],
-                    augend.date.alias['%Y年%-m月%-d日'],
                     augend.constant.alias.bool,
-                    augend.constant.new {
-                        elements = { 'and', 'or' },
-                        word = true,
-                        cyclic = true,
-                    },
-                    augend.constant.new {
-                        elements = { 'True', 'False' },
-                        word = true,
-                        cyclic = true,
-                    },
-                    augend.constant.new {
-                        elements = { '&&', '||' },
-                        cyclic = true,
-                    },
+                    augend.date.alias['%Y-%m-%d'],
+                    augend.date.alias['%Y年%-m月%-d日(%ja)'],
                 },
             }
         end,
@@ -896,7 +875,7 @@ local plugins = {
         'neovim/nvim-lspconfig',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
-            { '<leader>rn', vim.lsp.buf.rename, desc = 'Rename' },
+            -- { '<leader>rn', vim.lsp.buf.rename, desc = 'Rename' },
             { '<leader>a', vim.lsp.buf.code_action, desc = 'Code Action' },
             { 'gk', vim.lsp.buf.hover, desc = 'Hover' },
         },
