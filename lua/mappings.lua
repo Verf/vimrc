@@ -87,12 +87,6 @@ keymap.set('n', '<leader><TAB>', '<CMD>b#<CR>', { desc = 'Swith Buffer' })
 keymap.set('n', 'zn', 'zj')
 keymap.set('n', 'zi', 'zk')
 
--- change cursor word and set search register
--- keymap.set('n', '<C-s>', function()
---     vim.api.nvim_command 'norm! yiw'
---     vim.fn.setreg('/', vim.fn.getreg '+')
---     vim.api.nvim_feedkeys('ciw', 'n', false)
--- end, { desc = 'Search & Replace' })
 keymap.set('n', '<C-s>', '*``cgn', { desc = 'Search & Replace' })
 keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]], { desc = 'Search & Replace' })
 
