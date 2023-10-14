@@ -25,11 +25,6 @@ local plugins = {
         end,
     },
     { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
-    { -- smjonas/inc-rename.nvim
-        'smjonas/inc-rename.nvim',
-        keys = { { '<leader>rn', ':IncRename ', 'Rename' } },
-        opts = {},
-    },
     { -- folke/noice.nvim
         'folke/noice.nvim',
         event = 'VeryLazy',
@@ -47,7 +42,7 @@ local plugins = {
                 bottom_search = true,
                 command_palette = true,
                 long_message_to_split = true,
-                inc_rename = true,
+                inc_rename = false,
                 lsp_doc_border = true,
             },
         },
@@ -273,6 +268,16 @@ local plugins = {
             },
         },
     },
+    {
+        'echasnovski/mini.pick',
+        keys = {
+            { '<leader>ff', ':Pick files<CR>', 'Find Files' },
+            { '<leader>fg', ':Pick grep_live<CR>', 'Live Grep' },
+            { '<leader>fb', ':Pick buffers<CR>', 'Find Buffers' },
+            { '<leader><leader>', ':Pick buffers<CR>', 'Find Buffers' },
+        },
+        opts = {},
+    },
     { -- echasnovski/mini.surround
         'echasnovski/mini.surround',
         keys = { '<leader>sa', '<leader>sd', '<leader>sc' },
@@ -456,6 +461,10 @@ local plugins = {
             { '<C-w>', [[<CMD>lua require('readline').unix_word_rubout()<CR>]], mode = { '!' } },
             { '<C-k>', [[<CMD>lua require('readline').kill_line()<CR>]], mode = { '!' } },
             { '<C-u>', [[<CMD>lua require('readline').backward_kill_line()<CR>]], mode = { '!' } },
+            { '<C-f>', '<Right>', mode = { '!' } },
+            { '<C-b>', '<Left>', mode = { '!' } },
+            { '<M-f>', [[<CMD>lua require('readline').forward_word()<CR>]], mode = { '!' } },
+            { '<M-b>', [[<CMD>lua require('readline').backward_word()<CR>]], mode = { '!' } },
         },
     },
     { -- monaqa/dial.nvim
@@ -521,50 +530,50 @@ local plugins = {
         event = 'VeryLazy',
         opts = {},
     },
-    { -- nvim-telescope/telescope.nvim
-        'nvim-telescope/telescope.nvim',
-        keys = {
-            { '<leader><leader>', '<CMD>Telescope buffers<CR>', desc = 'Buffers' },
-            { '<leader>ff', '<CMD>Telescope find_files<CR>', desc = 'Files' },
-            { '<leader>fh', '<CMD>Telescope oldfiles<CR>', desc = 'History' },
-            { '<leader>fe', '<CMD>Telescope everything<CR>', desc = 'Everything' },
-            { '<leader>fg', '<CMD>Telescope live_grep<CR>', desc = 'Grep' },
-            { '<leader>fd', '<CMD>Telescope diagnostics<CR>', desc = 'Diagnostics' },
-            { '<leader>fs', '<CMD>Telescope lsp_document_symbols<CR>', desc = 'Symbols' },
-            { 'gd', '<CMD>Telescope lsp_definitions<CR>', desc = 'Definitions' },
-            { 'gr', '<CMD>Telescope lsp_references<CR>', desc = 'References' },
-            { 'gi', '<CMD>Telescope lsp_implementations<CR>', desc = 'Implementations' },
-        },
-        opts = function(_, opts)
-            vim.cmd [[au FileType Telescope setlocal nocursorline]]
-            opts.defaults = {
-                borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-                layout_strategy = 'vertical',
-                layout_config = {
-                    width = 0.8,
-                },
-            }
-            opts.extensions = {
-                undo = {
-                    use_delta = false,
-                    side_by_side = false,
-                    diff_context_lines = 3,
-                },
-                everything = {
-                    match_path = true,
-                    regex = true,
-                    max_results = 100,
-                },
-            }
-            require('telescope').load_extension 'zf-native'
-            require('telescope').load_extension 'everything'
-        end,
-        dependencies = {
-            'nvim-lua/plenary.nvim',
-            'natecraddock/telescope-zf-native.nvim',
-            'Verf/telescope-everything.nvim',
-        },
-    },
+    -- { -- nvim-telescope/telescope.nvim
+    --     'nvim-telescope/telescope.nvim',
+    --     keys = {
+    --         { '<leader><leader>', '<CMD>Telescope buffers<CR>', desc = 'Buffers' },
+    --         { '<leader>ff', '<CMD>Telescope find_files<CR>', desc = 'Files' },
+    --         { '<leader>fh', '<CMD>Telescope oldfiles<CR>', desc = 'History' },
+    --         { '<leader>fe', '<CMD>Telescope everything<CR>', desc = 'Everything' },
+    --         { '<leader>fg', '<CMD>Telescope live_grep<CR>', desc = 'Grep' },
+    --         { '<leader>fd', '<CMD>Telescope diagnostics<CR>', desc = 'Diagnostics' },
+    --         { '<leader>fs', '<CMD>Telescope lsp_document_symbols<CR>', desc = 'Symbols' },
+    --         { 'gd', '<CMD>Telescope lsp_definitions<CR>', desc = 'Definitions' },
+    --         { 'gr', '<CMD>Telescope lsp_references<CR>', desc = 'References' },
+    --         { 'gi', '<CMD>Telescope lsp_implementations<CR>', desc = 'Implementations' },
+    --     },
+    --     opts = function(_, opts)
+    --         vim.cmd [[au FileType Telescope setlocal nocursorline]]
+    --         opts.defaults = {
+    --             borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+    --             layout_strategy = 'vertical',
+    --             layout_config = {
+    --                 width = 0.8,
+    --             },
+    --         }
+    --         opts.extensions = {
+    --             undo = {
+    --                 use_delta = false,
+    --                 side_by_side = false,
+    --                 diff_context_lines = 3,
+    --             },
+    --             everything = {
+    --                 match_path = true,
+    --                 regex = true,
+    --                 max_results = 100,
+    --             },
+    --         }
+    --         require('telescope').load_extension 'zf-native'
+    --         require('telescope').load_extension 'everything'
+    --     end,
+    --     dependencies = {
+    --         'nvim-lua/plenary.nvim',
+    --         'natecraddock/telescope-zf-native.nvim',
+    --         'Verf/telescope-everything.nvim',
+    --     },
+    -- },
     { -- kevinhwang91/nvim-ufo
         'kevinhwang91/nvim-ufo',
         event = 'BufReadPost',
@@ -875,7 +884,7 @@ local plugins = {
         'neovim/nvim-lspconfig',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
-            -- { '<leader>rn', vim.lsp.buf.rename, desc = 'Rename' },
+            { '<leader>rn', vim.lsp.buf.rename, desc = 'Rename' },
             { '<leader>a', vim.lsp.buf.code_action, desc = 'Code Action' },
             { 'gk', vim.lsp.buf.hover, desc = 'Hover' },
         },
