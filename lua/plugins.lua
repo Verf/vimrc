@@ -24,7 +24,10 @@ local plugins = {
             vim.cmd [[colorscheme deepwhite]]
         end,
     },
-    { 'nvim-tree/nvim-web-devicons', event = 'VeryLazy' },
+    { -- nvim-tree/nvim-web-devicons
+        'nvim-tree/nvim-web-devicons',
+        event = 'VeryLazy',
+    },
     { -- folke/noice.nvim
         'folke/noice.nvim',
         event = 'VeryLazy',
@@ -51,7 +54,7 @@ local plugins = {
             'rcarriga/nvim-notify',
         },
     },
-    {
+    { -- folke/which-key
         'folke/which-key.nvim',
         event = 'VeryLazy',
         init = function()
@@ -89,7 +92,6 @@ local plugins = {
         },
         opts = {},
     },
-    { 'echasnovski/mini.bracketed', event = 'VeryLazy', opts = {} },
     { -- echasnovski/mini.bufremove
         'echasnovski/mini.bufremove',
         keys = {
@@ -268,7 +270,7 @@ local plugins = {
             },
         },
     },
-    {
+    { -- echasnovski/mini.pick
         'echasnovski/mini.pick',
         keys = {
             { '<leader>ff', ':Pick files<CR>', 'Find Files' },
@@ -570,37 +572,10 @@ local plugins = {
         end,
         opts = {},
     },
-    { -- kevinhwang91/nvim-ufo
-        'kevinhwang91/nvim-ufo',
-        event = 'BufReadPost',
-        keys = {
-            { 'zR', "<CMD>lua require('ufo').openAllFolds()<CR>", desc = 'Open All Folds' },
-            { 'zM', "<CMD>lua require('ufo').closeAllFolds()<CR>", desc = 'Close All Folds' },
-            { 'zr', "<CMD>lua require('ufo').openFoldsExceptKinds()<CR>", desc = 'Open Folds' },
-            {
-                'zm',
-                function()
-                    local count = vim.v.count1
-                    vim.api.nvim_command [[lua require('ufo').closeFoldsWith(count)]]
-                end,
-                desc = 'Close n-level Folds',
-            },
-        },
-        init = function()
-            vim.o.foldcolumn = '0'
-            vim.o.foldlevel = 99
-            vim.o.foldlevelstart = 99
-            vim.o.foldnestmax = 3
-            vim.o.foldenable = true
-        end,
-        opts = {
-            provider_selector = function(bufnr, filetype, buftype)
-                return { 'treesitter', 'indent' }
-            end,
-        },
-        dependencies = 'kevinhwang91/promise-async',
+    { -- NMAC427/guess-indent.nvim
+        'NMAC427/guess-indent.nvim',
+        opts = {},
     },
-    { 'NMAC427/guess-indent.nvim', opts = {} },
     { -- stevearc/conform.nvim
         'stevearc/conform.nvim',
         keys = {
@@ -635,18 +610,6 @@ local plugins = {
                 },
             }
         end,
-    },
-    { -- NeogitOrg/neogit
-        'NeogitOrg/neogit',
-        event = { 'BufReadPre', 'BufNewFile' },
-        keys = {
-            { '<leader>g', '<CMD>Neogit<CR>', desc = 'Neogit' },
-        },
-        opts = {},
-        dependencies = {
-            'nvim-lua/plenary.nvim', -- required
-            'sindrets/diffview.nvim', -- optional
-        },
     },
     { -- lewis6991/gitsigns.nvim
         'lewis6991/gitsigns.nvim',

@@ -80,6 +80,15 @@ opt.shiftwidth = 4
 opt.synmaxcol = 200
 opt.pumheight = 10
 
+opt.foldenable = true
+opt.foldcolumn = '0'
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldnestmax = 3
+opt.foldmethod = 'expr'
+opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+opt.foldtext = 'v:lua.vim.treesitter.foldtext()'
+
 opt.signcolumn = 'yes:1'
 opt.mouse = 'a'
 opt.showbreak = '⮎'
@@ -98,7 +107,6 @@ opt.fillchars:append {
     eob = ' ',
     stl = '─',
     stlnc = '─',
-    fold = ' ',
     foldopen = '',
     foldsep = ' ',
     foldclose = '',
