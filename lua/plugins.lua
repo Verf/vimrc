@@ -499,21 +499,6 @@ local plugins = {
             -- }
         end,
     },
-    { -- linty-org/readline.nvim
-        'linty-org/readline.nvim',
-        keys = {
-            { '<M-BS>', [[<CMD>lua require('readline').backward_kill_word()<CR>]], mode = { '!' } },
-            { '<C-a>', [[<CMD>lua require('readline').beginning_of_line()<CR>]], mode = { '!' } },
-            { '<C-e>', [[<CMD>lua require('readline').end_of_line()<CR>]], mode = { '!' } },
-            { '<C-w>', [[<CMD>lua require('readline').unix_word_rubout()<CR>]], mode = { '!' } },
-            { '<C-k>', [[<CMD>lua require('readline').kill_line()<CR>]], mode = { '!' } },
-            { '<C-u>', [[<CMD>lua require('readline').backward_kill_line()<CR>]], mode = { '!' } },
-            { '<C-f>', '<Right>', mode = { '!' } },
-            { '<C-b>', '<Left>', mode = { '!' } },
-            { '<M-f>', [[<CMD>lua require('readline').forward_word()<CR>]], mode = { '!' } },
-            { '<M-b>', [[<CMD>lua require('readline').backward_word()<CR>]], mode = { '!' } },
-        },
-    },
     { -- monaqa/dial.nvim
         'monaqa/dial.nvim',
         keys = {
@@ -745,6 +730,7 @@ local plugins = {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         cmd = 'TSUpdateSync',
+        event = 'VeryLazy',
         config = function()
             require('nvim-treesitter.configs').setup {
                 ensure_installed = {
@@ -767,6 +753,7 @@ local plugins = {
                     'json',
                     'toml',
                     'yaml',
+                    'regex',
                     'git_config',
                     'git_rebase',
                     'gitcommit',
@@ -840,7 +827,7 @@ local plugins = {
     },
     { -- neovim/nvim-lspconfig
         'neovim/nvim-lspconfig',
-        event = { 'BufReadPre', 'BufNewFile' },
+        event = 'VeryLazy',
         keys = {
             { '<leader>rn', vim.lsp.buf.rename, desc = 'Rename' },
             { '<leader>a', vim.lsp.buf.code_action, desc = 'Code Action' },
@@ -877,6 +864,12 @@ local plugins = {
             }
             require('lspconfig').volar.setup {
                 capabilities = capabilities,
+                filetypes = { 'typescript', 'javascript', 'vue', 'json' },
+                init_options = {
+                    typescript = {
+                        tsdk = vim.fs.normalize '~/AppData/Roaming/npm/node_modules/typescript/lib',
+                    },
+                },
             }
             require('lspconfig').tailwindcss.setup {
                 capabilities = capabilities,
