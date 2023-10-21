@@ -24,6 +24,7 @@ local plugins = {
             vim.cmd [[colorscheme deepwhite]]
         end,
     },
+    { 'EdenEast/nightfox.nvim' },
     { -- nvim-tree/nvim-web-devicons
         'nvim-tree/nvim-web-devicons',
         event = 'VeryLazy',
