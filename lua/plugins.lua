@@ -345,7 +345,7 @@ local plugins = {
             },
         },
     },
-    {
+    { -- echasnovski/mini.trailspace
         'echasnovski/mini.trailspace',
         keys = {
             { '<leader>ts', '<CMD>lua MiniTrailspace.trim()<CR>', 'Trim space' },
