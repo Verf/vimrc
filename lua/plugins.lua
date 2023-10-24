@@ -345,6 +345,14 @@ local plugins = {
             },
         },
     },
+    {
+        'echasnovski/mini.trailspace',
+        keys = {
+            { '<leader>ts', '<CMD>lua MiniTrailspace.trim()<CR>', 'Trim space' },
+            { '<leader>tl', '<CMD>lua MiniTrailspace.trim_last_lines()<CR>', 'Trim lines' },
+        },
+        opt = {},
+    },
     { -- rebelot/heirline.nvim
         'rebelot/heirline.nvim',
         opts = function(_, opts)
@@ -835,6 +843,8 @@ local plugins = {
             { '<leader>rn', vim.lsp.buf.rename, desc = 'Rename' },
             { '<leader>a', vim.lsp.buf.code_action, desc = 'Code Action' },
             { 'gk', vim.lsp.buf.hover, desc = 'Hover' },
+            { 'gd', vim.lsp.buf.definition, desc = 'Goto definition' },
+            { 'gr', vim.lsp.buf.references, desc = 'Find references' },
         },
         config = function()
             -- diagnostic config
