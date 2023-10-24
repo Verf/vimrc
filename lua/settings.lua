@@ -100,9 +100,7 @@ opt.shell = 'nu'
 opt.shellcmdflag = '-c'
 opt.shellquote = ''
 opt.shellxquote = ''
-opt.spelllang = { 'en_us' }
-opt.completeopt = { 'menu', 'preview' }
-opt.sessionoptions = { 'buffers', 'curdir', 'folds', 'tabpages', 'winsize', 'winpos' }
+opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize'
 opt.fillchars:append {
     eob = ' ',
     stl = '─',

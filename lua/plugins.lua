@@ -496,19 +496,12 @@ local plugins = {
                 utils.make_tablist(Tabpage),
             }
             opts.tabline = { BufferLine, Align, TabPages }
-            -- winbar
-            -- opts.winbar = {
-            --     { provider = ' ' },
-            -- }
-            -- opts.opts = {
-            --     disable_winbar_cb = function(args)
-            --         return conditions.buffer_matches({
-            --             buftype = { 'nofile', 'prompt', 'help', 'quickfix' },
-            --             filetype = { '^git.*', 'fugitive', 'Trouble', 'dashboard' },
-            --         }, args.buf)
-            --     end,
-            -- }
         end,
+    },
+    { -- backdround/tabscope.nvim
+        'backdround/tabscope.nvim',
+        event = 'VeryLazy',
+        opts = {},
     },
     { -- monaqa/dial.nvim
         'monaqa/dial.nvim',
