@@ -83,8 +83,8 @@ keymap.set('n', '<TAB>', '<CMD>bn<CR>')
 keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
 keymap.set('n', '<leader><TAB>', '<CMD>b#<CR>', { desc = 'Swith Buffer' })
 
-keymap.set('n', ']d', ':lua vim.diagnostic.goto_next()<CR>', { desc = 'Next diagnostic' })
-keymap.set('n', '[d', ':lua vim.diagnostic.goto_prev()<CR>', { desc = 'Previous diagnostic' })
+keymap.set('n', ']d', '<CMD>lua vim.diagnostic.goto_next()<CR>', { desc = 'Next diagnostic' })
+keymap.set('n', '[d', '<CMD>lua vim.diagnostic.goto_prev()<CR>', { desc = 'Previous diagnostic' })
 
 keymap.set('n', 'zn', 'zj')
 keymap.set('n', 'zi', 'zk')

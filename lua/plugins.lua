@@ -276,12 +276,12 @@ local plugins = {
     { -- echasnovski/mini.pick
         'echasnovski/mini.pick',
         keys = {
-            { '<leader>ff', ':Pick files<CR>', 'Find Files' },
-            { '<leader>fg', ':Pick grep_live<CR>', 'Live Grep' },
-            { '<leader>fb', ':Pick buffers<CR>', 'Find Buffers' },
-            { '<leader>fh', ':Pick oldfiles<CR>', 'Find Oldfiles' },
-            { '<leader>fs', ':Pick symbols<CR>', 'Find Symbols' },
-            { '<leader><leader>', ':Pick buffers<CR>', 'Find Buffers' },
+            { '<leader>ff', '<CMD>Pick files<CR>', 'Find Files' },
+            { '<leader>fg', '<CMD>Pick grep_live<CR>', 'Live Grep' },
+            { '<leader>fb', '<CMD>Pick buffers<CR>', 'Find Buffers' },
+            { '<leader>fh', '<CMD>Pick oldfiles<CR>', 'Find Oldfiles' },
+            { '<leader>fs', '<CMD>Pick symbols<CR>', 'Find Symbols' },
+            { '<leader><leader>', '<CMD>Pick buffers<CR>', 'Find Buffers' },
         },
         config = function()
             require('mini.pick').setup {}
@@ -604,8 +604,8 @@ local plugins = {
         'lewis6991/gitsigns.nvim',
         event = { 'BufReadPre', 'BufNewFile' },
         keys = {
-            { ']h', ':Gitsigns next_hunk<CR>', desc = 'Next Hunk' },
-            { '[h', ':Gitsigns prev_hunk<CR>', desc = 'Next Hunk' },
+            { ']h', '<CMD>Gitsigns next_hunk<CR>', desc = 'Next Hunk' },
+            { '[h', '<CMD>Gitsigns prev_hunk<CR>', desc = 'Next Hunk' },
         },
         opts = {
             update_debounce = 1000,
