@@ -40,6 +40,13 @@ vim.api.nvim_create_autocmd('TermClose', {
         vim.api.nvim_command 'bd!'
     end,
 })
+-- disable new line comment
+vim.api.nvim_create_autocmd('BufEnter', {
+    callback = function()
+        vim.opt_local.formatoptions:remove { 'c', 'r', 'o' }
+    end,
+    desc = 'Disable new line comment',
+})
 -- markdown
 vim.api.nvim_create_autocmd('FileType', {
     pattern = { 'markdown' },
