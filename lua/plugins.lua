@@ -29,6 +29,15 @@ local plugins = {
         'nvim-tree/nvim-web-devicons',
         event = 'VeryLazy',
     },
+    {
+        'mawkler/modicator.nvim',
+        init = function()
+            vim.o.cursorline = true
+            vim.o.number = true
+            vim.o.termguicolors = true
+        end,
+        opts = {},
+    },
     { -- folke/noice.nvim
         'folke/noice.nvim',
         event = 'VeryLazy',
