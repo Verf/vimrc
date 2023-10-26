@@ -843,7 +843,6 @@ local plugins = {
         event = 'VeryLazy',
         keys = {
             { '<leader>rn', vim.lsp.buf.rename, desc = 'Rename' },
-            { '<leader>a', vim.lsp.buf.code_action, desc = 'Code Action' },
             { 'gk', vim.lsp.buf.hover, desc = 'Hover' },
             { 'gd', vim.lsp.buf.definition, desc = 'Goto definition' },
             { 'gr', vim.lsp.buf.references, desc = 'Find references' },
@@ -871,12 +870,6 @@ local plugins = {
             require('lspconfig').ruff_lsp.setup {
                 capabilities = capabilities,
             }
-            require('lspconfig').gopls.setup {
-                capabilities = capabilities,
-            }
-            require('lspconfig').rust_analyzer.setup {
-                capabilities = capabilities,
-            }
             require('lspconfig').volar.setup {
                 capabilities = capabilities,
                 filetypes = { 'typescript', 'javascript', 'vue', 'json' },
@@ -893,6 +886,13 @@ local plugins = {
         dependencies = {
             'onsails/lspkind-nvim',
         },
+    },
+    {
+        'weilbith/nvim-code-action-menu',
+        keys = {
+            { '<leader>a', '<CMD>CodeActionMenu<CR>', desc = 'Code Action' },
+        },
+        cmd = 'CodeActionMenu',
     },
     { -- mfussenegger/nvim-dap
         'mfussenegger/nvim-dap',
