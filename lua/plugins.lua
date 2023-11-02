@@ -12,24 +12,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    { -- Verf/deepwhite.nvim
-        'Verf/deepwhite.nvim',
-        branch = 'main',
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require('deepwhite').setup {
-                low_blue_light = true,
-            }
-            vim.cmd [[colorscheme deepwhite]]
-        end,
-    },
+    { 'Verf/deepwhite.nvim' },
     { 'EdenEast/nightfox.nvim' },
+    { 'Mofiqul/dracula.nvim' },
     { -- nvim-tree/nvim-web-devicons
         'nvim-tree/nvim-web-devicons',
         event = 'VeryLazy',
     },
-    {
+    { -- mawkler/modicator.nvim
         'mawkler/modicator.nvim',
         init = function()
             vim.o.cursorline = true
