@@ -92,6 +92,9 @@ local plugins = {
                 i = { 'n', 'i', 'y', 'o' },
                 v = { 'n', 'i', 'y', 'o' },
             },
+            window = {
+                border = 'single',
+            },
         },
     },
     { -- echasnovski/mini.align
@@ -507,11 +510,7 @@ local plugins = {
             opts.tabline = { BufferLine, Align, TabPages }
         end,
     },
-    { -- backdround/tabscope.nvim
-        'backdround/tabscope.nvim',
-        event = 'VeryLazy',
-        opts = {},
-    },
+    { 'tiagovla/scope.nvim', event = 'VeryLazy', opts = {} },
     { -- monaqa/dial.nvim
         'monaqa/dial.nvim',
         keys = {
