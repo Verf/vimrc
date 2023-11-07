@@ -1,10 +1,6 @@
 # #
 snippet #u "coding: utf-8" b
 	# -*- coding: utf-8 -*-
-snippet #a "coding with information" b
-    # -*- coding: utf-8 -*-
-    # @Auther: Verf
-    # @Email: verf@protonmail.com
 snippet #! "shebang" b
 	#!/usr/bin/env python3
 # [
@@ -45,31 +41,20 @@ snippet cli "class with init" b
 snippet d "def" b
 	def $1(${2:`indent('.') ? 'self' : ''`}) -> ${3:None}:
 		$0
-snippet def "def" b
-	def $1(${2:`indent('.') ? 'self' : ''`}) -> ${3:None}:
-		$0
 # e
 # f
 snippet f "for in" b
 	for ${1:item} in ${2:items}:
 	    $0
-snippet fim "from import" b
-	from ${1:package} import ${0:module}
-snippet for "for in" b
-	for ${1:item} in ${2:items}:
-	    $0
-snippet from "from import" b
+snippet fi "from import" b
 	from ${1:package} import ${0:module}
 # g
 snippet g "global" b
 	global
 # h
 # i
-snippet if "if" b
-	if $1:
-		$0
-snippet im "import" b
-	import ${0:package}
+snippet i "import" b
+	import $0
 snippet ifm "if main" b
 	if __name__ == '__main__':
 	    ${0:main()}
@@ -79,13 +64,13 @@ snippet ifm "if main" b
 snippet l "lambda"
 	lambda $1: $0
 snippet ld "logging.debug"
-	${1:logging}.debug($0)
+	${1|logging,logger|}.debug($0)
 snippet li "logging.info"
-	${1:logging}.info($0)
+	${1|logging,logger|}.info($0)
 snippet lw "logging.warning"
-	${1:logging}.warning($0)
+	${1|logging,logger|}.warning($0)
 snippet le "logging.error"
-	${1:logging}.error($0)
+	${1|logging,logger|}.error($0)
 # m
 # n
 # o
@@ -100,30 +85,21 @@ snippet ra "raise exception" b
 	raise ${0:Exception}
 snippet rai "raise exception" b
 	raise ${0:Exception}
-snippet raise "raise exception" b
-	raise ${0:Exception}
 # s
 snippet s. "self." i
 	self.
 # t
-snippet tr "try except" b
+snippet t "try except" b
 	try:
 	    $1
 	except ${2:Exception}$3:
 		$0
-snippet tf "try except finally" b
+snippet tf "try finally" b
  	try:
 		$1
-	except ${2:Exception}$3:
-		$4
 	finally:
 		$0
-snippet try "try except" b
-	try:
-	    $1
-	except ${2:Exception}$3:
-		$0
-snippet tryf "try except finally" b
+snippet tef "try except finally" b
  	try:
 		$1
 	except ${2:Exception}$3:
@@ -145,9 +121,6 @@ snippet wr "with open read" b
 snippet ww "with open write" b
 	with open('$1', '${2:w}', encoding='${3:utf-8}', newline='${4:\\n}') as ${5:fw}:
 	    $0
-snippet while "while" b
-	while $1:
-		$0
 # x
 # y
 snippet y "yield" b

@@ -118,6 +118,7 @@ local plugins = {
         event = { 'BufReadPost', 'BufNewFile' },
         opts = {},
     },
+    { 'echasnovski/mini.extra', opts = {} },
     { -- echasnovski/mini.files
         'echasnovski/mini.files',
         keys = { { '<F2>', '<CMD>lua MiniFiles.open()<CR>', desc = 'Files' } },
@@ -278,12 +279,12 @@ local plugins = {
     { -- echasnovski/mini.pick
         'echasnovski/mini.pick',
         keys = {
-            { '<leader>ff', '<CMD>Pick files<CR>', 'Find Files' },
-            { '<leader>fg', '<CMD>Pick grep_live<CR>', 'Live Grep' },
-            { '<leader>fb', '<CMD>Pick buffers<CR>', 'Find Buffers' },
-            { '<leader>fh', '<CMD>Pick oldfiles<CR>', 'Find Oldfiles' },
-            { '<leader>fs', '<CMD>Pick symbols<CR>', 'Find Symbols' },
-            { '<leader><leader>', '<CMD>Pick buffers<CR>', 'Find Buffers' },
+            { '<leader>f', '<CMD>Pick files<CR>', desc = 'Files' },
+            { '<leader>/', '<CMD>Pick grep_live<CR>', desc = 'Live Grep' },
+            { '<leader>h', '<CMD>Pick oldfiles<CR>', desc = 'Oldfiles' },
+            { '<leader>s', '<CMD>Pick symbols<CR>', desc = 'Symbols' },
+            { '<leader>d', '<CMD>Pick diagnostic<CR>', desc = 'Diagnostics' },
+            { '<leader><leader>', '<CMD>Pick buffers<CR>', desc = 'Buffers' },
         },
         config = function()
             require('mini.pick').setup {}
@@ -336,8 +337,8 @@ local plugins = {
         opts = {
             mappings = {
                 add = '<leader>sa',
-                delete = '<leader>sd',
                 find = '',
+                delete = '<leader>sd',
                 find_left = '',
                 highlight = '',
                 replace = '<leader>sc',
@@ -350,8 +351,8 @@ local plugins = {
     { -- echasnovski/mini.trailspace
         'echasnovski/mini.trailspace',
         keys = {
-            { '<leader>ts', '<CMD>lua MiniTrailspace.trim()<CR>', 'Trim space' },
-            { '<leader>tl', '<CMD>lua MiniTrailspace.trim_last_lines()<CR>', 'Trim lines' },
+            { '<leader>ts', '<CMD>lua MiniTrailspace.trim()<CR>', desc = 'Trim Space' },
+            { '<leader>tl', '<CMD>lua MiniTrailspace.trim_last_lines()<CR>', desc = 'Trim Lines' },
         },
         opt = {},
     },
@@ -523,10 +524,10 @@ local plugins = {
     { -- chrisgrieser/nvim-spider
         'chrisgrieser/nvim-spider',
         keys = {
-            { 'w', "<cmd>lua require('spider').motion('w')<CR>", desc = 'Spider_w', mode = { 'n', 'x', 'o' } },
-            { 'd', "<cmd>lua require('spider').motion('e')<CR>", desc = 'Spider_e', mode = { 'n', 'x', 'o' } },
-            { 'b', "<cmd>lua require('spider').motion('b')<CR>", desc = 'Spider_b', mode = { 'n', 'x', 'o' } },
-            { 'ge', "<cmd>lua require('spider').motion('ge')<CR>", desc = 'Spider_ge', mode = { 'n', 'x', 'o' } },
+            { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'n', 'x', 'o' } },
+            { 'd', "<cmd>lua require('spider').motion('e')<CR>", mode = { 'n', 'x', 'o' } },
+            { 'b', "<cmd>lua require('spider').motion('b')<CR>", mode = { 'n', 'x', 'o' } },
+            { 'ge', "<cmd>lua require('spider').motion('ge')<CR>", mode = { 'n', 'x', 'o' } },
         },
         opts = {
             skipInsignificantPunctuation = false,
@@ -573,12 +574,14 @@ local plugins = {
             },
         },
         config = function()
-            require('conform.formatters.black').args = {
-                '--stdin-filename',
-                '$FILENAME',
-                '--preview',
-                '--quiet',
-                '-',
+            require('conform').formatters.black = {
+                args = {
+                    '--stdin-filename',
+                    '$FILENAME',
+                    '--quiet',
+                    '--preview',
+                    '-',
+                },
             }
             require('conform').setup {
                 formatters_by_ft = {
@@ -731,8 +734,7 @@ local plugins = {
     { -- nvim-treesitter/nvim-treesitter
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
-        cmd = 'TSUpdateSync',
-        event = 'VeryLazy',
+        lazy = false,
         config = function()
             require('nvim-treesitter.configs').setup {
                 ensure_installed = {
@@ -748,7 +750,6 @@ local plugins = {
                     'markdown_inline',
                     'bash',
                     'sql',
-                    'lua',
                     'ini',
                     'xml',
                     'csv',
@@ -829,12 +830,12 @@ local plugins = {
     },
     { -- neovim/nvim-lspconfig
         'neovim/nvim-lspconfig',
-        event = 'VeryLazy',
+        lazy = false,
         keys = {
-            { '<leader>rn', vim.lsp.buf.rename, desc = 'Rename' },
+            { '<leader>r', vim.lsp.buf.rename, desc = 'Rename' },
             { 'gk', vim.lsp.buf.hover, desc = 'Hover' },
-            { 'gd', vim.lsp.buf.definition, desc = 'Goto definition' },
-            { 'gr', vim.lsp.buf.references, desc = 'Find references' },
+            { 'gd', vim.lsp.buf.definition, desc = 'Goto Definition' },
+            { 'gr', vim.lsp.buf.references, desc = 'Find References' },
         },
         config = function()
             -- diagnostic config
@@ -881,7 +882,7 @@ local plugins = {
             'onsails/lspkind-nvim',
         },
     },
-    {
+    { -- weilbith/nvim-code-action-menu
         'weilbith/nvim-code-action-menu',
         keys = {
             { '<leader>a', '<CMD>CodeActionMenu<CR>', desc = 'Code Action' },
