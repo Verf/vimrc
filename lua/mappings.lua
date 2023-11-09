@@ -92,6 +92,9 @@ keymap.set('n', 'zi', 'zk')
 keymap.set('n', '<C-s>', '*``cgn', { desc = 'Search & Replace' })
 keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]], { desc = 'Search & Replace' })
 
+keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard' })
+keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })
+
 keymap.set('n', '<leader>qa', '<CMD>qa!<CR>', { desc = 'Quit All' })
 
 keymap.set('n', '<leader>bc', '<CMD>%bd!|e#<CR>', { desc = 'Buffer Only' })
