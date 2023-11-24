@@ -13,8 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
     { 'Verf/deepwhite.nvim' },
-    { 'EdenEast/nightfox.nvim' },
-    { 'Mofiqul/dracula.nvim' },
     { -- nvim-tree/nvim-web-devicons
         'nvim-tree/nvim-web-devicons',
         event = 'VeryLazy',
