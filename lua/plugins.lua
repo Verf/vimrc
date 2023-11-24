@@ -28,32 +28,6 @@ local plugins = {
         end,
         opts = {},
     },
-    { -- folke/noice.nvim
-        'folke/noice.nvim',
-        event = 'VeryLazy',
-        opts = {
-            messages = {
-                view = 'mini',
-                view_search = 'mini',
-            },
-            lsp = {
-                hover = { silent = true },
-                progress = { enabled = false },
-                signature = { enabled = false },
-            },
-            presets = {
-                bottom_search = true,
-                command_palette = true,
-                long_message_to_split = true,
-                inc_rename = false,
-                lsp_doc_border = true,
-            },
-        },
-        dependencies = {
-            'MunifTanjim/nui.nvim',
-            'rcarriga/nvim-notify',
-        },
-    },
     { -- folke/which-key
         'folke/which-key.nvim',
         event = 'VeryLazy',
@@ -405,15 +379,6 @@ local plugins = {
                     provider = ' ',
                 },
             }
-            local Noice = {
-                condition = require('noice').api.statusline.mode.has,
-                hl = 'TabLineSel',
-                { provider = ' ' },
-                {
-                    provider = require('noice').api.statusline.mode.get,
-                },
-                { provider = ' ' },
-            }
             local FileFormat = {
                 provider = function()
                     local enc = (vim.bo.fenc ~= '' and vim.bo.fenc) or vim.o.enc
@@ -430,7 +395,6 @@ local plugins = {
             local DefaultStatusline = {
                 Git,
                 Align,
-                Noice,
                 Align,
                 FileFormat,
                 Ruler,
@@ -856,8 +820,9 @@ local plugins = {
                 settings = {
                     python = {
                         analysis = {
-                            autoImportCompletions = true,
                             typeCheckingMode = 'basic',
+                            useLibraryCodeForTypes = false,
+                            autoImportCompletions = true,
                         },
                     },
                 },
