@@ -248,61 +248,6 @@ local plugins = {
             },
         },
     },
-    { -- echasnovski/mini.pick
-        'echasnovski/mini.pick',
-        keys = {
-            { '<leader>f', '<CMD>Pick files<CR>', desc = 'Files' },
-            { '<leader>/', '<CMD>Pick grep_live<CR>', desc = 'Live Grep' },
-            { '<leader>h', '<CMD>Pick oldfiles<CR>', desc = 'Oldfiles' },
-            { '<leader>s', '<CMD>Pick symbols<CR>', desc = 'Symbols' },
-            { '<leader>d', '<CMD>Pick diagnostic<CR>', desc = 'Diagnostics' },
-            { '<leader><leader>', '<CMD>Pick buffers<CR>', desc = 'Buffers' },
-        },
-        config = function()
-            require('mini.pick').setup {}
-            MiniPick.registry.oldfiles = function()
-                local source = {
-                    items = vim.v.oldfiles,
-                    name = 'Oldfiles',
-                }
-                local oldfiles = MiniPick.start { source = source }
-                if oldfiles == nil then
-                    return
-                end
-                return oldfiles
-            end
-            MiniPick.registry.symbols = function()
-                local bufnr = vim.fn.bufnr()
-                local winnr = vim.fn.winnr()
-                local params = vim.lsp.util.make_position_params(0)
-                vim.lsp.buf_request(bufnr, 'textDocument/documentSymbol', params, function(err, result, _, _)
-                    if err then
-                        return
-                    end
-                    if not result or vim.tbl_isempty(result) then
-                        return
-                    end
-                    local locations = vim.lsp.util.symbols_to_items(result or {}, bufnr) or {}
-                    if vim.tbl_isempty(locations) then
-                        return
-                    end
-                    local source = {
-                        items = locations,
-                        name = 'Symbols',
-                        choose = function(item)
-                            item.bufnr = bufnr
-                            MiniPick.default_choose(item)
-                        end,
-                    }
-                    local symbols = MiniPick.start { source = source }
-                    if symbols == nil then
-                        return
-                    end
-                    return symbols
-                end)
-            end
-        end,
-    },
     { -- echasnovski/mini.surround
         'echasnovski/mini.surround',
         keys = { 'sa', 'sd', 'sc' },
@@ -691,6 +636,49 @@ local plugins = {
             'hrsh7th/cmp-nvim-lsp-signature-help',
             'dcampos/nvim-snippy',
             'dcampos/cmp-snippy',
+        },
+    },
+    { -- nvim-telescope/telescope.nvim
+        'nvim-telescope/telescope.nvim',
+        keys = {
+            { '<leader><leader>', '<CMD>Telescope buffers<CR>', desc = 'Buffers' },
+            { '<leader>f', '<CMD>Telescope find_files<CR>', desc = 'Files' },
+            { '<leader>h', '<CMD>Telescope oldfiles<CR>', desc = 'History' },
+            { '<leader>/', '<CMD>Telescope live_grep<CR>', desc = 'Grep' },
+            { '<leader>d', '<CMD>Telescope diagnostics<CR>', desc = 'Diagnostics' },
+            { '<leader>s', '<CMD>Telescope lsp_document_symbols<CR>', desc = 'Symbols' },
+            { 'gd', '<CMD>Telescope lsp_definitions<CR>', desc = 'Definitions' },
+            { 'gr', '<CMD>Telescope lsp_references<CR>', desc = 'References' },
+            { 'gi', '<CMD>Telescope lsp_implementations<CR>', desc = 'Implementations' },
+        },
+        opts = function(_, opts)
+            vim.cmd [[au FileType Telescope setlocal nocursorline]]
+            opts.defaults = {
+                borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+                layout_strategy = 'vertical',
+                layout_config = {
+                    width = 0.8,
+                },
+            }
+            opts.extensions = {
+                undo = {
+                    use_delta = false,
+                    side_by_side = false,
+                    diff_context_lines = 3,
+                },
+                everything = {
+                    match_path = true,
+                    regex = true,
+                    max_results = 100,
+                },
+            }
+            require('telescope').load_extension 'zf-native'
+            require('telescope').load_extension 'everything'
+        end,
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'natecraddock/telescope-zf-native.nvim',
+            'Verf/telescope-everything.nvim',
         },
     },
     { -- nvim-treesitter/nvim-treesitter
