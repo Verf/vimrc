@@ -111,8 +111,6 @@ opt.shellxquote = ''
 opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize'
 opt.fillchars:append {
     eob = ' ',
-    stl = '─',
-    stlnc = '─',
     foldopen = '',
     foldsep = ' ',
     foldclose = '',
