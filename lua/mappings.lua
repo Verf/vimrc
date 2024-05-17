@@ -47,8 +47,8 @@ end, { noremap = true, expr = true })
 -- don't add change value to clipboard
 keymap.set({ 'n', 'v' }, 'c', '"_c')
 keymap.set({ 'n', 'v' }, 'C', '"_C')
-keymap.set({ 'n', 'v' }, 's', '"_s')
-keymap.set({ 'n', 'v' }, 'S', '"_S')
+-- keymap.set({ 'n', 'v' }, 's', '"_s')
+-- keymap.set({ 'n', 'v' }, 'S', '"_S')
 
 -- speed up macro running
 keymap.set('n', '@', function()
@@ -65,6 +65,7 @@ keymap.set('n', '@', function()
         vim.api.nvim_command 'silent update'
     end
 end, { noremap = true })
+
 keymap.set('n', 'Q', function()
     local count = vim.v.count1
     vim.opt.lazyredraw = true
@@ -83,14 +84,14 @@ keymap.set('n', '<TAB>', '<CMD>bn<CR>')
 keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
 keymap.set('n', '<leader><TAB>', '<CMD>b#<CR>', { desc = 'Swith Buffer' })
 
-keymap.set('n', ']d', '<CMD>lua vim.diagnostic.goto_next()<CR>', { desc = 'Next Diagnostic' })
-keymap.set('n', '[d', '<CMD>lua vim.diagnostic.goto_prev()<CR>', { desc = 'Previous Diagnostic' })
-
 keymap.set('n', 'zn', 'zj')
 keymap.set('n', 'zi', 'zk')
 
 keymap.set('n', '<C-s>', '*``cgn', { desc = 'Search & Replace' })
 keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]], { desc = 'Search & Replace' })
+
+keymap.set({ 'n', 'o', 'x' }, 'gs', '^', { desc = 'Goto Line Start' })
+keymap.set({ 'n', 'o', 'x' }, 'gl', '$', { desc = 'Goto Line End' })
 
 keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard' })
 keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })
@@ -107,10 +108,13 @@ keymap.set('n', '<leader>tc', '<CMD>tabonly<CR>', { desc = 'Tab Only' })
 
 keymap.set('n', '<leader>wc', '<C-w>o', { desc = 'Window Only' })
 keymap.set('n', '<leader>wq', '<C-w>c', { desc = 'Window Close' })
+keymap.set('n', '<leader>ws', '<C-w>s', { desc = 'Window Split' })
+keymap.set('n', '<leader>wv', '<C-w>v', { desc = 'Window VSplit' })
+keymap.set('n', '<leader>wy', '<C-w>h', { desc = 'Switch to Left' })
+keymap.set('n', '<leader>wn', '<C-w>j', { desc = 'Switch to Bottom' })
+keymap.set('n', '<leader>wi', '<C-w>k', { desc = 'Switch to Up' })
+keymap.set('n', '<leader>wo', '<C-w>l', { desc = 'Switch to Right' })
 keymap.set('n', '<leader>wY', '<C-w>H', { desc = 'Window to Left' })
 keymap.set('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
 keymap.set('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
 keymap.set('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
-
-keymap.set({ 'n', 'v', 'i' }, '<F1>', '<CMD>vs | term<CR>', { desc = 'Open Terminal' })
-keymap.set('t', '<Esc>', '<C-\\><C-n>')

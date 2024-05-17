@@ -9,7 +9,6 @@
 --
 vim.loader.enable()
 
-require 'functions'
 require 'settings'
 require 'mappings'
 require 'plugins'
