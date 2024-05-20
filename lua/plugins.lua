@@ -42,15 +42,6 @@ now(function()
 end)
 
 later(function()
-    require('mini.ai').setup {
-        mappings = {
-            inside = 'r',
-            inside_next = 'rn',
-            inside_last = 'rl',
-        },
-    }
-end)
-later(function()
     require('mini.bufremove').setup()
     vim.keymap.set('n', '<leader>qq', '<CMD>lua MiniBufremove.delete()<CR>')
 end)
@@ -58,7 +49,12 @@ later(function()
     require('mini.comment').setup()
 end)
 later(function()
-    require('mini.completion').setup()
+    require('mini.completion').setup {
+        window = {
+            info = { border = 'single' },
+            signature = { border = 'single' },
+        },
+    }
     vim.keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
     vim.keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
 end)
@@ -99,7 +95,8 @@ later(function()
             end,
         },
         mappings = {
-            object_scope = 'ri',
+            object_scope = '',
+            object_scope_with_border = '',
         },
         symbol = '│',
     }
@@ -264,7 +261,26 @@ later(function()
             'csv',
             'vimdoc',
         },
-        highlight = { enable = true },
+        highlight = {
+            enable = true,
+            disable = function(lang, bufnr)
+                -- disable for a large file
+                return vim.api.nvim_buf_line_count(bufnr) > 10000
+            end,
+            additional_vim_regex_highlighting = false,
+        },
+        indent = {
+            enable = true,
+        },
+        incremental_selection = {
+            enable = true,
+            keymaps = {
+                init_selection = '<CR>',
+                node_incremental = '<CR>',
+                scope_incremental = false,
+                node_decremental = '<S-CR>',
+            },
+        },
     }
 end)
 
