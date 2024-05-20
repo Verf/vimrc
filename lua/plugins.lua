@@ -183,7 +183,7 @@ later(function()
     require('mini.pick').setup()
     vim.keymap.set('n', '<leader>/', '<CMD>Pick grep_live<CR>', { desc = 'Grep Live' })
     vim.keymap.set('n', '<leader>f', '<CMD>Pick files<CR>', { desc = 'Pick Files' })
-    vim.keymap.set('n', '<leader>h', '<CMD>Pick files<CR>', { desc = 'Pick Oldfiles' })
+    vim.keymap.set('n', '<leader>h', '<CMD>Pick oldfiles<CR>', { desc = 'Pick Oldfiles' })
     vim.keymap.set('n', '<leader>d', '<CMD>Pick diagnostic<CR>', { desc = 'Pick Diagnostics' })
     vim.keymap.set('n', '<leader>gb', '<CMD>Pick git_branches<CR>', { desc = 'Pick Diagnostics' })
     vim.keymap.set('n', '<leader>gc', '<CMD>Pick git_commits<CR>', { desc = 'Pick Commits' })
@@ -218,7 +218,16 @@ end)
 
 now(function()
     add { source = 'neovim/nvim-lspconfig' }
-    require('lspconfig').basedpyright.setup {}
+    require('lspconfig').basedpyright.setup {
+        cmd = { 'basedpyright-langserver', '--stdio', '--pythonversion 3.6' },
+        settings = {
+            basedpyright = {
+                analysis = {
+                    typeCheckingMode = 'basic',
+                },
+            },
+        },
+    }
 end)
 
 later(function()
