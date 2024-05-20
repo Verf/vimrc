@@ -42,7 +42,13 @@ now(function()
 end)
 
 later(function()
-    require('mini.ai').setup()
+    require('mini.ai').setup {
+        mappings = {
+            inside = 'r',
+            inside_next = 'rn',
+            inside_last = 'rl',
+        },
+    }
 end)
 later(function()
     require('mini.bufremove').setup()
@@ -91,6 +97,9 @@ later(function()
             animation = function()
                 return 0
             end,
+        },
+        mappings = {
+            object_scope = 'ri',
         },
         symbol = '│',
     }
