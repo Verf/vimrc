@@ -37,7 +37,6 @@ opt.synmaxcol = 200
 opt.pumheight = 10
 
 opt.mouse = 'a'
-opt.splitkeep = 'screen'
 opt.virtualedit = 'block'
 opt.fileformats = 'unix,dos'
 opt.shell = 'nu'
@@ -46,3 +45,4 @@ opt.shellquote = ''
 opt.shellxquote = ''
 opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize'
 opt.formatoptions:remove { 'c', 'r', 'o' }
+opt.fillchars:append { vert = ' ' }
