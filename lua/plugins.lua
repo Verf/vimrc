@@ -249,16 +249,9 @@ later(function()
     }
     require('nvim-treesitter.configs').setup {
         ensure_installed = {
-            'lua',
-            'python',
             'vue',
-            'yaml',
-            'toml',
-            'json',
+            'python',
             'javascript',
-            'css',
-            'html',
-            'csv',
             'vimdoc',
         },
         highlight = {
