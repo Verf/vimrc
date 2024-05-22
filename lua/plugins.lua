@@ -49,16 +49,6 @@ later(function()
     require('mini.comment').setup()
 end)
 later(function()
-    require('mini.completion').setup {
-        window = {
-            info = { border = 'single' },
-            signature = { border = 'single' },
-        },
-    }
-    vim.keymap.set('i', '<Tab>', [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
-    vim.keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
-end)
-later(function()
     require('mini.diff').setup()
 end)
 later(function()
@@ -222,7 +212,122 @@ later(function()
     vim.api.nvim_create_user_command('TrimLine', 'lua MiniTrailspace.trim_last_lines()', {})
 end)
 
-now(function()
+later(function()
+    add {
+        source = 'hrsh7th/nvim-cmp',
+        depends = {
+            'hrsh7th/cmp-path',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-cmdline',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lsp-signature-help',
+            'dcampos/nvim-snippy',
+            'dcampos/cmp-snippy',
+            'onsails/lspkind-nvim',
+        },
+    }
+    local cmp = require 'cmp'
+    local snip = require 'snippy'
+    local lspkind = require 'lspkind'
+    local compare = require('cmp').config.compare
+
+    local has_words_before = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
+    end
+
+    cmp.setup {
+        snippet = {
+            expand = function(args)
+                snip.expand_snippet(args.body)
+            end,
+        },
+        window = {
+            completion = cmp.config.window.bordered { border = 'single', scrollbar = false },
+            documentation = cmp.config.window.bordered { border = 'single' },
+        },
+        formatting = {
+            format = lspkind.cmp_format {
+                maxwidth = 50,
+            },
+        },
+        mapping = {
+            ['<CR>'] = cmp.mapping.confirm { select = true },
+            ['<Tab>'] = cmp.mapping(function(fallback)
+                if snip.can_expand() then
+                    snip.expand()
+                elseif cmp.visible() then
+                    cmp.select_next_item()
+                elseif snip.can_jump(1) then
+                    snip.next()
+                else
+                    fallback()
+                end
+            end, { 'i', 's' }),
+            ['<S-Tab>'] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                elseif snip.can_jump(-1) then
+                    snip.previous()
+                else
+                    fallback()
+                end
+            end, { 'i', 's' }),
+            ['<C-n>'] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.select_next_item()
+                elseif has_words_before() then
+                    cmp.complete()
+                end
+            end, { 'i', 's' }),
+            ['<C-p>'] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                elseif has_words_before() then
+                    cmp.complete()
+                end
+            end, { 'i', 's' }),
+        },
+        sources = cmp.config.sources {
+            { name = 'nvim_lsp_signature_help' },
+            { name = 'nvim_lsp' },
+            { name = 'snippy' },
+            { name = 'buffer' },
+            { name = 'path' },
+        },
+        sorting = {
+            priority_weight = 1.0,
+            comparators = {
+                compare.locality,
+                compare.recently_used,
+                compare.score,
+                compare.offset,
+                compare.order,
+            },
+        },
+    }
+
+    -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+            { name = 'buffer' },
+        },
+    })
+
+    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+            { name = 'path' },
+        }, {
+            { name = 'cmdline' },
+        }),
+    })
+end)
+
+later(function()
     add { source = 'neovim/nvim-lspconfig' }
     require('lspconfig').basedpyright.setup {
         cmd = { 'basedpyright-langserver', '--stdio', '--pythonversion 3.6' },
