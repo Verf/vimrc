@@ -31,9 +31,6 @@ keymap.set({ 'n', 'o', 'x' }, 'O', 'L')
 keymap.set({ 'n', 'o', 'x' }, 'P', 'N')
 keymap.set({ 'n', 'o', 'x' }, 'H', ':')
 keymap.set({ 'n', 'o', 'x' }, ':', 'P')
--- switch keymap for marks and registers
-keymap.set({ 'n', 'o', 'x' }, [[']], [["]])
-keymap.set({ 'n', 'o', 'x' }, [["]], [[']])
 
 -- don't push to clipboard when delete empty line
 keymap.set('n', 'ee', function()
@@ -42,7 +39,7 @@ keymap.set('n', 'ee', function()
     else
         return 'dd'
     end
-end, { noremap = true, expr = true })
+end, { expr = true })
 
 -- don't add change value to clipboard
 keymap.set({ 'n', 'v' }, 'c', '"_c')
@@ -64,7 +61,7 @@ keymap.set('n', '@', function()
     if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
         vim.api.nvim_command 'silent update'
     end
-end, { noremap = true })
+end, { expr = true, desc = 'Execute Macro' })
 
 keymap.set('n', 'Q', function()
     local count = vim.v.count1
@@ -78,7 +75,7 @@ keymap.set('n', 'Q', function()
     if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
         vim.api.nvim_command 'silent update'
     end
-end, { noremap = true })
+end, { expr = true, desc = 'Execute Last Macro' })
 
 keymap.set('n', '<TAB>', '<CMD>bn<CR>')
 keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')
@@ -92,6 +89,7 @@ keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]], { desc = 'Se
 
 keymap.set({ 'n', 'o', 'x' }, 'gs', '^', { desc = 'Goto Line Start' })
 keymap.set({ 'n', 'o', 'x' }, 'gl', '$', { desc = 'Goto Line End' })
+keymap.set({ 'n', 'o', 'x' }, 'ge', 'G', { desc = 'Goto End' })
 
 keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard' })
 keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })

@@ -48,7 +48,7 @@ later(function()
 end)
 later(function()
     require('mini.bufremove').setup()
-    vim.keymap.set('n', '<leader>qq', '<CMD>lua MiniBufremove.delete()<CR>')
+    vim.keymap.set('n', '<leader>qq', '<CMD>lua MiniBufremove.delete()<CR>', { desc = 'Close Buffer' })
 end)
 later(function()
     require('mini.comment').setup()
@@ -192,6 +192,7 @@ later(function()
     vim.keymap.set('n', '<leader>gb', '<CMD>Pick git_branches<CR>', { desc = 'Pick Diagnostics' })
     vim.keymap.set('n', '<leader>gc', '<CMD>Pick git_commits<CR>', { desc = 'Pick Commits' })
     vim.keymap.set('n', '<leader>gh', '<CMD>Pick git_hunks<CR>', { desc = 'Pick Hunks' })
+    vim.keymap.set('n', '<leader>gm', '<CMD>Pick marks<CR>', { desc = 'Pick Marks' })
 end)
 later(function()
     require('mini.sessions').setup {
@@ -335,7 +336,7 @@ later(function()
     })
 end)
 
-later(function()
+now(function()
     add { source = 'neovim/nvim-lspconfig' }
     require('lspconfig').basedpyright.setup {
         cmd = { 'basedpyright-langserver', '--stdio', '--pythonversion 3.6' },
@@ -347,9 +348,15 @@ later(function()
             },
         },
     }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'Goto Declaration' })
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto Definition' })
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Goto References' })
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = 'Goto Implementation' })
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover Doc' })
+    vim.keymap.set('n', '<space>r', vim.lsp.buf.rename, { desc = 'Rename' })
 end)
 
-later(function()
+now(function()
     add {
         source = 'nvim-treesitter/nvim-treesitter',
         checkout = 'master',
