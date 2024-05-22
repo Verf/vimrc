@@ -24,6 +24,7 @@ opt.shellslash = false
 opt.spell = false
 opt.autowrite = true
 opt.confirm = true
+opt.foldenable = false
 
 opt.updatetime = 750
 opt.scrolloff = 999
