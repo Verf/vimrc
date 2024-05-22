@@ -17,6 +17,8 @@ require('mini.deps').setup { path = { package = path_package } }
 
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
+add { source = 'echasnovski/mini.nvim' }
+
 now(function()
     add {
         source = 'Verf/deepwhite.nvim',
@@ -64,6 +66,9 @@ later(function()
         },
     }
     vim.keymap.set('n', '-', '<CMD>lua MiniFiles.open()<CR>', { desc = 'Open Files' })
+end)
+later(function()
+    require('mini.git').setup()
 end)
 later(function()
     require('mini.hipatterns').setup {
