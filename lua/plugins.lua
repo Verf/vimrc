@@ -33,32 +33,36 @@ now(function()
     require('mini.notify').setup()
     vim.notify = require('mini.notify').make_notify()
 end)
+
 now(function()
     require('mini.tabline').setup()
 end)
+
 now(function()
     require('mini.statusline').setup()
-end)
-now(function()
-    require('mini.starter').setup()
 end)
 
 later(function()
     require('mini.align').setup()
 end)
+
 later(function()
     require('mini.bufremove').setup()
     vim.keymap.set('n', '<leader>qq', '<CMD>lua MiniBufremove.delete()<CR>', { desc = 'Close Buffer' })
 end)
+
 later(function()
     require('mini.comment').setup()
 end)
+
 later(function()
     require('mini.diff').setup()
 end)
+
 later(function()
     require('mini.extra').setup()
 end)
+
 later(function()
     require('mini.files').setup {
         mappings = {
@@ -70,9 +74,7 @@ later(function()
     }
     vim.keymap.set('n', '-', '<CMD>lua MiniFiles.open()<CR>', { desc = 'Open Files' })
 end)
-later(function()
-    require('mini.git').setup()
-end)
+
 later(function()
     require('mini.hipatterns').setup {
         highlighters = {
@@ -84,6 +86,7 @@ later(function()
         },
     }
 end)
+
 later(function()
     require('mini.indentscope').setup {
         draw = {
@@ -99,6 +102,7 @@ later(function()
         symbol = '│',
     }
 end)
+
 later(function()
     require('mini.jump').setup {
         mappings = {
@@ -110,6 +114,7 @@ later(function()
         },
     }
 end)
+
 later(function()
     require('mini.jump2d').setup {
         labels = 'tneisoahfdurvcpm',
@@ -135,11 +140,13 @@ later(function()
         { desc = 'Goto Word' }
     )
 end)
+
 later(function()
     require('mini.misc').setup()
     require('mini.misc').setup_auto_root()
     require('mini.misc').setup_restore_cursor()
 end)
+
 later(function()
     require('mini.move').setup {
         mappings = {
@@ -154,6 +161,7 @@ later(function()
         },
     }
 end)
+
 later(function()
     -- disable auto pairs when block edit
     vim.api.nvim_create_autocmd({ 'ModeChanged' }, {
@@ -173,16 +181,9 @@ later(function()
             insert = true,
             command = true,
         },
-        mappings = {
-            ['('] = { action = 'open', pair = '()', neigh_pattern = '[^\\][^%a]' },
-            ['['] = { action = 'open', pair = '[]', neigh_pattern = '[^\\][^%a]' },
-            ['{'] = { action = 'open', pair = '{}', neigh_pattern = '[^\\][^%a]' },
-            ['"'] = { action = 'closeopen', pair = '""', neigh_pattern = '[^\\][^%a]', register = { cr = false } },
-            ["'"] = { action = 'closeopen', pair = "''", neigh_pattern = '[^\\][^%a]', register = { cr = false } },
-            ['`'] = { action = 'closeopen', pair = '``', neigh_pattern = '[^\\][^%a]', register = { cr = false } },
-        },
     }
 end)
+
 later(function()
     require('mini.pick').setup()
     vim.keymap.set('n', '<leader>/', '<CMD>Pick grep_live<CR>', { desc = 'Grep Live' })
@@ -194,12 +195,7 @@ later(function()
     vim.keymap.set('n', '<leader>gh', '<CMD>Pick git_hunks<CR>', { desc = 'Pick Hunks' })
     vim.keymap.set('n', '<leader>gm', '<CMD>Pick marks<CR>', { desc = 'Pick Marks' })
 end)
-later(function()
-    require('mini.sessions').setup {
-        directory = vim.fn.stdpath 'data' .. '/session',
-        file = '',
-    }
-end)
+
 later(function()
     require('mini.surround').setup {
         mappings = {
@@ -215,6 +211,7 @@ later(function()
         },
     }
 end)
+
 later(function()
     require('mini.trailspace').setup()
     vim.api.nvim_create_user_command('Trim', 'lua MiniTrailspace.trim()', {})
@@ -338,6 +335,14 @@ end)
 
 now(function()
     add { source = 'neovim/nvim-lspconfig' }
+    local on_attach = function(client, bufnr)
+        if client.name == 'ruff' then
+            client.server_capabilities.hoverProvider = false
+        end
+    end
+    require('lspconfig').ruff.setup {
+        on_attach = on_attach,
+    }
     require('lspconfig').basedpyright.setup {
         cmd = { 'basedpyright-langserver', '--stdio', '--pythonversion 3.6' },
         settings = {
@@ -353,6 +358,7 @@ now(function()
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Goto References' })
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = 'Goto Implementation' })
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'Hover Doc' })
+    vim.keymap.set('n', '<space>a', vim.lsp.buf.code_action, { desc = 'Code Action' })
     vim.keymap.set('n', '<space>r', vim.lsp.buf.rename, { desc = 'Rename' })
 end)
 
