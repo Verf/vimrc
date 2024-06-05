@@ -336,6 +336,7 @@ end)
 now(function()
     add { source = 'neovim/nvim-lspconfig' }
     local on_attach = function(client, bufnr)
+        client.server_capabilities.semanticTokensProvider = nil
         if client.name == 'ruff' then
             client.server_capabilities.hoverProvider = false
         end
@@ -345,6 +346,7 @@ now(function()
     }
     require('lspconfig').basedpyright.setup {
         cmd = { 'basedpyright-langserver', '--stdio', '--pythonversion 3.6' },
+        on_attach = on_attach,
         settings = {
             basedpyright = {
                 analysis = {
