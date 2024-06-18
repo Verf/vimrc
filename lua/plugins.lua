@@ -336,9 +336,11 @@ end)
 now(function()
     add { source = 'neovim/nvim-lspconfig' }
     local on_attach = function(client, bufnr)
-        client.server_capabilities.semanticTokensProvider = nil
         if client.name == 'ruff' then
             client.server_capabilities.hoverProvider = false
+        end
+        if client.name == 'basedpyright' then
+            client.server_capabilities.semanticTokensProvider = nil
         end
     end
     require('lspconfig').ruff.setup {
@@ -355,6 +357,9 @@ now(function()
             },
         },
     }
+
+    require('lspconfig').rust_analyzer.setup {}
+
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'Goto Declaration' })
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto Definition' })
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Goto References' })
