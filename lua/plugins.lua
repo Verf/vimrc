@@ -360,6 +360,14 @@ now(function()
 
     require('lspconfig').rust_analyzer.setup {}
 
+    require('lspconfig').volar.setup {
+        init_options = {
+            typescript = {
+                tsdk = vim.fn.expand '$HOME/AppData/Roaming/npm/node_modules/typescript/lib',
+            },
+        },
+    }
+
     vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'Goto Declaration' })
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto Definition' })
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'Goto References' })
