@@ -218,6 +218,12 @@ later(function()
                     cmp.complete()
                 end
             end, { 'i', 's' }),
+            ['<C-d>'] = cmp.mapping(function(fallback)
+                if snip.can_jump(1) then snip.next() end
+            end, { 'i', 's' }),
+            ['<C-u>'] = cmp.mapping(function(fallback)
+                if snip.can_jump(-1) then snip.previous() end
+            end, { 'i', 's' }),
         },
         sources = cmp.config.sources {
             { name = 'nvim_lsp_signature_help' },
@@ -252,10 +258,12 @@ later(function()
 end)
 
 add { source = 'neovim/nvim-lspconfig' }
+
 local on_attach = function(client, bufnr)
     if client.name == 'ruff' then client.server_capabilities.hoverProvider = false end
     if client.name == 'basedpyright' then client.server_capabilities.semanticTokensProvider = nil end
 end
+
 require('lspconfig').ruff.setup { on_attach = on_attach }
 require('lspconfig').basedpyright.setup {
     cmd = { 'basedpyright-langserver', '--stdio', '--pythonversion 3.6' },
