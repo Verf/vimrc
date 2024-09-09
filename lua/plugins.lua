@@ -118,7 +118,12 @@ require('mini.pairs').setup {
         command = true,
     },
 }
-require('mini.pick').setup()
+require('mini.pick').setup {
+    delay = {
+        async = 200,
+        busy = 500,
+    },
+}
 vim.keymap.set('n', '<leader>/', '<CMD>Pick grep_live<CR>', { desc = 'Grep Live' })
 vim.keymap.set('n', '<leader>f', '<CMD>Pick files<CR>', { desc = 'Pick Files' })
 vim.keymap.set('n', '<leader>h', '<CMD>Pick oldfiles<CR>', { desc = 'Pick Oldfiles' })
@@ -228,7 +233,6 @@ later(function()
         sources = cmp.config.sources {
             { name = 'nvim_lsp_signature_help' },
             { name = 'nvim_lsp' },
-            { name = 'snippy' },
             { name = 'buffer' },
             { name = 'path' },
         },
@@ -370,6 +374,7 @@ require('conform').setup {
     formatters_by_ft = {
         lua = { 'stylua' },
         python = { 'ruff_format' },
+        vue = { 'prettier' },
     },
 }
 vim.keymap.set('n', '<leader>m', '<CMD>lua require("conform").format({async=true})<CR>', { desc = 'Format' })
