@@ -380,22 +380,3 @@ require('conform').setup {
     },
 }
 vim.keymap.set('n', '<leader>m', '<CMD>lua require("conform").format({async=true})<CR>', { desc = 'Format' })
-
-add { source = 'chrisgrieser/nvim-rip-substitute' }
-require('rip-substitute').setup {
-    keymaps = {
-        -- normal & visual mode
-        confirm = '<CR>',
-        abort = 'q',
-        prevSubst = '<C-p>',
-        nextSubst = '<C-n>',
-        openAtRegex101 = 'R',
-        insertModeConfirm = '<C-CR>', -- (except this one, obviously)
-    },
-}
-vim.keymap.set(
-    { 'n', 'x' },
-    '<leader>s',
-    function() require('rip-substitute').sub() end,
-    { desc = ' rip substitute' }
-)
