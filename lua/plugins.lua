@@ -150,7 +150,8 @@ vim.api.nvim_create_user_command('Trim', 'lua MiniTrailspace.trim()', {})
 vim.api.nvim_create_user_command('TrimLine', 'lua MiniTrailspace.trim_last_lines()', {})
 
 add {
-    source = 'hrsh7th/nvim-cmp',
+    source = 'iguanacucumber/magazine.nvim',
+    name = 'nvim-cmp',
     depends = {
         'hrsh7th/cmp-path',
         'hrsh7th/cmp-buffer',
@@ -375,6 +376,7 @@ require('conform').setup {
         lua = { 'stylua' },
         python = { 'ruff_format' },
         vue = { 'prettier' },
+        json = { 'prettier' },
     },
 }
 vim.keymap.set('n', '<leader>m', '<CMD>lua require("conform").format({async=true})<CR>', { desc = 'Format' })
