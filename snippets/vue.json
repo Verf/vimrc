@@ -1,0 +1,6 @@
+{
+  "console.log": {
+    "prefix": "csl",
+    "body": "console.log($0)"
+  }
+}

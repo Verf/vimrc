@@ -22,253 +22,187 @@ require('deepwhite').setup { low_blue_light = true }
 now(function() vim.cmd 'colorscheme deepwhite' end)
 
 add { source = 'echasnovski/mini.nvim' }
-require('mini.notify').setup()
-vim.notify = require('mini.notify').make_notify()
-require('mini.tabline').setup()
-require('mini.statusline').setup()
-require('mini.align').setup()
-require('mini.bufremove').setup()
-vim.keymap.set('n', '<leader>qq', '<CMD>lua MiniBufremove.delete()<CR>', { desc = 'Close Buffer' })
-require('mini.comment').setup()
-require('mini.diff').setup()
-require('mini.extra').setup()
-require('mini.files').setup {
-    mappings = {
-        go_in = 'o',
-        go_in_plus = 'H',
-        go_out = 'y',
-        go_out_plus = 'Y',
-    },
-}
-vim.keymap.set('n', '-', '<CMD>lua MiniFiles.open()<CR>', { desc = 'Open Files' })
-require('mini.hipatterns').setup {
-    highlighters = {
-        fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
-        hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
-        todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
-        note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
-        hex_color = require('mini.hipatterns').gen_highlighter.hex_color(),
-    },
-}
-require('mini.indentscope').setup {
-    draw = {
-        delay = 0,
-        animation = function() return 0 end,
-    },
-    mappings = {
-        object_scope = '',
-        object_scope_with_border = '',
-    },
-    symbol = '│',
-}
-require('mini.jump').setup {
-    mappings = {
-        forward = 't',
-        backward = 'T',
-        forward_till = 'k',
-        backward_till = 'K',
-        repeat_jump = '',
-    },
-}
-require('mini.jump2d').setup {
-    labels = 'tneisoahfdurvcpm',
-    view = {
-        dim = true,
-        n_steps_ahead = 2,
-    },
-    allowed_lines = {
-        blank = false,
-        cursor_at = false,
-    },
-    allowed_windows = {
-        not_current = false,
-    },
-    mappings = {
-        start_jumping = 'gw',
-    },
-}
-vim.keymap.set('n', 'gw', '<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>', { desc = 'Goto Word' })
-require('mini.misc').setup()
-require('mini.misc').setup_auto_root()
-require('mini.misc').setup_restore_cursor()
-require('mini.move').setup {
-    mappings = {
-        left = '<M-y>',
-        right = '<M-o>',
-        down = '<M-n>',
-        up = '<M-i>',
-        line_left = '<M-y>',
-        line_right = '<M-o>',
-        line_up = '<M-i>',
-        line_down = '<M-n>',
-    },
-}
--- disable auto pairs when block edit
-vim.api.nvim_create_autocmd({ 'ModeChanged' }, {
-    pattern = '*:[vV\x16]*',
-    callback = function() vim.b.minipairs_disable = true end,
-})
--- enable auto pairs after block edit finsih
-vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
-    callback = function() vim.b.minipairs_disable = false end,
-})
-require('mini.pairs').setup {
-    modes = {
-        insert = true,
-        command = true,
-    },
-}
-require('mini.pick').setup {
-    delay = {
-        async = 200,
-        busy = 500,
-    },
-}
-vim.keymap.set('n', '<leader>/', '<CMD>Pick grep_live<CR>', { desc = 'Grep Live' })
-vim.keymap.set('n', '<leader>f', '<CMD>Pick files<CR>', { desc = 'Pick Files' })
-vim.keymap.set('n', '<leader>h', '<CMD>Pick oldfiles<CR>', { desc = 'Pick Oldfiles' })
-vim.keymap.set('n', '<leader>d', '<CMD>Pick diagnostic<CR>', { desc = 'Pick Diagnostics' })
-vim.keymap.set('n', '<leader>gb', '<CMD>Pick git_branches<CR>', { desc = 'Pick Diagnostics' })
-vim.keymap.set('n', '<leader>gc', '<CMD>Pick git_commits<CR>', { desc = 'Pick Commits' })
-vim.keymap.set('n', '<leader>gh', '<CMD>Pick git_hunks<CR>', { desc = 'Pick Hunks' })
-vim.keymap.set('n', '<leader>gm', '<CMD>Pick marks<CR>', { desc = 'Pick Marks' })
-require('mini.surround').setup {
-    mappings = {
-        add = 'sa',
-        find = '',
-        delete = 'sd',
-        find_left = '',
-        highlight = '',
-        replace = 'sc',
-        update_n_lines = '',
-        suffix_last = '',
-        suffix_next = '',
-    },
-}
-require('mini.trailspace').setup()
-vim.api.nvim_create_user_command('Trim', 'lua MiniTrailspace.trim()', {})
-vim.api.nvim_create_user_command('TrimLine', 'lua MiniTrailspace.trim_last_lines()', {})
-
-add {
-    source = 'iguanacucumber/magazine.nvim',
-    name = 'nvim-cmp',
-    depends = {
-        'hrsh7th/cmp-path',
-        'hrsh7th/cmp-buffer',
-        'hrsh7th/cmp-cmdline',
-        'hrsh7th/cmp-nvim-lsp',
-        'hrsh7th/cmp-nvim-lsp-signature-help',
-        'dcampos/nvim-snippy',
-        'dcampos/cmp-snippy',
-        'onsails/lspkind-nvim',
-    },
-}
-later(function()
-    local cmp = require 'cmp'
-    local snip = require 'snippy'
-    local lspkind = require 'lspkind'
-    local compare = require('cmp').config.compare
-
-    local has_words_before = function()
-        unpack = unpack or table.unpack
-        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match '%s' == nil
-    end
-
-    cmp.setup {
-        snippet = {
-            expand = function(args) snip.expand_snippet(args.body) end,
-        },
+now(function()
+    require('mini.notify').setup()
+    vim.notify = require('mini.notify').make_notify()
+    require('mini.tabline').setup()
+    require('mini.statusline').setup()
+    require('mini.align').setup()
+    require('mini.bufremove').setup()
+    vim.keymap.set('n', '<leader>qq', '<CMD>lua MiniBufremove.delete()<CR>', { desc = 'Close Buffer' })
+    require('mini.comment').setup()
+    require('mini.diff').setup()
+    require('mini.extra').setup()
+    require('mini.icons').setup()
+    -- completion
+    require('mini.completion').setup {
         window = {
-            completion = cmp.config.window.bordered { border = 'single', scrollbar = false },
-            documentation = cmp.config.window.bordered { border = 'single' },
-        },
-        formatting = {
-            format = lspkind.cmp_format {
-                maxwidth = 50,
-            },
-        },
-        mapping = {
-            ['<CR>'] = cmp.mapping.confirm { select = true },
-            ['<Tab>'] = cmp.mapping(function(fallback)
-                if snip.can_expand() then
-                    snip.expand()
-                elseif cmp.visible() then
-                    cmp.select_next_item()
-                elseif snip.can_jump(1) then
-                    snip.next()
-                else
-                    fallback()
-                end
-            end, { 'i', 's' }),
-            ['<S-Tab>'] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif snip.can_jump(-1) then
-                    snip.previous()
-                else
-                    fallback()
-                end
-            end, { 'i', 's' }),
-            ['<C-n>'] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_next_item()
-                elseif has_words_before() then
-                    cmp.complete()
-                end
-            end, { 'i', 's' }),
-            ['<C-p>'] = cmp.mapping(function(fallback)
-                if cmp.visible() then
-                    cmp.select_prev_item()
-                elseif has_words_before() then
-                    cmp.complete()
-                end
-            end, { 'i', 's' }),
-            ['<C-d>'] = cmp.mapping(function(fallback)
-                if snip.can_jump(1) then snip.next() end
-            end, { 'i', 's' }),
-            ['<C-u>'] = cmp.mapping(function(fallback)
-                if snip.can_jump(-1) then snip.previous() end
-            end, { 'i', 's' }),
-        },
-        sources = cmp.config.sources {
-            { name = 'nvim_lsp_signature_help' },
-            { name = 'nvim_lsp' },
-            { name = 'buffer' },
-            { name = 'path' },
-        },
-        sorting = {
-            priority_weight = 1.0,
-            comparators = {
-                compare.locality,
-                compare.recently_used,
-                compare.score,
-                compare.offset,
-                compare.order,
-            },
+            info = { height = 25, width = 80, border = 'rounded' },
+            signature = { height = 25, width = 80, border = 'rounded' },
         },
     }
-
-    -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = { { name = 'buffer' } },
+    vim.keymap.set('i', '<Tab>', function()
+        local can_expand = #MiniSnippets.expand { insert = false } > 0
+        if can_expand then
+            vim.schedule(MiniSnippets.expand)
+            return ''
+        elseif vim.fn.pumvisible() then
+            return '<C-n>'
+        else
+            return '<Tab>'
+        end
+    end, { expr = true })
+    vim.keymap.set('i', '<S-Tab>', function()
+        if vim.fn.pumvisible() then
+            return '<C-p>'
+        else
+            return '<Tab>'
+        end
+    end, { expr = true })
+    -- snippets
+    local gen_loader = require('mini.snippets').gen_loader
+    require('mini.snippets').setup {
+        snippets = {
+            gen_loader.from_file(vim.fn.stdpath 'config' .. '/snippets/global.json'),
+            gen_loader.from_lang(),
+        },
+        mappings = {
+            expand = '',
+            jump_next = '<C-d>',
+            jump_prev = '<C-u>',
+            stop = '<C-s>',
+        },
+        expand = {
+            match = function(snippets) return MiniSnippets.default_match(snippets, { pattern_fuzzy = '' }) end,
+        },
+    }
+    require('mini.files').setup {
+        mappings = {
+            go_in = 'o',
+            go_in_plus = 'H',
+            go_out = 'y',
+            go_out_plus = 'Y',
+        },
+    }
+    vim.keymap.set('n', '-', '<CMD>lua MiniFiles.open()<CR>', { desc = 'Open Files' })
+    require('mini.hipatterns').setup {
+        highlighters = {
+            fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+            hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
+            todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
+            note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
+            hex_color = require('mini.hipatterns').gen_highlighter.hex_color(),
+        },
+    }
+    require('mini.indentscope').setup {
+        draw = {
+            delay = 0,
+            animation = function() return 0 end,
+        },
+        mappings = {
+            object_scope = '',
+            object_scope_with_border = '',
+        },
+        symbol = '│',
+    }
+    require('mini.jump').setup {
+        mappings = {
+            forward = 't',
+            backward = 'T',
+            forward_till = 'k',
+            backward_till = 'K',
+            repeat_jump = '',
+        },
+    }
+    require('mini.jump2d').setup {
+        labels = 'tneisoahfdurvcpm',
+        view = {
+            dim = true,
+            n_steps_ahead = 2,
+        },
+        allowed_lines = {
+            blank = false,
+            cursor_at = false,
+        },
+        allowed_windows = {
+            not_current = false,
+        },
+        mappings = {
+            start_jumping = 'gw',
+        },
+    }
+    vim.keymap.set(
+        'n',
+        'gw',
+        '<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>',
+        { desc = 'Goto Word' }
+    )
+    require('mini.misc').setup()
+    require('mini.misc').setup_auto_root()
+    require('mini.misc').setup_restore_cursor()
+    require('mini.move').setup {
+        mappings = {
+            left = '<M-y>',
+            right = '<M-o>',
+            down = '<M-n>',
+            up = '<M-i>',
+            line_left = '<M-y>',
+            line_right = '<M-o>',
+            line_up = '<M-i>',
+            line_down = '<M-n>',
+        },
+    }
+    -- disable auto pairs when block edit
+    vim.api.nvim_create_autocmd({ 'ModeChanged' }, {
+        pattern = '*:[vV\x16]*',
+        callback = function() vim.b.minipairs_disable = true end,
     })
-
-    -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
+    -- enable auto pairs after block edit finsih
+    vim.api.nvim_create_autocmd({ 'InsertLeave' }, {
+        callback = function() vim.b.minipairs_disable = false end,
     })
+    require('mini.pairs').setup {
+        modes = {
+            insert = true,
+            command = true,
+        },
+    }
+    require('mini.pick').setup {
+        delay = {
+            async = 200,
+            busy = 500,
+        },
+    }
+    vim.keymap.set('n', '<leader>/', '<CMD>Pick grep_live<CR>', { desc = 'Grep Live' })
+    vim.keymap.set('n', '<leader>f', '<CMD>Pick files<CR>', { desc = 'Pick Files' })
+    vim.keymap.set('n', '<leader>h', '<CMD>Pick oldfiles<CR>', { desc = 'Pick Oldfiles' })
+    vim.keymap.set('n', '<leader>d', '<CMD>Pick diagnostic<CR>', { desc = 'Pick Diagnostics' })
+    vim.keymap.set('n', '<leader>gb', '<CMD>Pick git_branches<CR>', { desc = 'Pick Diagnostics' })
+    vim.keymap.set('n', '<leader>gc', '<CMD>Pick git_commits<CR>', { desc = 'Pick Commits' })
+    vim.keymap.set('n', '<leader>gh', '<CMD>Pick git_hunks<CR>', { desc = 'Pick Hunks' })
+    vim.keymap.set('n', '<leader>gm', '<CMD>Pick marks<CR>', { desc = 'Pick Marks' })
+    require('mini.surround').setup {
+        mappings = {
+            add = 'sa',
+            find = '',
+            delete = 'sd',
+            find_left = '',
+            highlight = '',
+            replace = 'sc',
+            update_n_lines = '',
+            suffix_last = '',
+            suffix_next = '',
+        },
+    }
+    require('mini.trailspace').setup()
+    vim.api.nvim_create_user_command('Trim', 'lua MiniTrailspace.trim()', {})
+    vim.api.nvim_create_user_command('TrimLine', 'lua MiniTrailspace.trim_last_lines()', {})
 end)
-
 add { source = 'neovim/nvim-lspconfig' }
-
 local on_attach = function(client, bufnr)
     if client.name == 'ruff' then client.server_capabilities.hoverProvider = false end
     if client.name == 'basedpyright' then client.server_capabilities.semanticTokensProvider = nil end
 end
-
 require('lspconfig').ruff.setup { on_attach = on_attach }
 require('lspconfig').basedpyright.setup {
     cmd = { 'basedpyright-langserver', '--stdio', '--pythonversion 3.6' },
@@ -281,7 +215,6 @@ require('lspconfig').basedpyright.setup {
         },
     },
 }
-require('lspconfig').rust_analyzer.setup {}
 require('lspconfig').volar.setup {
     init_options = {
         typescript = {
@@ -308,11 +241,14 @@ add {
 add { source = 'nvim-treesitter/nvim-treesitter-textobjects' }
 require('nvim-treesitter.configs').setup {
     ensure_installed = {
-        'vue',
+        'json',
         'python',
-        'javascript',
-        'vimdoc',
         'regex',
+        'sql',
+        'toml',
+        'vue',
+        'xml',
+        'yaml',
     },
     highlight = {
         enable = true,
