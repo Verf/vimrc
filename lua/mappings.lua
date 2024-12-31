@@ -44,38 +44,6 @@ end, { expr = true })
 -- don't add change value to clipboard
 keymap.set({ 'n', 'v' }, 'c', '"_c')
 keymap.set({ 'n', 'v' }, 'C', '"_C')
--- keymap.set({ 'n', 'v' }, 's', '"_s')
--- keymap.set({ 'n', 'v' }, 'S', '"_S')
-
--- speed up macro running
-keymap.set('n', '@', function()
-    local count = vim.v.count1
-    local register = vim.fn.getcharstr()
-    vim.opt.lazyredraw = true
-    vim.opt.eventignore = { 'TextChanged', 'TextChangedI' }
-    vim.opt.clipboard = ''
-    vim.api.nvim_command(string.format('norm! %d@%s', count, register))
-    vim.opt.lazyredraw = false
-    vim.opt.eventignore = ''
-    vim.opt.clipboard = 'unnamedplus'
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
-        vim.api.nvim_command 'silent update'
-    end
-end, { expr = true, desc = 'Execute Macro' })
-
-keymap.set('n', 'Q', function()
-    local count = vim.v.count1
-    vim.opt.lazyredraw = true
-    vim.opt.eventignore = { 'TextChanged', 'TextChangedI' }
-    vim.opt.clipboard = ''
-    vim.api.nvim_command(string.format('norm! %dQ', count))
-    vim.opt.lazyredraw = false
-    vim.opt.eventignore = ''
-    vim.opt.clipboard = 'unnamedplus'
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
-        vim.api.nvim_command 'silent update'
-    end
-end, { expr = true, desc = 'Execute Last Macro' })
 
 keymap.set('n', '<TAB>', '<CMD>bn<CR>')
 keymap.set('n', '<S-TAB>', '<CMD>bp<CR>')

@@ -46,7 +46,7 @@ now(function()
         if can_expand then
             vim.schedule(MiniSnippets.expand)
             return ''
-        elseif vim.fn.pumvisible() then
+        elseif vim.fn.pumvisible() == 1 then
             return '<C-n>'
         else
             return '<Tab>'
