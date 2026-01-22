@@ -2,12 +2,12 @@ local g = vim.g
 local cmd = vim.cmd
 local opt = vim.opt
 
+-- ui
+opt.background = 'light'
+
 -- leader
 g.mapleader = ' '
 g.maplocalleader = ','
-
--- ui
-opt.background = 'light'
 
 -- config
 opt.autowrite = true

@@ -1,5 +1,6 @@
 local keymap = vim.keymap
 
+
 -- Norman Keyboard Layout
 keymap.set({ 'n', 'o', 'x' }, 'd', 'e')
 keymap.set({ 'n', 'o', 'x' }, 'f', 'r')
@@ -63,10 +64,9 @@ keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard
 keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })
 
 keymap.set('n', '<leader>qa', '<CMD>qa!<CR>', { desc = 'Quit All' })
+keymap.set('n', '<leader>qq', '<CMD>bd!<CR>', { desc = 'Buffer Close' })
 
 keymap.set('n', '<leader>bc', '<CMD>%bd!|e#<CR>', { desc = 'Buffer Only' })
-keymap.set('n', '<leader>bq', '<CMD>bd!<CR>', { desc = 'Buffer Close' })
-keymap.set('n', '<leader>bn', '<CMD>vnew<CR>', { desc = 'Buffer New' })
 
 keymap.set('n', '<leader>tn', '<CMD>tabnew<CR>', { desc = 'Tab New' })
 keymap.set('n', '<leader>tq', '<CMD>tabclose<CR>', { desc = 'Tab Close' })
