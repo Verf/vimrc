@@ -3,15 +3,6 @@ local now_if_args = _G.Config.now_if_args
 
 later(function() vim.lsp.enable { 'ty', 'ruff' } end)
 
-now(function()
-    add 'ibhagwan/fzf-lua'
-
-    require('fzf-lua').setup { defaults = { git_icons = false } }
-
-    vim.keymap.set('n', '<leader>f', [[<Cmd>lua require"fzf-lua".files()<CR>]], {})
-    vim.keymap.set('n', '<leader>g', [[<Cmd>lua require"fzf-lua".live_grep()<CR>]], {})
-end)
-
 later(function()
     add 'stevearc/conform.nvim'
 

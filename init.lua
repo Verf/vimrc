@@ -30,3 +30,10 @@ _G.Config = {}
 -- now_if_args根据nvim启动时是否打开文件(通过参数数量)来决定插件应该立刻加载还是延后加载
 -- 如果nvim打开一个文件，则一些文件编辑相关的插件应该立刻启动，否则可以延后
 _G.Config.now_if_args = vim.fn.argc(-1) > 0 and MiniDeps.now or MiniDeps.later
+
+-- 定义autocm的帮助函数
+local gr = vim.api.nvim_create_augroup('custom-config', {})
+_G.Config.new_autocmd = function(event, pattern, callback, desc)
+    local opts = { group = gr, pattern = pattern, callback = callback, desc = desc }
+    vim.api.nvim_create_autocmd(event, opts)
+end

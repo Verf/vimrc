@@ -39,6 +39,16 @@ later(function() require('mini.git').setup() end)
 later(function() require('mini.pairs').setup { modes = { command = true } } end)
 later(function() require('mini.surround').setup() end)
 later(function() require('mini.trailspace').setup() end)
+later(function()
+    require('mini.pick').setup()
+
+    vim.keymap.set('n', '<leader>ff', [[<CMD>Pick files<CR>]], { desc = 'Find Files' })
+    vim.keymap.set('n', '<leader>fs', [[<CMD>Pick lsp scope="document_symbol"<CR>]], { desc = 'Find Symbols' })
+    vim.keymap.set('n', '<leader>fd', [[<CMD>Pick diagnostic scope="current"<CR>]], { desc = 'Diagnostic' })
+    vim.keymap.set('n', '<leader>fD', [[<CMD>Pick diagnostic scope="all"<CR>]], { desc = 'Diagnostic All' })
+    vim.keymap.set('n', '<leader>fg', [[<CMD>Pick grep_live<CR>]], { desc = 'Live Grep' })
+    vim.keymap.set('n', '<leader>fw', [[<CMD>Pick grep pattern="<cword>"<CR>]], { desc = 'Grep CWord' })
+end)
 
 later(
     function()
@@ -91,6 +101,51 @@ later(function()
             todo = hi_words({ 'TODO' }, 'MiniHipatternsTodo'),
             note = hi_words({ 'NOTE' }, 'MiniHipatternsNote'),
             hex_color = hipatterns.gen_highlighter.hex_color(),
+        },
+    }
+end)
+later(function()
+    require('mini.keymap').setup()
+    -- 使用 <Tab>/<S-Tab> 选择补全菜单项
+    MiniKeymap.map_multistep('i', '<Tab>', { 'pmenu_next' })
+    MiniKeymap.map_multistep('i', '<S-Tab>', { 'pmenu_prev' })
+    -- <CR> 用于选择补全项或应用mini.pairs
+    MiniKeymap.map_multistep('i', '<CR>', { 'pmenu_accept', 'minipairs_cr' })
+    -- <BS> 用于消除mini.pairs
+    MiniKeymap.map_multistep('i', '<BS>', { 'minipairs_bs' })
+end)
+
+later(function()
+    -- 对LSP补全结果后处理，隐藏Text，并调整Snippet到列表末尾
+    local process_items_opts = { kind_priority = { Text = -1, Snippet = 99 } }
+    local process_items = function(items, base)
+        return MiniCompletion.default_process_items(items, base, process_items_opts)
+    end
+    require('mini.completion').setup {
+        lsp_completion = {
+            -- 1. 使用omnifunc而不是默认的completefunc
+            -- 2. 关闭LSP自动配置，用于下面的on_attach
+            -- 3. 应用上面的后处理规则
+            source_func = 'omnifunc',
+            auto_setup = false,
+            process_items = process_items,
+        },
+    }
+
+    -- 当LspAttach时挂载omnifunc为MiniCompletion.completefunc_lsp
+    local on_attach = function(ev) vim.bo[ev.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp' end
+    _G.Config.new_autocmd('LspAttach', nil, on_attach, "Set 'omnifunc'")
+
+    -- 向LSP服务器告知客户端能力
+    vim.lsp.config('*', { capabilities = MiniCompletion.get_lsp_capabilities() })
+end)
+
+later(function()
+    local snippets = require 'mini.snippets'
+    local config_path = vim.fn.stdpath 'config'
+    snippets.setup {
+        snippets = {
+            snippets.gen_loader.from_file(config_path .. '/snippets/global.json'),
         },
     }
 end)
