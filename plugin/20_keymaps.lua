@@ -63,7 +63,7 @@ keymap.set({ 'n', 'o', 'x' }, 'ge', 'G', { desc = 'Goto End' })
 keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard' })
 keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })
 
-keymap.set('n', '<leader>qa', '<CMD>qa!<CR>', { desc = 'Quit All' })
+keymap.set('n', '<leader>qa', '<CMD>wqa!<CR>', { desc = 'Quit All' })
 keymap.set('n', '<leader>qq', '<CMD>bd!<CR>', { desc = 'Buffer Close' })
 
 keymap.set('n', '<leader>bc', '<CMD>%bd!|e#<CR>', { desc = 'Buffer Only' })
