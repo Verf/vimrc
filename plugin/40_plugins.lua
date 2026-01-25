@@ -1,7 +1,11 @@
 local now, later, add = MiniDeps.now, MiniDeps.later, MiniDeps.add
 local now_if_args = _G.Config.now_if_args
 
-later(function() vim.lsp.enable { 'ty', 'ruff' } end)
+later(function()
+    add 'neovim/nvim-lspconfig'
+
+    vim.lsp.enable { 'ty', 'ruff', 'biome' }
+end)
 
 later(function()
     add 'stevearc/conform.nvim'

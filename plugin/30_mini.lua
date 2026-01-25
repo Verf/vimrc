@@ -28,17 +28,70 @@ now(function() require('mini.notify').setup() end)
 now(function() require('mini.statusline').setup() end)
 now(function() require('mini.tabline').setup() end)
 
-later(function() require('mini.extra').setup() end)
 later(function() require('mini.align').setup() end)
 later(function() require('mini.bracketed').setup() end)
 later(function() require('mini.bufremove').setup() end)
 later(function() require('mini.cmdline').setup() end)
 later(function() require('mini.diff').setup() end)
-later(function() require('mini.indentscope').setup() end)
+later(function() require('mini.extra').setup() end)
 later(function() require('mini.git').setup() end)
-later(function() require('mini.pairs').setup { modes = { command = true } } end)
-later(function() require('mini.surround').setup() end)
 later(function() require('mini.trailspace').setup() end)
+
+later(function() require('mini.pairs').setup { modes = { command = true } } end)
+
+later(function()
+    local ai = require 'mini.ai'
+    ai.setup {
+        mappings = {
+            around = 'a',
+            inside = 'r',
+
+            around_next = 'an',
+            inside_next = 'rn',
+            around_last = 'al',
+            inside_last = 'rl',
+
+            goto_left = 'g[',
+            goto_right = 'g]',
+        },
+        custom_textobjects = {
+            -- aB/iB应用于Buffer
+            B = MiniExtra.gen_ai_spec.buffer(),
+        },
+        -- 默认的cover_or_next模式当光标所在范围不存在操作内容时会向右查找，有时会产生意外
+        -- 而cover模式让操作更严格，只作用于当前光标所在的范围内，禁止自动向右查找
+        search_method = 'cover',
+    }
+end)
+
+later(function()
+    require('mini.indentscope').setup {
+        mappings = {
+            -- 禁用textobject
+            object_scope = '',
+            object_scope_with_border = '',
+        },
+    }
+end)
+
+later(
+    function()
+        require('mini.surround').setup {
+            mappings = {
+                add = 'sa',
+                delete = 'se',
+                find = 'st',
+                find_left = 'sT',
+                highlight = 'sh',
+                replace = 'sc',
+
+                suffix_last = 'l',
+                suffix_next = 'n',
+            },
+        }
+    end
+)
+
 later(function()
     require('mini.pick').setup()
 
@@ -107,7 +160,7 @@ end)
 later(function()
     require('mini.keymap').setup()
     -- 使用 <Tab>/<S-Tab> 选择补全菜单项
-    MiniKeymap.map_multistep('i', '<Tab>', { 'pmenu_next' })
+    MiniKeymap.map_multistep('i', '<Tab>', { 'minisnippets_expand', 'pmenu_next' })
     MiniKeymap.map_multistep('i', '<S-Tab>', { 'pmenu_prev' })
     -- <CR> 用于选择补全项或应用mini.pairs
     MiniKeymap.map_multistep('i', '<CR>', { 'pmenu_accept', 'minipairs_cr' })
@@ -146,6 +199,54 @@ later(function()
     snippets.setup {
         snippets = {
             snippets.gen_loader.from_file(config_path .. '/snippets/global.json'),
+            snippets.gen_loader.from_lang { lang_patterns = { markdown_inline = { 'markdown.json' } } },
+        },
+        mappings = {
+            expand = '',
+            jump_next = '<C-d>',
+            jump_prev = '<C-u>',
+            stop = '<C-c>',
+        },
+    }
+
+    -- 开启一个简单的lsp服务使snippets在补全菜单可见
+    MiniSnippets.start_lsp_server()
+end)
+
+later(function()
+    local miniclue = require 'mini.clue'
+    local leader_group_clues = {
+        { mode = 'n', keys = '<Leader>f', desc = '+Find' },
+        { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
+        { mode = 'n', keys = '<Leader>t', desc = '+Tab' },
+        { mode = 'n', keys = '<Leader>w', desc = '+Window' },
+        { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
+    }
+    miniclue.setup {
+        clues = {
+            leader_group_clues,
+            miniclue.gen_clues.builtin_completion(),
+            miniclue.gen_clues.g(),
+            miniclue.gen_clues.marks(),
+            miniclue.gen_clues.registers(),
+            miniclue.gen_clues.square_brackets(),
+            miniclue.gen_clues.z(),
+        },
+        -- Explicitly opt-in for set of common keys to trigger clue window
+        triggers = {
+            { mode = { 'n', 'x' }, keys = '<Leader>' }, -- Leader triggers
+            { mode = 'n', keys = '\\' }, -- mini.basics
+            { mode = { 'n', 'x' }, keys = '[' }, -- mini.bracketed
+            { mode = { 'n', 'x' }, keys = ']' },
+            { mode = 'i', keys = '<C-x>' }, -- Built-in completion
+            { mode = { 'n', 'x' }, keys = 'g' }, -- `g` key
+            { mode = { 'n', 'x' }, keys = "'" }, -- Marks
+            { mode = { 'n', 'x' }, keys = '`' },
+            { mode = { 'n', 'x' }, keys = '"' }, -- Registers
+            { mode = { 'i', 'c' }, keys = '<C-r>' },
+            { mode = 'n', keys = '<C-w>' }, -- Window commands
+            { mode = { 'n', 'x' }, keys = 's' }, -- `s` key (mini.surround, etc.)
+            { mode = { 'n', 'x' }, keys = 'z' }, -- `z` key
         },
     }
 end)
