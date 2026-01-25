@@ -43,17 +43,11 @@ later(function()
     local ai = require 'mini.ai'
     ai.setup {
         mappings = {
-            around = 'a',
             inside = 'r',
-
-            around_next = 'an',
             inside_next = 'rn',
-            around_last = 'al',
             inside_last = 'rl',
-
-            goto_left = 'g[',
-            goto_right = 'g]',
         },
+
         custom_textobjects = {
             -- aB/iB应用于Buffer
             B = MiniExtra.gen_ai_spec.buffer(),
@@ -93,9 +87,50 @@ later(
 )
 
 later(function()
-    require('mini.pick').setup()
+    local mini_pick = require 'mini.pick'
+    mini_pick.setup {
+        options = {
+            -- Whether to cache matches (more speed and memory on repeated prompts)
+            use_cache = true,
+        },
+    }
+    -- 定义一个智能选择器函数用于加速文件搜索
+    -- 在插件加载时预检查工具存在情况
+    local has_fd = vim.fn.executable 'fd' == 1
+    local has_rg = vim.fn.executable 'rg' == 1
+    -- 定义一个缓存表，key 是当前工作目录，value 是该目录下最佳的工具
+    local tool_cache = {}
+    mini_pick.registry.files = function(local_opts, opts)
+        local_opts = local_opts or {}
+        opts = opts or {}
+        -- 1. 获取当前工作目录 (CWD)
+        local cwd = vim.fn.getcwd()
+        -- 2. 如果用户没指定工具，且缓存里没有记录，则进行检测
+        if not local_opts.tool then
+            if not tool_cache[cwd] then
+                -- A. 检查是否在 git 项目中 (利用 vim.fs 高效向上查找)
+                -- limit=1 表示只要找到一个就停止，path=cwd 指定从当前目录开始
+                local git_root = vim.fs.find('.git', { path = cwd, upward = true, limit = 1 })[1]
+                if git_root then
+                    tool_cache[cwd] = 'git'
+                -- B. 只有非 Git 项目才去检查 fd 或 rg
+                elseif has_fd then
+                    tool_cache[cwd] = 'fd'
+                elseif has_rg then
+                    tool_cache[cwd] = 'rg'
+                else
+                    -- 如果都没有，留空让 mini.pick 使用默认回退
+                    tool_cache[cwd] = 'fallback'
+                end
+            end
+            -- 3. 从缓存应用工具 (如果缓存是 'fallback' 则不设置 tool 字段)
+            if tool_cache[cwd] ~= 'fallback' then local_opts.tool = tool_cache[cwd] end
+        end
+        return mini_pick.builtin.files(local_opts, opts)
+    end
 
     vim.keymap.set('n', '<leader>ff', [[<CMD>Pick files<CR>]], { desc = 'Find Files' })
+    vim.keymap.set('n', '<leader>fh', [[<CMD>Pick oldfiles<CR>]], { desc = 'Find Files' })
     vim.keymap.set('n', '<leader>fs', [[<CMD>Pick lsp scope="document_symbol"<CR>]], { desc = 'Find Symbols' })
     vim.keymap.set('n', '<leader>fd', [[<CMD>Pick diagnostic scope="current"<CR>]], { desc = 'Diagnostic' })
     vim.keymap.set('n', '<leader>fD', [[<CMD>Pick diagnostic scope="all"<CR>]], { desc = 'Diagnostic All' })
@@ -244,7 +279,6 @@ later(function()
             { mode = { 'n', 'x' }, keys = '`' },
             { mode = { 'n', 'x' }, keys = '"' }, -- Registers
             { mode = { 'i', 'c' }, keys = '<C-r>' },
-            { mode = 'n', keys = '<C-w>' }, -- Window commands
             { mode = { 'n', 'x' }, keys = 's' }, -- `s` key (mini.surround, etc.)
             { mode = { 'n', 'x' }, keys = 'z' }, -- `z` key
         },

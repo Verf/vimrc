@@ -18,6 +18,6 @@ later(function()
             timeout_ms = 500,
         },
 
-        formatters_by_ft = { lua = { 'stylua' } },
+        formatters_by_ft = { lua = { 'stylua' }, json = { 'biome' } },
     }
 end)

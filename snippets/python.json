@@ -1,0 +1,42 @@
+{
+    "shebang": { "prefix": "#!", "body": "#!/usr/bin/env python3" },
+    "coding": { "prefix": "#u", "body": "# coding: utf-8" },
+    "self": {
+        "prefix": "s.",
+        "body": "self.$0"
+    },
+    "if main": {
+        "prefix": "ifm",
+        "body": ["if __name__ == '__main__':", "\t${0:main}"]
+    },
+    "logging.debug": {
+        "prefix": "ld",
+        "body": "logging.debug($0)"
+    },
+    "logging.info": {
+        "prefix": "li",
+        "body": "logging.info($0)"
+    },
+    "logging.warning": {
+        "prefix": "lw",
+        "body": "logging.warning($0)"
+    },
+    "logging.error": {
+        "prefix": "lw",
+        "body": "logging.error($0)"
+    },
+    "read file": {
+        "prefix": "wr",
+        "body": [
+            "with open('$1', '${2:r}', encoding='${3:utf-8}') as ${4:fread}:",
+            "\t$0"
+        ]
+    },
+    "write file": {
+        "prefix": "ww",
+        "body": [
+            "with open('$1', '${2:w}', encoding='${3:utf-8}', newline='${4:\\n}') as ${5:fwrite}:",
+            "\t$0"
+        ]
+    }
+}
