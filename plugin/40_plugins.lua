@@ -1,12 +1,13 @@
 local now, later, add = MiniDeps.now, MiniDeps.later, MiniDeps.add
 local now_if_args = _G.Config.now_if_args
+local kset = vim.keymap.set
 
 later(function()
     add 'chrisgrieser/nvim-spider'
 
-    vim.keymap.set({ 'n', 'o', 'x' }, 'w', "<cmd>lua require('spider').motion('w')<CR>")
-    vim.keymap.set({ 'n', 'o', 'x' }, 'd', "<cmd>lua require('spider').motion('e')<CR>")
-    vim.keymap.set({ 'n', 'o', 'x' }, 'b', "<cmd>lua require('spider').motion('b')<CR>")
+    kset({ 'n', 'o', 'x' }, 'w', "<cmd>lua require('spider').motion('w')<CR>")
+    kset({ 'n', 'o', 'x' }, 'd', "<cmd>lua require('spider').motion('e')<CR>")
+    kset({ 'n', 'o', 'x' }, 'b', "<cmd>lua require('spider').motion('b')<CR>")
 end)
 
 now_if_args(function()
@@ -14,9 +15,9 @@ now_if_args(function()
 
     vim.lsp.enable { 'ty', 'ruff', 'biome' }
 
-    vim.keymap.set('n', 'gd', [[<CMD>Pick lsp scope="definition"<CR>]], { desc = 'Goto Definition' })
-    vim.keymap.set('n', 'gr', [[<CMD>Pick lsp scope="references"<CR>]], { desc = 'Goto References' })
-    vim.keymap.set('n', 'gD', [[<CMD>Pick lsp scope="declaration"<CR>]], { desc = 'Goto Declaration' })
+    kset('n', 'gd', [[<CMD>Pick lsp scope="definition"<CR>]], { desc = 'Goto Definition' })
+    kset('n', 'gr', [[<CMD>Pick lsp scope="references"<CR>]], { desc = 'Goto References' })
+    kset('n', 'gD', [[<CMD>Pick lsp scope="declaration"<CR>]], { desc = 'Goto Declaration' })
 end)
 
 now_if_args(function()
@@ -52,25 +53,21 @@ now_if_args(function()
     -- treesitter-textobject keymaps
     -- select
     local ts_select = require 'nvim-treesitter-textobjects.select'
-    vim.keymap.set({ 'x', 'o' }, 'af', function() ts_select.select_textobject('@function.outer', 'textobjects') end)
-    vim.keymap.set({ 'x', 'o' }, 'rf', function() ts_select.select_textobject('@function.inner', 'textobjects') end)
-    vim.keymap.set({ 'x', 'o' }, 'ac', function() ts_select.select_textobject('@class.outer', 'textobjects') end)
-    vim.keymap.set({ 'x', 'o' }, 'rc', function() ts_select.select_textobject('@class.inner', 'textobjects') end)
-    vim.keymap.set({ 'x', 'o' }, 'as', function() ts_select.select_textobject('@local.scope', 'locals') end)
+    kset({ 'x', 'o' }, 'af', function() ts_select.select_textobject('@function.outer', 'textobjects') end)
+    kset({ 'x', 'o' }, 'rf', function() ts_select.select_textobject('@function.inner', 'textobjects') end)
+    kset({ 'x', 'o' }, 'ac', function() ts_select.select_textobject('@class.outer', 'textobjects') end)
+    kset({ 'x', 'o' }, 'rc', function() ts_select.select_textobject('@class.inner', 'textobjects') end)
+    kset({ 'x', 'o' }, 'as', function() ts_select.select_textobject('@local.scope', 'locals') end)
     -- move
     local ts_move = require 'nvim-treesitter-textobjects.move'
-    vim.keymap.set({ 'n', 'x', 'o' }, ']f', function() ts_move.goto_next_start('@function.outer', 'textobjects') end)
-    vim.keymap.set({ 'n', 'x', 'o' }, ']c', function() ts_move.goto_next_start('@class.outer', 'textobjects') end)
-    vim.keymap.set(
-        { 'n', 'x', 'o' },
-        '[f',
-        function() ts_move.goto_previous_start('@function.outer', 'textobjects') end
-    )
-    vim.keymap.set({ 'n', 'x', 'o' }, '[c', function() ts_move.goto_previous_start('@class.outer', 'textobjects') end)
+    kset({ 'n', 'x', 'o' }, ']f', function() ts_move.goto_next_start('@function.outer', 'textobjects') end)
+    kset({ 'n', 'x', 'o' }, ']c', function() ts_move.goto_next_start('@class.outer', 'textobjects') end)
+    kset({ 'n', 'x', 'o' }, '[f', function() ts_move.goto_previous_start('@function.outer', 'textobjects') end)
+    kset({ 'n', 'x', 'o' }, '[c', function() ts_move.goto_previous_start('@class.outer', 'textobjects') end)
     -- swap
     local ts_swap = require 'nvim-treesitter-textobjects.swap'
-    vim.keymap.set('n', ']p', function() ts_swap.swap_next '@parameter.inner' end)
-    vim.keymap.set('n', '[p', function() ts_swap.swap_previous '@parameter.inner' end)
+    kset('n', ']p', function() ts_swap.swap_next '@parameter.inner' end)
+    kset('n', '[p', function() ts_swap.swap_previous '@parameter.inner' end)
 end)
 
 later(function()
@@ -92,4 +89,29 @@ later(function()
             vue = { 'dprint' },
         },
     }
+end)
+
+later(function()
+    add { source = 'jake-stewart/multicursor.nvim', checkout = '1.0' }
+    local mc = require 'multicursor-nvim'
+    mc.setup()
+
+    -- 类似于helix的多光标快捷键
+    -- s: 在选中范围内按正则拆分
+    kset('v', 's', mc.matchCursors, { desc = 'Match regex within selection' })
+    -- Alt-s: 按换行符拆分
+    kset('v', '<M-s>', function() mc.splitCursors '^' end, { desc = 'Split on newlines' })
+
+    -- 定义多光标状态下的快捷键
+    mc.addKeymapLayer(function(layerSet)
+        -- 选择前/后光标作为主光标
+        layerSet({ 'n', 'x' }, '<left>', mc.prevCursor)
+        layerSet({ 'n', 'x' }, '<right>', mc.nextCursor)
+        -- 删除主光标
+        layerSet({ 'n', 'x' }, '<M-,>', mc.deleteCursor)
+        -- 删除主光标外的其他光标
+        layerSet({ 'n', 'x' }, ',', function()
+            if mc.hasCursors() then mc.clearCursors() end
+        end, { desc = 'Clear all cursors' })
+    end)
 end)

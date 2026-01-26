@@ -73,12 +73,12 @@ later(
     function()
         require('mini.surround').setup {
             mappings = {
-                add = 'sa',
-                delete = 'se',
-                find = 'st',
-                find_left = 'sT',
-                highlight = 'sh',
-                replace = 'sc',
+                add = '<leader>sa',
+                delete = '<leader>se',
+                find = '<leader>st',
+                find_left = '<leader>sT',
+                highlight = '<leader>sh',
+                replace = '<leader>sc',
 
                 suffix_last = 'l',
                 suffix_next = 'n',
@@ -147,7 +147,7 @@ later(
                 backward = 'T',
                 forward_till = 'k',
                 backward_till = 'K',
-                repeat_jump = ',',
+                repeat_jump = '',
             },
         }
     end
@@ -252,11 +252,12 @@ end)
 later(function()
     local miniclue = require 'mini.clue'
     local leader_group_clues = {
-        { mode = 'n', keys = '<Leader>f', desc = '+Find' },
         { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
+        { mode = 'n', keys = '<Leader>f', desc = '+Find' },
+        { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
+        { mode = 'n', keys = '<Leader>s', desc = '+Surround' },
         { mode = 'n', keys = '<Leader>t', desc = '+Tab' },
         { mode = 'n', keys = '<Leader>w', desc = '+Window' },
-        { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
     }
     miniclue.setup {
         clues = {
