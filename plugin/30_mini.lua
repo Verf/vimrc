@@ -40,25 +40,6 @@ later(function() require('mini.trailspace').setup() end)
 later(function() require('mini.pairs').setup { modes = { command = true } } end)
 
 later(function()
-    local ai = require 'mini.ai'
-    ai.setup {
-        mappings = {
-            inside = 'r',
-            inside_next = 'rn',
-            inside_last = 'rl',
-        },
-
-        custom_textobjects = {
-            -- aB/iB应用于Buffer
-            B = MiniExtra.gen_ai_spec.buffer(),
-        },
-        -- 默认的cover_or_next模式当光标所在范围不存在操作内容时会向右查找，有时会产生意外
-        -- 而cover模式让操作更严格，只作用于当前光标所在的范围内，禁止自动向右查找
-        search_method = 'cover',
-    }
-end)
-
-later(function()
     require('mini.indentscope').setup {
         mappings = {
             -- 禁用textobject
@@ -136,6 +117,10 @@ later(function()
     vim.keymap.set('n', '<leader>fD', [[<CMD>Pick diagnostic scope="all"<CR>]], { desc = 'Diagnostic All' })
     vim.keymap.set('n', '<leader>fg', [[<CMD>Pick grep_live<CR>]], { desc = 'Live Grep' })
     vim.keymap.set('n', '<leader>fw', [[<CMD>Pick grep pattern="<cword>"<CR>]], { desc = 'Grep CWord' })
+
+    vim.keymap.set('n', 'gd', [[<CMD>Pick lsp scope="definition"<CR>]], { desc = 'Goto Definition' })
+    vim.keymap.set('n', 'gr', [[<CMD>Pick lsp scope="references"<CR>]], { desc = 'Goto References' })
+    vim.keymap.set('n', 'gD', [[<CMD>Pick lsp scope="declaration"<CR>]], { desc = 'Goto Declaration' })
 end)
 
 later(

@@ -1,6 +1,5 @@
 local keymap = vim.keymap
 
-
 -- Norman Keyboard Layout
 keymap.set({ 'n', 'o', 'x' }, 'd', 'e')
 keymap.set({ 'n', 'o', 'x' }, 'f', 'r')
@@ -58,7 +57,6 @@ keymap.set('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]], { desc = 'Se
 
 keymap.set({ 'n', 'o', 'x' }, 'gs', '^', { desc = 'Goto Line Start' })
 keymap.set({ 'n', 'o', 'x' }, 'gl', '$', { desc = 'Goto Line End' })
-keymap.set({ 'n', 'o', 'x' }, 'ge', 'G', { desc = 'Goto End' })
 
 keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard' })
 keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })

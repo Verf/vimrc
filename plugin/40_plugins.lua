@@ -2,6 +2,14 @@ local now, later, add = MiniDeps.now, MiniDeps.later, MiniDeps.add
 local now_if_args = _G.Config.now_if_args
 
 later(function()
+    add 'chrisgrieser/nvim-spider'
+
+    vim.keymap.set({ 'n', 'o', 'x' }, 'w', "<cmd>lua require('spider').motion('w')<CR>")
+    vim.keymap.set({ 'n', 'o', 'x' }, 'd', "<cmd>lua require('spider').motion('e')<CR>")
+    vim.keymap.set({ 'n', 'o', 'x' }, 'b', "<cmd>lua require('spider').motion('b')<CR>")
+end)
+
+later(function()
     add 'neovim/nvim-lspconfig'
 
     vim.lsp.enable { 'ty', 'ruff', 'biome' }
@@ -18,6 +26,12 @@ later(function()
             timeout_ms = 500,
         },
 
-        formatters_by_ft = { lua = { 'stylua' }, json = { 'biome' } },
+        formatters_by_ft = {
+            lua = { 'stylua' },
+            json = { 'biome' },
+            javascript = { 'dprint' },
+            typescript = { 'dprint' },
+            vue = { 'dprint' },
+        },
     }
 end)
