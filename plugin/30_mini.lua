@@ -29,7 +29,6 @@ now(function() require('mini.statusline').setup() end)
 now(function() require('mini.tabline').setup() end)
 
 later(function() require('mini.align').setup() end)
-later(function() require('mini.bracketed').setup() end)
 later(function() require('mini.bufremove').setup() end)
 later(function() require('mini.cmdline').setup() end)
 later(function() require('mini.diff').setup() end)
@@ -38,6 +37,27 @@ later(function() require('mini.git').setup() end)
 later(function() require('mini.trailspace').setup() end)
 
 later(function() require('mini.pairs').setup { modes = { command = true } } end)
+
+later(
+    function()
+        require('mini.bracketed').setup {
+            buffer = { suffix = '', options = {} },
+            comment = { suffix = '', options = {} },
+            conflict = { suffix = 'x', options = {} },
+            diagnostic = { suffix = 'd', options = { severity = vim.diagnostic.severity.ERROR } },
+            file = { suffix = '', options = {} },
+            indent = { suffix = '', options = {} },
+            jump = { suffix = '', options = {} },
+            location = { suffix = '', options = {} },
+            oldfile = { suffix = '', options = {} },
+            quickfix = { suffix = 'q', options = {} },
+            treesitter = { suffix = '', options = {} },
+            undo = { suffix = 'u', options = {} },
+            window = { suffix = '', options = {} },
+            yank = { suffix = '', options = {} },
+        }
+    end
+)
 
 later(function()
     require('mini.indentscope').setup {
@@ -117,10 +137,6 @@ later(function()
     vim.keymap.set('n', '<leader>fD', [[<CMD>Pick diagnostic scope="all"<CR>]], { desc = 'Diagnostic All' })
     vim.keymap.set('n', '<leader>fg', [[<CMD>Pick grep_live<CR>]], { desc = 'Live Grep' })
     vim.keymap.set('n', '<leader>fw', [[<CMD>Pick grep pattern="<cword>"<CR>]], { desc = 'Grep CWord' })
-
-    vim.keymap.set('n', 'gd', [[<CMD>Pick lsp scope="definition"<CR>]], { desc = 'Goto Definition' })
-    vim.keymap.set('n', 'gr', [[<CMD>Pick lsp scope="references"<CR>]], { desc = 'Goto References' })
-    vim.keymap.set('n', 'gD', [[<CMD>Pick lsp scope="declaration"<CR>]], { desc = 'Goto Declaration' })
 end)
 
 later(
