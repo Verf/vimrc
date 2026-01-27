@@ -2,6 +2,16 @@ local now, later, add = MiniDeps.now, MiniDeps.later, MiniDeps.add
 local now_if_args = _G.Config.now_if_args
 local kset = vim.keymap.set
 
+now(function()
+    add { source = 'Verf/deepwhite.nvim', checkout = 'dev' }
+
+    require('deepwhite').setup {
+        low_blue_light = true,
+    }
+
+    vim.cmd 'color deepwhite'
+end)
+
 later(function()
     add 'chrisgrieser/nvim-spider'
 
@@ -15,7 +25,7 @@ now_if_args(function()
 
     vim.diagnostic.config { virtual_text = true, severity_sort = true }
 
-    vim.lsp.enable { 'ty', 'ruff', 'biome' }
+    vim.lsp.enable { 'ty', 'ruff', 'biome', 'lua_ls' }
 
     kset({ 'n', 'x' }, '<leader>rn', [[<CMD> lua vim.lsp.buf.rename()<CR>]], { desc = 'Rename' })
     kset({ 'n', 'x' }, '<leader>ra', [[<CMD> lua vim.lsp.buf.code_action()<CR>]], { desc = 'Code Action' })

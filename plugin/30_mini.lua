@@ -2,8 +2,6 @@ local now, later, add = MiniDeps.now, MiniDeps.later, MiniDeps.add
 local now_if_args = _G.Config.now_if_args
 local kset = vim.keymap.set
 
-now(function() vim.cmd 'colorscheme miniwinter' end)
-
 now(function()
     -- Set up to not prefer extension-based icon for some extensions
     local ext3_blocklist = { scm = true, txt = true, yml = true }
