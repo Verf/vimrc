@@ -5,9 +5,9 @@ local kset = vim.keymap.set
 later(function()
     add 'chrisgrieser/nvim-spider'
 
-    kset({ 'n', 'o', 'x' }, 'w', "<cmd>lua require('spider').motion('w')<CR>")
-    kset({ 'n', 'o', 'x' }, 'd', "<cmd>lua require('spider').motion('e')<CR>")
-    kset({ 'n', 'o', 'x' }, 'b', "<cmd>lua require('spider').motion('b')<CR>")
+    kset({ 'n', 'o', 'x' }, 'w', [[<CMD>lua require('spider').motion('w')<CR>]])
+    kset({ 'n', 'o', 'x' }, 'd', [[<CMD>lua require('spider').motion('e')<CR>]])
+    kset({ 'n', 'o', 'x' }, 'b', [[<CMD>lua require('spider').motion('b')<CR>]])
 end)
 
 now_if_args(function()
@@ -15,9 +15,8 @@ now_if_args(function()
 
     vim.lsp.enable { 'ty', 'ruff', 'biome' }
 
-    kset('n', 'gd', [[<CMD>Pick lsp scope="definition"<CR>]], { desc = 'Goto Definition' })
-    kset('n', 'gr', [[<CMD>Pick lsp scope="references"<CR>]], { desc = 'Goto References' })
-    kset('n', 'gD', [[<CMD>Pick lsp scope="declaration"<CR>]], { desc = 'Goto Declaration' })
+    kset({ 'n', 'x' }, '<leader>rn', [[<CMD> lua vim.lsp.buf.rename()<CR>]], { desc = 'Rename' })
+    kset({ 'n', 'x' }, '<leader>ra', [[<CMD> lua vim.lsp.buf.code_action()<CR>]], { desc = 'Code Action' })
 end)
 
 now_if_args(function()
@@ -98,7 +97,7 @@ later(function()
 
     -- 类似于helix的多光标快捷键
     -- s: 在选中范围内按正则拆分
-    kset('v', 's', mc.matchCursors, { desc = 'Match regex within selection' })
+    kset('v', 's', mc.matchCursors, { desc = 'Add cursor by regex' })
     -- Alt-s: 按换行符拆分
     kset('v', '<M-s>', function() mc.splitCursors '^' end, { desc = 'Split on newlines' })
 
@@ -107,6 +106,9 @@ later(function()
         -- 选择前/后光标作为主光标
         layerSet({ 'n', 'x' }, '<left>', mc.prevCursor)
         layerSet({ 'n', 'x' }, '<right>', mc.nextCursor)
+        -- 使用上下键添加或减少行光标
+        layerSet({ 'n', 'x' }, '<up>', function() mc.lineAddCursor(-1) end)
+        layerSet({ 'n', 'x' }, '<down>', function() mc.lineAddCursor(1) end)
         -- 删除主光标
         layerSet({ 'n', 'x' }, '<M-,>', mc.deleteCursor)
         -- 删除主光标外的其他光标

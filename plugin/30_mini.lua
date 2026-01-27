@@ -1,5 +1,6 @@
 local now, later, add = MiniDeps.now, MiniDeps.later, MiniDeps.add
 local now_if_args = _G.Config.now_if_args
+local kset = vim.keymap.set
 
 now(function() vim.cmd 'colorscheme miniwinter' end)
 
@@ -130,13 +131,20 @@ later(function()
         return mini_pick.builtin.files(local_opts, opts)
     end
 
-    vim.keymap.set('n', '<leader>ff', [[<CMD>Pick files<CR>]], { desc = 'Find Files' })
-    vim.keymap.set('n', '<leader>fh', [[<CMD>Pick oldfiles<CR>]], { desc = 'Find Files' })
-    vim.keymap.set('n', '<leader>fs', [[<CMD>Pick lsp scope="document_symbol"<CR>]], { desc = 'Find Symbols' })
-    vim.keymap.set('n', '<leader>fd', [[<CMD>Pick diagnostic scope="current"<CR>]], { desc = 'Diagnostic' })
-    vim.keymap.set('n', '<leader>fD', [[<CMD>Pick diagnostic scope="all"<CR>]], { desc = 'Diagnostic All' })
-    vim.keymap.set('n', '<leader>fg', [[<CMD>Pick grep_live<CR>]], { desc = 'Live Grep' })
-    vim.keymap.set('n', '<leader>fw', [[<CMD>Pick grep pattern="<cword>"<CR>]], { desc = 'Grep CWord' })
+    kset('n', '<leader>ff', [[<CMD>Pick files<CR>]], { desc = 'Find Files' })
+    kset('n', '<leader>fh', [[<CMD>Pick oldfiles<CR>]], { desc = 'Find Files' })
+    kset('n', '<leader>fs', [[<CMD>Pick lsp scope="document_symbol"<CR>]], { desc = 'Find Symbols' })
+    kset('n', '<leader>fd', [[<CMD>Pick diagnostic scope="current"<CR>]], { desc = 'Diagnostic' })
+    kset('n', '<leader>fD', [[<CMD>Pick diagnostic scope="all"<CR>]], { desc = 'Diagnostic All' })
+    kset('n', '<leader>fg', [[<CMD>Pick grep_live<CR>]], { desc = 'Live Grep' })
+    kset('n', '<leader>fw', [[<CMD>Pick grep pattern="<cword>"<CR>]], { desc = 'Grep CWord' })
+
+    -- 当LspAttach时设置快捷键，避免冲突
+    _G.Config.new_autocmd('LspAttach', nil, function(args)
+        kset('n', 'gd', [[<CMD>Pick lsp scope="definition"<CR>]], { desc = 'Goto Definition' })
+        kset('n', 'gr', [[<CMD>Pick lsp scope="references"<CR>]], { desc = 'Goto References' })
+        kset('n', 'gD', [[<CMD>Pick lsp scope="declaration"<CR>]], { desc = 'Goto Declaration' })
+    end, 'Set lsp keymaps')
 end)
 
 later(
@@ -160,7 +168,7 @@ later(function()
         },
     }
 
-    vim.keymap.set('n', 'gw', [[<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>]], {})
+    kset('n', 'gw', [[<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>]], {})
 end)
 
 later(
@@ -222,8 +230,8 @@ later(function()
     }
 
     -- 当LspAttach时挂载omnifunc为MiniCompletion.completefunc_lsp
-    local on_attach = function(ev) vim.bo[ev.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp' end
-    _G.Config.new_autocmd('LspAttach', nil, on_attach, "Set 'omnifunc'")
+    local on_attach = function(args) vim.bo[args.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp' end
+    _G.Config.new_autocmd('LspAttach', nil, on_attach, 'Set monifunc')
 
     -- 向LSP服务器告知客户端能力
     vim.lsp.config('*', { capabilities = MiniCompletion.get_lsp_capabilities() })
@@ -255,6 +263,7 @@ later(function()
         { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
         { mode = 'n', keys = '<Leader>f', desc = '+Find' },
         { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
+        { mode = 'n', keys = '<Leader>r', desc = '+Lsp' },
         { mode = 'n', keys = '<Leader>s', desc = '+Surround' },
         { mode = 'n', keys = '<Leader>t', desc = '+Tab' },
         { mode = 'n', keys = '<Leader>w', desc = '+Window' },
