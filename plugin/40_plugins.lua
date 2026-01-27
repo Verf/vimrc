@@ -13,6 +13,8 @@ end)
 now_if_args(function()
     add 'neovim/nvim-lspconfig'
 
+    vim.diagnostic.config { virtual_text = true, severity_sort = true }
+
     vim.lsp.enable { 'ty', 'ruff', 'biome' }
 
     kset({ 'n', 'x' }, '<leader>rn', [[<CMD> lua vim.lsp.buf.rename()<CR>]], { desc = 'Rename' })
