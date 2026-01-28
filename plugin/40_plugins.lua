@@ -12,20 +12,10 @@ now(function()
     vim.cmd 'color deepwhite'
 end)
 
-later(function()
-    add 'chrisgrieser/nvim-spider'
-
-    kset({ 'n', 'o', 'x' }, 'w', [[<CMD>lua require('spider').motion('w')<CR>]])
-    kset({ 'n', 'o', 'x' }, 'd', [[<CMD>lua require('spider').motion('e')<CR>]])
-    kset({ 'n', 'o', 'x' }, 'b', [[<CMD>lua require('spider').motion('b')<CR>]])
-end)
-
 now_if_args(function()
     add 'neovim/nvim-lspconfig'
 
-    vim.diagnostic.config { virtual_text = true, severity_sort = true }
-
-    vim.lsp.enable { 'ty', 'ruff', 'biome', 'lua_ls' }
+    vim.lsp.enable { 'ty', 'ruff', 'biome' }
 
     kset({ 'n', 'x' }, '<leader>rn', [[<CMD> lua vim.lsp.buf.rename()<CR>]], { desc = 'Rename' })
     kset({ 'n', 'x' }, '<leader>ra', [[<CMD> lua vim.lsp.buf.code_action()<CR>]], { desc = 'Code Action' })
@@ -61,7 +51,7 @@ now_if_args(function()
     local ts_start = function(ev) vim.treesitter.start(ev.buf) end
     _G.Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
 
-    -- treesitter-textobject keymaps
+    -- treesitter-textobject按键设置
     -- select
     local ts_select = require 'nvim-treesitter-textobjects.select'
     kset({ 'x', 'o' }, 'af', function() ts_select.select_textobject('@function.outer', 'textobjects') end)
@@ -79,6 +69,16 @@ now_if_args(function()
     local ts_swap = require 'nvim-treesitter-textobjects.swap'
     kset('n', ']p', function() ts_swap.swap_next '@parameter.inner' end)
     kset('n', '[p', function() ts_swap.swap_previous '@parameter.inner' end)
+end)
+
+later(function() vim.diagnostic.config { virtual_text = true, severity_sort = true } end)
+
+later(function()
+    add 'chrisgrieser/nvim-spider'
+
+    kset({ 'n', 'o', 'x' }, 'w', [[<CMD>lua require('spider').motion('w')<CR>]])
+    kset({ 'n', 'o', 'x' }, 'd', [[<CMD>lua require('spider').motion('e')<CR>]])
+    kset({ 'n', 'o', 'x' }, 'b', [[<CMD>lua require('spider').motion('b')<CR>]])
 end)
 
 later(function()
