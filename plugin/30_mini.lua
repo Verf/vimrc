@@ -142,6 +142,7 @@ later(function()
         kset('n', 'gd', [[<CMD>Pick lsp scope="definition"<CR>]], { desc = 'Goto Definition' })
         kset('n', 'gr', [[<CMD>Pick lsp scope="references"<CR>]], { desc = 'Goto References' })
         kset('n', 'gD', [[<CMD>Pick lsp scope="declaration"<CR>]], { desc = 'Goto Declaration' })
+        kset('n', 'gD', function() vim.lsp.buf.hover() end, { desc = 'Goto Declaration' })
     end, 'Set lsp keymaps')
 end)
 
@@ -269,27 +270,27 @@ later(function()
     miniclue.setup {
         clues = {
             leader_group_clues,
-            miniclue.gen_clues.builtin_completion(),
-            miniclue.gen_clues.g(),
+            -- miniclue.gen_clues.builtin_completion(),
+            -- miniclue.gen_clues.g(),
             miniclue.gen_clues.marks(),
             miniclue.gen_clues.registers(),
-            miniclue.gen_clues.square_brackets(),
-            miniclue.gen_clues.z(),
+            -- miniclue.gen_clues.square_brackets(),
+            -- miniclue.gen_clues.z(),
         },
         -- Explicitly opt-in for set of common keys to trigger clue window
         triggers = {
             { mode = { 'n', 'x' }, keys = '<Leader>' }, -- Leader triggers
-            { mode = 'n', keys = '\\' }, -- mini.basics
-            { mode = { 'n', 'x' }, keys = '[' }, -- mini.bracketed
-            { mode = { 'n', 'x' }, keys = ']' },
-            { mode = 'i', keys = '<C-x>' }, -- Built-in completion
-            { mode = { 'n', 'x' }, keys = 'g' }, -- `g` key
+            -- { mode = 'n', keys = '\\' }, -- mini.basics
+            -- { mode = { 'n', 'x' }, keys = '[' }, -- mini.bracketed
+            -- { mode = { 'n', 'x' }, keys = ']' },
+            -- { mode = 'i', keys = '<C-x>' }, -- Built-in completion
+            -- { mode = { 'n', 'x' }, keys = 'g' }, -- `g` key
             { mode = { 'n', 'x' }, keys = "'" }, -- Marks
-            { mode = { 'n', 'x' }, keys = '`' },
+            { mode = { 'n', 'x' }, keys = '`' }, -- Marks
             { mode = { 'n', 'x' }, keys = '"' }, -- Registers
             { mode = { 'i', 'c' }, keys = '<C-r>' },
-            { mode = { 'n', 'x' }, keys = 's' }, -- `s` key (mini.surround, etc.)
-            { mode = { 'n', 'x' }, keys = 'z' }, -- `z` key
+            -- { mode = { 'n', 'x' }, keys = 's' }, -- `s` key (mini.surround, etc.)
+            -- { mode = { 'n', 'x' }, keys = 'z' }, -- `z` key
         },
     }
 end)
