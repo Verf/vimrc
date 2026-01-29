@@ -32,28 +32,12 @@ kset({ 'n', 'o', 'x' }, 'P', 'N')
 kset({ 'n', 'o', 'x' }, 'H', ':')
 kset({ 'n', 'o', 'x' }, ':', 'P')
 
--- don't push to clipboard when delete empty line
-kset('n', 'ee', function()
-    if vim.api.nvim_get_current_line():match '^%s*$' then
-        return '"_dd'
-    else
-        return 'dd'
-    end
-end, { expr = true })
-
--- don't add change value to clipboard
-kset({ 'n', 'v' }, 'c', '"_c')
-kset({ 'n', 'v' }, 'C', '"_C')
-
 kset('n', '<TAB>', '<CMD>bn<CR>')
 kset('n', '<S-TAB>', '<CMD>bp<CR>')
 kset('n', '<leader><TAB>', '<CMD>b#<CR>', { desc = 'Swith Buffer' })
 
 kset('n', 'zn', 'zj')
 kset('n', 'zi', 'zk')
-
-kset('n', '<C-s>', '*``cgn', { desc = 'Search & Replace' })
-kset('v', '<C-s>', [[y/\V<C-R>=escape(@",'/\')<CR><CR>Ncgn]], { desc = 'Search & Replace' })
 
 kset({ 'n', 'o', 'x' }, 'gs', '^', { desc = 'Goto Line Start' })
 kset({ 'n', 'o', 'x' }, 'gl', '$', { desc = 'Goto Line End' })
@@ -82,3 +66,60 @@ kset('n', '<leader>wY', '<C-w>H', { desc = 'Window to Left' })
 kset('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
 kset('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
 kset('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
+
+-- 删除的空行不记录寄存器中
+kset('n', 'ee', function()
+    if vim.api.nvim_get_current_line():match '^%s*$' then
+        return '"_dd'
+    else
+        return 'dd'
+    end
+end, { expr = true })
+
+-- 修改时不记录寄存器中
+kset({ 'n', 'v' }, 'c', '"_c')
+kset({ 'n', 'v' }, 'C', '"_C')
+kset({ 'n', 'v' }, 'x', '"_x')
+
+-- 替换并记录当前内容，支持按.自动替换下一个
+kset('n', '<C-s>', 'g*Ncgn', { desc = 'Search & Replace' })
+kset('x', '<C-s>', function()
+    -- 1. 复制当前选区内容到寄存器 v
+    vim.cmd 'noau normal! "vy'
+    -- 2. 获取内容并转义特殊字符
+    local text = vim.fn.getreg 'v'
+    local escaped_text = '\\V' .. vim.fn.escape(text, '\\/')
+    -- 3. 将其设置为搜索寄存器 /
+    vim.fn.setreg('/', escaped_text)
+    -- 4. 使用 feedkeys 发送后续按键
+    local keys = vim.api.nvim_replace_termcodes('<Esc>cgn', true, false, true)
+    vim.api.nvim_feedkeys(keys, 'n', false)
+end, { desc = 'Search & Replace' })
+
+kset('n', '@', function()
+    local count = vim.v.count1
+    local register = vim.fn.getcharstr()
+    vim.opt.lazyredraw = true
+    vim.opt.eventignore = { 'TextChanged', 'TextChangedI' }
+    vim.opt.clipboard = ''
+    vim.api.nvim_command(string.format('norm! %d@%s', count, register))
+    vim.opt.lazyredraw = false
+    vim.opt.eventignore = ''
+    vim.opt.clipboard = 'unnamedplus'
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
+        vim.api.nvim_command 'silent update'
+    end
+end, { expr = true, desc = 'Execute Macro' })
+kset('n', 'Q', function()
+    local count = vim.v.count1
+    vim.opt.lazyredraw = true
+    vim.opt.eventignore = { 'TextChanged', 'TextChangedI' }
+    vim.opt.clipboard = ''
+    vim.api.nvim_command(string.format('norm! %dQ', count))
+    vim.opt.lazyredraw = false
+    vim.opt.eventignore = ''
+    vim.opt.clipboard = 'unnamedplus'
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
+        vim.api.nvim_command 'silent update'
+    end
+end, { expr = true, desc = 'Execute Last Macro' })
