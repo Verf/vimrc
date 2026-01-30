@@ -229,7 +229,11 @@ later(function()
     }
 
     -- 当LspAttach时挂载omnifunc为MiniCompletion.completefunc_lsp
-    local on_attach = function(args) vim.bo[args.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp' end
+    local on_attach = function(args)
+        vim.bo[args.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        client.server_capabilities.semanticTokensProvider = nil
+    end
     _G.Config.new_autocmd('LspAttach', nil, on_attach, 'Set monifunc')
 
     -- 向LSP服务器告知客户端能力
