@@ -232,7 +232,7 @@ later(function()
     local on_attach = function(args)
         vim.bo[args.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
         local client = vim.lsp.get_client_by_id(args.data.client_id)
-        client.server_capabilities.semanticTokensProvider = nil
+        if client then client.server_capabilities.semanticTokensProvider = nil end
     end
     _G.Config.new_autocmd('LspAttach', nil, on_attach, 'Set monifunc')
 
