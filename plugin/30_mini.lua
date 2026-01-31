@@ -90,7 +90,6 @@ later(function()
     local mini_pick = require 'mini.pick'
     mini_pick.setup {
         options = {
-            -- Whether to cache matches (more speed and memory on repeated prompts)
             use_cache = true,
         },
     }
