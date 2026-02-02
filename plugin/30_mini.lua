@@ -264,7 +264,7 @@ later(function()
     }
 
     -- 开启一个简单的lsp服务使snippets在补全菜单可见
-    MiniSnippets.start_lsp_server()
+    -- MiniSnippets.start_lsp_server()
 end)
 
 later(function()
