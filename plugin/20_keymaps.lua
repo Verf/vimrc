@@ -79,7 +79,6 @@ end, { expr = true })
 -- 修改时不记录寄存器中
 kset({ 'n', 'v' }, 'c', '"_c')
 kset({ 'n', 'v' }, 'C', '"_C')
-kset({ 'n', 'v' }, 'x', '"_x')
 
 -- 替换并记录当前内容，支持按.自动替换下一个
 kset('n', '<C-s>', 'g*Ncgn', { desc = 'Search & Replace' })
