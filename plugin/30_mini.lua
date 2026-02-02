@@ -28,7 +28,11 @@ now(function() require('mini.statusline').setup() end)
 now(function() require('mini.tabline').setup() end)
 
 later(function() require('mini.align').setup() end)
-later(function() require('mini.bufremove').setup() end)
+later(function()
+    require('mini.bufremove').setup()
+
+    kset('n', '<leader>qq', '<CMD>lua MiniBufremove.delete(0, true)<CR>', { desc = 'Buffer Close' })
+end)
 later(function() require('mini.cmdline').setup() end)
 later(function() require('mini.diff').setup() end)
 later(function() require('mini.extra').setup() end)
