@@ -15,7 +15,7 @@ end)
 now_if_args(function()
     add 'neovim/nvim-lspconfig'
 
-    vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust-analyzer', 'gopls' }
+    vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust_analyzer', 'gopls' }
 
     kset({ 'n', 'x' }, '<leader>rn', [[<CMD> lua vim.lsp.buf.rename()<CR>]], { desc = 'Rename' })
     kset({ 'n', 'x' }, '<leader>ra', [[<CMD> lua vim.lsp.buf.code_action()<CR>]], { desc = 'Code Action' })
