@@ -134,16 +134,19 @@ later(function()
     add { source = 'saghen/blink.cmp', checkout = 'v1.9.0' }
 
     require('blink.cmp').setup {
+
         keymap = { preset = 'none' },
+
         appearance = {
             nerd_font_variant = 'mono',
         },
-        -- 仅当手动触发时显示文档
-        -- completion = { documentation = { auto_show = false } },
 
+        -- snippets = { preset = 'mini_snippets' },
         sources = {
-            default = { 'lsp', 'path', 'buffer' },
+            default = { 'lsp', 'buffer', 'path' },
         },
+
+        signature = { enabled = true },
 
         fuzzy = { implementation = 'prefer_rust_with_warning' },
     }
