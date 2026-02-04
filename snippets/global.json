@@ -1,10 +1,10 @@
 {
     "dash date": {
-        "prefix": "cdt",
+        "prefix": "dt",
         "body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE"
     },
     "simp date": {
-        "prefix": "cdt",
+        "prefix": "sdt",
         "body": "$CURRENT_YEAR$CURRENT_MONTH$CURRENT_DATE"
     }
 }

@@ -129,3 +129,22 @@ later(function()
         end, { desc = 'Clear all cursors' })
     end)
 end)
+
+later(function()
+    add { source = 'saghen/blink.cmp', checkout = 'v1.9.0' }
+
+    require('blink.cmp').setup {
+        keymap = { preset = 'none' },
+        appearance = {
+            nerd_font_variant = 'mono',
+        },
+        -- 仅当手动触发时显示文档
+        -- completion = { documentation = { auto_show = false } },
+
+        sources = {
+            default = { 'lsp', 'path', 'buffer' },
+        },
+
+        fuzzy = { implementation = 'prefer_rust_with_warning' },
+    }
+end)

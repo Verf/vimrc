@@ -209,42 +209,13 @@ later(function()
     MiniKeymap.map_multistep(
         'i',
         '<Tab>',
-        { 'minisnippets_next', 'minisnippets_expand', 'pmenu_next', 'jump_after_close' }
+        { 'minisnippets_next', 'minisnippets_expand', 'blink_next', 'jump_after_close' }
     )
-    MiniKeymap.map_multistep('i', '<S-Tab>', { 'minisnippets_prev', 'pmenu_prev', 'jump_before_open' })
+    MiniKeymap.map_multistep('i', '<S-Tab>', { 'minisnippets_prev', 'blink_prev', 'jump_before_open' })
     -- <CR> 用于选择补全项或应用mini.pairs
-    MiniKeymap.map_multistep('i', '<CR>', { 'pmenu_accept', 'minipairs_cr' })
+    MiniKeymap.map_multistep('i', '<CR>', { 'blink_accept', 'minipairs_cr' })
     -- <BS> 用于消除mini.pairs
     MiniKeymap.map_multistep('i', '<BS>', { 'minipairs_bs' })
-end)
-
-later(function()
-    -- 对LSP补全结果后处理，隐藏Text，并调整Snippet到列表末尾
-    local process_items_opts = { kind_priority = { Text = -1, Snippet = 99 } }
-    local process_items = function(items, base)
-        return MiniCompletion.default_process_items(items, base, process_items_opts)
-    end
-    require('mini.completion').setup {
-        lsp_completion = {
-            -- 1. 使用omnifunc而不是默认的completefunc
-            -- 2. 关闭LSP自动配置，用于下面的on_attach
-            -- 3. 应用上面的后处理规则
-            source_func = 'omnifunc',
-            auto_setup = false,
-            process_items = process_items,
-        },
-    }
-
-    -- 当LspAttach时挂载omnifunc为MiniCompletion.completefunc_lsp
-    local on_attach = function(args)
-        vim.bo[args.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if client then client.server_capabilities.semanticTokensProvider = nil end
-    end
-    _G.Config.new_autocmd('LspAttach', nil, on_attach, 'Set monifunc')
-
-    -- 向LSP服务器告知客户端能力
-    vim.lsp.config('*', { capabilities = MiniCompletion.get_lsp_capabilities() })
 end)
 
 later(function()
