@@ -94,30 +94,44 @@ kset('x', '<C-s>', function()
     vim.api.nvim_feedkeys(keys, 'n', false)
 end, { desc = 'Search & Replace' })
 
+-- 关闭影响性能的配置项并执行宏
+local function fast_execute(cmd_str)
+    -- 1. 备份并关闭性能杀手项
+    local old_lazy = vim.o.lazyredraw
+    local old_event = vim.o.eventignore
+    local old_clipboard = vim.o.clipboard
+
+    vim.o.lazyredraw = true
+    vim.o.eventignore = 'all' -- 忽略所有事件以达到最高速
+    vim.o.clipboard = '' -- 宏执行期间禁用剪贴板同步
+
+    -- 2. 执行宏 (使用 pcall 捕获错误，防止宏中断导致设置无法恢复)
+    local success, err = pcall(function() vim.api.nvim_command('norm! ' .. cmd_str) end)
+
+    -- 3. 恢复设置
+    vim.o.lazyredraw = old_lazy
+    vim.o.eventignore = old_event
+    vim.o.clipboard = old_clipboard
+
+    if not success then vim.api.nvim_err_writeln('Macro failed: ' .. (err or '')) end
+
+    -- 4. 自动保存逻辑 (可选)
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
+        vim.api.nvim_command 'silent update'
+    end
+end
+
+-- 映射 @ 键
 kset('n', '@', function()
     local count = vim.v.count1
     local register = vim.fn.getcharstr()
-    vim.opt.lazyredraw = true
-    vim.opt.eventignore = { 'TextChanged', 'TextChangedI' }
-    vim.opt.clipboard = ''
-    vim.api.nvim_command(string.format('norm! %d@%s', count, register))
-    vim.opt.lazyredraw = false
-    vim.opt.eventignore = ''
-    vim.opt.clipboard = 'unnamedplus'
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
-        vim.api.nvim_command 'silent update'
-    end
-end, { expr = true, desc = 'Execute Macro' })
+    -- 如果按了 Esc (编码为 \27)，则退出执行
+    if register == '\27' then return end
+    fast_execute(count .. '@' .. register)
+end, { desc = 'Execute Macro Fast' })
+
+-- 映射 Q 键 (执行上一次宏)
 kset('n', 'Q', function()
     local count = vim.v.count1
-    vim.opt.lazyredraw = true
-    vim.opt.eventignore = { 'TextChanged', 'TextChangedI' }
-    vim.opt.clipboard = ''
-    vim.api.nvim_command(string.format('norm! %dQ', count))
-    vim.opt.lazyredraw = false
-    vim.opt.eventignore = ''
-    vim.opt.clipboard = 'unnamedplus'
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype ~= '' then
-        vim.api.nvim_command 'silent update'
-    end
-end, { expr = true, desc = 'Execute Last Macro' })
+    fast_execute(count .. 'Q')
+end, { desc = 'Execute Last Macro Fast' })
