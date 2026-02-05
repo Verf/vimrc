@@ -33,13 +33,12 @@ later(function()
 
     kset('n', '<leader>qq', '<CMD>lua MiniBufremove.delete(0, true)<CR>', { desc = 'Buffer Close' })
 end)
-later(function() require('mini.cmdline').setup() end)
 later(function() require('mini.diff').setup() end)
 later(function() require('mini.extra').setup() end)
 later(function() require('mini.git').setup() end)
 later(function() require('mini.trailspace').setup() end)
 
-later(function() require('mini.pairs').setup { modes = { command = true } } end)
+later(function() require('mini.pairs').setup() end)
 
 later(
     function()

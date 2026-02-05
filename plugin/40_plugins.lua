@@ -89,7 +89,7 @@ later(function()
             lsp_format = 'fallback', -- 配置lsp的格式化器为默认项
         },
         format_on_save = {
-            timeout_ms = 500,
+            timeout_ms = 1000,
         },
 
         formatters_by_ft = {
@@ -131,7 +131,7 @@ later(function()
 end)
 
 later(function()
-    add { source = 'saghen/blink.cmp', checkout = 'v1.9.0' }
+    add { source = 'saghen/blink.cmp', checkout = 'v1.9.1' }
 
     require('blink.cmp').setup {
 
@@ -141,7 +141,8 @@ later(function()
             nerd_font_variant = 'mono',
         },
 
-        -- snippets = { preset = 'mini_snippets' },
+        snippets = { preset = 'mini_snippets' },
+
         sources = {
             default = { 'lsp', 'buffer', 'path' },
         },
@@ -152,6 +153,13 @@ later(function()
 
         completion = {
             list = { selection = { preselect = false, auto_insert = true } },
+        },
+
+        cmdline = {
+            completion = {
+                menu = { auto_show = true },
+                list = { selection = { preselect = false, auto_insert = true } },
+            },
         },
     }
 end)
