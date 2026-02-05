@@ -39,9 +39,6 @@ kset('n', '<leader><TAB>', '<CMD>b#<CR>', { desc = 'Swith Buffer' })
 kset('n', 'zn', 'zj')
 kset('n', 'zi', 'zk')
 
-kset({ 'n', 'o', 'x' }, 'gs', '^', { desc = 'Goto Line Start' })
-kset({ 'n', 'o', 'x' }, 'gl', '$', { desc = 'Goto Line End' })
-
 kset({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard' })
 kset({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })
 
@@ -49,9 +46,11 @@ kset('n', '<leader>qa', '<CMD>wqa!<CR>', { desc = 'Quit All' })
 
 kset('n', '<leader>bc', '<CMD>%bd!|e#<CR>', { desc = 'Buffer Only' })
 
-kset('n', '<leader>tn', '<CMD>tabnew<CR>', { desc = 'Tab New' })
+kset('n', '<leader>tN', '<CMD>tabnew<CR>', { desc = 'Tab New' })
 kset('n', '<leader>tq', '<CMD>tabclose<CR>', { desc = 'Tab Close' })
 kset('n', '<leader>tc', '<CMD>tabonly<CR>', { desc = 'Tab Only' })
+kset('n', '<leader>tn', '<CMD>tabnext<CR>', { desc = 'Tab Next' })
+kset('n', '<leader>tp', '<CMD>tabprevious<CR>', { desc = 'Tab Previous' })
 
 kset('n', '<leader>wc', '<C-w>o', { desc = 'Window Only' })
 kset('n', '<leader>wq', '<C-w>c', { desc = 'Window Close' })

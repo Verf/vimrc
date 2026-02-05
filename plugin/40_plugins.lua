@@ -65,10 +65,6 @@ now_if_args(function()
     kset({ 'n', 'x', 'o' }, ']c', function() ts_move.goto_next_start('@class.outer', 'textobjects') end)
     kset({ 'n', 'x', 'o' }, '[f', function() ts_move.goto_previous_start('@function.outer', 'textobjects') end)
     kset({ 'n', 'x', 'o' }, '[c', function() ts_move.goto_previous_start('@class.outer', 'textobjects') end)
-    -- swap
-    local ts_swap = require 'nvim-treesitter-textobjects.swap'
-    kset('n', ']p', function() ts_swap.swap_next '@parameter.inner' end)
-    kset('n', '[p', function() ts_swap.swap_previous '@parameter.inner' end)
 end)
 
 later(function() vim.diagnostic.config { virtual_text = true, severity_sort = true } end)

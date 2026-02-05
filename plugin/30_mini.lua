@@ -28,17 +28,19 @@ now(function() require('mini.statusline').setup() end)
 now(function() require('mini.tabline').setup() end)
 
 later(function() require('mini.align').setup() end)
+later(function() require('mini.diff').setup() end)
+later(function() require('mini.extra').setup() end)
+later(function() require('mini.git').setup() end)
+later(function() require('mini.trailspace').setup() end)
+later(function() require('mini.pairs').setup() end)
+
+later(function() require('mini.operators').setup { replace = { prefix = '' } } end)
+
 later(function()
     require('mini.bufremove').setup()
 
     kset('n', '<leader>qq', '<CMD>lua MiniBufremove.delete(0, true)<CR>', { desc = 'Buffer Close' })
 end)
-later(function() require('mini.diff').setup() end)
-later(function() require('mini.extra').setup() end)
-later(function() require('mini.git').setup() end)
-later(function() require('mini.trailspace').setup() end)
-
-later(function() require('mini.pairs').setup() end)
 
 later(
     function()
@@ -164,6 +166,10 @@ later(
 
 later(function()
     require('mini.jump2d').setup {
+        view = {
+            dim = true,
+            n_steps_ahead = 2,
+        },
         mappings = {
             start_jumping = '',
         },
