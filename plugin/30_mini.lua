@@ -133,7 +133,7 @@ later(function()
         return mini_pick.builtin.files(local_opts, opts)
     end
 
-    kset('n', '<leader>ff', [[<CMD>Pick files<CR>]], { desc = 'Find Files' })
+    -- kset('n', '<leader>ff', [[<CMD>Pick files<CR>]], { desc = 'Find Files' })
     kset('n', '<leader>fh', [[<CMD>Pick oldfiles<CR>]], { desc = 'Find Files' })
     kset('n', '<leader>fs', [[<CMD>Pick lsp scope="document_symbol"<CR>]], { desc = 'Find Symbols' })
     kset('n', '<leader>fd', [[<CMD>Pick diagnostic scope="current"<CR>]], { desc = 'Diagnostic' })

@@ -160,3 +160,85 @@ later(function()
         },
     }
 end)
+
+later(function()
+    local function build_fff(args) require('fff.download').download_or_build_binary() end
+    add {
+        source = 'dmtrKovalenko/fff.nvim',
+        hooks = {
+            post_install = build_fff,
+            post_checkout = build_fff,
+        },
+    }
+
+    -- from https://github.com/nvim-mini/mini.nvim/discussions/1974
+    local state = {}
+    local ns_id = vim.api.nvim_create_namespace 'MiniPick FFFiles Picker'
+
+    local function find(query)
+        local file_picker = require 'fff.file_picker'
+
+        query = query or ''
+        local fff_result = file_picker.search_files(query, state.current_file_cache, 100, 4)
+
+        local items = {}
+        for _, fff_item in ipairs(fff_result) do
+            local item = {
+                text = fff_item.relative_path,
+                path = fff_item.path,
+            }
+            table.insert(items, item)
+        end
+
+        return items
+    end
+
+    local function run()
+        -- Setup fff.nvim
+        local file_picker = require 'fff.file_picker'
+        if not file_picker.is_initialized() then
+            local setup_success = file_picker.setup()
+            if not setup_success then
+                vim.notify('Could not setup fff.nvim', vim.log.levels.ERROR)
+                return
+            end
+        end
+
+        -- Cache current file to deprioritize in fff.nvim
+        if not state.current_file_cache then
+            local current_buf = vim.api.nvim_get_current_buf()
+            if current_buf and vim.api.nvim_buf_is_valid(current_buf) then
+                local current_file = vim.api.nvim_buf_get_name(current_buf)
+                if current_file ~= '' and vim.fn.filereadable(current_file) == 1 then
+                    local relative_path = vim.fs.relpath(vim.uv.cwd(), current_file)
+                    state.current_file_cache = relative_path
+                else
+                    state.current_file_cache = nil
+                end
+            end
+        end
+
+        local function show_with_icons(buf_id, items, query)
+            MiniPick.default_show(buf_id, items, query, { show_icons = true })
+        end
+
+        -- Start picker
+        MiniPick.start {
+            source = {
+                name = 'FFFiles',
+                items = find,
+                match = function(_, _, query)
+                    local items = find(table.concat(query))
+                    MiniPick.set_picker_items(items, { do_match = false })
+                end,
+                show = show_with_icons,
+            },
+        }
+
+        state.current_file_cache = nil -- Reset cache
+    end
+
+    MiniPick.registry.fffiles = run
+
+    kset('n', '<leader>ff', MiniPick.registry.fffiles)
+end)
