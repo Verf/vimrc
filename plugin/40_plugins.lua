@@ -150,6 +150,19 @@ later(function()
 
         completion = {
             list = { selection = { preselect = false, auto_insert = true } },
+            menu = {
+                draw = {
+                    padding = { 0, 1 },
+                    components = {
+                        kind_icon = {
+                            highlight = function(ctx)
+                                local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+                                return hl
+                            end,
+                        },
+                    },
+                },
+            },
         },
 
         cmdline = {
@@ -162,18 +175,10 @@ later(function()
 end)
 
 later(function()
-    local function build_fff(args) require('fff.download').download_or_build_binary() end
-    add {
-        source = 'dmtrKovalenko/fff.nvim',
-        hooks = {
-            post_install = build_fff,
-            post_checkout = build_fff,
-        },
-    }
+    add 'dmtrKovalenko/fff.nvim'
 
     -- from https://github.com/nvim-mini/mini.nvim/discussions/1974
     local state = {}
-    local ns_id = vim.api.nvim_create_namespace 'MiniPick FFFiles Picker'
 
     local function find(query)
         local file_picker = require 'fff.file_picker'
