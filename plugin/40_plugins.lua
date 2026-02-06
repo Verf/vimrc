@@ -19,6 +19,7 @@ now_if_args(function()
 
     kset({ 'n', 'x' }, '<leader>rn', [[<CMD> lua vim.lsp.buf.rename()<CR>]], { desc = 'Rename' })
     kset({ 'n', 'x' }, '<leader>ra', [[<CMD> lua vim.lsp.buf.code_action()<CR>]], { desc = 'Code Action' })
+    kset({ 'n', 'x' }, '<leader>rh', [[<CMD> lua vim.lsp.buf.hover()<CR>]], { desc = 'Hover Doc' })
 end)
 
 now_if_args(function()
