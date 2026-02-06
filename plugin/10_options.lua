@@ -3,9 +3,6 @@ local g = vim.g
 local cmd = vim.cmd
 local opt = vim.opt
 
--- [[ UI 界面设置 ]]
-opt.background = 'light' -- 设置背景主题
-
 -- [[ Leader 键设置 ]]
 g.mapleader = ' ' -- 全局 Leader 键
 g.maplocalleader = ',' -- 将局部 Leader 键（通常用于特定文件类型插件）
@@ -35,12 +32,12 @@ opt.softtabstop = 4 -- 设置在编辑模式下，按 Tab 键插入的空格数
 opt.tabstop = 4 -- 设置文件中一个 Tab 字符代表的空格数
 opt.updatetime = 750 -- 设置更新交换文件和触发 CursorHold 事件的延迟时间（毫秒）
 
-opt.iskeyword = '@,48-57,_,192-255,-' -- -也作为word一部分
-opt.formatlistpat = [[^\s*[0-9\-\+\*]\+[\.\)]*\s\+]]
 opt.complete = '.,w,b,kspell' -- 内置自动补全数据源
 opt.completeopt = 'menuone,noselect,fuzzy,nosort' -- 内置自动补全菜单配置
 opt.fileformats = 'unix,dos' -- 设置识别的文件格式，优先使用 unix 换行符 (\n)
+opt.formatlistpat = [[^\s*[0-9\-\+\*]\+[\.\)]*\s\+]]
 opt.formatoptions = 'rqnl1j' -- 增强自动注释的体验
+opt.iskeyword = '@,48-57,_,192-255,-' -- -也作为word一部分
 opt.mouse = 'a' -- 在所有模式下（普通、可视、插入等）启用鼠标支持
 opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize' -- 设置 :mksession 命令保存的会话内容
 opt.shell = 'nu' -- 设置用于执行外部命令的 shell 程序为 nu (nushell)
@@ -48,9 +45,9 @@ opt.shellcmdflag = '-c' -- 设置传递给 shell 的标志，以执行命令
 opt.shellquote = '' -- 设置引用传递给 shell 的命令的方式
 opt.shellxquote = '' -- 类似于 shellquote，但用于重定向
 opt.spelloptions = 'camel' -- 将CamelCase单词视为多个单词
+opt.splitkeep = 'screen' -- 分屏时保持相对位置更稳定
 opt.switchbuf = 'usetab' -- 执行特定跳转时优先复用已有标签页，若没有则新建标签页打开
 opt.virtualedit = 'block' -- 启用虚拟编辑，允许光标在块选择模式下移动到没有实际字符的列
-
 -- autocmd
 -- 在当前注释中按o插入新行后不自动添加注释符，在 FileType 时调用以自动覆盖文件类似特定的配置
 local f = function() vim.cmd 'setlocal formatoptions-=c formatoptions-=o' end

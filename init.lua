@@ -7,7 +7,7 @@
 --
 --  For Verf
 --
-vim.loader.enable()
+if vim.loader then vim.loader.enable() end
 
 -- 安装mini.nvim
 local mini_path = vim.fn.stdpath 'data' .. '/site/pack/deps/start/mini.nvim'

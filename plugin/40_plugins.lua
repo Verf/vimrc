@@ -175,7 +175,14 @@ later(function()
 end)
 
 later(function()
-    add 'dmtrKovalenko/fff.nvim'
+    local function build() require('fff.download').download_or_build_binary() end
+    add {
+        source = 'dmtrKovalenko/fff.nvim',
+        hooks = {
+            post_install = build,
+            post_checkout = build,
+        },
+    }
 
     -- from https://github.com/nvim-mini/mini.nvim/discussions/1974
     local state = {}
