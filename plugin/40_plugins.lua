@@ -184,57 +184,60 @@ later(function()
         },
     }
 
-    -- from https://github.com/nvim-mini/mini.nvim/discussions/1974
+    local file_picker = require 'fff.file_picker'
+    if not file_picker.is_initialized() then
+        local setup_success = file_picker.setup()
+        if not setup_success then
+            vim.notify('Could not setup fff.nvim', vim.log.levels.ERROR)
+            return
+        end
+    end
+
     local state = {}
 
-    local function find(query)
-        local file_picker = require 'fff.file_picker'
+    -- 对路径进行标准化处理，去掉Windows下可能添加的前缀
+    local function normalize_path(p)
+        if vim.fn.has 'win32' == 1 and p:match '^\\\\%?\\' then return p:sub(5) end
+        return p
+    end
 
+    local function find(query)
         query = query or ''
         local fff_result = file_picker.search_files(query, state.current_file_cache, 100, 4)
 
         local items = {}
         for _, fff_item in ipairs(fff_result) do
             local item = {
-                text = fff_item.relative_path,
-                path = fff_item.path,
+                text = normalize_path(fff_item.relative_path),
+                path = normalize_path(fff_item.path),
             }
             table.insert(items, item)
         end
-
         return items
     end
 
     local function run()
-        -- Setup fff.nvim
-        local file_picker = require 'fff.file_picker'
-        if not file_picker.is_initialized() then
-            local setup_success = file_picker.setup()
-            if not setup_success then
-                vim.notify('Could not setup fff.nvim', vim.log.levels.ERROR)
-                return
-            end
-        end
-
-        -- Cache current file to deprioritize in fff.nvim
+        -- 仅当路径合法时进行缓存
         if not state.current_file_cache then
             local current_buf = vim.api.nvim_get_current_buf()
-            if current_buf and vim.api.nvim_buf_is_valid(current_buf) then
+            if
+                current_buf
+                and vim.api.nvim_buf_is_valid(current_buf)
+                and vim.api.nvim_buf_get_option(current_buf, 'buftype') == ''
+            then -- 跳过 help/quickfix/etc.
                 local current_file = vim.api.nvim_buf_get_name(current_buf)
                 if current_file ~= '' and vim.fn.filereadable(current_file) == 1 then
                     local relative_path = vim.fs.relpath(vim.uv.cwd(), current_file)
-                    state.current_file_cache = relative_path
-                else
-                    state.current_file_cache = nil
+                    state.current_file_cache = normalize_path(relative_path)
                 end
             end
         end
 
+        -- 使用mini.icons进行图标显示
         local function show_with_icons(buf_id, items, query)
             MiniPick.default_show(buf_id, items, query, { show_icons = true })
         end
 
-        -- Start picker
         MiniPick.start {
             source = {
                 name = 'FFFiles',
@@ -247,7 +250,8 @@ later(function()
             },
         }
 
-        state.current_file_cache = nil -- Reset cache
+        vim.api.nvim_exec_autocmds('User', { pattern = 'MiniPickStop' })
+        state.current_file_cache = nil
     end
 
     MiniPick.registry.fffiles = run
