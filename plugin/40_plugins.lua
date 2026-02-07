@@ -258,3 +258,14 @@ later(function()
 
     kset('n', '<leader>ff', MiniPick.registry.fffiles)
 end)
+
+later(function()
+    add 'nvim-focus/focus.nvim'
+
+    require('focus').setup()
+
+    kset('n', '<leader>wy', [[<CMD>FocusSplitLeft<CR>]])
+    kset('n', '<leader>wo', [[<CMD>FocusSplitRight<CR>]])
+    kset('n', '<leader>wn', [[<CMD>FocusSplitDown<CR>]])
+    kset('n', '<leader>wi', [[<CMD>FocusSplitUp<CR>]])
+end)
