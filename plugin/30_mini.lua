@@ -26,6 +26,7 @@ end)
 now(function() require('mini.notify').setup() end)
 now(function() require('mini.statusline').setup() end)
 now(function() require('mini.tabline').setup() end)
+now(function() require('mini.starter').setup() end)
 
 later(function() require('mini.align').setup() end)
 later(function() require('mini.diff').setup() end)
