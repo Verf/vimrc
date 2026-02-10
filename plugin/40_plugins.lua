@@ -68,7 +68,19 @@ now_if_args(function()
     kset({ 'n', 'x', 'o' }, '[c', function() ts_move.goto_previous_start('@class.outer', 'textobjects') end)
 end)
 
-later(function() vim.diagnostic.config { virtual_text = true, severity_sort = true } end)
+later(
+    function()
+        vim.diagnostic.config {
+            virtual_text = {
+                source = 'always',
+            },
+            float = {
+                source = 'always',
+            },
+            severity_sort = true,
+        }
+    end
+)
 
 later(function()
     add 'chrisgrieser/nvim-spider'
