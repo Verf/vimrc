@@ -38,5 +38,9 @@
             "with open('$1', '${2:w}', encoding='${3:utf-8}', newline='${4:\\n}') as ${5:fwrite}:",
             "\t$0"
         ]
+    },
+    "from typing": {
+        "prefix": "frtyp",
+        "body": "from typing import Optional, Union, Dict, List, Set, Tuple, Any, Callable, Iterable, NamedTuple"
     }
 }
