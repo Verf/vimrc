@@ -162,6 +162,10 @@ later(function()
 
         completion = {
             list = { selection = { preselect = false, auto_insert = true } },
+            trigger = {
+                show_on_keyword = true,
+                show_on_trigger_character = false,
+            },
             menu = {
                 draw = {
                     padding = { 0, 1 },
