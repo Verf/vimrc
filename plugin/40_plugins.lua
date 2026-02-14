@@ -144,7 +144,17 @@ later(function()
 
     require('blink.cmp').setup {
 
-        keymap = { preset = 'none' },
+        keymap = {
+            preset = 'none',
+            ['<CR>'] = { 'accept', 'fallback' },
+            ['<C-e>'] = { 'hide', 'show' },
+            ['<C-y>'] = { 'select_and_accept', 'fallback' },
+            ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+            ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
+            ['<C-k>'] = { 'show_signature', 'hide_signature', 'fallback' },
+            ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+            ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+        },
 
         appearance = {
             nerd_font_variant = 'mono',
