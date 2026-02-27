@@ -212,12 +212,8 @@ end)
 later(function()
     require('mini.keymap').setup()
     -- 使用 <Tab>/<S-Tab> 选择补全菜单项
-    MiniKeymap.map_multistep(
-        'i',
-        '<Tab>',
-        { 'minisnippets_next', 'minisnippets_expand', 'blink_next', 'jump_after_close' }
-    )
-    MiniKeymap.map_multistep('i', '<S-Tab>', { 'minisnippets_prev', 'blink_prev', 'jump_before_open' })
+    MiniKeymap.map_multistep('i', '<Tab>', { 'minisnippets_expand', 'blink_next', 'jump_after_close' })
+    MiniKeymap.map_multistep('i', '<S-Tab>', { 'blink_prev', 'jump_before_open' })
     -- <CR> 用于选择补全项或应用mini.pairs
     MiniKeymap.map_multistep('i', '<CR>', { 'blink_accept', 'minipairs_cr' })
     -- <BS> 用于消除mini.pairs
