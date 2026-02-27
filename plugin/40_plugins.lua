@@ -20,6 +20,11 @@ now_if_args(function()
     kset({ 'n', 'x' }, '<leader>rn', [[<CMD> lua vim.lsp.buf.rename()<CR>]], { desc = 'Rename' })
     kset({ 'n', 'x' }, '<leader>ra', [[<CMD> lua vim.lsp.buf.code_action()<CR>]], { desc = 'Code Action' })
     kset({ 'n', 'x' }, '<leader>rh', [[<CMD> lua vim.lsp.buf.hover()<CR>]], { desc = 'Hover Doc' })
+
+    _G.Config.new_autocmd('LspAttach', nil, function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        client.server_capabilities.semanticTokensProvider = nil
+    end, 'Disable Semantic Tokens')
 end)
 
 now_if_args(function()
