@@ -238,6 +238,16 @@ later(function()
 
     -- 开启一个简单的lsp服务使snippets在补全菜单可见
     -- MiniSnippets.start_lsp_server()
+
+    -- 退出insert时自动退出snippets
+    _G.Config.new_autocmd('InsertLeave', nil, function()
+        vim.schedule(function()
+            local snippets = require 'mini.snippets'
+            while snippets.session.get() do
+                snippets.session.stop()
+            end
+        end)
+    end, 'Cancel mini.snippets session when leave insert')
 end)
 
 later(function()

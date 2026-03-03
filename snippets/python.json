@@ -1,6 +1,10 @@
 {
     "shebang": { "prefix": "#!", "body": "#!/usr/bin/env python3" },
     "coding": { "prefix": "#u", "body": "# coding: utf-8" },
+    "inline script metadata": {
+        "prefix": "#s",
+        "body": ["# /// script", "# $0", "# ///"]
+    },
     "self": {
         "prefix": "s.",
         "body": "self.$0"
@@ -31,6 +35,10 @@
             "with open('$1', '${2:r}', encoding='${3:utf-8}') as ${4:fread}:",
             "\t$0"
         ]
+    },
+    "with": {
+        "prefix": "with",
+        "body": ["with $1 as $2:", "\t${0:pass}"]
     },
     "write file": {
         "prefix": "ww",

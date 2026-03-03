@@ -1,0 +1,6 @@
+{
+    "snippet template": {
+        "prefix": "st",
+        "body": ["\"$1\": {", "\t\"prefix\": \"$2\",", "\t\"body\": [$3]", "}"]
+    }
+}
