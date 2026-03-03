@@ -203,6 +203,10 @@ later(function()
             },
         },
     }
+
+    _G.Config.new_autocmd('InsertLeave', nil, function()
+        vim.schedule(function() require('blink.cmp').cancel() end)
+    end, 'Cancel completion when leave insert')
 end)
 
 later(function()
