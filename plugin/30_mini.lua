@@ -234,6 +234,10 @@ later(function()
             jump_prev = '<C-u>',
             stop = '<C-c>',
         },
+        -- 禁止对snippet的prefix进行模糊匹配，仅允许准确的prefix展开
+        expand = {
+            match = function(snips) return snippets.default_match(snips, { pattern_fuzzy = '' }) end,
+        },
     }
 
     -- 开启一个简单的lsp服务使snippets在补全菜单可见
