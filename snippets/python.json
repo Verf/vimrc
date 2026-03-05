@@ -13,6 +13,18 @@
         "prefix": "ifm",
         "body": ["if __name__ == '__main__':", "\t${0:main}"]
     },
+    "from import": {
+        "prefix": "fi",
+        "body": "from $1 import $0"
+    },
+    "function definition": {
+        "prefix": "def",
+        "body": ["def $1($2) -> ${3:None}}:", "\t${0:pass}"]
+    },
+    "class definition": {
+        "prefix": "class",
+        "body": ["class $1:", "\t${0:pass}"]
+    },
     "logging.debug": {
         "prefix": "logd",
         "body": "logging.debug($0)"
