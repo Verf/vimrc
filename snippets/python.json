@@ -14,37 +14,30 @@
         "body": ["if __name__ == '__main__':", "\t${0:main}"]
     },
     "logging.debug": {
-        "prefix": "ld",
+        "prefix": "logd",
         "body": "logging.debug($0)"
     },
     "logging.info": {
-        "prefix": "li",
+        "prefix": "logi",
         "body": "logging.info($0)"
     },
     "logging.warning": {
-        "prefix": "lw",
+        "prefix": "logw",
         "body": "logging.warning($0)"
     },
     "logging.error": {
-        "prefix": "lw",
+        "prefix": "logw",
         "body": "logging.error($0)"
-    },
-    "read file": {
-        "prefix": "wr",
-        "body": [
-            "with open('$1', '${2:r}', encoding='${3:utf-8}') as ${4:fread}:",
-            "\t$0"
-        ]
     },
     "with": {
         "prefix": "with",
         "body": ["with $1 as $2:", "\t${0:pass}"]
     },
-    "write file": {
-        "prefix": "ww",
+    "with open": {
+        "prefix": "wop",
         "body": [
-            "with open('$1', '${2:w}', encoding='${3:utf-8}', newline='${4:\\n}') as ${5:fwrite}:",
-            "\t$0"
+            "with open($1, '${2:r}', encoding='${3:utf-8}'$4) as $5:",
+            "\t${0:pass}"
         ]
     },
     "from typing": {
