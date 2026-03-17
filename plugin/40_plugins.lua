@@ -42,6 +42,13 @@ now_if_args(function()
         'javascript',
         'typescript',
         'vue',
+        'markdown',
+        'markdown_inline',
+        'html',
+        'css',
+        'yaml',
+        'json',
+        'latex',
     }
     local isnt_installed = function(lang) return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0 end
     local to_install = vim.tbl_filter(isnt_installed, languages)
@@ -145,7 +152,7 @@ later(function()
 end)
 
 later(function()
-    add { source = 'saghen/blink.cmp', checkout = 'v1.9.1' }
+    add { source = 'saghen/blink.cmp', checkout = 'v1.10.1' }
 
     require('blink.cmp').setup {
 
@@ -304,3 +311,5 @@ later(function()
     kset('n', '<leader>wn', [[<CMD>FocusSplitDown<CR>]])
     kset('n', '<leader>wi', [[<CMD>FocusSplitUp<CR>]])
 end)
+
+now_if_args(function() add 'MeanderingProgrammer/render-markdown.nvim' end)
