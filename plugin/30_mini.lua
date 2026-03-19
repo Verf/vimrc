@@ -139,7 +139,7 @@ later(function()
     kset('n', '<leader>fs', [[<CMD>Pick lsp scope="document_symbol"<CR>]], { desc = 'Find Symbols' })
     kset('n', '<leader>fd', [[<CMD>Pick diagnostic scope="current"<CR>]], { desc = 'Diagnostic' })
     kset('n', '<leader>fD', [[<CMD>Pick diagnostic scope="all"<CR>]], { desc = 'Diagnostic All' })
-    kset('n', '<leader>fg', [[<CMD>Pick grep_live<CR>]], { desc = 'Live Grep' })
+    kset('n', '<leader>fg', [[<CMD>Pick grep<CR>]], { desc = 'Grep' })
     kset('n', '<leader>fw', [[<CMD>Pick grep pattern="<cword>"<CR>]], { desc = 'Grep CWord' })
 
     -- 当LspAttach时设置快捷键，避免冲突
