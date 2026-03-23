@@ -308,3 +308,12 @@ later(function()
         open_mapping = [[<C-\>]],
     }
 end)
+
+now_if_args(function()
+    add 'Aasim-A/scrollEOF.nvim'
+
+    require('scrollEOF').setup {
+        pattern = '*',
+        insert_mode = true,
+    }
+end)
