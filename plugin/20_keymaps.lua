@@ -52,18 +52,39 @@ kset('n', '<leader>tc', '<CMD>tabonly<CR>', { desc = 'Tab Only' })
 kset('n', '<leader>tn', '<CMD>tabnext<CR>', { desc = 'Tab Next' })
 kset('n', '<leader>tp', '<CMD>tabprevious<CR>', { desc = 'Tab Previous' })
 
+local function smart_win_move(dir)
+    local cur_win = vim.api.nvim_get_current_win()
+    vim.cmd('wincmd ' .. dir) -- 先尝试切换
+
+    -- 如果窗口没变（说明那个方向没有窗口）
+    if cur_win == vim.api.nvim_get_current_win() then
+        if dir == 'h' then
+            vim.cmd 'leftabove vsplit' -- 左边新建
+        elseif dir == 'l' then
+            vim.cmd 'vsplit' -- 右边新建（默认就是右边）
+        elseif dir == 'j' then
+            vim.cmd 'split' -- 下边新建（默认就是下面）
+        elseif dir == 'k' then
+            vim.cmd 'leftabove split' -- 上边新建
+        end
+        vim.cmd('wincmd ' .. dir) -- 再次切换
+    end
+end
+
 kset('n', '<leader>wc', '<C-w>o', { desc = 'Window Only' })
 kset('n', '<leader>wq', '<C-w>c', { desc = 'Window Close' })
--- kset('n', '<leader>ws', '<C-w>s', { desc = 'Window Split' })
--- kset('n', '<leader>wv', '<C-w>v', { desc = 'Window VSplit' })
--- kset('n', '<leader>wy', '<C-w>h', { desc = 'Switch to Left' })
--- kset('n', '<leader>wn', '<C-w>j', { desc = 'Switch to Bottom' })
--- kset('n', '<leader>wi', '<C-w>k', { desc = 'Switch to Up' })
--- kset('n', '<leader>wo', '<C-w>l', { desc = 'Switch to Right' })
--- kset('n', '<leader>wY', '<C-w>H', { desc = 'Window to Left' })
--- kset('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
--- kset('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
--- kset('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
+kset('n', '<leader>ws', '<C-w>s', { desc = 'Window Split' })
+kset('n', '<leader>wv', '<C-w>v', { desc = 'Window VSplit' })
+kset('n', '<leader>wy', function() smart_win_move 'h' end, { desc = 'Switch to Left' })
+kset('n', '<leader>wn', function() smart_win_move 'j' end, { desc = 'Switch to Bottom' })
+kset('n', '<leader>wi', function() smart_win_move 'k' end, { desc = 'Switch to Up' })
+kset('n', '<leader>wo', function() smart_win_move 'l' end, { desc = 'Switch to Right' })
+kset('n', '<leader>wY', '<C-w>H', { desc = 'Window to Left' })
+kset('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
+kset('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
+kset('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
+
+kset('t', '<Esc>', [[<C-\><C-n>]])
 
 -- 删除的空行不记录寄存器中
 kset('n', 'ee', function()

@@ -109,16 +109,14 @@ later(function()
         default_format_opts = {
             lsp_format = 'fallback', -- 配置lsp的格式化器为默认项
         },
-        format_on_save = {
-            timeout_ms = 1000,
+        format_after_save = {
+            lsp_format = 'fallback',
         },
 
         formatters_by_ft = {
+            python = { 'ruff_format', 'ruff_organize_imports' },
             lua = { 'stylua' },
             json = { 'biome' },
-            javascript = { 'dprint' },
-            typescript = { 'dprint' },
-            vue = { 'dprint' },
         },
     }
 end)
@@ -298,18 +296,15 @@ later(function()
 
     MiniPick.registry.fffiles = run
 
-    kset('n', '<leader>ff', MiniPick.registry.fffiles)
-end)
-
-later(function()
-    add 'nvim-focus/focus.nvim'
-
-    require('focus').setup()
-
-    kset('n', '<leader>wy', [[<CMD>FocusSplitLeft<CR>]])
-    kset('n', '<leader>wo', [[<CMD>FocusSplitRight<CR>]])
-    kset('n', '<leader>wn', [[<CMD>FocusSplitDown<CR>]])
-    kset('n', '<leader>wi', [[<CMD>FocusSplitUp<CR>]])
+    kset('n', '<leader>ff', MiniPick.registry.fffiles, { desc = 'Find Files' })
 end)
 
 now_if_args(function() add 'MeanderingProgrammer/render-markdown.nvim' end)
+
+later(function()
+    add 'akinsho/toggleterm.nvim'
+
+    require('toggleterm').setup {
+        open_mapping = [[<C-\>]],
+    }
+end)
