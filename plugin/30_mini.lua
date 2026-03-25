@@ -246,7 +246,6 @@ later(function()
     -- 退出insert时自动退出snippets
     _G.Config.new_autocmd('InsertLeave', nil, function()
         vim.schedule(function()
-            local snippets = require 'mini.snippets'
             while snippets.session.get() do
                 snippets.session.stop()
             end
@@ -259,7 +258,7 @@ later(function()
     local leader_group_clues = {
         { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
         { mode = 'n', keys = '<Leader>f', desc = '+Find' },
-        { mode = 'n', keys = '<Leader>h', desc = '+Hunk' },
+        { mode = 'n', keys = '<Leader>g', desc = '+Git' },
         { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
         { mode = 'n', keys = '<Leader>r', desc = '+Lsp' },
         { mode = 'n', keys = '<Leader>s', desc = '+Surround' },
