@@ -340,23 +340,28 @@ now_if_args(function()
             view = {
                 { 'n', '<tab>', actions.select_next_entry, { desc = 'View next file' } },
                 { 'n', '<S-tab>', actions.select_prev_entry, { desc = 'View previous File' } },
+                { 'n', 'q', [[<cmd>tabclose<cr>]], { desc = 'Quit diff view panel' } },
             },
             diff1 = {
                 { 'n', 'g?', actions.help { 'view', 'diff1' }, { desc = 'Open the help panel' } },
+                { 'n', 'q', [[<cmd>tabclose<cr>]], { desc = 'Quit diff view panel' } },
             },
             diff2 = {
                 { 'n', 'g?', actions.help { 'view', 'diff2' }, { desc = 'Open the help panel' } },
+                { 'n', 'q', [[<cmd>tabclose<cr>]], { desc = 'Quit diff view panel' } },
             },
             diff3 = {
                 { { 'n', 'x' }, '2eo', actions.diffget 'ours', { desc = 'Obtain the diff hunk from the OURS version of the file' } },
                 { { 'n', 'x' }, '3eo', actions.diffget 'theirs', { desc = 'Obtain the diff hunk from the THEIRS version of the file' } },
                 { 'n', 'g?', actions.help { 'view', 'diff3' }, { desc = 'Open the help panel' } },
+                { 'n', 'q', [[<cmd>tabclose<cr>]], { desc = 'Quit diff view panel' } },
             },
             diff4 = {
                 { { 'n', 'x' }, '1eo', actions.diffget 'base', { desc = 'Obtain the diff hunk from the BASE version of the file' } },
                 { { 'n', 'x' }, '2eo', actions.diffget 'ours', { desc = 'Obtain the diff hunk from the OURS version of the file' } },
                 { { 'n', 'x' }, '3eo', actions.diffget 'theirs', { desc = 'Obtain the diff hunk from the THEIRS version of the file' } },
                 { 'n', 'g?', actions.help { 'view', 'diff4' }, { desc = 'Open the help panel' } },
+                { 'n', 'q', [[<cmd>tabclose<cr>]], { desc = 'Quit diff view panel' } },
             },
             file_panel = {
                 { 'n', 'n', actions.next_entry, { desc = 'Next file entry' } },
@@ -372,8 +377,8 @@ now_if_args(function()
                 { 'n', 'za', actions.toggle_fold, { desc = 'Toggle fold' } },
                 { 'n', 'zR', actions.open_all_folds, { desc = 'Expand all folds' } },
                 { 'n', 'zM', actions.close_all_folds, { desc = 'Collapse all folds' } },
-                { 'n', '<C-b>', actions.scroll_view(-0.25), { desc = 'Scroll the view up' } },
-                { 'n', '<C-f>', actions.scroll_view(0.25), { desc = 'Scroll the view down' } },
+                { 'n', '<C-d>', actions.scroll_view(0.25), { desc = 'Scroll the view down' } },
+                { 'n', '<C-u>', actions.scroll_view(-0.25), { desc = 'Scroll the view up' } },
                 { 'n', '<tab>', actions.select_next_entry, { desc = 'View next file' } },
                 { 'n', '<S-tab>', actions.select_prev_entry, { desc = 'View previous file' } },
                 { 'n', 'o', actions.goto_file_edit, { desc = 'Open file' } },
@@ -388,6 +393,7 @@ now_if_args(function()
                 { 'n', '<leader>cB', actions.conflict_choose_all 'base', { desc = 'Choose the BASE version of a conflict for the whole file' } },
                 { 'n', '<leader>cA', actions.conflict_choose_all 'all', { desc = 'Choose all the versions of a conflict for the whole file' } },
                 { 'n', 'eX', actions.conflict_choose_all 'none', { desc = 'Delete the conflict region for the whole file' } },
+                { 'n', 'q', [[<cmd>tabclose<cr>]], { desc = 'Quit diff view panel' } },
             },
             file_history_panel = {
                 { 'n', 'g!', actions.options, { desc = 'Open the option panel' } },
@@ -403,13 +409,14 @@ now_if_args(function()
                 { 'n', 'n', actions.next_entry, { desc = 'Bring the cursor to the next file entry' } },
                 { 'n', 'i', actions.prev_entry, { desc = 'Bring the cursor to the previous file entry' } },
                 { 'n', '<cr>', actions.select_entry, { desc = 'Open the diff for the selected entry' } },
-                { 'n', '<C-b>', actions.scroll_view(-0.25), { desc = 'Scroll the view up' } },
-                { 'n', '<C-f>', actions.scroll_view(0.25), { desc = 'Scroll the view down' } },
+                { 'n', '<C-d>', actions.scroll_view(0.25), { desc = 'Scroll the view down' } },
+                { 'n', '<C-u>', actions.scroll_view(-0.25), { desc = 'Scroll the view up' } },
                 { 'n', '<tab>', actions.select_next_entry, { desc = 'Open the diff for the next file' } },
                 { 'n', '<S-tab>', actions.select_prev_entry, { desc = 'Open the diff for the previous file' } },
                 { 'n', 'o', actions.goto_file_edit, { desc = 'Open the file in the previous tabpage' } },
                 { 'n', 'O', actions.goto_file_split, { desc = 'Open the file in a new split' } },
                 { 'n', 'g?', actions.help 'file_history_panel', { desc = 'Open the help panel' } },
+                { 'n', 'q', [[<cmd>tabclose<cr>]], { desc = 'Quit diff view panel' } },
             },
             option_panel = {
                 { 'n', '<tab>', actions.select_entry, { desc = 'Change the current option' } },
@@ -424,6 +431,7 @@ now_if_args(function()
     }
 
     kset('n', '<leader>gd', [[:DiffviewOpen ]], { desc = 'Diff View' })
+    kset('n', '<leader>gh', [[<cmd>DiffviewFileHistory<cr>]], { desc = 'Diff File History' })
 end)
 
 now_if_args(function()
@@ -435,7 +443,7 @@ now_if_args(function()
     -- nvim-ufo 的自定义虚拟文本处理函数
     local handler = function(virtText, lnum, endLnum, width, truncate)
         local newVirtText = {}
-        local suffix = (' 󰁂 %d lines '):format(endLnum - lnum)
+        local suffix = (' ... 󰁂 %d lines '):format(endLnum - lnum)
         local sufWidth = vim.fn.strdisplaywidth(suffix)
         local targetWidth = width - sufWidth
         local curWidth = 0
