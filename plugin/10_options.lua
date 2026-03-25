@@ -77,31 +77,26 @@ opt.fillchars = {
 -- 全局函数用于精准计算每一行应该显示的折叠图标
 _G.custom_fold_icon = function()
     local lnum = vim.v.lnum
-    local fold_level = vim.fn.foldlevel(lnum)
-
-    -- 1. 当前行没有任何折叠，直接返回一个空白，保持干净
-    if fold_level == 0 then return '  ' end
-
-    -- 获取 fillchars 中配置的图标
+    local fold_closed = vim.fn.foldclosed(lnum)
     local fcs = vim.opt.fillchars:get()
-    local foldopen = fcs.foldopen or ''
-    local foldclose = fcs.foldclose or ''
-    local foldsep = fcs.foldsep or '│'
 
-    -- 2. 当前行处于折叠且被合上的状态
-    local fold_closed = vim.fn.foldclosed(lnum) ~= -1
-    if fold_closed then return foldclose .. ' ' end
+    -- 1. 已闭合的折叠：永远显示合上的图标
+    if fold_closed == lnum then return (fcs.foldclose or '') .. ' ' end
 
-    -- 3. 当前行是某个折叠的起始行（判断依据：当前行折叠层级大于上一行）
-    local fold_level_before = lnum == 1 and 0 or vim.fn.foldlevel(lnum - 1)
-    if fold_level > fold_level_before then return foldopen .. ' ' end
+    -- 2. 若光标所在行是折叠起点时，显示展开的图标
+    if lnum == vim.fn.line '.' then
+        local fold_level = vim.fn.foldlevel(lnum)
+        local fold_level_before = lnum == 1 and 0 or vim.fn.foldlevel(lnum - 1)
 
-    -- 4. 当前行处于折叠区域的内部，显示垂直引导线
-    return foldsep .. ' '
+        -- 如果当前行的折叠层级大于上一行，说明这里是代码块/函数的起点
+        if fold_level > fold_level_before then return (fcs.foldopen or '') .. ' ' end
+    end
+
+    -- 3. 其他所有行留白
+    return '  '
 end
 
--- 组装现代化的 Statuscolumn 字符串
--- 参数解析：
+-- statuscolumn：
 --   %s           : 诊断错误(LSP)/Git状态等符号列
 --   %=           : 将后面的内容向右对齐
 --   %l           : 智能行号
