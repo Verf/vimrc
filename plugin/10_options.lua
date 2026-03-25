@@ -32,6 +32,11 @@ opt.softtabstop = 4 -- 设置在编辑模式下，按 Tab 键插入的空格数
 opt.tabstop = 4 -- 设置文件中一个 Tab 字符代表的空格数
 opt.updatetime = 750 -- 设置更新交换文件和触发 CursorHold 事件的延迟时间（毫秒）
 
+opt.foldenable = true -- 开启折叠
+opt.foldcolumn = '1' -- 显示折叠列
+opt.foldlevel = 99 -- 默认折叠级别
+opt.foldlevelstart = 99 -- 打开buffer时的默认折叠级别
+
 opt.complete = '.,w,b,kspell' -- 内置自动补全数据源
 opt.completeopt = 'menuone,noselect,fuzzy,nosort' -- 内置自动补全菜单配置
 opt.fileformats = 'unix,dos' -- 设置识别的文件格式，优先使用 unix 换行符 (\n)
@@ -48,7 +53,64 @@ opt.spelloptions = 'camel' -- 将CamelCase单词视为多个单词
 opt.splitkeep = 'screen' -- 分屏时保持相对位置更稳定
 opt.switchbuf = 'usetab' -- 执行特定跳转时优先复用已有标签页，若没有则新建标签页打开
 opt.virtualedit = 'block' -- 启用虚拟编辑，允许光标在块选择模式下移动到没有实际字符的列
--- autocmd
+opt.fillchars = {
+    eob = ' ', -- 隐藏缓冲区末尾的 `~`
+
+    vert = '│', -- 垂直分割线
+    horiz = '─', -- 水平分割线
+    vertleft = '┤', -- 垂直线接左水平线
+    vertright = '├', -- 垂直线接右水平线
+    verthoriz = '┼', -- 十字交叉点
+    horizup = '┴', -- 水平线接上垂直线
+    horizdown = '┬', -- 水平线接下垂直线
+
+    fold = ' ', -- 隐藏折叠行的默认填充点，保持干净
+    foldopen = '', -- 折叠打开时的图标 (Nerd Font: chevron-down)
+    foldclose = '', -- 折叠关闭时的图标 (Nerd Font: chevron-right)
+    foldsep = '│', -- 折叠边距的垂直引导线，展示作用域层级
+
+    diff = '╱', -- 使用斜纹填充被删除/空白的区域，比破折号 `-` 更有高级感
+
+    msgsep = '‾', -- 命令行与编辑区之间的分隔符
+}
+
+-- 全局函数用于精准计算每一行应该显示的折叠图标
+_G.custom_fold_icon = function()
+    local lnum = vim.v.lnum
+    local fold_level = vim.fn.foldlevel(lnum)
+
+    -- 1. 当前行没有任何折叠，直接返回一个空白，保持干净
+    if fold_level == 0 then return '  ' end
+
+    -- 获取 fillchars 中配置的图标
+    local fcs = vim.opt.fillchars:get()
+    local foldopen = fcs.foldopen or ''
+    local foldclose = fcs.foldclose or ''
+    local foldsep = fcs.foldsep or '│'
+
+    -- 2. 当前行处于折叠且被合上的状态
+    local fold_closed = vim.fn.foldclosed(lnum) ~= -1
+    if fold_closed then return foldclose .. ' ' end
+
+    -- 3. 当前行是某个折叠的起始行（判断依据：当前行折叠层级大于上一行）
+    local fold_level_before = lnum == 1 and 0 or vim.fn.foldlevel(lnum - 1)
+    if fold_level > fold_level_before then return foldopen .. ' ' end
+
+    -- 4. 当前行处于折叠区域的内部，显示垂直引导线
+    return foldsep .. ' '
+end
+
+-- 组装现代化的 Statuscolumn 字符串
+-- 参数解析：
+--   %s           : 诊断错误(LSP)/Git状态等符号列
+--   %=           : 将后面的内容向右对齐
+--   %l           : 智能行号
+--   %#FoldColumn#: 切换到 FoldColumn 高亮组
+--   %{...}       : 执行 Lua 逻辑，只渲染图标，避免折叠数字
+--   %*           : 恢复默认高亮
+opt.statuscolumn = '%s%=%l %#FoldColumn#%{v:lua.custom_fold_icon()}%*'
+
+-- [[ autocmd ]]
 -- 在当前注释中按o插入新行后不自动添加注释符，在 FileType 时调用以自动覆盖文件类似特定的配置
 local f = function() vim.cmd 'setlocal formatoptions-=c formatoptions-=o' end
 _G.Config.new_autocmd('FileType', nil, f, "Proper 'formatoptions'")

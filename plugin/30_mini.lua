@@ -29,9 +29,9 @@ now(function() require('mini.tabline').setup() end)
 now(function() require('mini.starter').setup() end)
 
 later(function() require('mini.align').setup() end)
-later(function() require('mini.diff').setup() end)
+-- later(function() require('mini.diff').setup() end)
 later(function() require('mini.extra').setup() end)
-later(function() require('mini.git').setup() end)
+-- later(function() require('mini.git').setup() end)
 later(function() require('mini.trailspace').setup() end)
 later(function() require('mini.pairs').setup() end)
 
@@ -259,6 +259,7 @@ later(function()
     local leader_group_clues = {
         { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
         { mode = 'n', keys = '<Leader>f', desc = '+Find' },
+        { mode = 'n', keys = '<Leader>h', desc = '+Hunk' },
         { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
         { mode = 'n', keys = '<Leader>r', desc = '+Lsp' },
         { mode = 'n', keys = '<Leader>s', desc = '+Surround' },
@@ -288,7 +289,7 @@ later(function()
             { mode = { 'n', 'x' }, keys = '"' }, -- Registers
             { mode = { 'i', 'c' }, keys = '<C-r>' },
             -- { mode = { 'n', 'x' }, keys = 's' }, -- `s` key (mini.surround, etc.)
-            -- { mode = { 'n', 'x' }, keys = 'z' }, -- `z` key
+            { mode = { 'n', 'x' }, keys = 'z' }, -- `z` key
         },
     }
 end)

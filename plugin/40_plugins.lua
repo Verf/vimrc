@@ -17,9 +17,9 @@ now_if_args(function()
 
     vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust_analyzer', 'gopls', 'zls' }
 
-    kset({ 'n', 'x' }, '<leader>rn', [[<CMD> lua vim.lsp.buf.rename()<CR>]], { desc = 'Rename' })
-    kset({ 'n', 'x' }, '<leader>ra', [[<CMD> lua vim.lsp.buf.code_action()<CR>]], { desc = 'Code Action' })
-    kset({ 'n', 'x' }, '<leader>rh', [[<CMD> lua vim.lsp.buf.hover()<CR>]], { desc = 'Hover Doc' })
+    kset({ 'n', 'x' }, '<leader>rn', [[<cmd> lua vim.lsp.buf.rename()<cr>]], { desc = 'Rename' })
+    kset({ 'n', 'x' }, '<leader>ra', [[<cmd> lua vim.lsp.buf.code_action()<cr>]], { desc = 'Code Action' })
+    kset({ 'n', 'x' }, '<leader>rh', [[<cmd> lua vim.lsp.buf.hover()<cr>]], { desc = 'Hover Doc' })
 
     _G.Config.new_autocmd('LspAttach', nil, function(args)
         local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -97,9 +97,9 @@ later(
 later(function()
     add 'chrisgrieser/nvim-spider'
 
-    kset({ 'n', 'o', 'x' }, 'w', [[<CMD>lua require('spider').motion('w')<CR>]])
-    kset({ 'n', 'o', 'x' }, 'd', [[<CMD>lua require('spider').motion('e')<CR>]])
-    kset({ 'n', 'o', 'x' }, 'b', [[<CMD>lua require('spider').motion('b')<CR>]])
+    kset({ 'n', 'o', 'x' }, 'w', [[<cmd>lua require('spider').motion('w')<cr>]])
+    kset({ 'n', 'o', 'x' }, 'd', [[<cmd>lua require('spider').motion('e')<cr>]])
+    kset({ 'n', 'o', 'x' }, 'b', [[<cmd>lua require('spider').motion('b')<cr>]])
 end)
 
 later(function()
@@ -156,7 +156,7 @@ later(function()
 
         keymap = {
             preset = 'none',
-            ['<CR>'] = { 'accept', 'fallback' },
+            ['<cr>'] = { 'accept', 'fallback' },
             ['<C-e>'] = { 'hide', 'show' },
             ['<C-y>'] = { 'select_and_accept', 'fallback' },
             ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
@@ -237,6 +237,7 @@ later(function()
 
     -- 对路径进行标准化处理，去掉Windows下可能添加的前缀
     local function normalize_path(p)
+        p = p or ''
         if vim.fn.has 'win32' == 1 and p:match '^\\\\%?\\' then return p:sub(5) end
         return p
     end
@@ -260,11 +261,7 @@ later(function()
         -- 仅当路径合法时进行缓存
         if not state.current_file_cache then
             local current_buf = vim.api.nvim_get_current_buf()
-            if
-                current_buf
-                and vim.api.nvim_buf_is_valid(current_buf)
-                and vim.api.nvim_buf_get_option(current_buf, 'buftype') == ''
-            then -- 跳过 help/quickfix/etc.
+            if current_buf and vim.api.nvim_buf_is_valid(current_buf) and vim.api.nvim_buf_get_option(current_buf, 'buftype') == '' then -- 跳过 help/quickfix/etc.
                 local current_file = vim.api.nvim_buf_get_name(current_buf)
                 if current_file ~= '' and vim.fn.filereadable(current_file) == 1 then
                     local relative_path = vim.fs.relpath(vim.uv.cwd(), current_file)
@@ -274,9 +271,7 @@ later(function()
         end
 
         -- 使用mini.icons进行图标显示
-        local function show_with_icons(buf_id, items, query)
-            MiniPick.default_show(buf_id, items, query, { show_icons = true })
-        end
+        local function show_with_icons(buf_id, items, query) MiniPick.default_show(buf_id, items, query, { show_icons = true }) end
 
         MiniPick.start {
             source = {
@@ -316,4 +311,161 @@ now_if_args(function()
         pattern = '*',
         insert_mode = true,
     }
+end)
+
+now_if_args(function()
+    add 'lewis6991/gitsigns.nvim'
+    local gitsigns = require 'gitsigns'
+    gitsigns.setup()
+
+    kset('n', ']h', gitsigns.next_hunk, { desc = 'Next hunk' })
+    kset('n', '[h', gitsigns.prev_hunk, { desc = 'Previous hunk' })
+
+    kset('n', '<leader>gs', gitsigns.stage_hunk, { desc = 'Stage Hunk' })
+    kset('n', '<leader>gr', gitsigns.reset_hunk, { desc = 'Reset Hunk' })
+    kset('n', '<leader>gS', gitsigns.stage_buffer, { desc = 'Stage Buffer' })
+    kset('n', '<leader>gR', gitsigns.reset_buffer, { desc = 'Reset Buffer' })
+    kset('n', '<leader>gb', gitsigns.blame_line, { desc = 'Show Blame Inline' })
+    kset('n', '<leader>gB', gitsigns.blame, { desc = 'Show Blame' })
+end)
+
+now_if_args(function()
+    add 'sindrets/diffview.nvim'
+
+    local actions = require 'diffview.actions'
+    require('diffview').setup {
+        enhanced_diff_hl = true,
+        keymaps = {
+            disable_defaults = true,
+            view = {
+                { 'n', '<tab>', actions.select_next_entry, { desc = 'View next file' } },
+                { 'n', '<S-tab>', actions.select_prev_entry, { desc = 'View previous File' } },
+            },
+            diff1 = {
+                { 'n', 'g?', actions.help { 'view', 'diff1' }, { desc = 'Open the help panel' } },
+            },
+            diff2 = {
+                { 'n', 'g?', actions.help { 'view', 'diff2' }, { desc = 'Open the help panel' } },
+            },
+            diff3 = {
+                { { 'n', 'x' }, '2eo', actions.diffget 'ours', { desc = 'Obtain the diff hunk from the OURS version of the file' } },
+                { { 'n', 'x' }, '3eo', actions.diffget 'theirs', { desc = 'Obtain the diff hunk from the THEIRS version of the file' } },
+                { 'n', 'g?', actions.help { 'view', 'diff3' }, { desc = 'Open the help panel' } },
+            },
+            diff4 = {
+                { { 'n', 'x' }, '1eo', actions.diffget 'base', { desc = 'Obtain the diff hunk from the BASE version of the file' } },
+                { { 'n', 'x' }, '2eo', actions.diffget 'ours', { desc = 'Obtain the diff hunk from the OURS version of the file' } },
+                { { 'n', 'x' }, '3eo', actions.diffget 'theirs', { desc = 'Obtain the diff hunk from the THEIRS version of the file' } },
+                { 'n', 'g?', actions.help { 'view', 'diff4' }, { desc = 'Open the help panel' } },
+            },
+            file_panel = {
+                { 'n', 'n', actions.next_entry, { desc = 'Next file entry' } },
+                { 'n', 'i', actions.prev_entry, { desc = 'Previous file entry' } },
+                { 'n', '<cr>', actions.select_entry, { desc = 'Select Entry' } },
+                { 'n', 's', actions.toggle_stage_entry, { desc = 'Stage / unstage the selected entry' } },
+                { 'n', 'S', actions.stage_all, { desc = 'Stage all entries' } },
+                { 'n', 'U', actions.unstage_all, { desc = 'Unstage all entries' } },
+                { 'n', 'X', actions.restore_entry, { desc = 'Restore entry' } },
+                { 'n', 'L', actions.open_commit_log, { desc = 'Open commit log' } },
+                { 'n', 'zo', actions.open_fold, { desc = 'Expand fold' } },
+                { 'n', 'zc', actions.close_fold, { desc = 'Collapse fold' } },
+                { 'n', 'za', actions.toggle_fold, { desc = 'Toggle fold' } },
+                { 'n', 'zR', actions.open_all_folds, { desc = 'Expand all folds' } },
+                { 'n', 'zM', actions.close_all_folds, { desc = 'Collapse all folds' } },
+                { 'n', '<C-b>', actions.scroll_view(-0.25), { desc = 'Scroll the view up' } },
+                { 'n', '<C-f>', actions.scroll_view(0.25), { desc = 'Scroll the view down' } },
+                { 'n', '<tab>', actions.select_next_entry, { desc = 'View next file' } },
+                { 'n', '<S-tab>', actions.select_prev_entry, { desc = 'View previous file' } },
+                { 'n', 'o', actions.goto_file_edit, { desc = 'Open file' } },
+                { 'n', 'O', actions.goto_file_split, { desc = 'Open file split' } },
+                { 'n', '.', actions.listing_style, { desc = 'Toggle view style' } },
+                { 'n', 'F', actions.refresh_files, { desc = 'Update stats and entries in the file list' } },
+                { 'n', '[x', actions.prev_conflict, { desc = 'Go to the previous conflict' } },
+                { 'n', ']x', actions.next_conflict, { desc = 'Go to the next conflict' } },
+                { 'n', 'g?', actions.help 'file_panel', { desc = 'Open the help panel' } },
+                { 'n', '<leader>cO', actions.conflict_choose_all 'ours', { desc = 'Choose the OURS version of a conflict for the whole file' } },
+                { 'n', '<leader>cT', actions.conflict_choose_all 'theirs', { desc = 'Choose the THEIRS version of a conflict for the whole file' } },
+                { 'n', '<leader>cB', actions.conflict_choose_all 'base', { desc = 'Choose the BASE version of a conflict for the whole file' } },
+                { 'n', '<leader>cA', actions.conflict_choose_all 'all', { desc = 'Choose all the versions of a conflict for the whole file' } },
+                { 'n', 'eX', actions.conflict_choose_all 'none', { desc = 'Delete the conflict region for the whole file' } },
+            },
+            file_history_panel = {
+                { 'n', 'g!', actions.options, { desc = 'Open the option panel' } },
+                { 'n', 'gd', actions.open_in_diffview, { desc = 'Open the entry under the cursor in a diffview' } },
+                { 'n', 'j', actions.copy_hash, { desc = 'Copy the commit hash of the entry under the cursor' } },
+                { 'n', 'L', actions.open_commit_log, { desc = 'Show commit details' } },
+                { 'n', 'X', actions.restore_entry, { desc = 'Restore file to the state from the selected entry' } },
+                { 'n', 'zo', actions.open_fold, { desc = 'Expand fold' } },
+                { 'n', 'zc', actions.close_fold, { desc = 'Collapse fold' } },
+                { 'n', 'za', actions.toggle_fold, { desc = 'Toggle fold' } },
+                { 'n', 'zR', actions.open_all_folds, { desc = 'Expand all folds' } },
+                { 'n', 'zM', actions.close_all_folds, { desc = 'Collapse all folds' } },
+                { 'n', 'n', actions.next_entry, { desc = 'Bring the cursor to the next file entry' } },
+                { 'n', 'i', actions.prev_entry, { desc = 'Bring the cursor to the previous file entry' } },
+                { 'n', '<cr>', actions.select_entry, { desc = 'Open the diff for the selected entry' } },
+                { 'n', '<C-b>', actions.scroll_view(-0.25), { desc = 'Scroll the view up' } },
+                { 'n', '<C-f>', actions.scroll_view(0.25), { desc = 'Scroll the view down' } },
+                { 'n', '<tab>', actions.select_next_entry, { desc = 'Open the diff for the next file' } },
+                { 'n', '<S-tab>', actions.select_prev_entry, { desc = 'Open the diff for the previous file' } },
+                { 'n', 'o', actions.goto_file_edit, { desc = 'Open the file in the previous tabpage' } },
+                { 'n', 'O', actions.goto_file_split, { desc = 'Open the file in a new split' } },
+                { 'n', 'g?', actions.help 'file_history_panel', { desc = 'Open the help panel' } },
+            },
+            option_panel = {
+                { 'n', '<tab>', actions.select_entry, { desc = 'Change the current option' } },
+                { 'n', 'q', actions.close, { desc = 'Close the panel' } },
+                { 'n', 'g?', actions.help 'option_panel', { desc = 'Open the help panel' } },
+            },
+            help_panel = {
+                { 'n', 'q', actions.close, { desc = 'Close help menu' } },
+                { 'n', '<esc>', actions.close, { desc = 'Close help menu' } },
+            },
+        },
+    }
+
+    kset('n', '<leader>gd', [[:DiffviewOpen ]], { desc = 'Diff View' })
+end)
+
+now_if_args(function()
+    add {
+        source = 'kevinhwang91/nvim-ufo',
+        depends = { 'kevinhwang91/promise-async' },
+    }
+
+    -- nvim-ufo 的自定义虚拟文本处理函数
+    local handler = function(virtText, lnum, endLnum, width, truncate)
+        local newVirtText = {}
+        local suffix = (' 󰁂 %d lines '):format(endLnum - lnum)
+        local sufWidth = vim.fn.strdisplaywidth(suffix)
+        local targetWidth = width - sufWidth
+        local curWidth = 0
+
+        for _, chunk in ipairs(virtText) do
+            local chunkText = chunk[1]
+            local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+            if targetWidth > curWidth + chunkWidth then
+                table.insert(newVirtText, chunk)
+            else
+                chunkText = truncate(chunkText, targetWidth - curWidth)
+                local hlGroup = chunk[2]
+                table.insert(newVirtText, { chunkText, hlGroup })
+                chunkWidth = vim.fn.strdisplaywidth(chunkText)
+                if curWidth + chunkWidth < targetWidth then suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth) end
+                break
+            end
+            curWidth = curWidth + chunkWidth
+        end
+
+        table.insert(newVirtText, { suffix, 'Comment' })
+        return newVirtText
+    end
+
+    -- 执行配置
+    require('ufo').setup {
+        provider_selector = function(bufnr, filetype, buftype) return { 'treesitter', 'indent' } end,
+        fold_virt_text_handler = handler,
+    }
+
+    kset('n', 'zR', require('ufo').openAllFolds, { desc = 'Open All Folds' })
+    kset('n', 'zM', require('ufo').closeAllFolds, { desc = 'Close All Folds' })
 end)

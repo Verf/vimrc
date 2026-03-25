@@ -32,9 +32,9 @@ kset({ 'n', 'o', 'x' }, 'P', 'N')
 kset({ 'n', 'o', 'x' }, 'H', ':')
 kset({ 'n', 'o', 'x' }, ':', 'P')
 
-kset('n', '<TAB>', '<CMD>bn<CR>')
-kset('n', '<S-TAB>', '<CMD>bp<CR>')
-kset('n', '<leader><TAB>', '<CMD>b#<CR>', { desc = 'Swith Buffer' })
+kset('n', '<tab>', '<cmd>bn<cr>')
+kset('n', '<s-tab>', '<cmd>bp<cr>')
+kset('n', '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
 
 kset('n', 'zn', 'zj')
 kset('n', 'zi', 'zk')
@@ -42,15 +42,16 @@ kset('n', 'zi', 'zk')
 kset({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard' })
 kset({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })
 
-kset('n', '<leader>qa', '<CMD>wqa!<CR>', { desc = 'Quit All' })
+kset('n', '<leader>qa', '<cmd>wqa!<cr>', { desc = 'Quit All' })
 
-kset('n', '<leader>bc', '<CMD>%bd!|e#<CR>', { desc = 'Buffer Only' })
+kset('n', '<leader>bc', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
 
-kset('n', '<leader>tN', '<CMD>tabnew<CR>', { desc = 'Tab New' })
-kset('n', '<leader>tq', '<CMD>tabclose<CR>', { desc = 'Tab Close' })
-kset('n', '<leader>tc', '<CMD>tabonly<CR>', { desc = 'Tab Only' })
-kset('n', '<leader>tn', '<CMD>tabnext<CR>', { desc = 'Tab Next' })
-kset('n', '<leader>tp', '<CMD>tabprevious<CR>', { desc = 'Tab Previous' })
+kset('n', '<leader>tN', '<cmd>tabnew<cr>', { desc = 'Tab New' })
+kset('n', '<leader>tq', '<cmd>tabclose<cr>', { desc = 'Tab Close' })
+kset('n', '<leader>tc', '<cmd>tabonly<cr>', { desc = 'Tab Only' })
+kset('n', '<leader>tn', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
+kset('n', '<leader>t<tab>', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
+kset('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = 'Tab Previous' })
 
 local function smart_win_move(dir)
     local cur_win = vim.api.nvim_get_current_win()
@@ -84,7 +85,7 @@ kset('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
 kset('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
 kset('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
 
-kset('t', '<Esc>', [[<C-\><C-n>]])
+kset('t', '<esc>', [[<C-\><C-n>]])
 
 -- 删除的空行不记录寄存器中
 kset('n', 'ee', function()
@@ -110,7 +111,7 @@ kset('x', '<C-s>', function()
     -- 3. 将其设置为搜索寄存器 /
     vim.fn.setreg('/', escaped_text)
     -- 4. 使用 feedkeys 发送后续按键
-    local keys = vim.api.nvim_replace_termcodes('<Esc>cgn', true, false, true)
+    local keys = vim.api.nvim_replace_termcodes('<esc>cgn', true, false, true)
     vim.api.nvim_feedkeys(keys, 'n', false)
 end, { desc = 'Search & Replace' })
 
@@ -136,9 +137,7 @@ local function fast_execute(cmd_str)
     if not success then vim.api.nvim_err_writeln('Macro failed: ' .. (err or '')) end
 
     -- 4. 自动保存逻辑 (可选)
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
-        vim.api.nvim_command 'silent update'
-    end
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then vim.api.nvim_command 'silent update' end
 end
 
 -- 映射 @ 键
