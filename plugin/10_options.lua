@@ -7,6 +7,30 @@ local opt = vim.opt
 g.mapleader = ' ' -- 全局 Leader 键
 g.maplocalleader = ',' -- 将局部 Leader 键（通常用于特定文件类型插件）
 
+-- [[ GUI 配置]]
+opt.guifont = 'Maple Mono NF CN:h12' -- GUI字体
+opt.winblend = 10 -- 浮动窗口透明度
+opt.pumblend = 10 -- 补全菜单透明度
+
+-- neovide
+if g.neovide then
+    g.neovide_refresh_rate = 60 -- 屏幕刷新率
+    g.neovide_no_idle = true -- 减少空闲时卡顿
+    g.neovide_cursor_animation_length = 0.08 -- 光标动画时长
+    g.neovide_cursor_trail_size = 0.8 -- 光标拖尾大小
+    g.neovide_cursor_vfx_mode = '' -- 光标特效，设置为空可提升性能
+
+    g.neovide_opacity = 0.90 -- 透明度
+    g.neovide_window_blurred = true -- 毛玻璃效果
+
+    g.neovide_floating_shadow = true -- 浮动窗口阴影特效
+    g.neovide_floating_z_height = 10 -- 阴影Z轴偏移
+    g.neovide_floating_corner_radius = 0.0 -- 浮动窗口圆角
+
+    g.neovide_hide_mouse_when_typing = true -- 打字时隐藏鼠标
+    g.neovide_remember_window_size = true -- 记住窗口大小
+end
+
 -- [[ 核心配置 ]]
 opt.autowrite = true -- 自动保存。在执行某些命令（如 :make）或切换缓冲区时自动写入文件
 opt.cindent = true -- 开启 C/C++ 风格的自动缩进
