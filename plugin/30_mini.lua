@@ -223,6 +223,12 @@ end)
 later(function()
     local snippets = require 'mini.snippets'
     local config_path = vim.fn.stdpath 'config'
+
+    local match_strict = function(snips)
+        -- Do not match with whitespace to cursor's left
+        return snippets.default_match(snips, { pattern_fuzzy = '%S+' })
+    end
+
     snippets.setup {
         snippets = {
             snippets.gen_loader.from_file(config_path .. '/snippets/global.json'),
@@ -236,7 +242,7 @@ later(function()
         },
         -- 禁止对snippet的prefix进行模糊匹配，仅允许准确的prefix展开
         expand = {
-            match = function(snips) return snippets.default_match(snips, { pattern_fuzzy = '' }) end,
+            match = match_strict,
         },
     }
 
@@ -245,11 +251,13 @@ later(function()
 
     -- 退出insert时自动退出snippets
     _G.Config.new_autocmd('InsertLeave', nil, function()
-        vim.schedule(function()
-            while snippets.session.get() do
-                snippets.session.stop()
-            end
-        end)
+        if snippets.session.get() then
+            vim.schedule(function()
+                while snippets.session.get() do
+                    snippets.session.stop()
+                end
+            end)
+        end
     end, 'Cancel mini.snippets session when leave insert')
 end)
 
