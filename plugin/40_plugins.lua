@@ -15,7 +15,7 @@ end)
 now_if_args(function()
     add 'neovim/nvim-lspconfig'
 
-    vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust_analyzer', 'gopls', 'zls' }
+    vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust_analyzer', 'gopls', 'zls', 'nushell' }
 
     kset({ 'n', 'x' }, '<leader>rn', [[<cmd> lua vim.lsp.buf.rename()<cr>]], { desc = 'Rename' })
     kset({ 'n', 'x' }, '<leader>ra', [[<cmd> lua vim.lsp.buf.code_action()<cr>]], { desc = 'Code Action' })
@@ -49,6 +49,7 @@ now_if_args(function()
         'yaml',
         'json',
         'latex',
+        'nu',
     }
     local isnt_installed = function(lang) return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0 end
     local to_install = vim.tbl_filter(isnt_installed, languages)
@@ -117,6 +118,7 @@ later(function()
             python = { 'ruff_format', 'ruff_organize_imports' },
             lua = { 'stylua' },
             json = { 'biome' },
+            nu = { 'nufmt' },
         },
     }
 end)
