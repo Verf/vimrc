@@ -8,7 +8,7 @@ g.mapleader = ' ' -- 全局 Leader 键
 g.maplocalleader = ',' -- 将局部 Leader 键（通常用于特定文件类型插件）
 
 -- [[ GUI 配置]]
-opt.guifont = 'Maple Mono NF CN:h12' -- GUI字体
+opt.guifont = 'Maple Mono NF CN:h13' -- GUI字体
 
 -- neovide
 if g.neovide then
@@ -19,7 +19,7 @@ if g.neovide then
     g.neovide_cursor_vfx_mode = '' -- 光标特效，设置为空可提升性能
 
     g.neovide_floating_shadow = true -- 浮动窗口阴影特效
-    g.neovide_floating_z_height = 10 -- 阴影Z轴偏移
+    g.neovide_floating_z_height = 4 -- 阴影Z轴偏移
     g.neovide_floating_corner_radius = 0.0 -- 浮动窗口圆角
 
     g.neovide_hide_mouse_when_typing = true -- 打字时隐藏鼠标
