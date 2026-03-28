@@ -22,16 +22,13 @@ now_if_args(function()
     MiniMisc.setup_auto_root()
     MiniMisc.setup_restore_cursor()
 end)
-
 now(function() require('mini.notify').setup() end)
 now(function() require('mini.statusline').setup() end)
 now(function() require('mini.tabline').setup() end)
 now(function() require('mini.starter').setup() end)
 
 later(function() require('mini.align').setup() end)
--- later(function() require('mini.diff').setup() end)
 later(function() require('mini.extra').setup() end)
--- later(function() require('mini.git').setup() end)
 later(function() require('mini.trailspace').setup() end)
 later(function() require('mini.pairs').setup() end)
 
@@ -64,15 +61,15 @@ later(
     end
 )
 
-later(function()
-    require('mini.indentscope').setup {
-        mappings = {
-            -- 禁用textobject
-            object_scope = '',
-            object_scope_with_border = '',
-        },
-    }
-end)
+-- later(function()
+--     require('mini.indentscope').setup {
+--         mappings = {
+--             -- 禁用textobject
+--             object_scope = '',
+--             object_scope_with_border = '',
+--         },
+--     }
+-- end)
 
 later(
     function()

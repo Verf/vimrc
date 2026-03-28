@@ -479,3 +479,8 @@ now_if_args(function()
     kset('n', 'zR', require('ufo').openAllFolds, { desc = 'Open All Folds' })
     kset('n', 'zM', require('ufo').closeAllFolds, { desc = 'Close All Folds' })
 end)
+
+now_if_args(function()
+    add 'lukas-reineke/indent-blankline.nvim'
+    require('ibl').setup()
+end)
