@@ -119,6 +119,8 @@ later(function()
             lua = { 'stylua' },
             json = { 'biome' },
             nu = { 'nufmt' },
+            toml = { 'taplo' },
+            yaml = { 'yamlfmt' },
         },
     }
 end)
