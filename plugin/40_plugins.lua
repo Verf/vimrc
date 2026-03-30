@@ -484,5 +484,29 @@ end)
 
 now_if_args(function()
     add 'lukas-reineke/indent-blankline.nvim'
-    require('ibl').setup()
+    require('ibl').setup {
+        indent = {
+            char = '┊',
+        },
+        scope = {
+            char = '│',
+            show_start = false, -- 通常关掉，避免顶部横线太显眼
+            show_end = false, -- 同上，关掉底部横线
+        },
+        exclude = {
+            filetypes = {
+                'help',
+                'alpha',
+                'dashboard',
+                'neo-tree',
+                'Trouble',
+                'trouble',
+                'lazy',
+                'mason',
+                'notify',
+                'toggleterm',
+                'NvimTree',
+            },
+        },
+    }
 end)
