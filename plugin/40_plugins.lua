@@ -1,9 +1,9 @@
-local now, later, add = MiniDeps.now, MiniDeps.later, MiniDeps.add
-local now_if_args = _G.Config.now_if_args
 local kset = vim.keymap.set
+local add = vim.pack.add
+local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 
 now(function()
-    add { source = 'Verf/deepwhite.nvim', checkout = 'dev' }
+    add { { src = 'https://github.com/Verf/deepwhite.nvim', version = 'dev' } }
 
     require('deepwhite').setup {
         low_blue_light = true,
@@ -13,7 +13,7 @@ now(function()
 end)
 
 now_if_args(function()
-    add 'neovim/nvim-lspconfig'
+    add { 'https://github.com/neovim/nvim-lspconfig' }
 
     vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust_analyzer', 'gopls', 'zls', 'nushell' }
 
@@ -28,13 +28,12 @@ now_if_args(function()
 end)
 
 now_if_args(function()
+    local ts_update = function() vim.cmd 'TSUpdate' end
+    Config.on_packchanged('nvim-treesitter', { 'update' }, ts_update, ':TSUpdate')
+
     add {
-        source = 'nvim-treesitter/nvim-treesitter',
-        hooks = { post_checkout = function() vim.cmd 'TSUpdate' end },
-    }
-    add {
-        source = 'nvim-treesitter/nvim-treesitter-textobjects',
-        checkout = 'main',
+        'https://github.com/nvim-treesitter/nvim-treesitter',
+        'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
     }
 
     local languages = {
@@ -51,11 +50,12 @@ now_if_args(function()
         'latex',
         'nu',
     }
+
     local isnt_installed = function(lang) return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0 end
+
     local to_install = vim.tbl_filter(isnt_installed, languages)
     if #to_install > 0 then require('nvim-treesitter').install(to_install) end
 
-    -- 打开文件时启动TreeSitter
     local filetypes = {}
     for _, lang in ipairs(languages) do
         for _, ft in ipairs(vim.treesitter.language.get_filetypes(lang)) do
@@ -63,7 +63,7 @@ now_if_args(function()
         end
     end
     local ts_start = function(ev) vim.treesitter.start(ev.buf) end
-    _G.Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
+    Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
 
     -- treesitter-textobject按键设置
     -- select
@@ -81,22 +81,8 @@ now_if_args(function()
     kset({ 'n', 'x', 'o' }, '[c', function() ts_move.goto_previous_start('@class.outer', 'textobjects') end)
 end)
 
-later(
-    function()
-        vim.diagnostic.config {
-            virtual_text = {
-                source = 'always',
-            },
-            float = {
-                source = 'always',
-            },
-            severity_sort = true,
-        }
-    end
-)
-
 later(function()
-    add 'chrisgrieser/nvim-spider'
+    add { 'https://github.com/chrisgrieser/nvim-spider' }
 
     kset({ 'n', 'o', 'x' }, 'w', [[<cmd>lua require('spider').motion('w')<cr>]])
     kset({ 'n', 'o', 'x' }, 'd', [[<cmd>lua require('spider').motion('e')<cr>]])
@@ -104,7 +90,7 @@ later(function()
 end)
 
 later(function()
-    add 'stevearc/conform.nvim'
+    add { 'https://github.com/stevearc/conform.nvim' }
 
     require('conform').setup {
         default_format_opts = {
@@ -126,7 +112,7 @@ later(function()
 end)
 
 later(function()
-    add { source = 'jake-stewart/multicursor.nvim', checkout = '1.0' }
+    add { { src = 'https://github.com/jake-stewart/multicursor.nvim', version = '1.0' } }
     local mc = require 'multicursor-nvim'
     mc.setup()
 
@@ -154,7 +140,7 @@ later(function()
 end)
 
 later(function()
-    add { source = 'saghen/blink.cmp', checkout = 'v1.10.1' }
+    add { { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.1' } }
 
     require('blink.cmp').setup {
 
@@ -219,14 +205,10 @@ later(function()
 end)
 
 later(function()
-    local function build() require('fff.download').download_or_build_binary() end
-    add {
-        source = 'dmtrKovalenko/fff.nvim',
-        hooks = {
-            post_install = build,
-            post_checkout = build,
-        },
-    }
+    local fff_download = function() require('fff.download').download_or_build_binary() end
+    Config.on_packchanged('fff', { 'update' }, fff_download, 'fff.download_or_build_binary')
+
+    add { 'https://github.com/dmtrKovalenko/fff.nvim' }
 
     local file_picker = require 'fff.file_picker'
     if not file_picker.is_initialized() then
@@ -298,10 +280,10 @@ later(function()
     kset('n', '<leader>ff', MiniPick.registry.fffiles, { desc = 'Find Files' })
 end)
 
-now_if_args(function() add 'MeanderingProgrammer/render-markdown.nvim' end)
+now_if_args(function() add { 'https://github.com/MeanderingProgrammer/render-markdown.nvim' } end)
 
 later(function()
-    add 'akinsho/toggleterm.nvim'
+    add { 'https://github.com/akinsho/toggleterm.nvim' }
 
     require('toggleterm').setup {
         open_mapping = [[<C-\>]],
@@ -309,7 +291,7 @@ later(function()
 end)
 
 now_if_args(function()
-    add 'Aasim-A/scrollEOF.nvim'
+    add { 'https://github.com/Aasim-A/scrollEOF.nvim' }
 
     require('scrollEOF').setup {
         pattern = '*',
@@ -318,7 +300,7 @@ now_if_args(function()
 end)
 
 now_if_args(function()
-    add 'lewis6991/gitsigns.nvim'
+    add { 'https://github.com/lewis6991/gitsigns.nvim' }
     local gitsigns = require 'gitsigns'
     gitsigns.setup()
 
@@ -334,7 +316,7 @@ now_if_args(function()
 end)
 
 now_if_args(function()
-    add 'sindrets/diffview.nvim'
+    add { 'https://github.com/sindrets/diffview.nvim' }
 
     local actions = require 'diffview.actions'
     require('diffview').setup {
@@ -440,8 +422,8 @@ end)
 
 now_if_args(function()
     add {
-        source = 'kevinhwang91/nvim-ufo',
-        depends = { 'kevinhwang91/promise-async' },
+        'https://github.com/kevinhwang91/promise-async',
+        'https://github.com/kevinhwang91/nvim-ufo',
     }
 
     -- nvim-ufo 的自定义虚拟文本处理函数
@@ -483,7 +465,7 @@ now_if_args(function()
 end)
 
 now_if_args(function()
-    add 'lukas-reineke/indent-blankline.nvim'
+    add { 'https://github.com/lukas-reineke/indent-blankline.nvim' }
     require('ibl').setup {
         indent = {
             char = '┊',

@@ -1,6 +1,5 @@
-local now, later, add = MiniDeps.now, MiniDeps.later, MiniDeps.add
-local now_if_args = _G.Config.now_if_args
 local kset = vim.keymap.set
+local now, now_if_args, later = Config.now, Config.now_if_args, Config.later
 
 now(function()
     -- Set up to not prefer extension-based icon for some extensions
