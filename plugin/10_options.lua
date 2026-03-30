@@ -14,9 +14,11 @@ opt.guifont = 'Maple Mono NF CN:h13' -- GUI字体
 if g.neovide then
     g.neovide_refresh_rate = 60 -- 屏幕刷新率
     g.neovide_no_idle = true -- 减少空闲时卡顿
-    g.neovide_cursor_animation_length = 0.08 -- 光标动画时长
-    g.neovide_cursor_trail_size = 0.8 -- 光标拖尾大小
-    g.neovide_cursor_vfx_mode = '' -- 光标特效，设置为空可提升性能
+    g.neovide_cursor_trail_size = 0 -- 关闭光标拖尾
+    g.neovide_scroll_animation_length = 0 -- 关闭平滑滚动
+    g.neovide_cursor_animation_length = 0 -- 关闭光标动画
+    g.neovide_cursor_vfx_mode = '' -- 关闭光标特效
+    g.neovide_opacity = 1 -- 关闭背景透明
 
     g.neovide_floating_shadow = true -- 浮动窗口阴影特效
     g.neovide_floating_z_height = 4 -- 阴影Z轴偏移
