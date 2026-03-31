@@ -130,13 +130,18 @@ snippets.setup {
     },
 }
 -- 退出insert时自动退出snippets
-_G.Config.new_autocmd('InsertLeave', nil, function()
-    if snippets.session.get() then vim.schedule(function()
-        while snippets.session.get() do
-            snippets.session.stop()
+vim.api.nvim_create_autocmd('InsertLeave', {
+    callback = function()
+        if snippets.session.get() then
+            vim.schedule(function()
+                while snippets.session.get() do
+                    snippets.session.stop()
+                end
+            end)
         end
-    end) end
-end, 'Cancel mini.snippets session when leave insert')
+    end,
+    desc = 'Cancel mini.snippets session when leave insert',
+})
 
 local miniclue = require 'mini.clue'
 local leader_group_clues = {
@@ -204,10 +209,13 @@ vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust_analyzer', 'gopls', 'zls', 'nushel
 kset({ 'n', 'x' }, '<leader>rn', [[<cmd> lua vim.lsp.buf.rename()<cr>]], { desc = 'Rename' })
 kset({ 'n', 'x' }, '<leader>ra', [[<cmd> lua vim.lsp.buf.code_action()<cr>]], { desc = 'Code Action' })
 kset({ 'n', 'x' }, '<leader>rh', [[<cmd> lua vim.lsp.buf.hover()<cr>]], { desc = 'Hover Doc' })
-_G.Config.new_autocmd('LspAttach', nil, function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    client.server_capabilities.semanticTokensProvider = nil
-end, 'Disable Semantic Tokens')
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(args)
+        local client = vim.lsp.get_client_by_id(args.data.client_id)
+        client.server_capabilities.semanticTokensProvider = nil
+    end,
+    desc = 'Disable Semantic Tokens',
+})
 
 add {
     'https://github.com/nvim-treesitter/nvim-treesitter',
@@ -237,7 +245,7 @@ for _, lang in ipairs(languages) do
     end
 end
 local ts_start = function(ev) vim.treesitter.start(ev.buf) end
-Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
+vim.api.nvim_create_autocmd('FileType', { pattern = filetypes, callback = ts_start, desc = 'Start tree-sitter' })
 -- treesitter-textobject按键设置
 -- select
 local ts_select = require 'nvim-treesitter-textobjects.select'
@@ -358,9 +366,12 @@ require('blink.cmp').setup {
         },
     },
 }
-_G.Config.new_autocmd('InsertLeave', nil, function()
-    vim.schedule(function() require('blink.cmp').cancel() end)
-end, 'Cancel completion when leave insert')
+vim.api.nvim_create_autocmd('InsertLeave', {
+    callback = function()
+        vim.schedule(function() require('blink.cmp').cancel() end)
+    end,
+    desc = 'Cancel completion when leave insert',
+})
 
 add { 'https://github.com/dmtrKovalenko/fff.nvim' }
 vim.g.fff = { lazy_sync = true }
