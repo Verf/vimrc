@@ -2,24 +2,28 @@ local kset = vim.keymap.set
 local add = vim.pack.add
 
 add { 'https://github.com/nvim-mini/mini.nvim' }
+
 require('mini.icons').setup()
 require('mini.icons').mock_nvim_web_devicons()
 require('mini.icons').tweak_lsp_kind()
+
 require('mini.misc').setup()
 require('mini.misc').setup_auto_root()
 require('mini.misc').setup_restore_cursor()
 
-require('mini.notify').setup()
-require('mini.statusline').setup()
-require('mini.tabline').setup()
-require('mini.starter').setup()
 require('mini.align').setup()
 require('mini.extra').setup()
-require('mini.trailspace').setup()
-require('mini.pairs').setup()
+require('mini.notify').setup()
 require('mini.operators').setup { replace = { prefix = '' } }
+require('mini.pairs').setup()
+require('mini.starter').setup()
+require('mini.statusline').setup()
+require('mini.tabline').setup()
+require('mini.trailspace').setup()
+
 require('mini.bufremove').setup()
 kset('n', '<leader>qq', '<CMD>lua MiniBufremove.delete(0, true)<CR>', { desc = 'Buffer Close' })
+
 require('mini.bracketed').setup {
     buffer = { suffix = '', options = {} },
     comment = { suffix = '', options = {} },
@@ -36,6 +40,7 @@ require('mini.bracketed').setup {
     window = { suffix = '', options = {} },
     yank = { suffix = '', options = {} },
 }
+
 require('mini.surround').setup {
     mappings = {
         add = '<leader>sa',
@@ -49,6 +54,7 @@ require('mini.surround').setup {
         suffix_next = 'n',
     },
 }
+
 require('mini.jump').setup {
     mappings = {
         forward = 't',
@@ -58,6 +64,7 @@ require('mini.jump').setup {
         repeat_jump = '',
     },
 }
+
 require('mini.jump2d').setup {
     view = {
         dim = true,
@@ -68,6 +75,7 @@ require('mini.jump2d').setup {
     },
 }
 kset('n', 'gw', [[<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>]], {})
+
 require('mini.move').setup {
     mappings = {
         left = '<M-y>',
@@ -80,6 +88,7 @@ require('mini.move').setup {
         line_up = '<M-i>',
     },
 }
+
 local hipatterns = require 'mini.hipatterns'
 local hi_words = MiniExtra.gen_highlighter.words
 hipatterns.setup {
@@ -91,20 +100,19 @@ hipatterns.setup {
         hex_color = hipatterns.gen_highlighter.hex_color(),
     },
 }
-local mini_keymap = require 'mini.keymap'
-mini_keymap.setup()
+
+local minikeymap = require 'mini.keymap'
+minikeymap.setup()
 -- 使用 <Tab>/<S-Tab> 选择补全菜单项
-mini_keymap.map_multistep('i', '<Tab>', { 'minisnippets_expand', 'blink_next', 'jump_after_close' })
-mini_keymap.map_multistep('i', '<S-Tab>', { 'blink_prev', 'jump_before_open' })
+minikeymap.map_multistep('i', '<Tab>', { 'minisnippets_expand', 'blink_next', 'jump_after_close' })
+minikeymap.map_multistep('i', '<S-Tab>', { 'blink_prev', 'jump_before_open' })
 -- <CR> 用于选择补全项或应用mini.pairs
 -- <BS> 用于消除mini.pairs
-mini_keymap.map_multistep('i', '<BS>', { 'minipairs_bs' })
+minikeymap.map_multistep('i', '<BS>', { 'minipairs_bs' })
 
 local snippets = require 'mini.snippets'
 local config_path = vim.fn.stdpath 'config'
-
 local match_strict = function(snips) return snippets.default_match(snips, { pattern_fuzzy = '%S+' }) end
-
 snippets.setup {
     snippets = {
         snippets.gen_loader.from_file(config_path .. '/snippets/global.json'),
@@ -121,7 +129,6 @@ snippets.setup {
         match = match_strict,
     },
 }
-
 -- 退出insert时自动退出snippets
 _G.Config.new_autocmd('InsertLeave', nil, function()
     if snippets.session.get() then vim.schedule(function()
@@ -189,19 +196,14 @@ require('mini.files').setup {
 kset('n', '-', [[<CMD>lua MiniFiles.open()<CR>]], { desc = 'Open Files' })
 
 add { { src = 'https://github.com/Verf/deepwhite.nvim', version = 'dev' } }
-require('deepwhite').setup {
-    low_blue_light = true,
-}
+require('deepwhite').setup { low_blue_light = true }
 vim.cmd 'color deepwhite'
 
 add { 'https://github.com/neovim/nvim-lspconfig' }
-
 vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust_analyzer', 'gopls', 'zls', 'nushell' }
-
 kset({ 'n', 'x' }, '<leader>rn', [[<cmd> lua vim.lsp.buf.rename()<cr>]], { desc = 'Rename' })
 kset({ 'n', 'x' }, '<leader>ra', [[<cmd> lua vim.lsp.buf.code_action()<cr>]], { desc = 'Code Action' })
 kset({ 'n', 'x' }, '<leader>rh', [[<cmd> lua vim.lsp.buf.hover()<cr>]], { desc = 'Hover Doc' })
-
 _G.Config.new_autocmd('LspAttach', nil, function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     client.server_capabilities.semanticTokensProvider = nil
@@ -211,7 +213,6 @@ add {
     'https://github.com/nvim-treesitter/nvim-treesitter',
     'https://github.com/nvim-treesitter/nvim-treesitter-textobjects',
 }
-
 local languages = {
     'python',
     'javascript',
@@ -226,12 +227,9 @@ local languages = {
     'latex',
     'nu',
 }
-
 local isnt_installed = function(lang) return #vim.api.nvim_get_runtime_file('parser/' .. lang .. '.*', false) == 0 end
-
 local to_install = vim.tbl_filter(isnt_installed, languages)
 if #to_install > 0 then require('nvim-treesitter').install(to_install) end
-
 local filetypes = {}
 for _, lang in ipairs(languages) do
     for _, ft in ipairs(vim.treesitter.language.get_filetypes(lang)) do
@@ -240,7 +238,6 @@ for _, lang in ipairs(languages) do
 end
 local ts_start = function(ev) vim.treesitter.start(ev.buf) end
 Config.new_autocmd('FileType', filetypes, ts_start, 'Start tree-sitter')
-
 -- treesitter-textobject按键设置
 -- select
 local ts_select = require 'nvim-treesitter-textobjects.select'
@@ -257,13 +254,11 @@ kset({ 'n', 'x', 'o' }, '[f', function() ts_move.goto_previous_start('@function.
 kset({ 'n', 'x', 'o' }, '[c', function() ts_move.goto_previous_start('@class.outer', 'textobjects') end)
 
 add { 'https://github.com/chrisgrieser/nvim-spider' }
-
 kset({ 'n', 'o', 'x' }, 'w', [[<cmd>lua require('spider').motion('w')<cr>]])
 kset({ 'n', 'o', 'x' }, 'd', [[<cmd>lua require('spider').motion('e')<cr>]])
 kset({ 'n', 'o', 'x' }, 'b', [[<cmd>lua require('spider').motion('b')<cr>]])
 
 add { 'https://github.com/stevearc/conform.nvim' }
-
 require('conform').setup {
     default_format_opts = {
         lsp_format = 'fallback', -- 配置lsp的格式化器为默认项
@@ -291,7 +286,6 @@ mc.setup()
 kset('v', 's', mc.matchCursors, { desc = 'Add cursor by regex' })
 -- Alt-s: 按换行符拆分
 kset('v', '<M-s>', function() mc.splitCursors '^' end, { desc = 'Split on newlines' })
-
 -- 定义多光标状态下的快捷键
 mc.addKeymapLayer(function(layerSet)
     -- 选择前/后光标作为主光标
@@ -309,9 +303,7 @@ mc.addKeymapLayer(function(layerSet)
 end)
 
 add { { src = 'https://github.com/saghen/blink.cmp', version = 'v1.10.1' } }
-
 require('blink.cmp').setup {
-
     keymap = {
         preset = 'none',
         ['<cr>'] = { 'accept', 'fallback' },
@@ -366,7 +358,6 @@ require('blink.cmp').setup {
         },
     },
 }
-
 _G.Config.new_autocmd('InsertLeave', nil, function()
     vim.schedule(function() require('blink.cmp').cancel() end)
 end, 'Cancel completion when leave insert')
@@ -374,6 +365,7 @@ end, 'Cancel completion when leave insert')
 add { 'https://github.com/dmtrKovalenko/fff.nvim' }
 vim.g.fff = { lazy_sync = true }
 require('fff').setup {
+    prompt = '❯ ',
     grep = {
         modes = { 'plain', 'regex' },
     },
