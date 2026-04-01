@@ -103,27 +103,18 @@ _G.custom_fold_icon = function()
 
     -- 1. 已闭合的折叠：永远显示合上的图标
     if fold_closed == lnum then return (fcs.foldclose or '') .. ' ' end
-
     -- 2. 若光标所在行是折叠起点时，显示展开的图标
     if lnum == vim.fn.line '.' then
         local fold_level = vim.fn.foldlevel(lnum)
         local fold_level_before = lnum == 1 and 0 or vim.fn.foldlevel(lnum - 1)
-
         -- 如果当前行的折叠层级大于上一行，说明这里是代码块/函数的起点
         if fold_level > fold_level_before then return (fcs.foldopen or '') .. ' ' end
     end
-
     -- 3. 其他所有行留白
     return '  '
 end
 
--- statuscolumn：
---   %s           : 诊断错误(LSP)/Git状态等符号列
---   %=           : 将后面的内容向右对齐
---   %l           : 智能行号
---   %#FoldColumn#: 切换到 FoldColumn 高亮组
---   %{...}       : 执行 Lua 逻辑，只渲染图标，避免折叠数字
---   %*           : 恢复默认高亮
+-- [[ statuscolumn ]]
 vim.opt.statuscolumn = '%s%=%l %#FoldColumn#%{v:lua.custom_fold_icon()}%*'
 
 -- [[ diagnostic ]]
@@ -136,12 +127,8 @@ vim.diagnostic.config {
             [vim.diagnostic.severity.HINT] = ' ',
         },
     },
-    virtual_text = {
-        source = 'always',
-    },
-    float = {
-        source = 'always',
-    },
+    virtual_text = { source = 'always' },
+    float = { source = 'always' },
     severity_sort = true,
 }
 
@@ -162,53 +149,3 @@ if vim.fn.executable 'rg' == 1 then
     vim.opt.grepprg = 'rg --vimgrep --smart-case --no-heading'
     vim.opt.grepformat = '%f:%l:%c:%m'
 end
-
--- 创建一个自定义命令 :Grep 来替代原生的 :grep 以静默输出
-vim.api.nvim_create_user_command('Grep', function(opts) vim.cmd('silent grep! ' .. opts.args) end, { nargs = '+', complete = 'file' })
-
--- [[ quickfix ]]
--- grep或make后自动打开quickfix
-vim.api.nvim_create_autocmd('QuickFixCmdPost', {
-    pattern = '[^l]*', -- 匹配 grep, make 等（排除 lgrep 等局部列表命令）
-    callback = function()
-        vim.cmd 'cwindow' -- 有结果才打开，没结果不打开
-    end,
-})
-
--- [[ autocmd ]]
--- 在当前注释中按o插入新行后不自动添加注释符，在 FileType 时调用以自动覆盖文件类似特定的配置
-vim.api.nvim_create_autocmd('FileType', {
-    callback = function() vim.cmd 'setlocal formatoptions-=c formatoptions-=o' end,
-    desc = "Proper 'formatoptions'",
-})
-
--- 失去焦点时自动保存
-vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave' }, {
-    callback = function()
-        local bufnr = vim.api.nvim_get_current_buf()
-
-        -- 1. 检查 Buffer 是否被修改过 (modified)
-        if not vim.api.nvim_buf_get_option(bufnr, 'modified') then return end
-
-        -- 2. 检查文件名是否为空 (排除未命名的新文件)
-        local bufname = vim.api.nvim_buf_get_name(bufnr)
-        if bufname == '' then return end
-
-        -- 3. 排除特定的 buftype (只保存普通文件)
-        -- 排除：terminal, prompt, quickfix, nofile (如 NvimTree, Telescope 等)
-        local buftype = vim.api.nvim_buf_get_option(bufnr, 'buftype')
-        if buftype ~= '' then return end
-
-        -- 4. 排除只读文件
-        if vim.api.nvim_buf_get_option(bufnr, 'readonly') then return end
-
-        -- 5. 排除特定的 filetype
-        local filetype = vim.api.nvim_buf_get_option(bufnr, 'filetype')
-        local exclude_ft = { 'gitcommit', 'gitrebase' }
-        if vim.tbl_contains(exclude_ft, filetype) then return end
-
-        -- 执行保存：silent! 忽略可能产生的错误（如权限不足），update 仅在有改动时写入
-        vim.cmd 'silent! update'
-    end,
-    desc = 'Auto save when focus lost',
-})
