@@ -42,7 +42,7 @@ kset('n', 'zi', 'zk')
 kset({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard' })
 kset({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })
 
-kset('n', '<leader>qa', '<cmd>wqa!<cr>', { desc = 'Quit All' })
+kset('n', '<leader>qa', '<cmd>qa!<cr>', { desc = 'Quit All' })
 
 kset('n', '<leader>bc', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
 
