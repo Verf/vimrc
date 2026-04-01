@@ -142,7 +142,9 @@ local function fast_execute(cmd_str)
     if not success then vim.api.nvim_err_writeln('Macro failed: ' .. (err or '')) end
 
     -- 4. 自动保存逻辑 (可选)
-    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then vim.api.nvim_command 'silent update' end
+    if vim.bo.modified and not vim.bo.readonly and vim.fn.expand '%' ~= '' and vim.bo.buftype == '' then
+        vim.api.nvim_command 'silent update'
+    end
 end
 
 -- 映射 @ 键
