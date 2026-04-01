@@ -46,6 +46,11 @@ kset('n', '<leader>qa', '<cmd>wqa!<cr>', { desc = 'Quit All' })
 
 kset('n', '<leader>bc', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
 
+kset('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix Next' })
+kset('n', '[q', '<cmd>cprev<cr>', { desc = 'Quickfix Previous' })
+kset('n', '<leader>co', '<cmd>copen<cr>', { desc = 'Open quickfix' })
+kset('n', '<leader>cc', '<cmd>cclose<cr>', { desc = 'Close quickfix' })
+
 kset('n', '<leader>tN', '<cmd>tabnew<cr>', { desc = 'Tab New' })
 kset('n', '<leader>tq', '<cmd>tabclose<cr>', { desc = 'Tab Close' })
 kset('n', '<leader>tc', '<cmd>tabonly<cr>', { desc = 'Tab Only' })

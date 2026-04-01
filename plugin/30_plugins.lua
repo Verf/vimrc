@@ -1,7 +1,6 @@
 local kset = vim.keymap.set
 local add = vim.pack.add
 
--- 1. 最先添加并加载 lz.n
 add { 'https://github.com/lumen-oss/lz.n' }
 
 local languages = {
@@ -25,7 +24,6 @@ for _, lang in ipairs(languages) do
     end
 end
 
--- 2. 统一的数据源定义（注意 keys 必须遵循 { "按键", "命令", mode = "..." } 的格式）
 local plugin_defs = {
     {
         url = 'https://github.com/Verf/deepwhite.nvim',
@@ -40,7 +38,6 @@ local plugin_defs = {
             require('mini.icons').setup()
             require('mini.icons').mock_nvim_web_devicons()
             require('mini.icons').tweak_lsp_kind()
-            require('mini.starter').setup()
             require('mini.statusline').setup()
             require('mini.tabline').setup()
 
@@ -146,10 +143,10 @@ local plugin_defs = {
                         { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
                         { mode = 'n', keys = '<Leader>f', desc = '+Find' },
                         { mode = 'n', keys = '<Leader>g', desc = '+Git' },
-                        { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
+                        { mode = 'n', keys = '<Leader>q', desc = '+Quit/Quickfix' },
                         { mode = 'n', keys = '<Leader>r', desc = '+Lsp' },
                         { mode = 'n', keys = '<Leader>s', desc = '+Surround' },
-                        { mode = 'n', keys = '<Leader>t', desc = '+Tab' },
+                        { mode = 'n', keys = '<Leader>t', desc = '+Tab/Term' },
                         { mode = 'n', keys = '<Leader>w', desc = '+Window' },
                         miniclue.gen_clues.marks(),
                         miniclue.gen_clues.registers(),
@@ -465,7 +462,7 @@ local plugin_defs = {
                         { 'n', '<esc>', actions.close, { desc = 'Close help menu' } },
                     },
                 },
-            } -- 这里填入你原来完整的快捷键
+            }
         end,
     },
     { url = 'https://github.com/kevinhwang91/promise-async' },
@@ -519,33 +516,52 @@ local plugin_defs = {
             }
         end,
     },
+    {
+        url = 'https://github.com/stevearc/quicker.nvim',
+        ft = 'qf',
+        keys = {
+            { '<leader>qf', [[<cmd>lua require("quicker").toggle()<cr>]], mode = 'n', desc = 'Toggle Quickfix' },
+            { '<leader>ql', [[<cmd>lua require("quicker").toggle({ loclist = true })<cr>]], mode = 'n', desc = 'Toggle Loclist' },
+        },
+        after = function()
+            require('quicker').setup {
+                keys = {
+                    {
+                        '>',
+                        function() require('quicker').expand { before = 2, after = 2, add_to_existing = true } end,
+                        desc = 'Expand quickfix context',
+                    },
+                    {
+                        '<',
+                        function() require('quicker').collapse() end,
+                        desc = 'Collapse quickfix context',
+                    },
+                },
+            }
+        end,
+    },
 }
 
--- 3. ✨ 核心代码：智能分离解析 ✨
 local pack_specs = {}
 local lz_specs = {}
 
 for _, def in ipairs(plugin_defs) do
-    -- [A] 给 vim.pack 提取链接：只让它负责下载文件
     table.insert(pack_specs, { src = def.url, version = def.version })
 
-    -- [B] 给 lz.n 提取短名：让它只拿目录名去操作
-    -- 比如把 'https://github.com/lumen-oss/lz.n' 截断成 'lz.n'
-    local folder_name = def.url:match('([^/]+)$'):gsub('%.git$', '')
+    -- 截断插件名
+    local name = def.url:match('([^/]+)$'):gsub('%.git$', '')
+    local lz_spec = { name }
 
-    local lz_spec = { folder_name }
     for k, v in pairs(def) do
         if k ~= 'url' and k ~= 'version' then lz_spec[k] = v end
     end
     table.insert(lz_specs, lz_spec)
 end
 
--- 4. 执行挂载
--- { load = function() end } 阻止 vim.pack 执行配置解析，完美绕过 #35550
+-- 阻止 vim.pack 执行配置解析，以绕过 #35550
 vim.pack.add(pack_specs, { load = function() end })
-
--- 让 lz.n 接管完整的快捷键与懒加载
+-- 使用lz.n加载配置
 require('lz.n').load(lz_specs)
 
--- 5. 触发 colorscheme 懒加载
+-- 主题懒加载
 vim.cmd 'color deepwhite'
