@@ -36,7 +36,6 @@ vim.opt.wrap = false -- 禁用自动换行，保持长行在同一行显示
 
 vim.opt.ruler = true -- 在状态栏右下角显示光标的行号和列号
 vim.opt.number = true -- 显示行号
-vim.opt.relativenumber = true -- 显示相对行号，当前行为绝对行号，其他行为距离当前行的行数
 vim.opt.showmatch = true -- 高亮显示匹配的括号，比如 ()、[]、{}
 vim.opt.showmode = false -- 不显示当前模式（如 -- INSERT --）
 vim.opt.showcmd = false -- 不在右下角显示未完成的命令
@@ -58,11 +57,6 @@ vim.opt.softtabstop = 4 -- 设置在编辑模式下，按 Tab 键插入的空格
 vim.opt.scrolloff = 999 -- 设置光标距离窗口顶部和底部的最小行数，999可以使光标始终保持在屏幕中央
 vim.opt.updatetime = 750 -- 设置更新交换文件和触发 CursorHold 事件的延迟时间（毫秒）
 
-vim.opt.foldenable = true -- 开启折叠
-vim.opt.foldcolumn = '1' -- 显示折叠列
-vim.opt.foldlevel = 99 -- 默认折叠级别
-vim.opt.foldlevelstart = 99 -- 打开buffer时的默认折叠级别
-
 vim.opt.complete = '.,w,b,kspell' -- 内置自动补全数据源
 vim.opt.completeopt = 'menuone,noselect,fuzzy,nosort' -- 内置自动补全菜单配置
 
@@ -74,26 +68,16 @@ vim.opt.formatoptions = 'rqnl1j' -- 增强自动注释的体验
 
 vim.opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize' -- 设置 :mksession 命令保存的会话内容
 
-vim.opt.fillchars = {
-    eob = ' ', -- 隐藏缓冲区末尾的 `~`
+vim.opt.fillchars:append { diff = '╱', foldopen = '', foldclose = '', foldsep = ' ', fold = ' ' }
 
-    vert = '│', -- 垂直分割线
-    horiz = '─', -- 水平分割线
-    vertleft = '┤', -- 垂直线接左水平线
-    vertright = '├', -- 垂直线接右水平线
-    verthoriz = '┼', -- 十字交叉点
-    horizup = '┴', -- 水平线接上垂直线
-    horizdown = '┬', -- 水平线接下垂直线
-
-    fold = ' ', -- 隐藏折叠行的默认填充点，保持干净
-    foldopen = '', -- 折叠打开时的图标 (Nerd Font: chevron-down)
-    foldclose = '', -- 折叠关闭时的图标 (Nerd Font: chevron-right)
-    foldsep = '│', -- 折叠边距的垂直引导线，展示作用域层级
-
-    diff = '╱', -- 使用斜纹填充被删除/空白的区域，比破折号 `-` 更有高级感
-
-    msgsep = '‾', -- 命令行与编辑区之间的分隔符
-}
+-- [[ fold ]]
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldtext = ''
+vim.opt.foldcolumn = '1' -- 在左侧显示折叠层级指示器 (0 为隐藏)
+vim.opt.foldlevel = 99 -- 默认不折叠任何代码
+vim.opt.foldlevelstart = 99 -- 打开文件时默认全展开
+vim.opt.foldenable = true -- 启用折叠
 
 -- 全局函数用于精准计算每一行应该显示的折叠图标
 _G.custom_fold_icon = function()
@@ -113,20 +97,10 @@ _G.custom_fold_icon = function()
     -- 3. 其他所有行留白
     return '  '
 end
-
--- [[ statuscolumn ]]
 vim.opt.statuscolumn = '%s%=%l %#FoldColumn#%{v:lua.custom_fold_icon()}%*'
 
 -- [[ diagnostic ]]
 vim.diagnostic.config {
-    signs = {
-        text = {
-            [vim.diagnostic.severity.ERROR] = ' ',
-            [vim.diagnostic.severity.WARN] = ' ',
-            [vim.diagnostic.severity.INFO] = ' ',
-            [vim.diagnostic.severity.HINT] = ' ',
-        },
-    },
     virtual_text = { source = 'always' },
     float = { source = 'always' },
     severity_sort = true,
