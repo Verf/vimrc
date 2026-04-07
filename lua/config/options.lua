@@ -71,8 +71,6 @@ vim.opt.sessionoptions = 'curdir,folds,globals,help,tabpages,terminal,winsize' -
 vim.opt.fillchars:append { diff = '╱', foldopen = '', foldclose = '', foldsep = ' ', fold = ' ' }
 
 -- [[ fold ]]
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.opt.foldtext = ''
 vim.opt.foldcolumn = '1' -- 在左侧显示折叠层级指示器 (0 为隐藏)
 vim.opt.foldlevel = 99 -- 默认不折叠任何代码

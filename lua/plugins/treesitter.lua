@@ -100,7 +100,12 @@ return {
             local ts_start = function(ev) vim.treesitter.start(ev.buf) end
             vim.api.nvim_create_autocmd('FileType', {
                 pattern = filetypes,
-                callback = function(ev) vim.treesitter.start(ev.buf) end,
+                callback = function(ev)
+                    vim.treesitter.start(ev.buf)
+                    vim.wo.foldmethod = 'expr'
+                    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                end,
                 desc = 'Start Tree-sitter',
             })
             -- 配置textobjects
