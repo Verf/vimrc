@@ -161,3 +161,18 @@ kset('n', 'Q', function()
     local count = vim.v.count1
     fast_execute(count .. 'Q')
 end, { desc = 'Execute Last Macro Fast' })
+
+-- 增量选择
+kset(
+    { 'x', 'n' },
+    '<cr>',
+    function() require('vim.treesitter._select').select_parent(vim.v.count1 or 1) end,
+    { desc = 'Incremental expand selection' }
+)
+
+kset(
+    'x',
+    '<bs>',
+    function() require('vim.treesitter._select').select_child(vim.v.count1) end,
+    { desc = 'Shrink selection' }
+)
