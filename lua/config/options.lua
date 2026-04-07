@@ -36,6 +36,7 @@ vim.opt.wrap = false -- 禁用自动换行，保持长行在同一行显示
 
 vim.opt.ruler = true -- 在状态栏右下角显示光标的行号和列号
 vim.opt.number = true -- 显示行号
+vim.opt.relativenumber = true -- 显示相对行号
 vim.opt.showmatch = true -- 高亮显示匹配的括号，比如 ()、[]、{}
 vim.opt.showmode = false -- 不显示当前模式（如 -- INSERT --）
 vim.opt.showcmd = false -- 不在右下角显示未完成的命令
