@@ -10,7 +10,30 @@ return {
     },
     event = 'VimEnter',
     config = function()
+        local actions = require 'telescope.actions'
+
         require('telescope').setup {
+            defaults = {
+                prompt_prefix = ' ',
+                selection_caret = ' ',
+                path_display = { 'truncate' },
+            },
+            pickers = {
+                find_files = {
+                    hidden = true,
+                    find_command = { 'rg', '--files', '--hidden', '--glob', '!**/.git/*' },
+                },
+                live_grep = {
+                    only_sort_text = true,
+                },
+                buffers = {
+                    theme = 'dropdown',
+                    previewer = false,
+                    mappings = {
+                        i = { ['<C-d>'] = actions.delete_buffer },
+                    },
+                },
+            },
             extensions = {
                 ['ui-select'] = { require('telescope.themes').get_dropdown() },
             },
