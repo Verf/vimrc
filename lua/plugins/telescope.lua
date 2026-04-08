@@ -10,8 +10,6 @@ return {
     },
     event = 'VimEnter',
     config = function()
-        local actions = require 'telescope.actions'
-
         require('telescope').setup {
             defaults = {
                 prompt_prefix = ' ',
@@ -30,7 +28,7 @@ return {
                     theme = 'dropdown',
                     previewer = false,
                     mappings = {
-                        i = { ['<C-d>'] = actions.delete_buffer },
+                        i = { ['<C-d>'] = 'delete_buffer' },
                     },
                 },
             },
@@ -58,8 +56,8 @@ return {
             callback = function(event)
                 local buf = event.buf
 
-                vim.keymap.set('n', 'gr', builtin.lsp_references, { buffer = buf, desc = 'Goto References' })
-                vim.keymap.set('n', 'gi', builtin.lsp_implementations, { buffer = buf, desc = 'Goto Implementation' })
+                vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = 'Goto References' })
+                vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = 'Goto Implementation' })
                 vim.keymap.set('n', 'gd', builtin.lsp_definitions, { buffer = buf, desc = 'Goto Definition' })
                 vim.keymap.set(
                     'n',
