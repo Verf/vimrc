@@ -5,7 +5,7 @@ return {
         { ']h', [[<cmd>lua require('gitsigns').next_hunk()<cr>]], mode = 'n', desc = 'Next hunk' },
         { '[h', [[<cmd>lua require('gitsigns').prev_hunk()<cr>]], mode = 'n', desc = 'Previous hunk' },
         { '<leader>gs', [[<cmd>lua require('gitsigns').stage_hunk()<cr>]], mode = 'n', desc = 'Stage Hunk' },
-        { '<leader>gr', [[<cmd>lua require('gitsigns').reset_hunk()<cr>]], mode = 'n', desc = 'Reset Hunk' },
+        { '<leader>gu', [[<cmd>lua require('gitsigns').reset_hunk()<cr>]], mode = 'n', desc = 'Unstage Hunk' },
         {
             '<leader>gS',
             [[<cmd>lua require('gitsigns').stage_buffer()<cr>]],
@@ -13,10 +13,10 @@ return {
             desc = 'Stage Buffer',
         },
         {
-            '<leader>gR',
+            '<leader>gU',
             [[<cmd>lua require('gitsigns').reset_buffer()<cr>]],
             mode = 'n',
-            desc = 'Reset Buffer',
+            desc = 'Unstage Buffer',
         },
         {
             '<leader>gb',
