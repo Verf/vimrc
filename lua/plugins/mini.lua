@@ -16,7 +16,7 @@ return {
             require('mini.misc').setup_restore_cursor()
             require('mini.align').setup()
             require('mini.extra').setup()
-            require('mini.notify').setup()
+            -- require('mini.notify').setup()
             require('mini.operators').setup { replace = { prefix = 'gf' } }
             require('mini.pairs').setup()
             require('mini.trailspace').setup()
@@ -117,29 +117,29 @@ return {
                 end,
             })
 
-            local miniclue = require 'mini.clue'
-            miniclue.setup {
-                clues = {
-                    { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
-                    { mode = 'n', keys = '<Leader>f', desc = '+Find' },
-                    { mode = 'n', keys = '<Leader>g', desc = '+Git' },
-                    { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
-                    { mode = 'n', keys = '<Leader>r', desc = '+Lsp' },
-                    { mode = 'n', keys = '<Leader>s', desc = '+Surround' },
-                    { mode = 'n', keys = '<Leader>t', desc = '+Tab' },
-                    { mode = 'n', keys = '<Leader>w', desc = '+Window' },
-                    miniclue.gen_clues.marks(),
-                    miniclue.gen_clues.registers(),
-                },
-                triggers = {
-                    { mode = { 'n', 'x' }, keys = '<Leader>' },
-                    { mode = { 'n', 'x' }, keys = "'" },
-                    { mode = { 'n', 'x' }, keys = '`' },
-                    { mode = { 'n', 'x' }, keys = '"' },
-                    { mode = { 'i', 'c' }, keys = '<C-r>' },
-                    { mode = { 'n', 'x' }, keys = 'z' },
-                },
-            }
+            -- local miniclue = require 'mini.clue'
+            -- miniclue.setup {
+            --     clues = {
+            --         { mode = 'n', keys = '<Leader>b', desc = '+Buffer' },
+            --         { mode = 'n', keys = '<Leader>f', desc = '+Find' },
+            --         { mode = 'n', keys = '<Leader>g', desc = '+Git' },
+            --         { mode = 'n', keys = '<Leader>q', desc = '+Quit' },
+            --         { mode = 'n', keys = '<Leader>r', desc = '+Lsp' },
+            --         { mode = 'n', keys = '<Leader>s', desc = '+Surround' },
+            --         { mode = 'n', keys = '<Leader>t', desc = '+Tab' },
+            --         { mode = 'n', keys = '<Leader>w', desc = '+Window' },
+            --         miniclue.gen_clues.marks(),
+            --         miniclue.gen_clues.registers(),
+            --     },
+            --     triggers = {
+            --         { mode = { 'n', 'x' }, keys = '<Leader>' },
+            --         { mode = { 'n', 'x' }, keys = "'" },
+            --         { mode = { 'n', 'x' }, keys = '`' },
+            --         { mode = { 'n', 'x' }, keys = '"' },
+            --         { mode = { 'i', 'c' }, keys = '<C-r>' },
+            --         { mode = { 'n', 'x' }, keys = 'z' },
+            --     },
+            -- }
 
             require('mini.files').setup {
                 mappings = {
