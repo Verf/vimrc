@@ -43,18 +43,58 @@ return {
                 mode = { 'n', 'x', 'o' },
             },
             {
-                ']c',
-                [[<cmd>lua require('nvim-treesitter-textobjects.move').goto_next_start('@class.outer', 'textobjects')<cr>]],
-                mode = { 'n', 'x', 'o' },
-            },
-            {
                 '[f',
                 [[<cmd>lua require('nvim-treesitter-textobjects.move').goto_previous_start('@function.outer', 'textobjects')<cr>]],
                 mode = { 'n', 'x', 'o' },
             },
             {
+                ']c',
+                [[<cmd>lua require('nvim-treesitter-textobjects.move').goto_next_start('@class.outer', 'textobjects')<cr>]],
+                mode = { 'n', 'x', 'o' },
+            },
+            {
                 '[c',
                 [[<cmd>lua require('nvim-treesitter-textobjects.move').goto_previous_start('@class.outer', 'textobjects')<cr>]],
+                mode = { 'n', 'x', 'o' },
+            },
+            {
+                ']p',
+                [[<cmd>lua require('nvim-treesitter-textobjects.move').goto_next_start('@parameter.outer', 'textobjects')<cr>]],
+                mode = { 'n', 'x', 'o' },
+            },
+            {
+                '[p',
+                [[<cmd>lua require('nvim-treesitter-textobjects.move').goto_previous_start('@parameter.outer', 'textobjects')<cr>]],
+                mode = { 'n', 'x', 'o' },
+            },
+            {
+                ']i',
+                [[<cmd>lua require('nvim-treesitter-textobjects.move').goto_next_start('@conditional.outer', 'textobjects')<cr>]],
+                mode = { 'n', 'x', 'o' },
+            },
+            {
+                '[i',
+                [[<cmd>lua require('nvim-treesitter-textobjects.move').goto_previous_start('@conditional.outer', 'textobjects')<cr>]],
+                mode = { 'n', 'x', 'o' },
+            },
+            {
+                '<leader>sn',
+                [[<cmd>lua require('nvim-treesitter-textobjects.swap').swap_next('@parameter.inner')<cr>]],
+                mode = 'n',
+            },
+            {
+                '<leader>sp',
+                [[<cmd>lua require('nvim-treesitter-textobjects.swap').swap_previous('@parameter.outer')<cr>]],
+                mode = 'n',
+            },
+            {
+                'h',
+                [[<cmd>lua require('nvim-treesitter-textobjects.repeatable_move').repeat_last_move_next()<cr>]],
+                mode = { 'n', 'x', 'o' },
+            },
+            {
+                ',',
+                [[<cmd>lua require('nvim-treesitter-textobjects.repeatable_move').repeat_last_move_previous()<cr>]],
                 mode = { 'n', 'x', 'o' },
             },
         },

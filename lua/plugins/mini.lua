@@ -17,7 +17,7 @@ return {
             require('mini.align').setup()
             require('mini.extra').setup()
             require('mini.notify').setup()
-            require('mini.operators').setup { replace = { prefix = '' } }
+            require('mini.operators').setup { replace = { prefix = 'gf' } }
             require('mini.pairs').setup()
             require('mini.trailspace').setup()
             require('mini.bufremove').setup()

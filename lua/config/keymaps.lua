@@ -94,11 +94,22 @@ kset('t', '<esc>', [[<C-\><C-n>]])
 
 -- 删除的空行不记录寄存器中
 kset('n', 'ee', function()
-    if vim.api.nvim_get_current_line():match '^%s*$' then
-        return '"_dd'
-    else
-        return 'dd'
+    -- 获取将要删除的行数（如果没有输入数字如 3ee，则默认为 1）
+    local count = vim.v.count1
+    -- 获取当前光标所在的行号 (Neovim API 行号从 0 开始，所以要减 1)
+    local start_row = vim.api.nvim_win_get_cursor(0)[1] - 1
+    -- 获取将要删除的所有行内容
+    local lines = vim.api.nvim_buf_get_lines(0, start_row, start_row + count, false)
+    -- 遍历所有即将被删除的行
+    for _, line in ipairs(lines) do
+        -- 只要发现有任何一行包含了“非空白字符”
+        if not line:match '^%s*$' then
+            -- 就正常删除，记录到寄存器中
+            return 'dd'
+        end
     end
+    -- 否则不记录
+    return '"_dd'
 end, { expr = true })
 
 -- 修改时不记录寄存器中
@@ -163,16 +174,28 @@ kset('n', 'Q', function()
 end, { desc = 'Execute Last Macro Fast' })
 
 -- 增量选择
-kset(
-    { 'x', 'n' },
-    '<cr>',
-    function() require('vim.treesitter._select').select_parent(vim.v.count1 or 1) end,
-    { desc = 'Incremental expand selection' }
-)
+kset({ 'x', 'n' }, '<cr>', function()
+    if vim.treesitter.get_parser(nil, nil, { error = false }) then
+        require('vim.treesitter._select').select_parent(vim.v.count1 or 1)
+    else
+        vim.lsp.buf.selection_range(vim.v.count1)
+    end
+end, { desc = 'Incremental expand selection' })
 
-kset(
-    'x',
-    '<bs>',
-    function() require('vim.treesitter._select').select_child(vim.v.count1) end,
-    { desc = 'Shrink selection' }
-)
+kset('x', '<bs>', function()
+    if vim.treesitter.get_parser(nil, nil, { error = false }) then
+        require('vim.treesitter._select').select_child(vim.v.count1)
+    else
+        vim.lsp.buf.selection_range(-vim.v.count1)
+    end
+end, { desc = 'Shrink selection' })
+
+-- 替换默认的增量选择快捷键
+vim.keymap.del({ 'x', 'o' }, 'in')
+vim.keymap.set({ 'x', 'o' }, 'rn', function()
+    if vim.treesitter.get_parser(nil, nil, { error = false }) then
+        require('vim.treesitter._select').select_child(vim.v.count1)
+    else
+        vim.lsp.buf.selection_range(-vim.v.count1)
+    end
+end, { desc = 'Select child (inner) node' })
