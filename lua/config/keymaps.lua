@@ -1,6 +1,6 @@
 local kset = vim.keymap.set
 
--- Norman Keyboard Layout
+-- [[ Norman Keyboard Layout ]]
 kset({ 'n', 'o', 'x' }, 'd', 'e')
 kset({ 'n', 'o', 'x' }, 'f', 'r')
 kset({ 'n', 'o', 'x' }, 'k', 't')
@@ -32,31 +32,45 @@ kset({ 'n', 'o', 'x' }, 'P', 'N')
 kset({ 'n', 'o', 'x' }, 'H', ':')
 kset({ 'n', 'o', 'x' }, ':', 'P')
 
-kset('n', '<tab>', '<cmd>bn<cr>')
-kset('n', '<s-tab>', '<cmd>bp<cr>')
+-- [[ Copy & Paste]]
+kset({ 'n', 'v' }, '<leader>j', '"*y', { desc = 'System Copy' })
+kset({ 'n', 'v' }, '<leader>;', '"*p', { desc = 'System Paste' })
+
+-- [[ Buffer ]]
+kset('n', '<leader>q', '<cmd>qa!<cr>', { desc = 'Quit All' })
+
+kset('n', '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
+kset('n', '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
 kset('n', '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
+kset('n', '<leader>X', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
 
-kset('n', 'zn', 'zj')
-kset('n', 'zi', 'zk')
-
-kset({ 'n', 'v' }, '<leader>j', '"*y', { desc = ' Copy to System Clipboard' })
-kset({ 'n', 'v' }, '<leader>;', '"*p', { desc = ' Paste from System Clipboard' })
-
-kset('n', '<leader>qa', '<cmd>qa!<cr>', { desc = 'Quit All' })
-
-kset('n', '<leader>bc', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
-
-kset('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix Next' })
-kset('n', '[q', '<cmd>cprev<cr>', { desc = 'Quickfix Previous' })
-kset('n', '<leader>co', '<cmd>copen<cr>', { desc = 'Open quickfix' })
-kset('n', '<leader>cc', '<cmd>cclose<cr>', { desc = 'Close quickfix' })
-
+-- [[ Tab ]]
 kset('n', '<leader>tN', '<cmd>tabnew<cr>', { desc = 'Tab New' })
 kset('n', '<leader>tq', '<cmd>tabclose<cr>', { desc = 'Tab Close' })
 kset('n', '<leader>tc', '<cmd>tabonly<cr>', { desc = 'Tab Only' })
 kset('n', '<leader>tn', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
 kset('n', '<leader>t<tab>', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
 kset('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = 'Tab Previous' })
+
+-- [[ Fold ]]
+kset('n', 'zn', 'zj')
+kset('n', 'zi', 'zk')
+
+-- [[ Quickfix ]]
+kset('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix Next' })
+kset('n', '[q', '<cmd>cprev<cr>', { desc = 'Quickfix Previous' })
+-- 切换 Quickfix 窗口
+local function toggle_quickfix()
+    local windows = vim.fn.getwininfo()
+    for _, win in ipairs(windows) do
+        if win.quickfix == 1 then
+            vim.cmd 'cclose'
+            return
+        end
+    end
+    vim.cmd 'copen'
+end
+vim.keymap.set('n', '<leader>c', toggle_quickfix, { desc = 'Quickfix' })
 
 local function smart_win_move(dir)
     local cur_win = vim.api.nvim_get_current_win()

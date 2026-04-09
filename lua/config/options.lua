@@ -49,6 +49,7 @@ vim.opt.splitkeep = 'screen' -- 分屏时保持相对位置更稳定
 vim.opt.splitright = true -- 竖向分屏时将新窗口放在右边
 vim.opt.switchbuf = 'usetab' -- 执行特定跳转时优先复用已有标签页，若没有则新建标签页打开
 vim.opt.virtualedit = 'block' -- 启用虚拟编辑，允许光标在块选择模式下移动到没有实际字符的列
+vim.opt.winborder = 'rounded'
 
 vim.opt.expandtab = true -- 将输入的 Tab 自动转换为空格
 vim.opt.tabstop = 4 -- 设置文件中一个 Tab 字符代表的空格数
@@ -127,34 +128,7 @@ end
 require('vim._core.ui2').enable {
     enable = true,
     msg = {
-        targets = {
-            [''] = 'msg',
-            empty = 'cmd',
-            bufwrite = 'msg',
-            confirm = 'cmd',
-            emsg = 'pager',
-            echo = 'msg',
-            echomsg = 'msg',
-            echoerr = 'pager',
-            completion = 'cmd',
-            list_cmd = 'pager',
-            lua_error = 'pager',
-            lua_print = 'msg',
-            progress = 'pager',
-            rpc_error = 'pager',
-            quickfix = 'msg',
-            search_cmd = 'cmd',
-            search_count = 'cmd',
-            shell_cmd = 'pager',
-            shell_err = 'pager',
-            shell_out = 'pager',
-            shell_ret = 'msg',
-            undo = 'msg',
-            verbose = 'pager',
-            wildlist = 'cmd',
-            wmsg = 'msg',
-            typed_cmd = 'cmd',
-        },
+        targets = 'cmd',
         cmd = {
             height = 0.5,
         },
@@ -162,11 +136,11 @@ require('vim._core.ui2').enable {
             height = 0.5,
         },
         msg = {
-            height = 0.3,
-            timeout = 5000,
+            height = 0.5,
+            timeout = 4000,
         },
         pager = {
-            height = 0.5,
+            height = 1,
         },
     },
 }

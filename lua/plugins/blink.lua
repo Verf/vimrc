@@ -1,6 +1,6 @@
 return {
     'saghen/blink.cmp',
-    version = 'v1.10.1', -- 你原来指定的版本
+    version = '1.*',
     event = { 'InsertEnter', 'CmdlineEnter' },
     opts = {
         keymap = {
@@ -16,11 +16,32 @@ return {
         },
         snippets = { preset = 'mini_snippets' },
         sources = { default = { 'lsp', 'buffer', 'path' } },
+        fuzzy = {
+            sorts = {
+                'exact',
+                'score',
+                'sort_text',
+                'label',
+            },
+        },
         signature = { enabled = true },
         completion = {
-            list = { selection = { preselect = false, auto_insert = true } },
-            trigger = { show_on_keyword = true, show_on_trigger_character = false },
+            list = {
+                selection = {
+                    preselect = false,
+                    auto_insert = true,
+                },
+            },
+            trigger = {
+                show_on_keyword = true,
+                show_on_trigger_character = false,
+            },
+            documentation = {
+                auto_show = true,
+                auto_show_delay_ms = 250,
+            },
             menu = {
+                border = 'none',
                 draw = {
                     padding = { 0, 1 },
                     components = {

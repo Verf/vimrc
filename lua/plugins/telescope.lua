@@ -45,7 +45,6 @@ return {
         vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
         vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = 'Live Grep' })
         vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find Diagnostics' })
-        vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = 'Find Resume' })
         vim.keymap.set('n', '<leader>fh', builtin.oldfiles, { desc = 'Find History' })
         vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
         vim.keymap.set({ 'n', 'v' }, '<leader>fw', builtin.grep_string, { desc = 'Find Current Word' })
