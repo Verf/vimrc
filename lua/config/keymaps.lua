@@ -32,79 +32,25 @@ kset({ 'n', 'o', 'x' }, 'P', 'N')
 kset({ 'n', 'o', 'x' }, 'H', ':')
 kset({ 'n', 'o', 'x' }, ':', 'P')
 
--- [[ Copy & Paste]]
-kset({ 'n', 'v' }, '<leader>j', '"*y', { desc = 'System Copy' })
-kset({ 'n', 'v' }, '<leader>;', '"*p', { desc = 'System Paste' })
+-- [[ Edit ]]
+-- 修改时不记录寄存器中
+kset({ 'n', 'v' }, 'c', '"_c')
+kset({ 'n', 'v' }, 'C', '"_C')
 
--- [[ Buffer ]]
-kset('n', '<leader>q', '<cmd>qa!<cr>', { desc = 'Quit All' })
-
-kset('n', '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
-kset('n', '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
-kset('n', '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
-kset('n', '<leader>X', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
-
--- [[ Tab ]]
-kset('n', '<leader>tN', '<cmd>tabnew<cr>', { desc = 'Tab New' })
-kset('n', '<leader>tq', '<cmd>tabclose<cr>', { desc = 'Tab Close' })
-kset('n', '<leader>tc', '<cmd>tabonly<cr>', { desc = 'Tab Only' })
-kset('n', '<leader>tn', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
-kset('n', '<leader>t<tab>', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
-kset('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = 'Tab Previous' })
-
--- [[ Fold ]]
-kset('n', 'zn', 'zj')
-kset('n', 'zi', 'zk')
-
--- [[ Quickfix ]]
-kset('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix Next' })
-kset('n', '[q', '<cmd>cprev<cr>', { desc = 'Quickfix Previous' })
--- 切换 Quickfix 窗口
-local function toggle_quickfix()
-    local windows = vim.fn.getwininfo()
-    for _, win in ipairs(windows) do
-        if win.quickfix == 1 then
-            vim.cmd 'cclose'
-            return
-        end
-    end
-    vim.cmd 'copen'
-end
-vim.keymap.set('n', '<leader>c', toggle_quickfix, { desc = 'Quickfix' })
-
-local function smart_win_move(dir)
-    local cur_win = vim.api.nvim_get_current_win()
-    vim.cmd('wincmd ' .. dir) -- 先尝试切换
-
-    -- 如果窗口没变（说明那个方向没有窗口）
-    if cur_win == vim.api.nvim_get_current_win() then
-        if dir == 'h' then
-            vim.cmd 'leftabove vsplit' -- 左边新建
-        elseif dir == 'l' then
-            vim.cmd 'vsplit' -- 右边新建（默认就是右边）
-        elseif dir == 'j' then
-            vim.cmd 'split' -- 下边新建（默认就是下面）
-        elseif dir == 'k' then
-            vim.cmd 'leftabove split' -- 上边新建
-        end
-        vim.cmd('wincmd ' .. dir) -- 再次切换
-    end
-end
-
-kset('n', '<leader>wc', '<C-w>o', { desc = 'Window Only' })
-kset('n', '<leader>wq', '<C-w>c', { desc = 'Window Close' })
-kset('n', '<leader>ws', '<C-w>s', { desc = 'Window Split' })
-kset('n', '<leader>wv', '<C-w>v', { desc = 'Window VSplit' })
-kset('n', '<leader>wy', function() smart_win_move 'h' end, { desc = 'Switch to Left' })
-kset('n', '<leader>wn', function() smart_win_move 'j' end, { desc = 'Switch to Bottom' })
-kset('n', '<leader>wi', function() smart_win_move 'k' end, { desc = 'Switch to Up' })
-kset('n', '<leader>wo', function() smart_win_move 'l' end, { desc = 'Switch to Right' })
-kset('n', '<leader>wY', '<C-w>H', { desc = 'Window to Left' })
-kset('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
-kset('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
-kset('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
-
-kset('t', '<esc>', [[<C-\><C-n>]])
+-- 替换并记录当前内容，支持按.自动替换下一个
+kset('n', '<C-s>', 'g*Ncgn', { desc = 'Search & Replace' })
+kset('x', '<C-s>', function()
+    -- 1. 复制当前选区内容到寄存器 v
+    vim.cmd 'noau normal! "vy'
+    -- 2. 获取内容并转义特殊字符
+    local text = vim.fn.getreg 'v'
+    local escaped_text = '\\V' .. vim.fn.escape(text, '\\/')
+    -- 3. 将其设置为搜索寄存器 /
+    vim.fn.setreg('/', escaped_text)
+    -- 4. 使用 feedkeys 发送后续按键
+    local keys = vim.api.nvim_replace_termcodes('<esc>cgn', true, false, true)
+    vim.api.nvim_feedkeys(keys, 'n', false)
+end, { desc = 'Search & Replace' })
 
 -- 删除的空行不记录寄存器中
 kset('n', 'ee', function()
@@ -126,25 +72,82 @@ kset('n', 'ee', function()
     return '"_dd'
 end, { expr = true })
 
--- 修改时不记录寄存器中
-kset({ 'n', 'v' }, 'c', '"_c')
-kset({ 'n', 'v' }, 'C', '"_C')
+-- [[ Copy & Paste]]
+kset({ 'n', 'v' }, '<leader>j', '"*y', { desc = 'System Copy' })
+kset({ 'n', 'v' }, '<leader>;', '"*p', { desc = 'System Paste' })
 
--- 替换并记录当前内容，支持按.自动替换下一个
-kset('n', '<C-s>', 'g*Ncgn', { desc = 'Search & Replace' })
-kset('x', '<C-s>', function()
-    -- 1. 复制当前选区内容到寄存器 v
-    vim.cmd 'noau normal! "vy'
-    -- 2. 获取内容并转义特殊字符
-    local text = vim.fn.getreg 'v'
-    local escaped_text = '\\V' .. vim.fn.escape(text, '\\/')
-    -- 3. 将其设置为搜索寄存器 /
-    vim.fn.setreg('/', escaped_text)
-    -- 4. 使用 feedkeys 发送后续按键
-    local keys = vim.api.nvim_replace_termcodes('<esc>cgn', true, false, true)
-    vim.api.nvim_feedkeys(keys, 'n', false)
-end, { desc = 'Search & Replace' })
+-- [[ Buffer ]]
+kset('n', '<leader>q', '<cmd>qa!<cr>', { desc = 'Quit All' })
 
+kset('n', '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
+kset('n', '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
+kset('n', '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
+kset('n', '<leader>X', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
+
+-- [[ Tab ]]
+kset('n', '<leader>tN', '<cmd>tabnew<cr>', { desc = 'Tab New' })
+kset('n', '<leader>tq', '<cmd>tabclose<cr>', { desc = 'Tab Close' })
+kset('n', '<leader>tc', '<cmd>tabonly<cr>', { desc = 'Tab Only' })
+kset('n', '<leader>tn', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
+kset('n', '<leader>t<tab>', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
+kset('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = 'Tab Previous' })
+
+-- [[ Window ]]
+local function smart_win_move(dir)
+    local cur_win = vim.api.nvim_get_current_win()
+    vim.cmd('wincmd ' .. dir) -- 先尝试切换
+
+    -- 如果窗口没变（说明那个方向没有窗口）
+    if cur_win == vim.api.nvim_get_current_win() then
+        if dir == 'h' then
+            vim.cmd 'leftabove vsplit' -- 左边新建
+        elseif dir == 'l' then
+            vim.cmd 'vsplit' -- 右边新建（默认就是右边）
+        elseif dir == 'j' then
+            vim.cmd 'split' -- 下边新建（默认就是下面）
+        elseif dir == 'k' then
+            vim.cmd 'leftabove split' -- 上边新建
+        end
+        vim.cmd('wincmd ' .. dir) -- 再次切换
+    end
+end
+kset('n', '<leader>wc', '<C-w>o', { desc = 'Window Only' })
+kset('n', '<leader>wq', '<C-w>c', { desc = 'Window Close' })
+kset('n', '<leader>ws', '<C-w>s', { desc = 'Window Split' })
+kset('n', '<leader>wv', '<C-w>v', { desc = 'Window VSplit' })
+kset('n', '<leader>wy', function() smart_win_move 'h' end, { desc = 'Switch to Left' })
+kset('n', '<leader>wn', function() smart_win_move 'j' end, { desc = 'Switch to Bottom' })
+kset('n', '<leader>wi', function() smart_win_move 'k' end, { desc = 'Switch to Up' })
+kset('n', '<leader>wo', function() smart_win_move 'l' end, { desc = 'Switch to Right' })
+kset('n', '<leader>wY', '<C-w>H', { desc = 'Window to Left' })
+kset('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
+kset('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
+kset('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
+
+-- [[ Fold ]]
+kset('n', 'zn', 'zj')
+kset('n', 'zi', 'zk')
+
+-- [[ Quickfix ]]
+kset('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix Next' })
+kset('n', '[q', '<cmd>cprev<cr>', { desc = 'Quickfix Previous' })
+-- 切换 Quickfix 窗口
+local function toggle_quickfix()
+    local windows = vim.fn.getwininfo()
+    for _, win in ipairs(windows) do
+        if win.quickfix == 1 then
+            vim.cmd 'cclose'
+            return
+        end
+    end
+    vim.cmd 'copen'
+end
+vim.keymap.set('n', '<leader>c', toggle_quickfix, { desc = 'Quickfix' })
+
+-- [[ Terminal ]]
+kset('t', '<esc>', [[<C-\><C-n>]])
+
+-- [[ Macro ]]
 -- 关闭影响性能的配置项并执行宏
 local function fast_execute(cmd_str)
     -- 1. 备份并关闭性能杀手项
@@ -172,7 +175,6 @@ local function fast_execute(cmd_str)
     end
 end
 
--- 映射 @ 键
 kset('n', '@', function()
     local count = vim.v.count1
     local register = vim.fn.getcharstr()
@@ -181,12 +183,12 @@ kset('n', '@', function()
     fast_execute(count .. '@' .. register)
 end, { desc = 'Execute Macro Fast' })
 
--- 映射 Q 键 (执行上一次宏)
 kset('n', 'Q', function()
     local count = vim.v.count1
     fast_execute(count .. 'Q')
 end, { desc = 'Execute Last Macro Fast' })
 
+-- [[ Tree-Sitter ]]
 -- 增量选择
 kset({ 'x', 'n' }, '<cr>', function()
     if vim.treesitter.get_parser(nil, nil, { error = false }) then
