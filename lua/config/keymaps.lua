@@ -164,13 +164,3 @@ kset('x', '<bs>', function()
         vim.lsp.buf.selection_range(-vim.v.count1)
     end
 end, { desc = 'Shrink selection' })
-
--- 替换默认的增量选择快捷键
-vim.keymap.del({ 'x', 'o' }, 'in')
-vim.keymap.set({ 'x', 'o' }, 'rn', function()
-    if vim.treesitter.get_parser(nil, nil, { error = false }) then
-        require('vim.treesitter._select').select_child(vim.v.count1)
-    else
-        vim.lsp.buf.selection_range(-vim.v.count1)
-    end
-end, { desc = 'Select child (inner) node' })
