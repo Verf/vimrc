@@ -6,6 +6,8 @@ return {
             view = {
                 toggle_explorer = false, -- Toggle explorer visibility (explorer mode only)
                 focus_explorer = false, -- Focus explorer panel (explorer mode only)
+                next_file = '<tab>', -- Next file in explorer/history mode
+                prev_file = '<S-tab>', -- Previous file in explorer/history mode
                 diff_get = '<leader>gg', -- Get change from other buffer (like vimdiff)
                 diff_put = '<leader>gp', -- Put change to other buffer (like vimdiff)
                 close_on_open_in_prev_tab = false, -- Close codediff tab after gf opens file in previous tab
