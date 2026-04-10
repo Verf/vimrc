@@ -146,6 +146,11 @@ vim.keymap.set('n', '<leader>c', toggle_quickfix, { desc = 'Quickfix' })
 
 -- [[ Terminal ]]
 kset('t', '<esc>', [[<C-\><C-n>]])
+-- 竖向分屏打开 terminal
+vim.keymap.set('n', '<leader>tv', function() vim.cmd 'vsplit | terminal' end, { desc = 'Vertical split Terminal' })
+
+-- 水平分屏打开 terminal
+vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { desc = 'Horizontal split Terminal' })
 
 -- [[ Tree-Sitter ]]
 -- 增量选择

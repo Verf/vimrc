@@ -38,20 +38,6 @@ return {
         require('mini.trailspace').setup()
         require('mini.bufremove').setup()
 
-        require('mini.bracketed').setup {
-            diagnostic = { suffix = 'd', options = { severity = vim.diagnostic.severity.ERROR } },
-            buffer = { suffix = '' },
-            comment = { suffix = '' },
-            file = { suffix = '' },
-            indent = { suffix = '' },
-            jump = { suffix = '' },
-            location = { suffix = '' },
-            oldfile = { suffix = '' },
-            treesitter = { suffix = '' },
-            window = { suffix = '' },
-            yank = { suffix = '' },
-        }
-
         require('mini.surround').setup {
             mappings = {
                 add = '<leader>sa',

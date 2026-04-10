@@ -14,7 +14,7 @@ return {
             { 'gr', group = '+Lsp' },
             { '<leader>f', group = '+Find' },
             { '<leader>g', group = '+Git' },
-            { '<leader>t', group = '+Tab' },
+            { '<leader>t', group = '+Tab/Term' },
             { '<leader>s', group = '+Surround/Swap' },
             { '<leader>w', group = '+Window' },
         }
