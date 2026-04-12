@@ -55,11 +55,6 @@ return {
             mappings = { forward = 't', backward = 'T', forward_till = 'k', backward_till = 'K', repeat_jump = '' },
         }
 
-        require('mini.jump2d').setup {
-            view = { dim = true, n_steps_ahead = 2 },
-            mappings = { start_jumping = '' },
-        }
-
         require('mini.move').setup {
             mappings = {
                 left = '<M-y>',
@@ -109,6 +104,7 @@ return {
             },
         }
 
+        -- 退出Insert模式时自动停止snippet状态
         vim.api.nvim_create_autocmd('InsertLeave', {
             callback = function()
                 if snippets.session.get() then
