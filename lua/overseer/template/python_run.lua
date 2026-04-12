@@ -6,7 +6,7 @@ return {
             args = { vim.fn.expand '%:p' },
             cwd = vim.fn.getcwd(),
             name = 'Python: ' .. vim.fn.expand '%:t',
-            components = { 'default', { 'on_complete_notify' }, { 'display_duration', detail_level = 2 } },
+            components = { 'default' },
         }
     end,
     condition = {
