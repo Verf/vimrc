@@ -7,6 +7,12 @@ return {
     },
     opts = {
         strategy = 'terminal',
+        task_list = {
+            direction = 'right',
+            min_width = 40,
+            max_width = 50,
+            default_detail = 1,
+        },
         -- VSCode-like
         component_aliases = {
             default = {
