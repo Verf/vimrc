@@ -75,13 +75,13 @@ return {
             desc = 'Inner Number',
         },
         {
-            'Q',
+            'q',
             [[<cmd>lua require("various-textobjs").toNextQuotationMark()<cr>]],
             mode = { 'o', 'x' },
             desc = 'Next Quote',
         },
         {
-            'B',
+            'c',
             [[<cmd>lua require("various-textobjs").toNextClosingBracket()<cr>]],
             mode = { 'o', 'x' },
             desc = 'Next Bracket',
