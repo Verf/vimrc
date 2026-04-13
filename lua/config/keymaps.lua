@@ -1,45 +1,43 @@
-local kset = vim.keymap.set
-
 -- [[ Norman Keyboard Layout ]]
-kset({ 'n', 'o', 'x' }, 'd', 'e')
-kset({ 'n', 'o', 'x' }, 'f', 'r')
-kset({ 'n', 'o', 'x' }, 'k', 't')
-kset({ 'n', 'o', 'x' }, 'j', 'y')
-kset({ 'n', 'o', 'x' }, 'r', 'i')
-kset({ 'n', 'o', 'x' }, 'l', 'o')
-kset({ 'n', 'o', 'x' }, 'e', 'd')
-kset({ 'n', 'o', 'x' }, 't', 'f')
-kset({ 'n', 'o', 'x' }, 'y', 'h')
-kset({ 'n', 'o', 'x' }, 'n', 'j')
-kset({ 'n', 'o', 'x' }, 'i', 'k')
-kset({ 'n', 'o', 'x' }, 'o', 'l')
-kset({ 'n', 'o', 'x' }, 'p', 'n')
-kset({ 'n', 'o', 'x' }, 'h', ';')
-kset({ 'n', 'o', 'x' }, ';', 'p')
-kset({ 'n', 'o', 'x' }, 'D', 'E')
-kset({ 'n', 'o', 'x' }, 'F', 'R')
-kset({ 'n', 'o', 'x' }, 'K', 'T')
-kset({ 'n', 'o', 'x' }, 'J', 'Y')
-kset({ 'n', 'o', 'x' }, 'R', 'I')
-kset({ 'n', 'o', 'x' }, 'L', 'O')
-kset({ 'n', 'o', 'x' }, 'E', 'D')
-kset({ 'n', 'o', 'x' }, 'T', 'F')
-kset({ 'n', 'o', 'x' }, 'Y', 'H')
-kset({ 'n', 'o', 'x' }, 'N', 'J')
-kset({ 'n', 'o', 'x' }, 'I', 'K')
-kset({ 'n', 'o', 'x' }, 'O', 'L')
-kset({ 'n', 'o', 'x' }, 'P', 'N')
-kset({ 'n', 'o', 'x' }, 'H', ':')
-kset({ 'n', 'o', 'x' }, ':', 'P')
+vim.keymap.set({ 'n', 'o', 'x' }, 'd', 'e')
+vim.keymap.set({ 'n', 'o', 'x' }, 'f', 'r')
+vim.keymap.set({ 'n', 'o', 'x' }, 'k', 't')
+vim.keymap.set({ 'n', 'o', 'x' }, 'j', 'y')
+vim.keymap.set({ 'n', 'o', 'x' }, 'r', 'i')
+vim.keymap.set({ 'n', 'o', 'x' }, 'l', 'o')
+vim.keymap.set({ 'n', 'o', 'x' }, 'e', 'd')
+vim.keymap.set({ 'n', 'o', 'x' }, 't', 'f')
+vim.keymap.set({ 'n', 'o', 'x' }, 'y', 'h')
+vim.keymap.set({ 'n', 'o', 'x' }, 'n', 'j')
+vim.keymap.set({ 'n', 'o', 'x' }, 'i', 'k')
+vim.keymap.set({ 'n', 'o', 'x' }, 'o', 'l')
+vim.keymap.set({ 'n', 'o', 'x' }, 'p', 'n')
+vim.keymap.set({ 'n', 'o', 'x' }, 'h', ';')
+vim.keymap.set({ 'n', 'o', 'x' }, ';', 'p')
+vim.keymap.set({ 'n', 'o', 'x' }, 'D', 'E')
+vim.keymap.set({ 'n', 'o', 'x' }, 'F', 'R')
+vim.keymap.set({ 'n', 'o', 'x' }, 'K', 'T')
+vim.keymap.set({ 'n', 'o', 'x' }, 'J', 'Y')
+vim.keymap.set({ 'n', 'o', 'x' }, 'R', 'I')
+vim.keymap.set({ 'n', 'o', 'x' }, 'L', 'O')
+vim.keymap.set({ 'n', 'o', 'x' }, 'E', 'D')
+vim.keymap.set({ 'n', 'o', 'x' }, 'T', 'F')
+vim.keymap.set({ 'n', 'o', 'x' }, 'Y', 'H')
+vim.keymap.set({ 'n', 'o', 'x' }, 'N', 'J')
+vim.keymap.set({ 'n', 'o', 'x' }, 'I', 'K')
+vim.keymap.set({ 'n', 'o', 'x' }, 'O', 'L')
+vim.keymap.set({ 'n', 'o', 'x' }, 'P', 'N')
+vim.keymap.set({ 'n', 'o', 'x' }, 'H', ':')
+vim.keymap.set({ 'n', 'o', 'x' }, ':', 'P')
 
 -- [[ Edit ]]
 -- 修改时不记录寄存器中
-kset({ 'n', 'v' }, 'c', '"_c')
-kset({ 'n', 'v' }, 'C', '"_C')
+vim.keymap.set({ 'n', 'v' }, 'c', '"_c')
+vim.keymap.set({ 'n', 'v' }, 'C', '"_C')
 
 -- 替换并记录当前内容，支持按.自动替换下一个
-kset('n', '<C-s>', 'g*Ncgn', { desc = 'Search & Replace' })
-kset('x', '<C-s>', function()
+vim.keymap.set('n', '<C-s>', 'g*Ncgn', { desc = 'Search & Replace' })
+vim.keymap.set('x', '<C-s>', function()
     -- 1. 复制当前选区内容到寄存器 v
     vim.cmd 'noau normal! "vy'
     -- 2. 获取内容并转义特殊字符
@@ -53,7 +51,7 @@ kset('x', '<C-s>', function()
 end, { desc = 'Search & Replace' })
 
 -- 删除的空行不记录寄存器中
-kset('n', 'ee', function()
+vim.keymap.set('n', 'ee', function()
     -- 获取将要删除的行数（如果没有输入数字如 3ee，则默认为 1）
     local count = vim.v.count1
     -- 获取当前光标所在的行号 (Neovim API 行号从 0 开始，所以要减 1)
@@ -73,24 +71,24 @@ kset('n', 'ee', function()
 end, { expr = true })
 
 -- [[ Copy & Paste]]
-kset({ 'n', 'v' }, '<leader>j', '"*y', { desc = 'System Copy' })
-kset({ 'n', 'v' }, '<leader>;', '"*p', { desc = 'System Paste' })
+vim.keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = 'System Copy' })
+vim.keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = 'System Paste' })
 
 -- [[ Buffer ]]
-kset('n', '<leader>q', '<cmd>qa!<cr>', { desc = 'Quit All' })
+vim.keymap.set('n', '<leader>q', '<cmd>qa!<cr>', { desc = 'Quit All' })
 
-kset('n', '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
-kset('n', '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
-kset('n', '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
-kset('n', '<leader>X', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
+vim.keymap.set('n', '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
+vim.keymap.set('n', '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
+vim.keymap.set('n', '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
+vim.keymap.set('n', '<leader>X', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
 
 -- [[ Tab ]]
-kset('n', '<leader>tN', '<cmd>tabnew<cr>', { desc = 'Tab New' })
-kset('n', '<leader>tq', '<cmd>tabclose<cr>', { desc = 'Tab Close' })
-kset('n', '<leader>tc', '<cmd>tabonly<cr>', { desc = 'Tab Only' })
-kset('n', '<leader>tn', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
-kset('n', '<leader>t<tab>', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
-kset('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = 'Tab Previous' })
+vim.keymap.set('n', '<leader>tN', '<cmd>tabnew<cr>', { desc = 'Tab New' })
+vim.keymap.set('n', '<leader>tq', '<cmd>tabclose<cr>', { desc = 'Tab Close' })
+vim.keymap.set('n', '<leader>tc', '<cmd>tabonly<cr>', { desc = 'Tab Only' })
+vim.keymap.set('n', '<leader>tn', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
+vim.keymap.set('n', '<leader>t<tab>', '<cmd>tabnext<cr>', { desc = 'Tab Next' })
+vim.keymap.set('n', '<leader>tp', '<cmd>tabprevious<cr>', { desc = 'Tab Previous' })
 
 -- [[ Window ]]
 local function smart_win_move(dir)
@@ -111,26 +109,26 @@ local function smart_win_move(dir)
         vim.cmd('wincmd ' .. dir) -- 再次切换
     end
 end
-kset('n', '<leader>wc', '<C-w>o', { desc = 'Window Only' })
-kset('n', '<leader>wq', '<C-w>c', { desc = 'Window Close' })
-kset('n', '<leader>ws', '<C-w>s', { desc = 'Window Split' })
-kset('n', '<leader>wv', '<C-w>v', { desc = 'Window VSplit' })
-kset('n', '<leader>wy', function() smart_win_move 'h' end, { desc = 'Switch to Left' })
-kset('n', '<leader>wn', function() smart_win_move 'j' end, { desc = 'Switch to Bottom' })
-kset('n', '<leader>wi', function() smart_win_move 'k' end, { desc = 'Switch to Up' })
-kset('n', '<leader>wo', function() smart_win_move 'l' end, { desc = 'Switch to Right' })
-kset('n', '<leader>wY', '<C-w>H', { desc = 'Window to Left' })
-kset('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
-kset('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
-kset('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
+vim.keymap.set('n', '<leader>wc', '<C-w>o', { desc = 'Window Only' })
+vim.keymap.set('n', '<leader>wq', '<C-w>c', { desc = 'Window Close' })
+vim.keymap.set('n', '<leader>ws', '<C-w>s', { desc = 'Window Split' })
+vim.keymap.set('n', '<leader>wv', '<C-w>v', { desc = 'Window VSplit' })
+vim.keymap.set('n', '<leader>wy', function() smart_win_move 'h' end, { desc = 'Switch to Left' })
+vim.keymap.set('n', '<leader>wn', function() smart_win_move 'j' end, { desc = 'Switch to Bottom' })
+vim.keymap.set('n', '<leader>wi', function() smart_win_move 'k' end, { desc = 'Switch to Up' })
+vim.keymap.set('n', '<leader>wo', function() smart_win_move 'l' end, { desc = 'Switch to Right' })
+vim.keymap.set('n', '<leader>wY', '<C-w>H', { desc = 'Window to Left' })
+vim.keymap.set('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
+vim.keymap.set('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
+vim.keymap.set('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
 
 -- [[ Fold ]]
-kset('n', 'zn', 'zj')
-kset('n', 'zi', 'zk')
+vim.keymap.set('n', 'zn', 'zj')
+vim.keymap.set('n', 'zi', 'zk')
 
 -- [[ Quickfix ]]
-kset('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix Next' })
-kset('n', '[q', '<cmd>cprev<cr>', { desc = 'Quickfix Previous' })
+vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix Next' })
+vim.keymap.set('n', '[q', '<cmd>cprev<cr>', { desc = 'Quickfix Previous' })
 -- 切换 Quickfix 窗口
 local function toggle_quickfix()
     local windows = vim.fn.getwininfo()
@@ -145,7 +143,7 @@ end
 vim.keymap.set('n', '<leader>c', toggle_quickfix, { desc = 'Quickfix' })
 
 -- [[ Terminal ]]
-kset('t', '<esc>', [[<C-\><C-n>]])
+vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
 -- 竖向分屏打开 terminal
 vim.keymap.set('n', '<leader>tv', function() vim.cmd 'vsplit | terminal' end, { desc = 'Vertical split Terminal' })
 
@@ -153,8 +151,10 @@ vim.keymap.set('n', '<leader>tv', function() vim.cmd 'vsplit | terminal' end, { 
 vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { desc = 'Horizontal split Terminal' })
 
 -- [[ Tree-Sitter ]]
+-- 删除默认的增量选择按键
+vim.keymap.del({ 'x', 'o' }, 'in')
 -- 增量选择
-kset({ 'x', 'n' }, '<cr>', function()
+vim.keymap.set({ 'x', 'n' }, '<cr>', function()
     if vim.treesitter.get_parser(nil, nil, { error = false }) then
         require('vim.treesitter._select').select_parent(vim.v.count1 or 1)
     else
@@ -162,10 +162,12 @@ kset({ 'x', 'n' }, '<cr>', function()
     end
 end, { desc = 'Incremental expand selection' })
 
-kset('x', '<bs>', function()
+vim.keymap.set('x', '<bs>', function()
     if vim.treesitter.get_parser(nil, nil, { error = false }) then
         require('vim.treesitter._select').select_child(vim.v.count1)
     else
         vim.lsp.buf.selection_range(-vim.v.count1)
     end
 end, { desc = 'Shrink selection' })
+
+-- [[ 其他 ]]
