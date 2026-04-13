@@ -1,5 +1,5 @@
 return {
-    name = 'Run Pytest',
+    name = 'pytest',
     builder = function(params)
         local args = { '-q' }
         if params.file then table.insert(args, params.file) end

@@ -17,7 +17,7 @@ return {
             { '<leader>g', group = '+Git' },
             { '<leader>o', group = '+Overseer' },
             { '<leader>t', group = '+Tab/Term' },
-            { '<leader>s', group = '+Surround/Swap' },
+            { '<leader>s', group = '+Surround/Swap/Session' },
             { '<leader>w', group = '+Window' },
         }
     end,

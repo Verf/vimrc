@@ -1,11 +1,11 @@
 return {
-    name = 'python',
+    name = 'uv run',
     builder = function()
         return {
-            cmd = { 'python' },
+            cmd = { 'uv', 'run' },
             args = { vim.fn.expand '%:p' },
             cwd = vim.fn.getcwd(),
-            name = 'python: ' .. vim.fn.expand '%:t',
+            name = 'uv run: ' .. vim.fn.expand '%:t',
             components = { 'default' },
         }
     end,
