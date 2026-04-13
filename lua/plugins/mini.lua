@@ -73,8 +73,10 @@ return {
 
         local minikeymap = require 'mini.keymap'
         minikeymap.setup()
-        minikeymap.map_multistep('i', '<Tab>', { 'minisnippets_next', 'minisnippets_expand', 'jump_after_close' })
-        minikeymap.map_multistep('i', '<S-Tab>', { 'minisnippets_prev', 'jump_before_open' })
+        minikeymap.map_multistep('i', '<Tab>', { 'minisnippets_expand', 'blink_next' })
+        minikeymap.map_multistep('i', '<S-Tab>', { 'minisnippets_prev', 'blink_prev' })
+        minikeymap.map_multistep('i', '<C-d>', { 'minisnippets_next', 'jump_after_close' })
+        minikeymap.map_multistep('i', '<C-u>', { 'minisnippets_prev', 'jump_before_open' })
         minikeymap.map_multistep('i', '<BS>', { 'minipairs_bs' })
 
         local snippets = require 'mini.snippets'
