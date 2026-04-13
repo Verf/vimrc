@@ -8,14 +8,6 @@ return {
             mode = { 'n', 'x' },
             desc = 'Close Buffer',
         },
-        {
-
-            'gw',
-            [[<CMD>lua MiniJump2d.start(MiniJump2d.builtin_opts.word_start)<CR>]],
-            mode = 'n',
-            desc = 'Jump Word',
-        },
-        { '-', [[<CMD>lua MiniFiles.open()<CR>]], mode = 'n', desc = 'Open Files' },
     },
     config = function()
         local kset = vim.keymap.set
@@ -33,10 +25,14 @@ return {
         require('mini.align').setup()
         require('mini.extra').setup()
         require('mini.notify').setup()
-        require('mini.operators').setup { replace = { prefix = 'gf' } }
         require('mini.pairs').setup()
         require('mini.trailspace').setup()
         require('mini.bufremove').setup()
+
+        require('mini.operators').setup {
+            sort = { prefix = '' },
+            replace = { prefix = 'gf' },
+        }
 
         require('mini.surround').setup {
             mappings = {
@@ -49,10 +45,6 @@ return {
                 suffix_last = 'l',
                 suffix_next = 'n',
             },
-        }
-
-        require('mini.jump').setup {
-            mappings = { forward = 't', backward = 'T', forward_till = 'k', backward_till = 'K', repeat_jump = '' },
         }
 
         require('mini.move').setup {

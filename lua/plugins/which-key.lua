@@ -6,6 +6,7 @@ return {
         delay = 250,
         icons = { mappings = false },
         triggers = { { '<auto>', mode = 'nso' } },
+        sort = { 'mod', 'alphanum' },
     },
     config = function(_, opts)
         local wk = require 'which-key'
