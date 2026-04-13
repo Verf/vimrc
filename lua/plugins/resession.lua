@@ -2,9 +2,9 @@ return {
     'stevearc/resession.nvim',
     lazy = false,
     keys = {
-        { 'n', '<leader>ss', function() require('resession').save() end, mode = 'n', desc = 'Session Save' },
-        { 'n', '<leader>sl', function() require('resession').load() end, mode = 'n', desc = 'Session Load' },
-        { 'n', '<leader>sd', function() require('resession').delete() end, mode = 'n', desc = 'Session Delete' },
+        { '<leader>ss', function() require('resession').save() end, mode = 'n', desc = 'Session Save' },
+        { '<leader>sl', function() require('resession').load() end, mode = 'n', desc = 'Session Load' },
+        { '<leader>sd', function() require('resession').delete() end, mode = 'n', desc = 'Session Delete' },
     },
     opts = {
         -- 为scope.nvim配置过滤器
@@ -18,7 +18,7 @@ return {
         -- 添加scope.nvim扩展
         extensions = { scope = {} },
     },
-    config = function(opts)
+    config = function(_, opts)
         local resession = require 'resession'
         resession.setup(opts)
 
@@ -33,7 +33,7 @@ return {
             nested = true,
         })
         vim.api.nvim_create_autocmd('VimLeavePre', {
-            callback = function() resession.save(vim.fn.getcwd(), { dir = 'dirsession', notify = false }) end,
+            callback = function() resession.save_tab(vim.fn.getcwd(), { dir = 'dirsession', notify = false }) end,
         })
         vim.api.nvim_create_autocmd('StdinReadPre', {
             callback = function() vim.g.using_stdin = true end,
