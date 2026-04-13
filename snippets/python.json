@@ -11,7 +11,7 @@
     },
     "if main": {
         "prefix": "ifm",
-        "body": ["if __name__ == '__main__':", "\t${0:main}"]
+        "body": ["if __name__ == '__main__':", "\t${0:main()}"]
     },
     "from import": {
         "prefix": "fi",

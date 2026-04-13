@@ -73,8 +73,8 @@ return {
 
         local minikeymap = require 'mini.keymap'
         minikeymap.setup()
-        minikeymap.map_multistep('i', '<Tab>', { 'minisnippets_expand', 'blink_next', 'jump_after_close' })
-        minikeymap.map_multistep('i', '<S-Tab>', { 'blink_prev', 'jump_before_open' })
+        minikeymap.map_multistep('i', '<Tab>', { 'minisnippets_next', 'minisnippets_expand', 'jump_after_close' })
+        minikeymap.map_multistep('i', '<S-Tab>', { 'minisnippets_prev', 'jump_before_open' })
         minikeymap.map_multistep('i', '<BS>', { 'minipairs_bs' })
 
         local snippets = require 'mini.snippets'
@@ -83,14 +83,13 @@ return {
                 snippets.gen_loader.from_file(vim.fn.stdpath 'config' .. '/snippets/global.json'),
                 snippets.gen_loader.from_lang { lang_patterns = { markdown_inline = { 'markdown.json' } } },
             },
-            mappings = { expand = '', jump_next = '<C-d>', jump_prev = '<C-u>', stop = '<C-c>' },
+            mappings = { expand = '', jump_next = '', jump_prev = '', stop = '<C-c>' },
             expand = {
                 match = function(snips)
-                    -- 必须同时覆盖 pattern_exact 和 pattern_fuzzy
-                    -- return 会自动将 default_match 的“匹配结果”和“删除范围”两个返回值都传递给插件
+                    -- 确保仅会在精确匹配prefix时展开snippet
                     return snippets.default_match(snips, {
                         pattern_exact_boundary = '[^%w_]?',
-                        pattern_fuzzy = '[%w_]+',
+                        pattern_fuzzy = '',
                     })
                 end,
             },
