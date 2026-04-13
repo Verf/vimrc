@@ -81,7 +81,7 @@ return {
             desc = 'Next Quote',
         },
         {
-            'c',
+            'B',
             function() require('various-textobjs').toNextClosingBracket() end,
             mode = { 'o', 'x' },
             desc = 'Next Bracket',
