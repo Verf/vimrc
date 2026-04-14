@@ -99,6 +99,7 @@ return {
 
         -- 退出Insert模式时自动停止snippet状态
         vim.api.nvim_create_autocmd('InsertLeave', {
+            group = vim.api.nvim_create_augroup('MyMiniGroup', { clear = true }),
             callback = function()
                 if snippets.session.get() then
                     vim.schedule(function()

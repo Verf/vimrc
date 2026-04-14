@@ -1,6 +1,9 @@
+local my_group = vim.api.nvim_create_augroup('MyAutoCmdGroup', { clear = true })
+
 -- grep或make后自动打开quickfix
 vim.api.nvim_create_autocmd('QuickFixCmdPost', {
     pattern = '[^l]*', -- 匹配 grep, make 等（排除 lgrep 等局部列表命令）
+    group = my_group,
     callback = function()
         vim.cmd 'cwindow' -- 有结果才打开，没结果不打开
     end,
@@ -8,6 +11,7 @@ vim.api.nvim_create_autocmd('QuickFixCmdPost', {
 
 -- 在当前注释中按o插入新行后不自动添加注释符，在 FileType 时调用以自动覆盖文件类似特定的配置
 vim.api.nvim_create_autocmd('FileType', {
+    group = my_group,
     callback = function() vim.cmd 'setlocal formatoptions-=c formatoptions-=o' end,
     desc = "Proper 'formatoptions'",
 })
@@ -36,6 +40,7 @@ end
 
 -- 失去焦点时自动保存
 vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave' }, {
+    group = my_group,
     callback = function()
         local bufnr = vim.api.nvim_get_current_buf()
         save_buffer(bufnr)
@@ -45,6 +50,7 @@ vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave' }, {
 
 -- 退出neovim时自动保存
 vim.api.nvim_create_autocmd('QuitPre', {
+    group = my_group,
     callback = function()
         -- 遍历所有 buffer
         for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
