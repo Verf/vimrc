@@ -149,25 +149,3 @@ vim.keymap.set('n', '<leader>tv', function() vim.cmd 'vsplit | terminal' end, { 
 
 -- 水平分屏打开 terminal
 vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { desc = 'Horizontal split Terminal' })
-
--- [[ Tree-Sitter ]]
--- 删除默认的增量选择按键
-vim.keymap.del({ 'x', 'o' }, 'in')
--- 增量选择
-vim.keymap.set({ 'x', 'n' }, '<cr>', function()
-    if vim.treesitter.get_parser(nil, nil, { error = false }) then
-        require('vim.treesitter._select').select_parent(vim.v.count1 or 1)
-    else
-        vim.lsp.buf.selection_range(vim.v.count1)
-    end
-end, { desc = 'Incremental expand selection' })
-
-vim.keymap.set('x', '<bs>', function()
-    if vim.treesitter.get_parser(nil, nil, { error = false }) then
-        require('vim.treesitter._select').select_child(vim.v.count1)
-    else
-        vim.lsp.buf.selection_range(-vim.v.count1)
-    end
-end, { desc = 'Shrink selection' })
-
--- [[ 其他 ]]
