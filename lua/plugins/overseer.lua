@@ -5,17 +5,27 @@ return {
         { '<leader>or', '<cmd>OverseerRun<cr>', desc = 'Run Task' },
         { '<leader>ot', '<cmd>OverseerToggle<cr>', desc = 'Toggle Task List' },
     },
-    opts = {
-        strategy = 'terminal',
-        -- VSCode-like
-        component_aliases = {
-            default = {
-                'on_exit_set_status',
-                'on_complete_notify',
-                { 'on_complete_dispose', statuses = { 'SUCCESS', 'FAILURE' } },
-                'on_output_parse',
-                'on_result_diagnostics',
+    config = function()
+        require('overseer').setup {
+            strategy = 'terminal',
+            task_list = {
+                direction = 'left',
+
+                min_width = { 20, 0.15 },
+                max_width = { 35, 0.25 },
+
+                render = require('overseer.render').format_standard,
             },
-        },
-    },
+            -- VSCode-like
+            component_aliases = {
+                default = {
+                    'on_exit_set_status',
+                    'on_complete_notify',
+                    { 'on_complete_dispose', statuses = { 'SUCCESS', 'FAILURE' } },
+                    'on_output_parse',
+                    'on_result_diagnostics',
+                },
+            },
+        }
+    end,
 }

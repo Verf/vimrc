@@ -16,7 +16,7 @@ return {
             return true
         end,
         -- 添加scope.nvim扩展
-        extensions = { scope = {} },
+        extensions = { scope = {}, overseer = {} },
     },
     config = function(_, opts)
         local resession = require 'resession'
