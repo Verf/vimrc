@@ -126,26 +126,9 @@ vim.keymap.set('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
 vim.keymap.set('n', 'zn', 'zj')
 vim.keymap.set('n', 'zi', 'zk')
 
--- [[ Quickfix ]]
-vim.keymap.set('n', ']q', '<cmd>cnext<cr>', { desc = 'Quickfix Next' })
-vim.keymap.set('n', '[q', '<cmd>cprev<cr>', { desc = 'Quickfix Previous' })
--- 切换 Quickfix 窗口
-local function toggle_quickfix()
-    local windows = vim.fn.getwininfo()
-    for _, win in ipairs(windows) do
-        if win.quickfix == 1 then
-            vim.cmd 'cclose'
-            return
-        end
-    end
-    vim.cmd 'copen'
-end
-vim.keymap.set('n', '<leader>c', toggle_quickfix, { desc = 'Quickfix' })
-
 -- [[ Terminal ]]
 vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
 -- 竖向分屏打开 terminal
 vim.keymap.set('n', '<leader>tv', function() vim.cmd 'vsplit | terminal' end, { desc = 'Vertical split Terminal' })
-
 -- 水平分屏打开 terminal
 vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { desc = 'Horizontal split Terminal' })
