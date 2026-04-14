@@ -163,16 +163,52 @@ return {
             end
         end
         local ts_start = function(ev) vim.treesitter.start(ev.buf) end
-        vim.api.nvim_create_autocmd('BufReadPost', {
-            pattern = '*',
+
+        local ts_group = vim.api.nvim_create_augroup('Tree-Sitter', { clear = true })
+        -- 为buffer自动启动tree-sitter
+        vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
+            group = ts_group,
             callback = function(ev)
-                vim.treesitter.start(ev.buf)
-                vim.wo.foldmethod = 'expr'
-                vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-                vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                local buftype = vim.bo[ev.buf].buftype
+                local filetype = vim.bo[ev.buf].filetype
+                -- 跳过特殊 buffer
+                if buftype ~= '' or filetype == '' or filetype == 'qf' or filetype == 'help' then return end
+                -- 仅为支持的buffer开启tree-sitter特性
+                if vim.tbl_contains(languages, filetype) then
+                    vim.treesitter.start(ev.buf)
+                    vim.wo.foldmethod = 'expr'
+                    vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                end
             end,
-            desc = 'Start Tree-sitter',
         })
+
+        -- 设置tree-sitter快捷键
+        vim.api.nvim_create_autocmd('FileType', {
+            group = ts_group,
+            pattern = languages,
+            callback = function(ev)
+                local buftype = vim.bo[ev.buf].buftype
+                -- 跳过特殊 buffer
+                if buftype ~= '' or filetype == '' or filetype == 'qf' or filetype == 'help' then return end
+                -- 增量选择快捷键
+                vim.keymap.set({ 'n', 'x' }, '<CR>', function()
+                    if vim.treesitter.get_parser(ev.buf, nil, { error = false }) then
+                        require('vim.treesitter._select').select_parent(vim.v.count1 or 1)
+                    else
+                        vim.lsp.buf.selection_range(vim.v.count1)
+                    end
+                end, { buffer = ev.buf, desc = 'Incremental expand selection', silent = true })
+                vim.keymap.set('x', '<bs>', function()
+                    if vim.treesitter.get_parser(nil, nil, { error = false }) then
+                        require('vim.treesitter._select').select_child(vim.v.count1)
+                    else
+                        vim.lsp.buf.selection_range(-vim.v.count1)
+                    end
+                end, { buffer = ev.buf, desc = 'Shrink selection', silent = true })
+            end,
+        })
+
         -- 配置textobjects
         require('nvim-treesitter-textobjects').setup { move = { set_jumps = true } }
     end,
