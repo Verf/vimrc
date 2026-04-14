@@ -67,6 +67,7 @@ return {
 
         -- 退出插入模式时自动关闭自动补全菜单
         vim.api.nvim_create_autocmd('InsertLeave', {
+            group = vim.api.nvim_create_augroup('MyBlinkGroup', { clear = true }),
             callback = function()
                 vim.schedule(function() require('blink.cmp').cancel() end)
             end,

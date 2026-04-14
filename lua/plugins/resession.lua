@@ -22,7 +22,9 @@ return {
         local resession = require 'resession'
         resession.setup(opts)
 
+        local rs_group = vim.api.nvim_create_augroup('MyResessionGroup', { clear = true })
         vim.api.nvim_create_autocmd('VimEnter', {
+            group = rs_group,
             callback = function()
                 -- 仅当neovim不加参数或stdin输入启动时恢复session
                 if vim.fn.argc(-1) == 0 and not vim.g.using_stdin then
@@ -33,9 +35,11 @@ return {
             nested = true,
         })
         vim.api.nvim_create_autocmd('VimLeavePre', {
+            group = rs_group,
             callback = function() resession.save_tab(vim.fn.getcwd(), { dir = 'dirsession', notify = false }) end,
         })
         vim.api.nvim_create_autocmd('StdinReadPre', {
+            group = rs_group,
             callback = function() vim.g.using_stdin = true end,
         })
     end,

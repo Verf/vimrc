@@ -51,7 +51,7 @@ return {
 
         -- Lsp快捷键使用telescope，需要在LspAttach时绑定
         vim.api.nvim_create_autocmd('LspAttach', {
-            group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
+            group = vim.api.nvim_create_augroup('MyTelescopeGroup', { clear = true }),
             callback = function(event)
                 local buf = event.buf
 

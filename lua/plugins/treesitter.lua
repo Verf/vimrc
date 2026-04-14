@@ -155,16 +155,14 @@ return {
         local to_install = vim.tbl_filter(isnt_installed, languages)
         if #to_install > 0 then require('nvim-treesitter').install(to_install) end
 
-        -- 使用autocmd自动根据filetypes开启Tree-sitter
         local filetypes = {}
         for _, lang in ipairs(languages) do
             for _, ft in ipairs(vim.treesitter.language.get_filetypes(lang)) do
                 table.insert(filetypes, ft)
             end
         end
-        local ts_start = function(ev) vim.treesitter.start(ev.buf) end
 
-        local ts_group = vim.api.nvim_create_augroup('Tree-Sitter', { clear = true })
+        local ts_group = vim.api.nvim_create_augroup('MyTreeSitterGroup', { clear = true })
         -- 为buffer自动启动tree-sitter
         vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
             group = ts_group,
@@ -186,7 +184,7 @@ return {
         -- 设置tree-sitter快捷键
         vim.api.nvim_create_autocmd('FileType', {
             group = ts_group,
-            pattern = languages,
+            pattern = filetypes,
             callback = function(ev)
                 local buftype = vim.bo[ev.buf].buftype
                 -- 跳过特殊 buffer
