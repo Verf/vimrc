@@ -2,7 +2,6 @@ return {
     'neovim/nvim-lspconfig',
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
-        local kset = vim.keymap.set
         vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust_analyzer', 'gopls', 'zls', 'nushell' }
 
         vim.api.nvim_create_autocmd('LspAttach', {
