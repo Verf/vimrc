@@ -139,6 +139,7 @@ return {
             'markdown_inline',
             'nu',
             'python',
+            'regex',
             'rust',
             'sql',
             'toml',
