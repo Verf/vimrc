@@ -18,7 +18,7 @@ return {
             { '<leader>o', group = '+Overseer' },
             { '<leader>t', group = '+Tab/Term' },
             { '<leader>s', group = '+Surround/Swap/Session' },
-            { '<leader>w', group = '+Window' },
+            { '<leader>w', group = '+Window', expand = function() return require('which-key.extras').expand.win() end },
         }
     end,
 }
