@@ -4,7 +4,7 @@ return {
     opts = {
         labels = 'sdfghjkqwtyuiopzxcvbnm',
         modes = {
-            search = { enabled = true, highlight = { backdrop = true } },
+            search = { enabled = true },
             char = {
                 enabled = true,
                 keys = { f = 't', F = 'T', t = 'k', T = 'K' }, -- 调整为Norman布局按键
