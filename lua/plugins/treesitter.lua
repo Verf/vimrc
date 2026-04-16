@@ -126,29 +126,43 @@ return {
     },
     config = function(_, opts)
         local languages = {
-            'bash',
-            'css',
-            'diff',
-            'elvish',
-            'go',
-            'html',
-            'java',
-            'javascript',
-            'json',
+            -- neovim basic
+            'c',
             'lua',
-            'markdown',
-            'markdown_inline',
-            'nu',
-            'python',
-            'regex',
-            'rust',
-            'sql',
-            'toml',
-            'typescript',
             'vim',
             'vimdoc',
+            'query',
+            -- config
+            'xml',
+            'json',
             'yaml',
-            'zig',
+            'toml',
+            -- git
+            'diff',
+            'gitcommit',
+            -- text & markdown
+            'regex',
+            'markdown',
+            'markdown_inline',
+            -- front & vue
+            'vue',
+            'html',
+            'css',
+            'javascript',
+            'typescript',
+            'tsx',
+            'scss',
+            -- backend
+            'java',
+            'javadoc',
+            'properties',
+            -- python
+            'python',
+            'rst',
+            -- shell & sql
+            'nu',
+            'bash',
+            'sql',
         }
         -- 确保parser均已安装
         local isnt_installed = function(lang)
