@@ -192,7 +192,7 @@ return {
                 -- 跳过特殊 buffer
                 if buftype ~= '' or filetype == '' or filetype == 'qf' or filetype == 'help' then return end
                 -- 删除内置的增量选择快捷键
-                vim.keymap.del({ 'x', 'o' }, 'in')
+                pcall(vim.keymap.del, { 'x', 'o' }, 'in')
                 -- 增量选择快捷键
                 vim.keymap.set({ 'n', 'x' }, '<CR>', function()
                     if vim.treesitter.get_parser(ev.buf, nil, { error = false }) then
