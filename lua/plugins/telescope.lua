@@ -1,11 +1,30 @@
 return {
     'nvim-telescope/telescope.nvim',
+    enabled = false,
     dependencies = {
         'nvim-lua/plenary.nvim',
         'nvim-telescope/telescope-ui-select.nvim',
         {
             'nvim-telescope/telescope-fzf-native.nvim',
             build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release ; cmake --build build --config Release --target install',
+        },
+    },
+    keys = {
+        { '<leader>/', function() require('telescope.builtin').live_grep() end, mode = 'n', desc = 'Live Grep' },
+        { '<leader>ff', function() require('telescope.builtin').find_files() end, mode = 'n', desc = 'Find Files' },
+        {
+            '<leader>fd',
+            function() require('telescope.builtin').diagnostics() end,
+            mode = 'n',
+            desc = 'Find Diagnostics',
+        },
+        { '<leader>fh', function() require('telescope.builtin').oldfiles() end, mode = 'n', desc = 'Find History' },
+        { '<leader>fb', function() require('telescope.builtin').buffers() end, mode = 'n', desc = 'Find buffers' },
+        {
+            'gw',
+            function() require('telescope.builtin').grep_string() end,
+            mode = { 'n', 'v' },
+            desc = 'Find Current Word',
         },
     },
     event = 'VimEnter',
@@ -40,14 +59,6 @@ return {
         -- 启用telescope插件
         pcall(require('telescope').load_extension, 'fzf')
         pcall(require('telescope').load_extension, 'ui-select')
-
-        local builtin = require 'telescope.builtin'
-        vim.keymap.set('n', '<leader>/', builtin.live_grep, { desc = 'Live Grep' })
-        vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Find Files' })
-        vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = 'Find Diagnostics' })
-        vim.keymap.set('n', '<leader>fh', builtin.oldfiles, { desc = 'Find History' })
-        vim.keymap.set('n', '<leader>fb', builtin.buffers, { desc = 'Find buffers' })
-        vim.keymap.set({ 'n', 'v' }, 'gw', builtin.grep_string, { desc = 'Find Current Word' })
 
         -- Lsp快捷键使用telescope，需要在LspAttach时绑定
         vim.api.nvim_create_autocmd('LspAttach', {
