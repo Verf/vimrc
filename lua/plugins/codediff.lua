@@ -1,6 +1,9 @@
 return {
     'esmuellert/codediff.nvim',
     cmd = 'CodeDiff',
+    keys = {
+        { '<leader>gd', [[:CodeDiff ]], mode = 'n', desc = 'Diff' },
+    },
     opts = {
         keymaps = {
             view = {
