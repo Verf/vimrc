@@ -61,3 +61,10 @@ vim.api.nvim_create_autocmd('QuitPre', {
     end,
     desc = 'Auto save all valid buffers when leave neovim',
 })
+
+-- help / man 默认竖向分屏
+vim.api.nvim_create_autocmd('FileType', {
+    group = my_group,
+    pattern = { 'help', 'man' },
+    command = 'wincmd L',
+})
