@@ -139,7 +139,6 @@ return {
             'toml',
             -- git
             'diff',
-            'gitcommit',
             -- text & markdown
             'regex',
             'markdown',

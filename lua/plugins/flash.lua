@@ -13,7 +13,7 @@ return {
         },
     },
     keys = {
-        { 'gs', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Jump' },
+        { 's', mode = { 'n', 'x', 'o' }, function() require('flash').jump() end, desc = 'Jump' },
         {
             'gt',
             mode = { 'n', 'x', 'o' },

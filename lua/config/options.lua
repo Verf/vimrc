@@ -45,7 +45,7 @@ vim.opt.hlsearch = false -- 禁用搜索结果高亮，避免视觉干扰
 vim.opt.showtabline = 2 -- 总是显示标签页栏
 
 vim.opt.mouse = 'a' -- 在所有模式下（普通、可视、插入等）启用鼠标支持
-vim.opt.splitkeep = 'screen' -- 分屏时保持相对位置更稳定
+vim.opt.splitkeep = 'cursor' -- 分屏时保持相对位置更稳定
 vim.opt.splitright = true -- 竖向分屏时将新窗口放在右边
 vim.opt.switchbuf = 'usetab' -- 执行特定跳转时优先复用已有标签页，若没有则新建标签页打开
 vim.opt.virtualedit = 'block' -- 启用虚拟编辑，允许光标在块选择模式下移动到没有实际字符的列
