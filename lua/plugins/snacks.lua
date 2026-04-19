@@ -19,7 +19,9 @@ return {
         explorer = { enabled = false },
         indent = { enabled = true },
         input = { enabled = false },
-        picker = { enabled = true },
+        picker = {
+            layout = { preset = 'sidebar' },
+        },
         notifier = { enabled = false },
         quickfile = { enabled = true },
         scope = { enabled = false },
