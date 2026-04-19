@@ -20,7 +20,12 @@ return {
         indent = { enabled = true },
         input = { enabled = false },
         picker = {
-            layout = { preset = 'sidebar' },
+            layout = {
+                preset = 'ivy_split',
+                layout = {
+                    height = 0.25,
+                },
+            },
         },
         notifier = { enabled = false },
         quickfile = { enabled = true },
