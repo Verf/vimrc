@@ -31,6 +31,7 @@ vim.keymap.set({ 'n', 'o', 'x' }, 'H', ':')
 vim.keymap.set({ 'n', 'o', 'x' }, ':', 'P')
 
 -- [[ Edit ]]
+vim.keymap.set('n', 'gk', vim.lsp.buf.hover, { desc = 'Show Doc' })
 -- 修改时不记录寄存器中
 vim.keymap.set({ 'n', 'v' }, 'c', '"_c')
 vim.keymap.set({ 'n', 'v' }, 'C', '"_C')
