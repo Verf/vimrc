@@ -3,19 +3,19 @@ return {
     lazy = false,
     keys = {
         {
-            '<leader>ss',
+            '<leader>Ss',
             function() require('resession').save_tab(vim.fn.getcwd(), { dir = 'dirsession', notify = true }) end,
             mode = 'n',
             desc = 'Session Save',
         },
         {
-            '<leader>sl',
+            '<leader>Sl',
             function() require('resession').load(vim.fn.getcwd(), { dir = 'dirsession', silence_errors = true }) end,
             mode = 'n',
             desc = 'Session Load',
         },
         {
-            '<leader>sd',
+            '<leader>Sd',
             function() require('resession').delete(vim.fn.getcwd(), { dir = 'dirsession', notify = true }) end,
             mode = 'n',
             desc = 'Session Delete',

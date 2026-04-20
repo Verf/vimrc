@@ -100,13 +100,13 @@ return {
             desc = 'Previous Conditional',
         },
         {
-            '<leader>sn',
+            'gn',
             function() require('nvim-treesitter-textobjects.swap').swap_next '@parameter.inner' end,
             mode = 'n',
             desc = 'Swap parameter to next',
         },
         {
-            '<leader>sp',
+            'gp',
             function() require('nvim-treesitter-textobjects.swap').swap_previous '@parameter.outer' end,
             mode = 'n',
             desc = 'Swap parameter to previous',
