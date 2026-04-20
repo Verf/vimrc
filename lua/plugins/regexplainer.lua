@@ -1,5 +1,5 @@
 return {
-    'https://github.com/bennypowers/nvim-regexplainer',
-    dependencies = { 'https://github.com/edluffy/hologram.nvim' },
+    'bennypowers/nvim-regexplainer',
+    dependencies = { 'edluffy/hologram.nvim' },
     opts = {},
 }

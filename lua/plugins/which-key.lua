@@ -13,6 +13,7 @@ return {
         wk.setup(opts)
         wk.add {
             { 'gr', group = '+Lsp' },
+            { '<leader>d', group = '+Debug' },
             { '<leader>f', group = '+Find' },
             { '<leader>g', group = '+Git' },
             { '<leader>o', group = '+Overseer' },

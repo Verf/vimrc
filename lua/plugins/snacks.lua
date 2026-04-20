@@ -35,6 +35,8 @@ return {
         words = { enabled = true },
     },
     init = function()
+        -- 将Snacks.debug设置为默认的print
+        vim.print = function(...) Snacks.debug.inspect(...) end
         -- Lsp快捷键使用telescope，需要在LspAttach时绑定
         vim.api.nvim_create_autocmd('LspAttach', {
             group = vim.api.nvim_create_augroup('MySnacksGroup', { clear = true }),
