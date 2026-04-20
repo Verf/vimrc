@@ -68,3 +68,25 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = { 'help', 'man' },
     command = 'wincmd L',
 })
+
+-- 启动:terminal时自动进入输入模式
+vim.api.nvim_create_autocmd('TermOpen', {
+    group = my_group,
+    callback = function()
+        vim.cmd 'startinsert'
+        -- 关闭行号等无关显示项
+        vim.opt_local.number = false
+        vim.opt_local.relativenumber = false
+        vim.opt_local.signcolumn = 'no'
+    end,
+})
+
+-- shell进程退出时自动关闭buffer
+vim.api.nvim_create_autocmd('TermClose', {
+    group = my_group,
+    callback = function()
+        -- 仅在正常退出(exit_code == 0)时自动关闭
+        -- 如果是报错崩溃退出则能看到错误信息
+        if vim.v.event.status == 0 then vim.api.nvim_buf_delete(0, { force = true }) end
+    end,
+})

@@ -13,12 +13,8 @@ return {
         wk.setup(opts)
         wk.add {
             { 'gr', group = '+Lsp' },
-            { '<leader>d', group = '+Debug' },
-            { '<leader>f', group = '+Find' },
-            { '<leader>g', group = '+Git' },
-            { '<leader>o', group = '+Overseer' },
             { '<leader>t', group = '+Tab/Term' },
-            { '<leader>s', group = '+Surround/Swap/Session' },
+            { '<leader>S', group = '+Session' },
             { '<leader>w', group = '+Window', expand = function() return require('which-key.extras').expand.win() end },
         }
     end,
