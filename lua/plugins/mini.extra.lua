@@ -7,6 +7,10 @@ return {
         { '<leader>d', function() MiniExtra.pickers.diagnostic() end, mode = 'n', desc = 'Diagnostics' },
         { '<leader>e', function() MiniExtra.pickers.explorer() end, mode = 'n', desc = 'Explorer' },
         { '<leader>s', function() MiniExtra.pickers.lsp { scope = 'workspace_symbol' } end, mode = 'n', desc = 'Symbols' },
+        { '<leader>gfs', function() MiniExtra.pickers.git_hunks { path = '%', scope = 'staged' } end, mode = 'n', desc = 'staged' },
+        { '<leader>gfS', function() MiniExtra.pickers.git_hunks { scope = 'staged' } end, mode = 'n', desc = 'staged' },
+        { '<leader>gfu', function() MiniExtra.pickers.git_hunks { path = '%', scope = 'unstaged' } end, mode = 'n', desc = 'Unstaged' },
+        { '<leader>gfU', function() MiniExtra.pickers.git_hunks { scope = 'unstaged' } end, mode = 'n', desc = 'Unstaged' },
     },
     opts = {},
 }
