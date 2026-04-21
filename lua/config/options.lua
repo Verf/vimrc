@@ -27,6 +27,7 @@ end
 vim.opt.confirm = true -- 在执行需要确认的操作时（如退出未保存的文件），弹出对话框进行确认
 vim.opt.autowrite = true -- 自动保存。在执行某些命令（如 :make）或切换缓冲区时自动写入文件
 vim.opt.autoindent = true -- 开启自动缩进
+vim.opt.cindent = true -- C风格缩进
 vim.opt.cursorline = true -- 高亮显示光标所在的行
 vim.opt.ignorecase = true -- 搜索时忽略大小写
 vim.opt.infercase = true -- 自动补充时忽略大小写
