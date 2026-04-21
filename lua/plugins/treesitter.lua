@@ -41,6 +41,11 @@ return {
         local to_install = vim.tbl_filter(isnt_installed, languages)
         if #to_install > 0 then require('nvim-treesitter').install(to_install) end
 
+        -- 插入Neovim自带的tree-sitter
+        for _, lang in ipairs { 'c', 'lua', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' } do
+            table.insert(languages, lang)
+        end
+
         local filetypes = {}
         for _, lang in ipairs(languages) do
             for _, ft in ipairs(vim.treesitter.language.get_filetypes(lang)) do
@@ -57,7 +62,7 @@ return {
                 -- 跳过特殊 buffer
                 if buftype ~= '' or filetype == '' or filetype == 'qf' or filetype == 'help' then return end
                 -- 仅为支持的buffer开启tree-sitter特性
-                if vim.tbl_contains(languages, filetype) then
+                if vim.tbl_contains(filetypes, filetype) then
                     vim.treesitter.start(ev.buf)
                     vim.wo.foldmethod = 'expr'
                     vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
