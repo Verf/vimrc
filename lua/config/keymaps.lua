@@ -78,10 +78,10 @@ vim.keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = 'System Paste' })
 -- [[ Buffer ]]
 vim.keymap.set('n', '<leader>q', '<cmd>qa!<cr>', { desc = 'Quit All' })
 
-vim.keymap.set('n', '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
-vim.keymap.set('n', '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
-vim.keymap.set('n', '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
-vim.keymap.set('n', '<leader>X', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
+vim.keymap.set({ 'n', 'x' }, '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
+vim.keymap.set({ 'n', 'x' }, '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
+vim.keymap.set({ 'n', 'x' }, '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
+vim.keymap.set({ 'n', 'x' }, '<leader>X', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
 
 -- [[ Tab ]]
 vim.keymap.set('n', '<leader>tN', '<cmd>tabnew<cr>', { desc = 'Tab New' })
@@ -133,3 +133,7 @@ vim.keymap.set('t', '<esc>', [[<C-\><C-n>]])
 vim.keymap.set('n', '<leader>tv', function() vim.cmd 'vsplit | terminal' end, { desc = 'Vertical split Terminal' })
 -- 水平分屏打开 terminal
 vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { desc = 'Horizontal split Terminal' })
+
+-- [[ Others ]]
+-- 删除内置的增量选择快捷键
+pcall(vim.keymap.del, { 'x', 'o' }, 'in')

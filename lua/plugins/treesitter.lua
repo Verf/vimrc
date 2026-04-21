@@ -3,127 +3,6 @@ return {
     build = ':TSUpdate',
     branch = 'main',
     lazy = false,
-    dependencies = {
-        'nvim-treesitter/nvim-treesitter-textobjects',
-    },
-    init = function()
-        -- nvim-treesitter-textobjects要求关闭所有内置filetype以避免冲突
-        vim.g.no_plugin_maps = true
-    end,
-    keys = {
-        {
-            'af',
-            function()
-                require('nvim-treesitter-textobjects.select').select_textobject('@function.outer', 'textobjects')
-            end,
-            mode = { 'x', 'o' },
-            desc = 'Outer Function',
-        },
-        {
-            'rf',
-            function()
-                require('nvim-treesitter-textobjects.select').select_textobject('@function.inner', 'textobjects')
-            end,
-            mode = { 'x', 'o' },
-            desc = 'Inner Function',
-        },
-        {
-            'ac',
-            function() require('nvim-treesitter-textobjects.select').select_textobject('@class.outer', 'textobjects') end,
-            mode = { 'x', 'o' },
-            desc = 'Outer Class',
-        },
-        {
-            'rc',
-            function() require('nvim-treesitter-textobjects.select').select_textobject('@class.inner', 'textobjects') end,
-            mode = { 'x', 'o' },
-            desc = 'Inner Class',
-        },
-        {
-            'as',
-            function() require('nvim-treesitter-textobjects.select').select_textobject('@local.scope', 'locals') end,
-            mode = { 'x', 'o' },
-            desc = 'Outer Scope',
-        },
-        {
-            ']f',
-            function() require('nvim-treesitter-textobjects.move').goto_next_start('@function.outer', 'textobjects') end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Next Function',
-        },
-        {
-            '[f',
-            function()
-                require('nvim-treesitter-textobjects.move').goto_previous_start('@function.outer', 'textobjects')
-            end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Previous Function',
-        },
-        {
-            ']c',
-            function() require('nvim-treesitter-textobjects.move').goto_next_start('@class.outer', 'textobjects') end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Next Class',
-        },
-        {
-            '[c',
-            function() require('nvim-treesitter-textobjects.move').goto_previous_start('@class.outer', 'textobjects') end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Previous Class',
-        },
-        {
-            ']p',
-            function() require('nvim-treesitter-textobjects.move').goto_next_start('@parameter.outer', 'textobjects') end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Next Parameter',
-        },
-        {
-            '[p',
-            function()
-                require('nvim-treesitter-textobjects.move').goto_previous_start('@parameter.outer', 'textobjects')
-            end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Previous Parameter',
-        },
-        {
-            ']i',
-            function() require('nvim-treesitter-textobjects.move').goto_next_start('@conditional.outer', 'textobjects') end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Next Conditional',
-        },
-        {
-            '[i',
-            function()
-                require('nvim-treesitter-textobjects.move').goto_previous_start('@conditional.outer', 'textobjects')
-            end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Previous Conditional',
-        },
-        {
-            'gn',
-            function() require('nvim-treesitter-textobjects.swap').swap_next '@parameter.inner' end,
-            mode = 'n',
-            desc = 'Swap parameter to next',
-        },
-        {
-            'gp',
-            function() require('nvim-treesitter-textobjects.swap').swap_previous '@parameter.outer' end,
-            mode = 'n',
-            desc = 'Swap parameter to previous',
-        },
-        {
-            'h',
-            function() require('nvim-treesitter-textobjects.repeatable_move').repeat_last_move_next() end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Repeat last move next',
-        },
-        {
-            ',',
-            function() require('nvim-treesitter-textobjects.repeatable_move').repeat_last_move_previous() end,
-            mode = { 'n', 'x', 'o' },
-            desc = 'Repeat last move previous',
-        },
-    },
     config = function(_, opts)
         local languages = {
             -- neovim basic
@@ -203,8 +82,6 @@ return {
                 local buftype = vim.bo[ev.buf].buftype
                 -- 跳过特殊 buffer
                 if buftype ~= '' or filetype == '' or filetype == 'qf' or filetype == 'help' then return end
-                -- 删除内置的增量选择快捷键
-                pcall(vim.keymap.del, { 'x', 'o' }, 'in')
                 -- 增量选择快捷键
                 vim.keymap.set({ 'n', 'x' }, '<CR>', function()
                     if vim.treesitter.get_parser(ev.buf, nil, { error = false }) then
@@ -222,8 +99,5 @@ return {
                 end, { buffer = ev.buf, desc = 'Shrink selection', silent = true })
             end,
         })
-
-        -- 配置textobjects
-        require('nvim-treesitter-textobjects').setup { move = { set_jumps = true } }
     end,
 }
