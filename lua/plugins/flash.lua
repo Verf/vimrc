@@ -5,7 +5,6 @@ return {
         labels = 'sdfghjkqwtyuiopzxcvbnm',
         label = { uppercase = false },
         modes = {
-            search = { enabled = true },
             char = {
                 enabled = true,
                 keys = { f = 't', F = 'T', t = 'k', T = 'K' }, -- 调整为Norman布局按键

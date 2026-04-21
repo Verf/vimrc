@@ -1,5 +1,6 @@
 return {
     'nvim-mini/mini.hipatterns',
+    version = '*',
     lazy = false,
     dependencies = { 'nvim-mini/mini.extra' },
     config = function()

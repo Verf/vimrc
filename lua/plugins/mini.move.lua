@@ -1,5 +1,6 @@
 return {
     'nvim-mini/mini.move',
+    version = '*',
     keys = { '<M-y>', '<M-o>', '<M-n>', '<M-i>', '<M-y>', '<M-o>', '<M-n>', '<M-i>' },
     opts = {
         mappings = {

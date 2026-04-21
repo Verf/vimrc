@@ -1,5 +1,6 @@
 return {
     'nvim-mini/mini.surround',
+    version = '*',
     keys = { 'ma', 'me', 'mc' },
     opts = {
         mappings = {

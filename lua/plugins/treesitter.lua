@@ -177,10 +177,9 @@ return {
             end
         end
 
-        local ts_group = vim.api.nvim_create_augroup('MyTreeSitterGroup', { clear = true })
         -- 为buffer自动启动tree-sitter
         vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
-            group = ts_group,
+            group = _G.my_group,
             callback = function(ev)
                 local buftype = vim.bo[ev.buf].buftype
                 local filetype = vim.bo[ev.buf].filetype
@@ -198,7 +197,7 @@ return {
 
         -- 设置tree-sitter快捷键
         vim.api.nvim_create_autocmd('FileType', {
-            group = ts_group,
+            group = _G.my_group,
             pattern = filetypes,
             callback = function(ev)
                 local buftype = vim.bo[ev.buf].buftype
