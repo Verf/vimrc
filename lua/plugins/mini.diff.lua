@@ -1,7 +1,6 @@
 return {
     'nvim-mini/mini.diff',
     version = '*',
-    event = 'BufReadPost',
-    keys = { 'gh', 'gH', '[h', ']h', '[H', ']H' },
+    lazy = false,
     opts = { view = { style = 'number' } },
 }
