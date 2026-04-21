@@ -59,6 +59,8 @@ vim.opt.softtabstop = 4 -- 设置在编辑模式下，按 Tab 键插入的空格
 vim.opt.scrolloff = 999 -- 设置光标距离窗口顶部和底部的最小行数，999可以使光标始终保持在屏幕中央
 vim.opt.updatetime = 750 -- 设置更新交换文件和触发 CursorHold 事件的延迟时间（毫秒）
 
+vim.opt.pumheight = 8 -- 补全菜单显示行数
+
 vim.opt.complete = '.,w,b,kspell' -- 内置自动补全数据源
 vim.opt.completeopt = 'menuone,noselect,fuzzy,nosort' -- 内置自动补全菜单配置
 

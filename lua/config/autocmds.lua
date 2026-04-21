@@ -1,9 +1,9 @@
-local my_group = vim.api.nvim_create_augroup('MyAutoCmdGroup', { clear = true })
-
+-- 创建全局autocmd group
+_G.my_group = vim.api.nvim_create_augroup('MyGroup', { clear = true })
 -- grep或make后自动打开quickfix
 vim.api.nvim_create_autocmd('QuickFixCmdPost', {
     pattern = '[^l]*', -- 匹配 grep, make 等（排除 lgrep 等局部列表命令）
-    group = my_group,
+    group = _G.my_group,
     callback = function()
         vim.cmd 'cwindow' -- 有结果才打开，没结果不打开
     end,
@@ -11,7 +11,7 @@ vim.api.nvim_create_autocmd('QuickFixCmdPost', {
 
 -- 在当前注释中按o插入新行后不自动添加注释符，在 FileType 时调用以自动覆盖文件类似特定的配置
 vim.api.nvim_create_autocmd('FileType', {
-    group = my_group,
+    group = _G.my_group,
     callback = function() vim.cmd 'setlocal formatoptions-=c formatoptions-=o' end,
     desc = "Proper 'formatoptions'",
 })
@@ -40,7 +40,7 @@ end
 
 -- 失去焦点时自动保存
 vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave' }, {
-    group = my_group,
+    group = _G.my_group,
     callback = function()
         local bufnr = vim.api.nvim_get_current_buf()
         save_buffer(bufnr)
@@ -50,7 +50,7 @@ vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave' }, {
 
 -- 退出neovim时自动保存
 vim.api.nvim_create_autocmd('QuitPre', {
-    group = my_group,
+    group = _G.my_group,
     callback = function()
         -- 遍历所有 buffer
         for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
@@ -64,14 +64,14 @@ vim.api.nvim_create_autocmd('QuitPre', {
 
 -- help / man 默认竖向分屏
 vim.api.nvim_create_autocmd('FileType', {
-    group = my_group,
+    group = _G.my_group,
     pattern = { 'help', 'man' },
     command = 'wincmd L',
 })
 
 -- 启动:terminal时自动进入输入模式
 vim.api.nvim_create_autocmd('TermOpen', {
-    group = my_group,
+    group = _G.my_group,
     callback = function()
         vim.cmd 'startinsert'
         -- 关闭行号等无关显示项
@@ -83,7 +83,7 @@ vim.api.nvim_create_autocmd('TermOpen', {
 
 -- shell进程退出时自动关闭buffer
 vim.api.nvim_create_autocmd('TermClose', {
-    group = my_group,
+    group = _G.my_group,
     callback = function()
         -- 仅在正常退出(exit_code == 0)时自动关闭
         -- 如果是报错崩溃退出则能看到错误信息

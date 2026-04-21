@@ -1,5 +1,6 @@
 return {
     'nvim-mini/mini.snippets',
+    version = '*',
     lazy = false,
     config = function()
         local snippets = require 'mini.snippets'
@@ -22,7 +23,7 @@ return {
 
         -- 退出Insert模式时自动停止snippet状态
         vim.api.nvim_create_autocmd('InsertLeave', {
-            group = vim.api.nvim_create_augroup('MyMiniGroup', { clear = true }),
+            group = _G.my_group,
             callback = function()
                 if snippets.session.get() then
                     vim.schedule(function()

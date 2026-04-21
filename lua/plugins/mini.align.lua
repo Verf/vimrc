@@ -1,5 +1,6 @@
 return {
     'nvim-mini/mini.align',
-    lazy = false,
+    version = '*',
+    keys = { 'ga', 'gA' },
     opts = {},
 }

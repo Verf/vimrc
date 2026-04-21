@@ -1,5 +1,6 @@
 return {
     'nvim-mini/mini.bufremove',
+    version = '*',
     keys = {
         {
             '<leader>x',

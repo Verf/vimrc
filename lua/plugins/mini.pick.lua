@@ -1,5 +1,6 @@
 return {
     'nvim-mini/mini.pick',
+    version = '*',
     dependencies = { 'nvim-mini/mini.extra' },
     keys = {
         { '<leader>f', function() MiniPick.builtin.files() end, mode = 'n', desc = 'Files' },
