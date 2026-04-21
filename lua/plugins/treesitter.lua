@@ -5,12 +5,6 @@ return {
     lazy = false,
     config = function(_, opts)
         local languages = {
-            -- neovim basic
-            'c',
-            'lua',
-            'vim',
-            'vimdoc',
-            'query',
             -- config
             'xml',
             'json',
@@ -18,10 +12,8 @@ return {
             'toml',
             -- git
             'diff',
-            -- text & markdown
+            -- text
             'regex',
-            'markdown',
-            'markdown_inline',
             -- front & vue
             'vue',
             'html',
