@@ -134,6 +134,9 @@ vim.keymap.set('n', '<leader>tv', function() vim.cmd 'vsplit | terminal' end, { 
 -- 水平分屏打开 terminal
 vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { desc = 'Horizontal split Terminal' })
 
+-- [[ Diagnostic ]]
+vim.keymap.set('n', '<leader>wd', vim.diagnostic.open_float, { desc = 'Show diagnostics under the cursor' })
+
 -- [[ Others ]]
 -- 删除内置的增量选择快捷键
 pcall(vim.keymap.del, { 'x', 'o' }, 'in')
