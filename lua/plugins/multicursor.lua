@@ -1,7 +1,7 @@
 return {
     'jake-stewart/multicursor.nvim',
     keys = {
-        { 'S', [[<cmd>lua require('multicursor-nvim').matchCursors()<cr>]], mode = 'x', desc = 'Add cursor by regex' },
+        { 's', [[<cmd>lua require('multicursor-nvim').matchCursors()<cr>]], mode = 'x', desc = 'Add cursor by regex' },
         {
             '<M-s>',
             [[<cmd>lua require('multicursor-nvim').splitCursors('^')<cr>]],
