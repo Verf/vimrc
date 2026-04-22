@@ -8,10 +8,6 @@ return {
         { '<leader>/', function() MiniPick.builtin.grep_live() end, mode = 'n', desc = 'Grep Live' },
     },
     opts = {
-        mappings = {
-            refine = '<C-m>',
-            refine_marked = '<C-S-m>',
-        },
-        options = { use_cache = false },
+        options = { use_cache = true },
     },
 }
