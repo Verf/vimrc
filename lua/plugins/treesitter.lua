@@ -59,6 +59,7 @@ return {
             callback = function(ev)
                 local buftype = vim.bo[ev.buf].buftype
                 local filetype = vim.bo[ev.buf].filetype
+                local lang = vim.treesitter.language.get_lang(filetype)
                 -- 跳过特殊 buffer
                 if buftype ~= '' or filetype == '' or filetype == 'qf' or filetype == 'help' then return end
                 -- 仅为支持的buffer开启tree-sitter特性
@@ -66,7 +67,8 @@ return {
                     vim.treesitter.start(ev.buf)
                     vim.wo.foldmethod = 'expr'
                     vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+                    local indents = vim.treesitter.query.get(lang, 'indents')
+                    if indents then vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()" end
                 end
             end,
         })
