@@ -1,7 +1,7 @@
 {
   "codediff.nvim": { "branch": "main", "commit": "8afc229d38dc13ce71b2ffbb860084b2c726e061" },
   "conform.nvim": { "branch": "master", "commit": "086a40dc7ed8242c03be9f47fbcee68699cc2395" },
-  "deepwhite.nvim": { "branch": "dev", "commit": "c8b6c2209c62966fe1aca6acc3a2849e18da1991" },
+  "deepwhite.nvim": { "branch": "dev", "commit": "031cee3fbbde09abeda515d6b6d255495aabb561" },
   "faster.nvim": { "branch": "main", "commit": "2e7a50f659711854b9a7fdc76d943b59b30d7852" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "mini-git": { "branch": "main", "commit": "832467238636e3dfa1db76de929996b6668c35ef" },

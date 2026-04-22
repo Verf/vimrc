@@ -9,6 +9,8 @@ return {
             view = {
                 toggle_explorer = false, -- Toggle explorer visibility (explorer mode only)
                 focus_explorer = false, -- Focus explorer panel (explorer mode only)
+                next_hunk = ']h', -- Jump to next change
+                prev_hunk = '[h', -- Jump to previous change
                 next_file = '<tab>', -- Next file in explorer/history mode
                 prev_file = '<S-tab>', -- Previous file in explorer/history mode
                 diff_get = '<leader>gg', -- Get change from other buffer (like vimdiff)
