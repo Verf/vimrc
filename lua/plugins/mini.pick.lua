@@ -7,5 +7,11 @@ return {
         { '<leader>b', function() MiniPick.builtin.buffers() end, mode = 'n', desc = 'Buffers' },
         { '<leader>/', function() MiniPick.builtin.grep_live() end, mode = 'n', desc = 'Grep Live' },
     },
-    opts = {},
+    opts = {
+        mappings = {
+            refine = '<C-m>',
+            refine_marked = '<C-S-m>',
+        },
+        options = { use_cache = false },
+    },
 }
