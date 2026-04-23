@@ -2,9 +2,9 @@ return {
     'nvim-mini/mini-git',
     version = '*',
     main = 'mini.git',
-    cmd = 'Git',
+    lazy = false,
     keys = {
-        { '<leader>gs', function() require('mini.git').show_at_cursor() end, mode = 'n', desc = 'Show' },
+        { '<leader>gs', function() require('mini.git').show_at_cursor() end, mode = { 'n', 'x' }, desc = 'Show' },
     },
     opts = {},
 }
