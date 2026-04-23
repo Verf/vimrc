@@ -137,6 +137,9 @@ vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { d
 -- [[ Diagnostic ]]
 vim.keymap.set('n', '<leader>wd', vim.diagnostic.open_float, { desc = 'Show diagnostics under the cursor' })
 
+-- [[ Lsp ]]
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto definition' })
+
 -- [[ Others ]]
 -- 删除内置的增量选择快捷键
 pcall(vim.keymap.del, { 'x', 'o' }, 'in')

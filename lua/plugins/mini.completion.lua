@@ -45,5 +45,40 @@ return {
 
         -- 向LSP服务器告知客户端能力
         vim.lsp.config('*', { capabilities = MiniCompletion.get_lsp_capabilities() })
+
+        -- 实现补全时自动覆盖/合并光标后已存在的重复后缀
+        vim.api.nvim_create_autocmd('CompleteDone', {
+            pattern = '*',
+            group = _G.my_group,
+            callback = function()
+                -- 获取刚刚被确认插入的补全项
+                local item = vim.v.completed_item
+                if not item or not item.word or item.word == '' then return end
+
+                -- 获取当前光标位置和当前行的完整内容
+                local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+                local line = vim.api.nvim_get_current_line()
+
+                -- 获取光标后的文本 (col 是 0-based 字节索引，所以 col+1 就是光标后的内容)
+                local after_cursor = line:sub(col + 1)
+                if after_cursor == '' then return end
+
+                local word = item.word
+                local match_len = 0
+
+                -- 寻找补全词的后缀与光标后文本前缀的最大重叠长度
+                for i = 1, #word do
+                    local suffix = word:sub(-i)
+                    -- 判断光标后文本的前缀是否与 suffix 一致
+                    if after_cursor:sub(1, i) == suffix then match_len = i end
+                end
+
+                -- 如果发现有重合的部分，删除光标后对应的重复字符
+                if match_len > 0 then
+                    local new_line = line:sub(1, col) .. line:sub(col + 1 + match_len)
+                    vim.api.nvim_set_current_line(new_line)
+                end
+            end,
+        })
     end,
 }
