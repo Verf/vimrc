@@ -5,15 +5,25 @@ return {
     lazy = false,
     keys = {
         { '<leader>h', function() MiniExtra.pickers.oldfiles() end, mode = 'n', desc = 'Oldfiles' },
-        { '<leader>d', function() MiniExtra.pickers.diagnostic() end, mode = 'n', desc = 'Diagnostics' },
-        { '<leader>e', function() MiniExtra.pickers.explorer() end, mode = 'n', desc = 'Explorer' },
+        {
+            '<leader>d',
+            function() MiniExtra.pickers.diagnostic { scope = 'current' } end,
+            mode = 'n',
+            desc = 'Diagnostics',
+        },
         {
             '<leader>s',
             function() MiniExtra.pickers.lsp { scope = 'document_symbol' } end,
             mode = 'n',
             desc = 'Symbols',
         },
-        -- git hunks
+        -- git
+        {
+            '<leader>gb',
+            function() MiniExtra.pickers.git_branches {  scope = 'local' } end,
+            mode = 'n',
+            desc = 'Find Git Branches',
+        },
         {
             '<leader>gfs',
             function() MiniExtra.pickers.git_hunks { path = '%', scope = 'staged' } end,
