@@ -7,7 +7,8 @@ return {
     opts = {
         skip_confirm_for_simple_edits = false,
         keymaps = {
-            ['<bs>'] = { 'actions.parent', mode = 'n' },
+            ['<bs>'] = 'actions.parent',
+            ['jp'] = 'actions.yank_entry',
         },
     },
 }

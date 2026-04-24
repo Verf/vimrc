@@ -36,9 +36,6 @@ return {
             group = _G.my_group,
             callback = function(args)
                 vim.bo[args.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
-                -- 关闭lsp的高亮
-                local client = vim.lsp.get_client_by_id(args.data.client_id)
-                if client then client.server_capabilities.semanticTokensProvider = nil end
             end,
             desc = 'Set omnifunc for lsp completion',
         })
