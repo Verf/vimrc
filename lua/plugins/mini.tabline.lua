@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.tabline',
-    version = '*',
+    version = false,
     lazy = false,
     opts = {},
 }

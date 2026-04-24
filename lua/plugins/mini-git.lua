@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini-git',
-    version = '*',
+    version = false,
     main = 'mini.git',
     lazy = false,
     keys = {

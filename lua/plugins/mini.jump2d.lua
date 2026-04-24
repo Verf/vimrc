@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.jump2d',
-    version = '*',
+    version = false,
     lazy = false,
     keys = {
         {

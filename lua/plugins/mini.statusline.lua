@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.statusline',
-    version = '*',
+    version = false,
     lazy = false,
     opts = {},
 }

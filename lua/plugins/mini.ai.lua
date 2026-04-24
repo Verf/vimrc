@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.ai',
-    version = '*',
+    version = false,
     dependencies = { 'nvim-treesitter/nvim-treesitter-textobjects' },
     lazy = false,
     config = function()

@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.pairs',
-    version = '*',
+    version = false,
     lazy = false,
     opts = {},
 }

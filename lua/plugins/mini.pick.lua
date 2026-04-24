@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.pick',
-    version = '*',
+    version = false,
     dependencies = { 'nvim-mini/mini.icons' },
     lazy = false,
     keys = {

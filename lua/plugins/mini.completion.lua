@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.completion',
-    version = '*',
+    version = false,
     dependencies = { 'nvim-mini/mini.icons' },
     lazy = false,
     config = function(_, opts)

@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.extra',
-    version = '*',
+    version = false,
     dependencies = { 'nvim-mini/mini.pick' },
     lazy = false,
     keys = {
