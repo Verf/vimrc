@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.operators',
-    version = '*',
+    version = false,
     lazy = false,
     opts = {
         sort = { prefix = '' },

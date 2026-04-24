@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.trailspace',
-    version = '*',
+    version = false,
     lazy = false,
     opts = {},
 }

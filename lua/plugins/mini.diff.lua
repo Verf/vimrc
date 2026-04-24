@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.diff',
-    version = '*',
+    version = false,
     lazy = false,
     opts = { view = { style = 'number' } },
 }

@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.misc',
-    version = '*',
+    version = false,
     lazy = false,
     config = function()
         require('mini.misc').setup()

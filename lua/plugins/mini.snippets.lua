@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.snippets',
-    version = '*',
+    version = false,
     lazy = false,
     config = function()
         local snippets = require 'mini.snippets'

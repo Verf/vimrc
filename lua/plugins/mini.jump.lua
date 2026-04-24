@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.jump',
-    version = '*',
+    version = false,
     lazy = false,
     opts = {
         mappings = {

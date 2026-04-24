@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.keymap',
-    version = '*',
+    version = false,
     lazy = false,
     config = function()
         local map_multistep = require('mini.keymap').map_multistep
