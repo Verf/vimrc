@@ -10,5 +10,8 @@ return {
     },
     opts = {
         options = { use_cache = true },
+        mappings = {
+            choose_marked = '<C-q>',
+        },
     },
 }
