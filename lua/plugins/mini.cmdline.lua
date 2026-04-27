@@ -1,8 +1,6 @@
 return {
     'nvim-mini/mini.cmdline',
     version = false,
-    event = 'CmdlineEnter',
-    opts = {
-        delay = 10,
-    },
+    lazy = false,
+    opts = { delay = 10 },
 }

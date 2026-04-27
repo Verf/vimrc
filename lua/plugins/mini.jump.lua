@@ -1,7 +1,7 @@
 return {
     'nvim-mini/mini.jump',
     version = false,
-    lazy = false,
+    keys = { 't', 'T', 'k', 'K', 'h' },
     opts = {
         mappings = {
             forward = 't',
