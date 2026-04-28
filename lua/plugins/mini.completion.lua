@@ -71,7 +71,7 @@ return {
                 end
 
                 -- 如果发现有重合的部分，删除光标后对应的重复字符
-                if match_len > 0 then
+                if match_len > 1 then
                     local new_line = line:sub(1, col) .. line:sub(col + 1 + match_len)
                     vim.api.nvim_set_current_line(new_line)
                 end
