@@ -1,8 +1,9 @@
 return {
     'nvim-mini/mini.operators',
     version = false,
-    keys = { 'g=', 'gx', 'gm', 'gf' },
+    lazy = false,
     opts = {
+        -- g= gx gm gf
         sort = { prefix = '' },
         replace = { prefix = 'gf' },
     },
