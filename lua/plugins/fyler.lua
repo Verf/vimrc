@@ -28,6 +28,9 @@ return {
                     ['#'] = 'CollapseAll',
                     ['<BS>'] = 'GotoParent',
                 },
+                win = {
+                    win_opts = { cursorline = true },
+                },
             },
         },
     },
