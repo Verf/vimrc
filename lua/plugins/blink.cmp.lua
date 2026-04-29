@@ -2,10 +2,6 @@ return {
     'saghen/blink.cmp',
     dependencies = { 'saghen/blink.lib', 'nvim-mini/mini.icons' },
     lazy = false,
-    build = function()
-        -- 构建Fuzzy Matcher，等待60秒，可以在:Lazy中使用gb重新构建
-        require('blink.cmp').build():wait(60000)
-    end,
     opts = {
         keymap = {
             preset = 'none',
@@ -16,6 +12,7 @@ return {
             ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
             ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
         },
+        fuzzy = { implementation = 'lua' },
         snippets = { preset = 'mini_snippets' },
         sources = { default = { 'lsp', 'path', 'buffer' } },
         cmdline = { enabled = false },
