@@ -50,7 +50,6 @@ vim.opt.splitkeep = 'cursor' -- 分屏时保持相对位置更稳定
 vim.opt.splitright = true -- 竖向分屏时将新窗口放在右边
 vim.opt.switchbuf = 'usetab' -- 执行特定跳转时优先复用已有标签页，若没有则新建标签页打开
 vim.opt.virtualedit = 'block' -- 启用虚拟编辑，允许光标在块选择模式下移动到没有实际字符的列
-vim.opt.winborder = 'rounded'
 
 vim.opt.expandtab = true -- 将输入的 Tab 自动转换为空格
 vim.opt.tabstop = 4 -- 设置文件中一个 Tab 字符代表的空格数
@@ -67,8 +66,8 @@ vim.opt.completeopt = {
     'noselect', -- 不自动选中补全项
     'menuone', -- 仅有一个补全项时仍显示补全菜单
     'popup', -- 选中补全项时显示额外信息
-    'fuzzy', -- 补全支持模糊匹配
-    'nosort', -- 关闭基于fuzzy的排序
+    -- 'fuzzy', -- 补全支持模糊匹配
+    -- 'nosort', -- 关闭基于fuzzy的排序
 }
 
 vim.opt.fileformats = 'unix,dos' -- 设置识别的文件格式，优先使用 unix 换行符 (\n)

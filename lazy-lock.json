@@ -1,4 +1,6 @@
 {
+  "blink.cmp": { "branch": "main", "commit": "147c96b976fb5f6f04801fabad83920d5c8817dd" },
+  "blink.lib": { "branch": "main", "commit": "dda2666685a5ac3598166577d2e34f1fff6b1637" },
   "codediff.nvim": { "branch": "main", "commit": "8afc229d38dc13ce71b2ffbb860084b2c726e061" },
   "conform.nvim": { "branch": "master", "commit": "dca1a190aa85f9065979ef35802fb77131911106" },
   "deepwhite.nvim": { "branch": "dev", "commit": "031cee3fbbde09abeda515d6b6d255495aabb561" },
@@ -11,7 +13,6 @@
   "mini.bufremove": { "branch": "main", "commit": "8603490905fdfa31943cf2ede7ef4475e3dbac9a" },
   "mini.cmdline": { "branch": "main", "commit": "abae396a175779dcbfe1500231f9bb48cda557c1" },
   "mini.comment": { "branch": "main", "commit": "8e5ff3ed3cc0e8f216617aae01020c00c20f7a87" },
-  "mini.completion": { "branch": "main", "commit": "667d94669be66043123cac44e7c5d65a31657732" },
   "mini.diff": { "branch": "main", "commit": "ab11575a6c147ecfba894d676d0c93e855021d34" },
   "mini.extra": { "branch": "main", "commit": "bc4e872500fd6d2ce252604e0ffa100f64f02280" },
   "mini.hipatterns": { "branch": "main", "commit": "9eff319bbe66adfaf781a0d0e174baa08ba94909" },
