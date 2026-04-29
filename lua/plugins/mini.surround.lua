@@ -1,7 +1,7 @@
 return {
     'nvim-mini/mini.surround',
     version = false,
-    keys = { 'ma', 'me', 'mc' },
+    lazy = false,
     opts = {
         mappings = {
             add = 'ma',

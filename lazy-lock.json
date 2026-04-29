@@ -1,5 +1,5 @@
 {
-  "blink.cmp": { "branch": "main", "commit": "147c96b976fb5f6f04801fabad83920d5c8817dd" },
+  "blink.cmp": { "branch": "main", "commit": "1617522ae80ca2436813da8afe2fc4b1280e975d" },
   "blink.lib": { "branch": "main", "commit": "dda2666685a5ac3598166577d2e34f1fff6b1637" },
   "codediff.nvim": { "branch": "main", "commit": "8afc229d38dc13ce71b2ffbb860084b2c726e061" },
   "conform.nvim": { "branch": "master", "commit": "dca1a190aa85f9065979ef35802fb77131911106" },
@@ -35,7 +35,7 @@
   "mini.tabline": { "branch": "main", "commit": "169af955ad2ed0ffcc3d2c83e850bcc7eaac2f0e" },
   "mini.trailspace": { "branch": "main", "commit": "b362246495d18c29b4545a8f1c47f627f8011b7c" },
   "multicursor.nvim": { "branch": "main", "commit": "704b99f10a72cc05d370cfeb294ff83412a8ab55" },
-  "nvim-lspconfig": { "branch": "master", "commit": "6419b36f50c42420cbbf1d3ffba573094cf414c8" },
+  "nvim-lspconfig": { "branch": "master", "commit": "bf5abe69c1874531f359a822d0cff4d73e26113f" },
   "nvim-spider": { "branch": "main", "commit": "4fdd56a4f45bca13a607632e15a6f9f8d1b1f99e" },
   "nvim-treesitter": { "branch": "main", "commit": "4916d6592ede8c07973490d9322f187e07dfefac" },
   "nvim-treesitter-textobjects": { "branch": "main", "commit": "851e865342e5a4cb1ae23d31caf6e991e1c99f1e" },
