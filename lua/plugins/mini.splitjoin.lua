@@ -1,6 +1,6 @@
 return {
     'nvim-mini/mini.splitjoin',
     version = false,
-    keys = { 'gS' },
+    lazy = false,
     opts = {},
 }
