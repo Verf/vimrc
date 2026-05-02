@@ -123,6 +123,12 @@ vim.keymap.set('n', '<leader>wN', '<C-w>J', { desc = 'Window to Bottom' })
 vim.keymap.set('n', '<leader>wI', '<C-w>K', { desc = 'Window to Up' })
 vim.keymap.set('n', '<leader>wO', '<C-w>L', { desc = 'Window to Right' })
 
+for i = 1, 4 do
+    local lhs = '<leader>' .. i
+    local rhs = i .. '<C-w>w'
+    vim.keymap.set('n', lhs, rhs, { desc = 'Move to Window ' .. i })
+end
+
 -- [[ Fold ]]
 vim.keymap.set('n', 'zn', 'zj')
 vim.keymap.set('n', 'zi', 'zk')
