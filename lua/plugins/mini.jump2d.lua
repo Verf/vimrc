@@ -17,14 +17,15 @@ return {
         },
         {
             'gl',
-            function()
-                MiniJump2d.start {
-                    spotter = MiniJump2d.builtin_opts.line_start.spotter,
-                    hooks = { after_jump = MiniJump2d.builtin_opts.line_start.hooks.after_jump },
-                }
-            end,
+            function() MiniJump2d.start(MiniJump2d.builtin_opts.line_start) end,
             mode = { 'n', 'x', 'o' },
             desc = 'Goto lines',
+        },
+        {
+            ',',
+            function() MiniJump2d.start(MiniJump2d.builtin_opts.single_character) end,
+            mode = { 'n', 'x', 'o' },
+            desc = 'Goto Single Character',
         },
     },
     opts = {
