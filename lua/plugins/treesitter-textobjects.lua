@@ -11,30 +11,6 @@ return {
         local move = require 'nvim-treesitter-textobjects.move'
         vim.keymap.set(
             { 'n', 'x', 'o' },
-            ']f',
-            function() move.goto_next_start('@function.outer', 'textobjects') end,
-            { desc = 'Goto next function' }
-        )
-        vim.keymap.set(
-            { 'n', 'x', 'o' },
-            '[f',
-            function() move.goto_previous_start('@function.outer', 'textobjects') end,
-            { desc = 'Goto previous function' }
-        )
-        vim.keymap.set(
-            { 'n', 'x', 'o' },
-            ']c',
-            function() move.goto_next_start('@class.outer', 'textobjects') end,
-            { desc = 'Goto next class' }
-        )
-        vim.keymap.set(
-            { 'n', 'x', 'o' },
-            '[c',
-            function() move.goto_previous_start('@class.outer', 'textobjects') end,
-            { desc = 'Goto previous class' }
-        )
-        vim.keymap.set(
-            { 'n', 'x', 'o' },
             ']a',
             function() move.goto_next_start('@parameter.outer', 'textobjects') end,
             { desc = 'Goto next parameter' }
@@ -45,7 +21,5 @@ return {
             function() move.goto_previous_start('@parameter.outer', 'textobjects') end,
             { desc = 'Goto previous parameter' }
         )
-        local repeat_move = require 'nvim-treesitter-textobjects.repeatable_move'
-        vim.keymap.set({ 'n', 'x', 'o' }, ',', repeat_move.repeat_last_move_next)
     end,
 }
