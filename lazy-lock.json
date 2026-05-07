@@ -1,11 +1,11 @@
 {
   "blink.cmp": { "branch": "main", "commit": "d3874d2a13aa19b095bdd10d37a82a8f0aa7cad3" },
   "blink.lib": { "branch": "main", "commit": "f29d8bac6549bc1e7d699c83f680823d7def98bd" },
+  "canola.nvim": { "branch": "main", "commit": "3fb9d28492ad7a24cd3e0e69e0d2808ed9aaf826" },
   "codediff.nvim": { "branch": "main", "commit": "8afc229d38dc13ce71b2ffbb860084b2c726e061" },
   "conform.nvim": { "branch": "master", "commit": "dca1a190aa85f9065979ef35802fb77131911106" },
   "deepwhite.nvim": { "branch": "dev", "commit": "031cee3fbbde09abeda515d6b6d255495aabb561" },
   "faster.nvim": { "branch": "main", "commit": "2e7a50f659711854b9a7fdc76d943b59b30d7852" },
-  "fyler.nvim": { "branch": "main", "commit": "e87911e6c21d099225063f5aa672e00f6dbb5976" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "mini-git": { "branch": "main", "commit": "a007cc40a4585c4f54787ddcf07295c2689daeb4" },
   "mini.ai": { "branch": "main", "commit": "7e10ce8468c0fce4f527ae2c0e5c484f7667f73d" },
