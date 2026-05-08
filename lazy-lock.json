@@ -35,7 +35,7 @@
   "mini.tabline": { "branch": "main", "commit": "169af955ad2ed0ffcc3d2c83e850bcc7eaac2f0e" },
   "mini.trailspace": { "branch": "main", "commit": "b362246495d18c29b4545a8f1c47f627f8011b7c" },
   "multicursor.nvim": { "branch": "main", "commit": "704b99f10a72cc05d370cfeb294ff83412a8ab55" },
-  "nvim-lspconfig": { "branch": "master", "commit": "cd576dd72d31ddffcbfa6d064c0dd697ca218758" },
+  "nvim-lspconfig": { "branch": "master", "commit": "451d4ef9abd4f0f08e379ef0d55d1c391b6125a7" },
   "nvim-spider": { "branch": "main", "commit": "4fdd56a4f45bca13a607632e15a6f9f8d1b1f99e" },
   "nvim-treesitter": { "branch": "main", "commit": "4916d6592ede8c07973490d9322f187e07dfefac" },
   "nvim-treesitter-textobjects": { "branch": "main", "commit": "851e865342e5a4cb1ae23d31caf6e991e1c99f1e" },
