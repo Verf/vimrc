@@ -1,8 +1,8 @@
 return {
     'neovim/nvim-lspconfig',
-    event = { 'BufReadPre', 'BufNewFile' },
+    event = 'VeryLazy',
     config = function()
-        vim.lsp.enable { 'ty', 'ruff', 'biome', 'rust_analyzer', 'gopls', 'zls', 'nushell' }
+        vim.lsp.enable { 'ty', 'ruff', 'biome', 'nushell' }
 
         vim.api.nvim_create_autocmd('LspAttach', {
             group = _G.my_group,
