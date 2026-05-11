@@ -44,6 +44,12 @@ return {
                     target = note_dir .. 'refile.org',
                 },
             },
+            -- 避免<CR>与mini.keymap中<CR>配置冲突
+            mappings = {
+                org = {
+                    org_return = false,
+                },
+            },
         }
         require('org-bullets').setup()
         require('org-roam').setup {
