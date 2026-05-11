@@ -21,6 +21,7 @@ return {
                 agenda_dir .. '*.org',
             },
             org_default_notes_file = note_dir .. 'refile.org',
+            org_startup_folded = 'inherit', -- 继承neovim的folded配置
             -- 自定义任务流状态 (使用 '|' 分隔未完成与已完成状态)
             org_todo_keywords = { 'TODO(t)', 'DOING(i)', 'WAITING(w)', '|', 'DONE(d)', 'CANCELED(c)' },
             -- 配置capture模板
@@ -40,14 +41,18 @@ return {
                 -- 碎片化记录
                 j = {
                     description = 'Journal',
-                    template = '* %U %?\n  %i',
+                    template = '* %U %?\n',
                     target = note_dir .. 'refile.org',
                 },
             },
-            -- 避免<CR>与mini.keymap中<CR>配置冲突
             mappings = {
+                agenda = {
+                    org_agenda_goto = false,
+                },
                 org = {
-                    org_return = false,
+                    org_cycle = false, -- 避免与<Tab>冲突
+                    org_global_cycle = false, -- 避免与<S-Tab>冲突
+                    org_return = false, -- 避免<CR>与mini.keymap中<CR>配置冲突
                 },
             },
         }
