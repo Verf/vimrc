@@ -15,7 +15,6 @@ return {
             { 'gr', group = '+Lsp' },
             { '<leader>g', group = '+Git' },
             { '<leader>gf', group = '+Find' },
-            { '<leader>n', group = '+Note' },
             { '<leader>o', group = '+Org' },
             { '<leader>t', group = '+Tab/Term' },
             { '<leader>S', group = '+Session' },
