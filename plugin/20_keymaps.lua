@@ -81,7 +81,19 @@ vim.keymap.set('n', '<leader>q', '<cmd>qa!<cr>', { desc = 'Quit All' })
 vim.keymap.set({ 'n', 'x' }, '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
 vim.keymap.set({ 'n', 'x' }, '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
 vim.keymap.set({ 'n', 'x' }, '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
-vim.keymap.set({ 'n', 'x' }, '<leader>X', '<cmd>%bd!|e#<cr>', { desc = 'Buffer Only' })
+vim.keymap.set({ 'n', 'x' }, '<leader>X', function()
+    local current_buf = vim.api.nvim_get_current_buf()
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+        if buf ~= current_buf and vim.bo[buf].buflisted then
+            if vim.bo[buf].modified then
+                local buf_name = vim.api.nvim_buf_get_name(buf)
+                -- 只有在有文件名的情况下才尝试保存
+                if buf_name ~= '' then vim.api.nvim_buf_call(buf, function() vim.cmd 'silent! update' end) end
+            end
+            vim.api.nvim_buf_delete(buf, { force = true })
+        end
+    end
+end, { desc = 'Buffer Only' })
 
 -- [[ Tab ]]
 vim.keymap.set('n', '<leader>tN', '<cmd>tabnew<cr>', { desc = 'Tab New' })
