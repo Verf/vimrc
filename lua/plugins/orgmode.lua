@@ -8,7 +8,7 @@ return {
 
         require('orgmode.utils.treesitter.install').compilers = { 'zig' }
         require('orgmode').setup {
-            org_agenda_files = { note_dir .. '*.org' },
+            org_agenda_files = note_dir .. '**/*.org',
             org_default_notes_file = note_dir .. 'refile.org',
             org_startup_folded = 'inherit', -- 继承neovim的folded配置
             -- 配置capture模板
