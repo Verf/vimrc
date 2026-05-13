@@ -21,7 +21,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "deepwhite.nvim": {
-      "rev": "b6fbf17709679b36d9ab5fd0ad35ad3098a6ae76",
+      "rev": "73c8627222c63d1e23480fe20a5137fbc29a5c9d",
       "src": "https://github.com/Verf/deepwhite.nvim",
       "version": "'dev'"
     },
