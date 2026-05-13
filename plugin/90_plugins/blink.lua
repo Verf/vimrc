@@ -20,7 +20,7 @@ require('blink.cmp').setup {
     completion = {
         list = { selection = { preselect = false } },
         menu = {
-            border = nil,
+            border = 'none',
             draw = {
                 components = {
                     kind_icon = {
