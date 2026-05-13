@@ -409,5 +409,6 @@ wk.add {
 }
 
 -- =============================================================================
--- render-markdown.nvim — no explicit setup needed
+-- render-markdown.nvim
 -- =============================================================================
+require('render-markdown').setup({})
