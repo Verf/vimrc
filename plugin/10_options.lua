@@ -47,7 +47,6 @@ vim.opt.showtabline = 2 -- 总是显示标签页栏
 vim.opt.cmdheight = 0 -- 隐藏默认的命令行
 
 vim.opt.winborder = 'single' -- 为所有浮动窗口(LSP悬浮、诊断等)开启圆角
-vim.opt.pumborder = 'single' -- 为自动补全弹出菜单开启圆角
 
 vim.opt.mouse = 'a' -- 在所有模式下（普通、可视、插入等）启用鼠标支持
 vim.opt.splitkeep = 'cursor' -- 分屏时保持相对位置更稳定
@@ -117,6 +116,17 @@ _G.custom_fold_icon = function()
 end
 vim.opt.statuscolumn = '%s%=%l %#FoldColumn#%{v:lua.custom_fold_icon()}%*'
 
+-- shada
+-- 限制 ShaDa 文件大小以加速启动
+-- '100  : 文件标记（file marks）最多保存 100 个
+-- <50   : 每个寄存器最多保存 50 行内容
+-- s10   : 单个项目最大 10 KiB，超过不保存
+-- :1000 : 命令行历史最多保存 1000 条
+-- /100  : 搜索历史最多保存 100 条
+-- @100  : input() 输入历史最多保存 100 条
+-- h     : 启动时不恢复 'hlsearch' 高亮
+vim.o.shada = "'100,<50,s10,:1000,/100,@100,h"
+
 -- [[ diagnostic ]]
 vim.diagnostic.config {
     virtual_text = { source = 'always' },
@@ -157,8 +167,6 @@ require('vim._core.ui2').enable {
     },
 }
 -- 解决执行 `:restart` 重启后，UI2 可能会意外丢失被禁用的小缺陷 (Issue #38553) [2]
-vim.api.nvim_create_autocmd("UIEnter", {
-    callback = function()
-        require('vim._core.ui2').enable({ enable = true })
-    end,
+vim.api.nvim_create_autocmd('UIEnter', {
+    callback = function() require('vim._core.ui2').enable { enable = true } end,
 })
