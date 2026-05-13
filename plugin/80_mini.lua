@@ -273,11 +273,6 @@ require('mini.move').setup {
 }
 
 -- =============================================================================
--- mini.notify
--- =============================================================================
-require('mini.notify').setup {}
-
--- =============================================================================
 -- mini.operators
 -- =============================================================================
 require('mini.operators').setup {
@@ -402,6 +397,30 @@ require('mini.splitjoin').setup {}
 local stsl = require 'mini.statusline'
 stsl.setup {
     content = {
+        active = function()
+            local mode, mode_hl = MiniStatusline.section_mode { trunc_width = 120 }
+            local git = MiniStatusline.section_git { trunc_width = 75 }
+            local diff = MiniStatusline.section_diff { trunc_width = 75 }
+            local diagnostics = MiniStatusline.section_diagnostics { trunc_width = 75 }
+            local lsp = MiniStatusline.section_lsp { trunc_width = 75 }
+            local filename = MiniStatusline.section_filename { trunc_width = 140 }
+            local fileinfo = MiniStatusline.section_fileinfo { trunc_width = 120 }
+            local location = MiniStatusline.section_location { trunc_width = 75 }
+            local search = MiniStatusline.section_searchcount { trunc_width = 75 }
+
+            local rec_reg = vim.fn.reg_recording()
+            local recording = rec_reg ~= '' and (' REC @' .. rec_reg) or ''
+
+            return MiniStatusline.combine_groups {
+                { hl = mode_hl, strings = { mode .. recording } },
+                { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
+                '%<', -- 截断点
+                { hl = 'MiniStatuslineFilename', strings = { filename } },
+                '%=', -- 右对齐分隔
+                { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
+                { hl = mode_hl, strings = { search, location } },
+            }
+        end,
         inactive = function()
             -- 1. 获取当前正在渲染状态栏的真实 Window ID
             -- Neovim 在渲染非当前窗口状态栏时，会将其 ID 存放在 vim.g.statusline_winid 中
@@ -421,6 +440,11 @@ stsl.setup {
     },
 }
 
+vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave', 'LspProgress' }, {
+    group = _G.my_group,
+    callback = function() vim.cmd 'redrawstatus' end,
+    desc = 'Update statusline on macro recording and LSP progress',
+})
 -- =============================================================================
 -- mini.surround
 -- =============================================================================

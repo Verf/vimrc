@@ -3,40 +3,24 @@
 -- =============================================================================
 
 vim.pack.add {
-    -- Completion
     'https://github.com/saghen/blink.lib',
     'https://github.com/saghen/blink.cmp',
-    -- File explorer
     'https://github.com/barrettruth/canola.nvim',
-    -- Diff viewer
     'https://github.com/esmuellert/codediff.nvim',
-    -- Formatter
     'https://github.com/stevearc/conform.nvim',
-    -- Colorscheme
     { src = 'https://github.com/Verf/deepwhite.nvim', version = 'dev' },
-    -- Smoother scrolling
     'https://github.com/pteroctopus/faster.nvim',
-    -- LSP config
     'https://github.com/neovim/nvim-lspconfig',
-    -- Multi-cursor
     'https://github.com/jake-stewart/multicursor.nvim',
-    -- Org mode
     'https://github.com/nvim-orgmode/orgmode',
     'https://github.com/akinsho/org-bullets.nvim',
-    -- Quickfix enhancements
     'https://github.com/stevearc/quicker.nvim',
-    -- Tab/session scope
     'https://github.com/tiagovla/scope.nvim',
-    -- Scroll past EOF
     'https://github.com/Aasim-A/scrollEOF.nvim',
-    -- Word motion (spider)
     'https://github.com/chrisgrieser/nvim-spider',
-    -- Treesitter
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter', version = 'main' },
     { src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects', version = 'main' },
-    -- Which-key
     'https://github.com/folke/which-key.nvim',
-    -- Markdown rendering
     'https://github.com/MeanderingProgrammer/render-markdown.nvim',
 }
 
