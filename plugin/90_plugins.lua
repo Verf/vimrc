@@ -196,6 +196,7 @@ require('orgmode').setup {
     org_agenda_files = note_dir .. '**/*.org',
     org_default_notes_file = note_dir .. 'refile.org',
     org_startup_folded = 'inherit', -- 继承neovim的folded配置
+    win_split_mode = 'float',
     -- 配置capture模板
     org_capture_templates = {
         -- 待办管理
@@ -411,4 +412,4 @@ wk.add {
 -- =============================================================================
 -- render-markdown.nvim
 -- =============================================================================
-require('render-markdown').setup({})
+require('render-markdown').setup {}
