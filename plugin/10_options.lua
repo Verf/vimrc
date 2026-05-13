@@ -44,6 +44,10 @@ vim.opt.showcmd = false -- 不在右下角显示未完成的命令
 vim.opt.hlsearch = false -- 禁用搜索结果高亮，避免视觉干扰
 
 vim.opt.showtabline = 2 -- 总是显示标签页栏
+vim.opt.cmdheight = 0 -- 隐藏默认的命令行
+
+vim.opt.winborder = 'single' -- 为所有浮动窗口(LSP悬浮、诊断等)开启圆角
+vim.opt.pumborder = 'single' -- 为自动补全弹出菜单开启圆角
 
 vim.opt.mouse = 'a' -- 在所有模式下（普通、可视、插入等）启用鼠标支持
 vim.opt.splitkeep = 'cursor' -- 分屏时保持相对位置更稳定
@@ -142,19 +146,19 @@ end
 require('vim._core.ui2').enable {
     enable = true,
     msg = {
-        targets = 'cmd',
-        cmd = {
-            height = 0.5,
-        },
-        dialog = {
-            height = 0.5,
-        },
-        msg = {
-            height = 0.5,
-            timeout = 4000,
-        },
-        pager = {
-            height = 1,
+        targets = {
+            [''] = 'msg', -- 普通消息：进入独立的右下角消息提示浮窗
+            empty = 'cmd', -- 空消息：直接丢入命令行，防止屏幕闪烁
+            bufwrite = 'msg', -- 文件保存消息 (如 "file.txt" written)：消息提示
+            confirm = 'cmd', -- 确认提示 (如 [Y/n])：在命令行展示，防止覆盖视野
+            emsg = 'pager', -- 错误消息 (Error)：强制进入 Pager (全功能 Buffer)，方便阅读报错日志
+            echo = 'msg', -- 普通的 lua print 或 echo 输出
         },
     },
 }
+-- 解决执行 `:restart` 重启后，UI2 可能会意外丢失被禁用的小缺陷 (Issue #38553) [2]
+vim.api.nvim_create_autocmd("UIEnter", {
+    callback = function()
+        require('vim._core.ui2').enable({ enable = true })
+    end,
+})
