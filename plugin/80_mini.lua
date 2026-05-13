@@ -1,14 +1,8 @@
--- =============================================================================
--- mini.nvim - All-in-one install + per-module configuration
--- =============================================================================
-
 vim.pack.add {
     'https://github.com/echasnovski/mini.nvim',
 }
 
--- =============================================================================
 -- mini.ai
--- =============================================================================
 local spec_treesitter = require('mini.ai').gen_spec.treesitter
 require('mini.ai').setup {
     mappings = {
@@ -36,14 +30,10 @@ require('mini.ai').setup {
 vim.keymap.set({ 'x', 'o' }, 'rw', 'iw')
 vim.keymap.set({ 'x', 'o' }, 'rW', 'iW')
 
--- =============================================================================
 -- mini.align
--- =============================================================================
 require('mini.align').setup {}
 
--- =============================================================================
 -- mini.bufremove
--- =============================================================================
 require('mini.bufremove').setup {}
 
 vim.keymap.set(
@@ -53,28 +43,19 @@ vim.keymap.set(
     { desc = 'Close Buffer' }
 )
 
--- =============================================================================
 -- mini.cmdline
--- =============================================================================
 require('mini.cmdline').setup { delay = 10 }
 
--- =============================================================================
 -- mini.comment
--- =============================================================================
 require('mini.comment').setup {}
 
--- =============================================================================
 -- mini.diff
--- =============================================================================
 require('mini.diff').setup { view = { style = 'number' } }
 
--- =============================================================================
 -- mini.extra
--- =============================================================================
 require('mini.extra').setup {}
 
 vim.keymap.set('n', '<leader>h', function() MiniExtra.pickers.oldfiles() end, { desc = 'Oldfiles' })
-
 vim.keymap.set('n', '<leader>z', function()
     MiniExtra.pickers.visit_paths({
         filter = function(data) return vim.fn.isdirectory(data.path) == 1 end,
@@ -91,7 +72,6 @@ vim.keymap.set('n', '<leader>z', function()
         },
     })
 end, { desc = 'Visit Directories' })
-
 vim.keymap.set(
     'n',
     '<leader>d',
@@ -105,53 +85,43 @@ vim.keymap.set(
     function() MiniExtra.pickers.lsp { scope = 'document_symbol' } end,
     { desc = 'Symbols' }
 )
-
--- git
 vim.keymap.set(
     'n',
     '<leader>gb',
     function() MiniExtra.pickers.git_branches { scope = 'local' } end,
     { desc = 'Find Git Branches' }
 )
-
 vim.keymap.set(
     'n',
     '<leader>gfs',
     function() MiniExtra.pickers.git_hunks { path = '%', scope = 'staged' } end,
     { desc = 'Find Staged' }
 )
-
 vim.keymap.set(
     'n',
     '<leader>gfS',
     function() MiniExtra.pickers.git_hunks { scope = 'staged' } end,
     { desc = 'Find All Staged' }
 )
-
 vim.keymap.set(
     'n',
     '<leader>gfu',
     function() MiniExtra.pickers.git_hunks { path = '%', scope = 'unstaged' } end,
     { desc = 'Find Unstaged' }
 )
-
 vim.keymap.set(
     'n',
     '<leader>gfU',
     function() MiniExtra.pickers.git_hunks { scope = 'unstaged' } end,
     { desc = 'Find All Unstaged' }
 )
-
--- lsp
 vim.keymap.set('n', 'grr', function() MiniExtra.pickers.lsp { scope = 'references' } end, { desc = 'Goto references' })
-
 vim.keymap.set(
     'n',
     'gri',
     function() MiniExtra.pickers.lsp { scope = 'implementation' } end,
     { desc = 'Goto implementation' }
 )
-
 vim.keymap.set(
     'n',
     'grt',
@@ -159,16 +129,12 @@ vim.keymap.set(
     { desc = 'Goto type_definition' }
 )
 
--- =============================================================================
 -- mini.git
--- =============================================================================
 require('mini.git').setup {}
 
 vim.keymap.set({ 'n', 'x' }, '<leader>gs', function() require('mini.git').show_at_cursor() end, { desc = 'Show' })
 
--- =============================================================================
 -- mini.hipatterns
--- =============================================================================
 local hipatterns = require 'mini.hipatterns'
 hipatterns.setup {
     highlighters = {
@@ -176,15 +142,11 @@ hipatterns.setup {
     },
 }
 
--- =============================================================================
 -- mini.icons
--- =============================================================================
 require('mini.icons').setup()
 require('mini.icons').mock_nvim_web_devicons()
 
--- =============================================================================
 -- mini.jump
--- =============================================================================
 require('mini.jump').setup {
     mappings = {
         forward = 't',
@@ -195,9 +157,7 @@ require('mini.jump').setup {
     },
 }
 
--- =============================================================================
 -- mini.jump2d
--- =============================================================================
 require('mini.jump2d').setup {
     -- mini.jump2d永远以labels中字母的顺序，按屏幕从上到下，从左到右的顺序为spot标记label。
     -- 根据实际体验+/-10行左右位置是最为常见进行跳转使用的位置，因此考虑设置这里为最常用按键
@@ -214,21 +174,18 @@ vim.keymap.set(
     function() MiniJump2d.start { spotter = MiniJump2d.gen_spotter.pattern '%f[%w]%w+' } end,
     { desc = 'Goto words' }
 )
-
 vim.keymap.set(
     { 'n', 'x', 'o' },
     'gs',
     function() MiniJump2d.start { spotter = MiniJump2d.gen_spotter.pattern '%p+' } end,
     { desc = 'Goto symbols' }
 )
-
 vim.keymap.set(
     { 'n', 'x', 'o' },
     'gl',
     function() MiniJump2d.start(MiniJump2d.builtin_opts.line_start) end,
     { desc = 'Goto lines' }
 )
-
 vim.keymap.set(
     { 'n', 'x', 'o' },
     ',',
@@ -236,9 +193,7 @@ vim.keymap.set(
     { desc = 'Goto Single Character' }
 )
 
--- =============================================================================
 -- mini.keymap
--- =============================================================================
 require('mini.keymap').setup {}
 
 local map_multistep = require('mini.keymap').map_multistep
@@ -249,16 +204,12 @@ map_multistep('i', '<C-u>', { 'minisnippets_prev', 'jump_before_open' })
 map_multistep('i', '<CR>', { 'blink_accept', 'minipairs_cr' })
 map_multistep('i', '<BS>', { 'minipairs_bs' })
 
--- =============================================================================
 -- mini.misc
--- =============================================================================
 require('mini.misc').setup()
 require('mini.misc').setup_auto_root()
 require('mini.misc').setup_restore_cursor()
 
--- =============================================================================
 -- mini.move
--- =============================================================================
 require('mini.move').setup {
     mappings = {
         left = '<M-y>',
@@ -272,23 +223,17 @@ require('mini.move').setup {
     },
 }
 
--- =============================================================================
 -- mini.operators
--- =============================================================================
 require('mini.operators').setup {
     -- g= gx gm gf
     sort = { prefix = '' },
     replace = { prefix = 'gf' },
 }
 
--- =============================================================================
 -- mini.pairs
--- =============================================================================
 require('mini.pairs').setup {}
 
--- =============================================================================
 -- mini.pick
--- =============================================================================
 require('mini.pick').setup {
     options = { use_cache = true },
     mappings = {
@@ -297,12 +242,8 @@ require('mini.pick').setup {
 }
 
 vim.keymap.set('n', '<leader>f', function() MiniPick.builtin.files() end, { desc = 'Files' })
-
 vim.keymap.set('n', '<leader>b', function() MiniPick.builtin.buffers() end, { desc = 'Buffers' })
-
 vim.keymap.set('n', '<leader>/', function() MiniPick.builtin.grep_live() end, { desc = 'Grep Live' })
-
--- for orgmode.nvim
 vim.keymap.set(
     'n',
     '<leader>of',
@@ -310,9 +251,7 @@ vim.keymap.set(
     { desc = 'Find Notes' }
 )
 
--- =============================================================================
 -- mini.sessions
--- =============================================================================
 require('mini.sessions').setup {
     autowrite = true,
     file = '',
@@ -340,20 +279,16 @@ require('mini.sessions').setup {
 }
 
 vim.keymap.set('n', '<leader>Ss', function() require('mini.sessions').select() end, { desc = 'Select Session' })
-
 vim.keymap.set('n', '<leader>Sw', function()
     local name = vim.fn.input 'Session name: '
     if name ~= '' then require('mini.sessions').write(name) end
 end, { desc = 'Write Session' })
-
 vim.keymap.set('n', '<leader>Sd', function()
     local name = vim.fn.input 'Session name: '
     if name ~= '' then require('mini.sessions').delete(name) end
 end, { desc = 'Delete Session' })
 
--- =============================================================================
 -- mini.snippets
--- =============================================================================
 local snippets = require 'mini.snippets'
 snippets.setup {
     snippets = {
@@ -386,14 +321,10 @@ vim.api.nvim_create_autocmd('InsertLeave', {
     end,
 })
 
--- =============================================================================
 -- mini.splitjoin
--- =============================================================================
 require('mini.splitjoin').setup {}
 
--- =============================================================================
 -- mini.statusline
--- =============================================================================
 local stsl = require 'mini.statusline'
 stsl.setup {
     content = {
@@ -445,9 +376,8 @@ vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave', 'LspProgress' 
     callback = function() vim.cmd 'redrawstatus' end,
     desc = 'Update statusline on macro recording and LSP progress',
 })
--- =============================================================================
+
 -- mini.surround
--- =============================================================================
 require('mini.surround').setup {
     mappings = {
         add = 'ma',
@@ -461,17 +391,11 @@ require('mini.surround').setup {
     },
 }
 
--- =============================================================================
 -- mini.tabline
--- =============================================================================
 require('mini.tabline').setup {}
 
--- =============================================================================
 -- mini.trailspace
--- =============================================================================
 require('mini.trailspace').setup {}
 
--- =============================================================================
 -- mini.visits
--- =============================================================================
 require('mini.visits').setup {}
