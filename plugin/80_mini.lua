@@ -55,7 +55,7 @@ require('mini.diff').setup { view = { style = 'number' } }
 -- mini.extra
 require('mini.extra').setup {}
 
-vim.keymap.set('n', '<leader>h', function() MiniExtra.pickers.oldfiles() end, { desc = 'Oldfiles' })
+vim.keymap.set('n', '<leader>h', function() MiniExtra.pickers.visit_paths { cwd = '' } end, { desc = 'Oldfiles' })
 vim.keymap.set('n', '<leader>z', function()
     MiniExtra.pickers.visit_paths({
         filter = function(data) return vim.fn.isdirectory(data.path) == 1 end,
