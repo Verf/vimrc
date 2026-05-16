@@ -9,6 +9,8 @@ Plug 'yegappan/lsp'
 Plug 'justinmk/vim-dirvish'
 Plug 'chaoren/vim-wordmotion'
 Plug 'machakann/vim-sandwich'
+Plug 'justinmk/vim-sneak'
+Plug 'rhysd/clever-f.vim'
 plug#end()
 
 packadd cfilter
@@ -61,8 +63,10 @@ set scrolloff=999      # 光标始终保持在屏幕中央
 set updatetime=750     # 交换文件写入延迟 (ms)
 set pumheight=8        # 补全菜单高度
 
-set complete=.,w,b,kspell  # 补全数据源
+set autocomplete
+set complete=.^5,w^5,b^5  # 补全数据源
 set completeopt=noselect,menuone,popup,fuzzy
+
 set fileformats=unix,dos   # 换行符优先 Unix
 
 set path+=**               # 让 Vim 的 :find 命令能够递归搜索当前目录下的所有文件
@@ -112,6 +116,8 @@ noremap : P
 nnoremap c "_c
 xnoremap c "_c
 
+nnoremap gw :grep <C-R><C-W><CR>
+
 nnoremap <C-s> g*Ncgn
 
 nnoremap <leader>j "+y
@@ -143,11 +149,13 @@ nnoremap <leader>wN <C-w>J
 nnoremap <leader>wI <C-w>K
 nnoremap <leader>wO <C-w>L
 
-nnoremap gw :Grep <C-R><C-W><CR>
+
+nnoremap <leader>f :find 
+nnoremap <leader>/ :grep 
 
 # supertab style
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 # wordmotion
@@ -164,3 +172,29 @@ var lspServers = [{
     args: []
 }]
 autocmd User LspSetup g:LspAddServer(lspServers)
+
+# dirvish
+nnoremap - <cmd>:Dirvish<cr>
+
+# sandwich
+g:sandwich_no_default_key_mappings = 1
+nmap ma <Plug>(sandwich-add)
+xmap ma <Plug>(sandwich-add)
+omap ma <Plug>(sandwich-add)
+nmap me <Plug>(sandwich-delete)
+xmap me <Plug>(sandwich-delete)
+nmap mea <Plug>(sandwich-delete-auto)
+nmap mc <Plug>(sandwich-replace)
+xmap mc <Plug>(sandwich-replace)
+nmap mca <Plug>(sandwich-replace-auto)
+
+# sneak
+g:sneak#label = 1
+g:sneak#target_labels = "gaxcwdtesfvoinulrmhy"
+
+# clever-f
+g:clever_f_not_overwrites_standard_mappings = 1
+map t <Plug>(clever-f-f)
+map T <Plug>(clever-f-F)
+map k <Plug>(clever-f-t)
+map K <Plug>(clever-f-T)
