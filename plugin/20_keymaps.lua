@@ -76,11 +76,11 @@ vim.keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = 'System Copy' })
 vim.keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = 'System Paste' })
 
 -- [[ Buffer ]]
-vim.keymap.set('n', '<leader>q', '<cmd>qa!<cr>', { desc = 'Quit All' })
 
 vim.keymap.set({ 'n', 'x' }, '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
 vim.keymap.set({ 'n', 'x' }, '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
 vim.keymap.set({ 'n', 'x' }, '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
+vim.keymap.set('n', '<leader>x', '<cmd>x<cr>', { desc = 'Write Quite' })
 vim.keymap.set({ 'n', 'x' }, '<leader>X', function()
     local current_buf = vim.api.nvim_get_current_buf()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
