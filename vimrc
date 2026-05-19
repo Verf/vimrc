@@ -11,6 +11,7 @@ Plug 'chaoren/vim-wordmotion'
 Plug 'machakann/vim-sandwich'
 Plug 'justinmk/vim-sneak'
 Plug 'rhysd/clever-f.vim'
+Plug 'ap/vim-buftabline'
 plug#end()
 
 packadd cfilter
@@ -22,6 +23,8 @@ g:mapleader = " "
 set termguicolors
 set background=light
 colorscheme one
+
+set hidden
 
 set confirm            # 退出未保存文件等操作时弹出确认对话框
 set autowrite          # 执行 :make 或切换缓冲区前自动保存
