@@ -30,7 +30,7 @@
       "src": "https://github.com/pteroctopus/faster.nvim"
     },
     "mini.nvim": {
-      "rev": "264b5c8fc6e82212af0dc5c345145cfa916efeb6",
+      "rev": "6791615e48801cbf5b2baefadcea77a7760de3f4",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "multicursor.nvim": {
@@ -38,7 +38,7 @@
       "src": "https://github.com/jake-stewart/multicursor.nvim"
     },
     "nvim-lspconfig": {
-      "rev": "deb0df61b2d6691e745b16a42755e10ad38218e9",
+      "rev": "dfbada1a311c4bf3369f8d5421369c9b6e8b888f",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-spider": {
@@ -58,10 +58,6 @@
     "org-bullets.nvim": {
       "rev": "503fe053550879cc202086a40454e46a87c41ddb",
       "src": "https://github.com/akinsho/org-bullets.nvim"
-    },
-    "orgmode": {
-      "rev": "98b3a2b7ff1475ddd921803df54558da22a0f354",
-      "src": "https://github.com/nvim-orgmode/orgmode"
     },
     "quicker.nvim": {
       "rev": "1c9322b7e2967472548ba9bccd1ccd40e49d0a49",
