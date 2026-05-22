@@ -29,6 +29,10 @@
       "rev": "2e7a50f659711854b9a7fdc76d943b59b30d7852",
       "src": "https://github.com/pteroctopus/faster.nvim"
     },
+    "kulala.nvim": {
+      "rev": "aa05c854cc46e235aa24684d0521719570ea489e",
+      "src": "https://github.com/mistweaverco/kulala.nvim"
+    },
     "mini.nvim": {
       "rev": "6791615e48801cbf5b2baefadcea77a7760de3f4",
       "src": "https://github.com/echasnovski/mini.nvim"
@@ -38,7 +42,7 @@
       "src": "https://github.com/jake-stewart/multicursor.nvim"
     },
     "nvim-lspconfig": {
-      "rev": "dfbada1a311c4bf3369f8d5421369c9b6e8b888f",
+      "rev": "a4ed4e761c400849e8c9f8bda33e5083f890268c",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-spider": {
