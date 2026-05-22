@@ -59,10 +59,6 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
-    "org-bullets.nvim": {
-      "rev": "503fe053550879cc202086a40454e46a87c41ddb",
-      "src": "https://github.com/akinsho/org-bullets.nvim"
-    },
     "quicker.nvim": {
       "rev": "1c9322b7e2967472548ba9bccd1ccd40e49d0a49",
       "src": "https://github.com/stevearc/quicker.nvim"
