@@ -8,3 +8,5 @@
 --  For Verf
 --
 if vim.loader then vim.loader.enable() end
+
+_G.Config = {}
