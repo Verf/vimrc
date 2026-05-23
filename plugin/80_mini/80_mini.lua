@@ -1,7 +1,3 @@
-vim.pack.add {
-    'https://github.com/echasnovski/mini.nvim',
-}
-
 -- mini.ai
 local spec_treesitter = require('mini.ai').gen_spec.treesitter
 require('mini.ai').setup {
