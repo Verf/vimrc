@@ -1,5 +1,7 @@
 -- mini.extra
-require('mini.extra').setup {}
+Config.later(function()
+    require('mini.extra').setup {}
+end)
 
 vim.keymap.set('n', '<leader>h', function() MiniExtra.pickers.visit_paths { cwd = '' } end, { desc = 'Oldfiles' })
 vim.keymap.set('n', '<leader>z', function()

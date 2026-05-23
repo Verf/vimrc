@@ -1,2 +1,4 @@
 -- mini.comment
-require('mini.comment').setup {}
+Config.now(function()
+    require('mini.comment').setup {}
+end)

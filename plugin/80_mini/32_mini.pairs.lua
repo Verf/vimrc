@@ -1,2 +1,4 @@
 -- mini.pairs
-require('mini.pairs').setup {}
+Config.now(function()
+    require('mini.pairs').setup {}
+end)

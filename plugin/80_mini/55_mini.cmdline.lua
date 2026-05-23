@@ -1,2 +1,4 @@
 -- mini.cmdline
-require('mini.cmdline').setup { delay = 10 }
+Config.later(function()
+    require('mini.cmdline').setup { delay = 10 }
+end)

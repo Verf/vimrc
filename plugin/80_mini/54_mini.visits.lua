@@ -1,2 +1,4 @@
 -- mini.visits
-require('mini.visits').setup {}
+Config.now_if_args(function()
+    require('mini.visits').setup {}
+end)
