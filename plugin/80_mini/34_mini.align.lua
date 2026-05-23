@@ -1,2 +1,4 @@
 -- mini.align
-require('mini.align').setup {}
+Config.later(function()
+    require('mini.align').setup {}
+end)

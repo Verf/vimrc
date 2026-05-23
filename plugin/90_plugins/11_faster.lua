@@ -1,3 +1,5 @@
 vim.pack.add { 'https://github.com/pteroctopus/faster.nvim' }
 
-require('faster').setup()
+Config.now(function()
+    require('faster').setup()
+end)

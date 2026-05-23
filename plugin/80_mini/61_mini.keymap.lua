@@ -1,10 +1,12 @@
 -- mini.keymap
-require('mini.keymap').setup {}
+Config.now(function()
+    require('mini.keymap').setup {}
 
-local map_multistep = require('mini.keymap').map_multistep
-map_multistep('i', '<Tab>', { 'minisnippets_expand', 'blink_next' })
-map_multistep('i', '<S-Tab>', { 'minisnippets_prev', 'blink_prev' })
-map_multistep('i', '<C-d>', { 'minisnippets_next', 'jump_after_close' })
-map_multistep('i', '<C-u>', { 'minisnippets_prev', 'jump_before_open' })
-map_multistep('i', '<CR>', { 'blink_accept', 'minipairs_cr' })
-map_multistep('i', '<BS>', { 'minipairs_bs' })
+    local map_multistep = require('mini.keymap').map_multistep
+    map_multistep('i', '<Tab>', { 'minisnippets_expand', 'blink_next' })
+    map_multistep('i', '<S-Tab>', { 'minisnippets_prev', 'blink_prev' })
+    map_multistep('i', '<C-d>', { 'minisnippets_next', 'jump_after_close' })
+    map_multistep('i', '<C-u>', { 'minisnippets_prev', 'jump_before_open' })
+    map_multistep('i', '<CR>', { 'blink_accept', 'minipairs_cr' })
+    map_multistep('i', '<BS>', { 'minipairs_bs' })
+end)

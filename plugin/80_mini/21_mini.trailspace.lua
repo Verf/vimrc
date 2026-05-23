@@ -1,2 +1,4 @@
 -- mini.trailspace
-require('mini.trailspace').setup {}
+Config.now_if_args(function()
+    require('mini.trailspace').setup {}
+end)

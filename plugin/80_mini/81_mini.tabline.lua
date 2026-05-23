@@ -1,2 +1,4 @@
 -- mini.tabline
-require('mini.tabline').setup {}
+Config.now(function()
+    require('mini.tabline').setup {}
+end)
