@@ -30,11 +30,11 @@
       "src": "https://github.com/pteroctopus/faster.nvim"
     },
     "kulala.nvim": {
-      "rev": "aa05c854cc46e235aa24684d0521719570ea489e",
+      "rev": "bfe3b3aa1a928d998dbf1036c92272b53a81c261",
       "src": "https://github.com/mistweaverco/kulala.nvim"
     },
     "mini.nvim": {
-      "rev": "6791615e48801cbf5b2baefadcea77a7760de3f4",
+      "rev": "44657837c7338e52727facc85c1d95bec1f6bd7c",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "multicursor.nvim": {
