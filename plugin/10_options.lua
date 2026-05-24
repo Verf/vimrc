@@ -152,6 +152,13 @@ if vim.fn.executable 'rg' == 1 then
     vim.opt.grepformat = '%f:%l:%c:%m'
 end
 
+-- [[ filetypes ]]
+vim.filetype.add {
+    extension = {
+        ['http'] = 'http',
+    },
+}
+
 -- [[ experimental ]]
 require('vim._core.ui2').enable {
     enable = true,
