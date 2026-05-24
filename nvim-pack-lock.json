@@ -1,7 +1,7 @@
 {
   "plugins": {
     "blink.cmp": {
-      "rev": "35e3923a09ff3db150ceff80004befcbbfa071a0",
+      "rev": "82efc953a6121822fda1974241a4d1af74c6c026",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
@@ -17,7 +17,7 @@
       "src": "https://github.com/esmuellert/codediff.nvim"
     },
     "conform.nvim": {
-      "rev": "18aeab3d63d350dcf44d64c462cc489a3412af40",
+      "rev": "24c70347f6b2128679f47d2eb765156ef34bf9e0",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "deepwhite.nvim": {
@@ -30,7 +30,7 @@
       "src": "https://github.com/pteroctopus/faster.nvim"
     },
     "kulala.nvim": {
-      "rev": "bfe3b3aa1a928d998dbf1036c92272b53a81c261",
+      "rev": "5809fe0b599bba8a125adf02922b535303f78b01",
       "src": "https://github.com/mistweaverco/kulala.nvim"
     },
     "mini.nvim": {
@@ -60,7 +60,7 @@
       "version": "'main'"
     },
     "quicker.nvim": {
-      "rev": "1c9322b7e2967472548ba9bccd1ccd40e49d0a49",
+      "rev": "4a6883cb13fe097a20a046eb55f6dffd239276e3",
       "src": "https://github.com/stevearc/quicker.nvim"
     },
     "render-markdown.nvim": {
