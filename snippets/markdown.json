@@ -1,0 +1,6 @@
+{
+    "todo": {
+        "prefix": "todo",
+        "body": "TODO $1 DEADLINE:<$2>"
+    }
+}
