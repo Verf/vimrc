@@ -9,4 +9,7 @@
 --
 if vim.loader then vim.loader.enable() end
 
+-- 全局配置
 _G.Config = {}
+-- 全局autocmd group
+_G.MyGroup = vim.api.nvim_create_augroup('MyGroup', { clear = true })

@@ -20,7 +20,7 @@ Config.on_event('InsertEnter', function()
 
     -- 退出Insert模式时自动停止snippet状态
     vim.api.nvim_create_autocmd('InsertLeave', {
-        group = _G.my_group,
+        group = _G.MyGroup,
         callback = function()
             if snippets.session.get() then
                 vim.schedule(function()

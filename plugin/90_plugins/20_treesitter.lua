@@ -54,7 +54,7 @@ Config.now(function()
 
     -- 为buffer自动启动tree-sitter
     vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
-        group = _G.my_group,
+        group = _G.MyGroup,
         callback = function(ev)
             local buftype = vim.bo[ev.buf].buftype
             local filetype = vim.bo[ev.buf].filetype
@@ -74,7 +74,7 @@ Config.now(function()
 
     -- 设置tree-sitter快捷键
     vim.api.nvim_create_autocmd('FileType', {
-        group = _G.my_group,
+        group = _G.MyGroup,
         pattern = filetypes,
         callback = function(ev)
             local buftype = vim.bo[ev.buf].buftype
