@@ -76,3 +76,9 @@ vim.keymap.set(
     function() MiniExtra.pickers.lsp { scope = 'type_definition' } end,
     { desc = 'Goto type_definition' }
 )
+vim.keymap.set(
+    'n',
+    '<leader>nf',
+    function() MiniPick.builtin.files({}, { source = { cwd = vim.fn.expand(vim.env.NOTE_TAKING_DIR) } }) end,
+    { desc = 'Find Notes' }
+)

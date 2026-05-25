@@ -159,27 +159,8 @@ vim.keymap.set('n', '<leader>wd', vim.diagnostic.open_float, { desc = 'Show diag
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto definition' })
 
 -- [[ Insert ]]
-vim.keymap.set('n', '<leader>id', [[<cmd>pu=strftime('%Y-%m-%d')]])
-vim.keymap.set('n', '<leader>it', [[<cmd>pu=strftime('%Y-%m-%d %H:%M:%S')]])
-
--- [[ GTD ]]
-local function edit_note(name)
-    -- 获取环境变量
-    local note_dir = os.getenv 'NOTE_TAKING_DIR'
-    -- 检查环境变量是否已设置
-    if note_dir == nil or note_dir == '' then
-        vim.notify('NOTE_TAKING_DIR 不存在', vim.log.levels.ERROR)
-        return
-    end
-    -- 拼接文件路径并打开文件
-    local todo_file = note_dir .. name
-    vim.cmd('edit ' .. todo_file)
-end
-vim.keymap.set('n', '<leader>nt', function() edit_note 'todo.md' end, { desc = 'Open Todo', silent = true })
-vim.keymap.set('n', '<leader>nl', function() edit_note 'logs.md' end, { desc = 'Open Logs', silent = true })
-vim.keymap.set('n', '<leader>nm', function() edit_note 'meetings.md' end, { desc = 'Open Meetings', silent = true })
-vim.keymap.set('n', '<leader>nc', function() edit_note 'changes.md' end, { desc = 'Open Changes', silent = true })
-vim.keymap.set('n', '<leader>nr', function() edit_note 'refile.md' end, { desc = 'Open Refile', silent = true })
+vim.keymap.set('n', '<leader>id', [[<cmd>pu=strftime('%Y-%m-%d')<cr>]], { desc = 'Insert Date' })
+vim.keymap.set('n', '<leader>it', [[<cmd>pu=strftime('%Y-%m-%d %H:%M:%S')<cr>]], { desc = 'Insert Datetime' })
 
 -- [[ Others ]]
 -- 删除内置的增量选择快捷键
