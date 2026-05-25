@@ -163,7 +163,7 @@ vim.keymap.set('n', '<leader>id', [[<cmd>pu=strftime('%Y-%m-%d')]])
 vim.keymap.set('n', '<leader>it', [[<cmd>pu=strftime('%Y-%m-%d %H:%M:%S')]])
 
 -- [[ GTD ]]
-vim.keymap.set('n', '<leader>gt', function()
+local function edit_note(name)
     -- 获取环境变量
     local note_dir = os.getenv 'NOTE_TAKING_DIR'
     -- 检查环境变量是否已设置
@@ -172,9 +172,14 @@ vim.keymap.set('n', '<leader>gt', function()
         return
     end
     -- 拼接文件路径并打开文件
-    local todo_file = note_dir .. 'todo.md'
+    local todo_file = note_dir .. name
     vim.cmd('edit ' .. todo_file)
-end, { desc = 'Open Todo', silent = true })
+end
+vim.keymap.set('n', '<leader>nt', function() edit_note 'todo.md' end, { desc = 'Open Todo', silent = true })
+vim.keymap.set('n', '<leader>nl', function() edit_note 'logs.md' end, { desc = 'Open Logs', silent = true })
+vim.keymap.set('n', '<leader>nm', function() edit_note 'meetings.md' end, { desc = 'Open Meetings', silent = true })
+vim.keymap.set('n', '<leader>nc', function() edit_note 'changes.md' end, { desc = 'Open Changes', silent = true })
+vim.keymap.set('n', '<leader>nr', function() edit_note 'refile.md' end, { desc = 'Open Refile', silent = true })
 
 -- [[ Others ]]
 -- 删除内置的增量选择快捷键
