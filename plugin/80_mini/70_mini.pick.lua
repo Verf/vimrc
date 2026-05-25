@@ -1,5 +1,5 @@
 -- mini.pick
-Config.later(function()
+Config.now(function()
     require('mini.pick').setup {
         options = { use_cache = true },
         mappings = {
