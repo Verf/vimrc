@@ -48,7 +48,7 @@ Config.now(function()
 end)
 
 vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave', 'LspProgress' }, {
-    group = _G.my_group,
+    group = _G.GyGroup,
     callback = function() vim.cmd 'redrawstatus' end,
     desc = 'Update statusline on macro recording and LSP progress',
 })

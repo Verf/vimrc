@@ -65,7 +65,7 @@ Sub-files use the same scheme: `20_mini.hipatterns.lua`, `20_treesitter.lua`, et
 
 ### Key Dependencies
 
-- `00_mini.lua` must load before all other plugins — it defines `Config.*` helpers and the `_G.my_group` augroup used by other files
+- `00_mini.lua` must load before all other plugins — it defines `Config.*` helpers and the `_G.MyGroup` augroup used by other files
 - Plugin config files are standalone; they all receive `Config.*` from `00_mini.lua`
 
 ## Key Configuration Conventions
@@ -79,7 +79,6 @@ Sub-files use the same scheme: `20_mini.hipatterns.lua`, `20_treesitter.lua`, et
 - **Mouse**: Enabled in all modes
 - **cmdheight**: 0 (hidden, uses Neovim's experimental UI2 for messages)
 - **Shell**: nushell when available, else falls back to default
-- **Grep**: ripgrep (`rg --vimgrep --smart-case --no-heading`)
 
 ### Keymap Rules
 - **All keymaps must have `desc`** — this feeds which-key.nvim
@@ -88,14 +87,14 @@ Sub-files use the same scheme: `20_mini.hipatterns.lua`, `20_treesitter.lua`, et
 - Which-key groups defined in `plugin/90_plugins/40_whichkey.lua`
 
 ### Autocommands
-- Always assign to `_G.my_group` (defined in `plugin/30_autocmds.lua`)
+- Always assign to `_G.MyGroup` (defined in `plugin/30_autocmds.lua`)
 - Group is cleared on reload (`clear = true`)
 
 ### Plugin Config Style
 - Plugin setup functions wrapped in `Config.now()` / `Config.later()` / etc.
 - Keymaps for a plugin are set in the same file as its config
 - Prefer `require('plugin').setup {}` pattern
-- Never use `nvim_create_autocmd` without assigning to `_G.my_group`
+- Never use `nvim_create_autocmd` without assigning to `_G.MyGroup`
 
 ## Norman Keyboard Layout
 
@@ -205,14 +204,14 @@ Enabled via `vim.lsp.enable` in `21_lspconfig.lua`:
 ### When Modifying Existing Config
 - **Keymaps**: Edit `20_keymaps.lua` for global keymaps, or the plugin file for plugin-specific ones
 - **Options**: Edit `10_options.lua`
-- **Autocommands**: Edit `30_autocmds.lua`, always use `_G.my_group`
+- **Autocommands**: Edit `30_autocmds.lua`, always use `_G.MyGroup`
 - **Commands**: Edit `40_commands.lua`
 - **Formatting**: Run `stylua` on any changed Lua files (or rely on conform.nvim)
 - **Finally** Update the `AGENTS.md`.
 
 ### Do Not
 - Do NOT introduce `lazy.nvim`, `packer`, or any alternative plugin manager — stick with `vim.pack`
-- Do NOT create autocommands without `group = _G.my_group`
+- Do NOT create autocommands without `group = _G.MyGroup`
 - Do NOT add keymaps without a `desc` field
 - Do NOT change the Norman keyboard layout remaps in `20_keymaps.lua` — they are intentional and affect all other keymaps
 - Do NOT change the shell config (nushell) without understanding the implications

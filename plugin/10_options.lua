@@ -148,9 +148,18 @@ end
 
 -- [[ grep ]]
 if vim.fn.executable 'rg' == 1 then
-    vim.opt.grepprg = 'rg --vimgrep --smart-case --no-heading'
+    vim.opt.grepprg = 'rg --vimgrep --smart-case --no-heading -j 1'
     vim.opt.grepformat = '%f:%l:%c:%m'
 end
+
+-- grep或make后自动打开quickfix
+vim.api.nvim_create_autocmd('QuickFixCmdPost', {
+    pattern = '[^l]*', -- 匹配 grep, make 等（排除 lgrep 等局部列表命令）
+    group = _G.MyGroup,
+    callback = function()
+        vim.cmd 'cwindow' -- 有结果才打开，没结果不打开
+    end,
+})
 
 -- [[ filetypes ]]
 vim.filetype.add {
@@ -175,5 +184,6 @@ require('vim._core.ui2').enable {
 }
 -- 解决执行 `:restart` 重启后，UI2 可能会意外丢失被禁用的小缺陷 (Issue #38553) [2]
 vim.api.nvim_create_autocmd('UIEnter', {
+    group = _G.MyGroup,
     callback = function() require('vim._core.ui2').enable { enable = true } end,
 })

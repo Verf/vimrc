@@ -1,9 +1,12 @@
 -- mini.extra
-Config.now(function()
-    require('mini.extra').setup {}
-end)
+Config.now(function() require('mini.extra').setup {} end)
 
-vim.keymap.set('n', '<leader>h', function() MiniExtra.pickers.visit_paths { cwd = '' } end, { desc = 'Oldfiles' })
+vim.keymap.set('n', '<leader>h', function()
+    MiniExtra.pickers.visit_paths {
+        filter = function(data) return vim.fn.isdirectory(data.path) == 0 end,
+        cwd = '', -- 默认限制在cwd范围，设置cwd = ''可查询全局
+    }
+end, { desc = 'Oldfiles' })
 vim.keymap.set('n', '<leader>z', function()
     MiniExtra.pickers.visit_paths({
         filter = function(data) return vim.fn.isdirectory(data.path) == 1 end,
