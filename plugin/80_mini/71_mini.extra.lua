@@ -1,5 +1,5 @@
 -- mini.extra
-Config.later(function()
+Config.now(function()
     require('mini.extra').setup {}
 end)
 
