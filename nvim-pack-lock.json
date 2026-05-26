@@ -1,7 +1,7 @@
 {
   "plugins": {
     "blink.cmp": {
-      "rev": "82efc953a6121822fda1974241a4d1af74c6c026",
+      "rev": "0593548ee0b0978abf303d30f449234e07f951d1",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
@@ -21,7 +21,7 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "deepwhite.nvim": {
-      "rev": "94dcef93a2cb589ff611440fa11e5560023d273e",
+      "rev": "49d8d2566990f96fc45cb80f0e14cc113f9781c5",
       "src": "https://github.com/Verf/deepwhite.nvim",
       "version": "'dev'"
     },
