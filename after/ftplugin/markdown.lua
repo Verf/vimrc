@@ -12,9 +12,6 @@ vim.wo.linebreak = true
 vim.wo.breakindent = true
 vim.bo.textwidth = 0
 
--- 拼写检查
-vim.wo.spell = true
-
 -- 修正 formatoptions（覆盖 30_autocmds.lua 的全局 'c' 'o' 移除）
 -- t: 按 textwidth 自动换行 / c: 自动续行列表 / q: 允许 gq 格式化
 -- l: 插入模式下不断行长行 / n: 识别编号列表 / j: 合并时移除注释前缀
