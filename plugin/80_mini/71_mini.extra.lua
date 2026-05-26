@@ -17,8 +17,22 @@ vim.keymap.set('n', '<leader>z', function()
             choose = function(item)
                 if item == nil then return end
                 local full_path = vim.fn.fnamemodify(item, ':p')
-                vim.api.nvim_set_current_dir(full_path)
-                vim.notify('cd ' .. full_path, vim.log.levels.INFO)
+                vim.schedule(function()
+                    -- 与 <leader>f 一致的逻辑：选中目录后进一步在该目录下浏览文件
+                    if vim.fn.executable 'rg' == 1 then
+                        MiniPick.builtin.cli({ command = { 'rg', '--files', '-j', '1', '--color=never' } }, {
+                            source = {
+                                name = 'Files (rg)',
+                                cwd = full_path,
+                                show = function(buf_id, items, query)
+                                    MiniPick.default_show(buf_id, items, query, { show_icons = true })
+                                end,
+                            },
+                        })
+                    else
+                        MiniPick.builtin.files({}, { source = { cwd = full_path } })
+                    end
+                end)
             end,
         },
     })
