@@ -22,6 +22,7 @@ Config.now(function()
         'typescript',
         'tsx',
         'scss',
+        'http',
         -- backend
         'java',
         'javadoc',
