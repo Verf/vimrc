@@ -37,12 +37,16 @@ function M.parse_line(line)
     if not status then return nil end
 
     -- 提取 DEADLINE 和 CLOSED 标签
-    local deadline = rest:match 'DEADLINE:%s*<(%d+%-%d+%-%d+)>'
+    -- DEADLINE 支持两种格式: 纯日期 <2026-05-01> 或日期+时间 <2026-05-01 10:00:00>
+    local deadline = rest:match 'DEADLINE:%s*<(%d+%-%d+%-%d+ %d+:%d+:%d+)>'
+    if not deadline then
+        deadline = rest:match 'DEADLINE:%s*<(%d+%-%d+%-%d+)>'
+    end
     local closed = rest:match 'CLOSED:%s*<(%d+%-%d+%-%d+ %d+:%d+:%d+)>'
 
     -- 从 rest 中移除标签，剩下的就是纯标题
     local title = rest
-    title = title:gsub('%s*DEADLINE:%s*<%d+%-%d+%-%d+>%s*', ' ')
+    title = title:gsub('%s*DEADLINE:%s*<%d+%-%d+%-%d+[^>]*>%s*', ' ')
     title = title:gsub('%s*CLOSED:%s*<%d+%-%d+%-%d+ %d+:%d+:%d+>%s*', ' ')
     title = title:gsub('%s+$', ''):gsub('^%s+', '')
 
