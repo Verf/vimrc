@@ -1,7 +1,4 @@
-vim.pack.add {
-    'https://github.com/arborist-ts/arborist.nvim',
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter-textobjects', version = 'main' },
-}
+vim.pack.add { 'https://github.com/arborist-ts/arborist.nvim' }
 
 Config.now(function()
     require('arborist').setup {
@@ -67,21 +64,4 @@ Config.now(function()
             end, { buffer = ev.buf, desc = 'Shrink selection', silent = true })
         end,
     })
-
-    -- nvim-treesitter-textobjects
-    vim.g.no_plugin_maps = true
-
-    local ts_move = require 'nvim-treesitter-textobjects.move'
-    vim.keymap.set(
-        { 'n', 'x', 'o' },
-        ']a',
-        function() ts_move.goto_next_start('@parameter.outer', 'textobjects') end,
-        { desc = 'Goto next parameter' }
-    )
-    vim.keymap.set(
-        { 'n', 'x', 'o' },
-        '[a',
-        function() ts_move.goto_previous_start('@parameter.outer', 'textobjects') end,
-        { desc = 'Goto previous parameter' }
-    )
 end)
