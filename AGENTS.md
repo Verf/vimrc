@@ -160,7 +160,7 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `11_faster.lua` | (speed tweaks) | Performance |
 | `12_scrollEOF.lua` | scrollEOF | Scroll beyond EOF |
 | `13_scope.lua` | scope | Buffer scope |
-| `20_treesitter.lua` | nvim-treesitter + textobjects | Syntax highlighting, text objects, incremental selection |
+| `20_treesitter.lua` | arborist.nvim | Manage tree-sitter parsers and queries |
 | `21_lspconfig.lua` | nvim-lspconfig | LSP client config (`ty`, `ruff`, `biome`, `nushell`) |
 | `22_spider.lua` | nvim-spider | CamelCase/subword motion |
 | `23_multicursor.lua` | multicursor.nvim | Multi-cursor editing |
