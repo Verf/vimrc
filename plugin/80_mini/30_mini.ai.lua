@@ -2,6 +2,7 @@
 Config.now(function()
     local spec_treesitter = require('mini.ai').gen_spec.treesitter
     require('mini.ai').setup {
+        n_lines = 200,
         mappings = {
             inside = 'r',
             inside_next = '',
