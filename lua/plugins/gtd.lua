@@ -210,7 +210,8 @@ function M.format_todos(line1, line2)
         local parsed = M.parse_line(line)
         if parsed then
             local prefix = '# ' .. parsed.status .. ' ' .. parsed.title
-            max_prefix = math.max(max_prefix, #prefix)
+            local disp_width = vim.api.nvim_strwidth(prefix)
+            max_prefix = math.max(max_prefix, disp_width)
 
             if parsed.deadline then
                 local tag = 'DEADLINE:<' .. parsed.deadline .. '>'
@@ -235,7 +236,7 @@ function M.format_todos(line1, line2)
         local parts = { entry.prefix }
 
         if entry.parsed.deadline then
-            local padding = deadline_col - #entry.prefix
+            local padding = deadline_col - vim.api.nvim_strwidth(entry.prefix)
             parts[#parts + 1] = string.rep(' ', math.max(1, padding)) .. entry.deadline_tag
 
             if entry.parsed.closed then
@@ -246,7 +247,7 @@ function M.format_todos(line1, line2)
             end
         elseif entry.parsed.closed then
             local closed_tag = 'CLOSED:<' .. entry.parsed.closed .. '>'
-            local padding = deadline_col - #entry.prefix
+            local padding = deadline_col - vim.api.nvim_strwidth(entry.prefix)
             parts[#parts + 1] = string.rep(' ', math.max(1, padding)) .. closed_tag
         end
 
