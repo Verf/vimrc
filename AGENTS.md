@@ -14,6 +14,7 @@ nvim/
 │   ├── 20_keymaps.lua        # All keymaps, Norman keyboard layout remaps
 │   ├── 30_autocmds.lua       # Autocommands: auto-save, terminal behavior, etc.
 │   ├── 40_commands.lua       # Custom commands (e.g., :Grep)
+│   ├── 50_lsp.lua            # LSP config (built-in vim.lsp.config API)
 │   ├── 80_mini/              # mini.nvim ecosystem plugins
 │   └── 90_plugins/           # External plugins
 ├── lua/
@@ -58,6 +59,7 @@ Files in `plugin/` load in alphanumeric order:
 - `20_` — Keymaps
 - `30_` — Autocommands
 - `40_` — User commands
+- `50_` — LSP config (built-in API, no external dependency)
 - `80_mini/` — mini.nvim plugins (80–81)
 - `90_plugins/` — External plugins (10–60+)
 
@@ -161,7 +163,7 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `12_scrollEOF.lua` | scrollEOF | Scroll beyond EOF |
 | `13_scope.lua` | scope | Buffer scope |
 | `20_treesitter.lua` | arborist.nvim | Manage tree-sitter parsers and queries |
-| `21_lspconfig.lua` | nvim-lspconfig | LSP client config (`ty`, `ruff`, `biome`, `nushell`) |
+
 | `22_spider.lua` | nvim-spider | CamelCase/subword motion |
 | `23_multicursor.lua` | multicursor.nvim | Multi-cursor editing |
 | `30_blink.lua` | blink.cmp | Completion engine (uses mini_snippets preset) |
@@ -184,10 +186,11 @@ A self-contained task management plugin. Key conventions:
 - **Lazy-init**: Configuration in `plugin/90_plugins/60_gtd.lua`, module in `lua/plugins/gtd.lua`
 
 ### LSP Servers
-Enabled via `vim.lsp.enable` in `21_lspconfig.lua`:
+Configured via `vim.lsp.config()` in `50_lsp.lua` (Neovim 0.11+ built-in API, no nvim-lspconfig dependency):
+- `ruff` — Python linter + organize imports (`ruff server`)
 - `ty` — Python type checker
-- `ruff` — Python linter
 - `nushell` — Nushell IDE support
+- `vls` — Vue2 language server (Vetur, Node ≤16)
 
 ## Coding Guidelines
 
@@ -222,7 +225,7 @@ When a user reports an issue, start investigation here:
 - **Startup/performance**: `init.lua`, `10_options.lua` (shada settings), `11_faster.lua`
 - **Keymaps not working**: `20_keymaps.lua` (Norman remaps), plugin files (plugin-specific maps)
 - **Completion**: `30_blink.lua`
-- **LSP/formatting/diagnostics**: `21_lspconfig.lua`, `50_conform.lua`, `10_options.lua` (diagnostic config)
+- **LSP/formatting/diagnostics**: `50_lsp.lua`, `50_conform.lua`, `10_options.lua` (diagnostic config)
 - **Colors/appearance**: `10_deepwhite.lua`, `80_mini.statusline.lua`, `81_mini.tabline.lua`, `10_options.lua` (UI options)
 - **File operations/sessions**: `53_mini.sessions.lua`, `54_mini.visits.lua`, `41_oil.lua`
 - **GTD/tasks**: `60_gtd.lua` + `lua/plugins/gtd.lua`

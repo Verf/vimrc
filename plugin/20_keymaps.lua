@@ -33,8 +33,6 @@ vim.keymap.set({ 'n', 'o', 'x' }, ':', 'P')
 -- [[ Edit ]]
 -- 全局模糊搜索
 vim.keymap.set('n', '<leader>/', ':Grep ', { desc = 'Grep' })
--- 显示文档
-vim.keymap.set('n', 'gk', vim.lsp.buf.hover, { desc = 'Show Doc' })
 -- 修改时不记录寄存器中
 vim.keymap.set({ 'n', 'v' }, 'c', '"_c')
 vim.keymap.set({ 'n', 'v' }, 'C', '"_C')
@@ -158,8 +156,6 @@ vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { d
 -- [[ Diagnostic ]]
 vim.keymap.set('n', '<leader>wd', vim.diagnostic.open_float, { desc = 'Show diagnostics under the cursor' })
 
--- [[ Lsp ]]
-vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto definition' })
 
 -- [[ Insert ]]
 vim.keymap.set(
