@@ -13,6 +13,7 @@ M.config = {
     mappings = {
         show_todos = '<leader>ns',
         toggle_status = '<leader>nt',
+        format_todos = '<leader>nm',
     },
 }
 
@@ -38,16 +39,14 @@ function M.parse_line(line)
 
     -- 提取 DEADLINE 和 CLOSED 标签
     -- DEADLINE 支持两种格式: 纯日期 <2026-05-01> 或日期+时间 <2026-05-01 10:00:00>
-    local deadline = rest:match 'DEADLINE:%s*<(%d+%-%d+%-%d+ %d+:%d+:%d+)>'
-    if not deadline then
-        deadline = rest:match 'DEADLINE:%s*<(%d+%-%d+%-%d+)>'
-    end
-    local closed = rest:match 'CLOSED:%s*<(%d+%-%d+%-%d+ %d+:%d+:%d+)>'
+    local deadline = rest:match 'DEADLINE:<(%d+%-%d+%-%d+ %d+:%d+:%d+)>'
+    if not deadline then deadline = rest:match 'DEADLINE:<(%d+%-%d+%-%d+)>' end
+    local closed = rest:match 'CLOSED:<(%d+%-%d+%-%d+ %d+:%d+:%d+)>'
 
     -- 从 rest 中移除标签，剩下的就是纯标题
     local title = rest
-    title = title:gsub('%s*DEADLINE:%s*<%d+%-%d+%-%d+[^>]*>%s*', ' ')
-    title = title:gsub('%s*CLOSED:%s*<%d+%-%d+%-%d+ %d+:%d+:%d+>%s*', ' ')
+    title = title:gsub('%s*DEADLINE:<%d+%-%d+%-%d+[^>]*>%s*', ' ')
+    title = title:gsub('%s*CLOSED:<%d+%-%d+%-%d+ %d+:%d+:%d+>%s*', ' ')
     title = title:gsub('%s+$', ''):gsub('^%s+', '')
 
     return {
@@ -99,7 +98,7 @@ function M.set_todos_to_quickfix()
     end
 
     if #items == 0 then
-        vim.fn.setqflist({})
+        vim.fn.setqflist {}
         vim.notify('[GTD] 未找到任何 TODO 任务', vim.log.levels.INFO)
         return
     end
@@ -189,6 +188,75 @@ function M.toggle_status()
 end
 
 -- ============================================================
+-- 格式化指定范围内的 GTD 行
+-- DEADLINE 和 CLOSED 标签双列左对齐
+-- ============================================================
+function M.format_todos(line1, line2)
+    line1 = line1 or 1
+    line2 = line2 or vim.api.nvim_buf_line_count(0)
+
+    local lines = vim.api.nvim_buf_get_lines(0, line1 - 1, line2, false)
+    local new_lines = {}
+    for i, line in ipairs(lines) do
+        new_lines[i] = line
+    end
+
+    -- 第一遍: 解析所有 GTD 行, 计算列宽
+    local entries = {}
+    local max_prefix = 0
+    local max_deadline_tag = 0
+
+    for i, line in ipairs(lines) do
+        local parsed = M.parse_line(line)
+        if parsed then
+            local prefix = '# ' .. parsed.status .. ' ' .. parsed.title
+            max_prefix = math.max(max_prefix, #prefix)
+
+            if parsed.deadline then
+                local tag = 'DEADLINE:<' .. parsed.deadline .. '>'
+                max_deadline_tag = math.max(max_deadline_tag, #tag)
+                entries[i] = { parsed = parsed, prefix = prefix, deadline_tag = tag }
+            elseif parsed.closed then
+                entries[i] = { parsed = parsed, prefix = prefix }
+            else
+                entries[i] = { parsed = parsed, prefix = prefix }
+            end
+        end
+    end
+
+    if next(entries) == nil then return end
+
+    -- 列位置 (0-indexed 长度)
+    local deadline_col = max_prefix + 2
+    local closed_col = deadline_col + max_deadline_tag + 2
+
+    -- 第二遍: 重建 GTD 行
+    for i, entry in pairs(entries) do
+        local parts = { entry.prefix }
+
+        if entry.parsed.deadline then
+            local padding = deadline_col - #entry.prefix
+            parts[#parts + 1] = string.rep(' ', math.max(1, padding)) .. entry.deadline_tag
+
+            if entry.parsed.closed then
+                local closed_tag = 'CLOSED:<' .. entry.parsed.closed .. '>'
+                local current_col = deadline_col + #entry.deadline_tag
+                local pad = closed_col - current_col
+                parts[#parts + 1] = string.rep(' ', math.max(1, pad)) .. closed_tag
+            end
+        elseif entry.parsed.closed then
+            local closed_tag = 'CLOSED:<' .. entry.parsed.closed .. '>'
+            local padding = deadline_col - #entry.prefix
+            parts[#parts + 1] = string.rep(' ', math.max(1, padding)) .. closed_tag
+        end
+
+        new_lines[i] = table.concat(parts, '')
+    end
+
+    vim.api.nvim_buf_set_lines(0, line1 - 1, line2, false, new_lines)
+end
+
+-- ============================================================
 -- 入口: setup(opts)
 --   opts.todo_dir - 任务文件所在目录，默认为 nil，则关闭功能
 --   opts.todo_file - 任务文件名，默认 todo.md
@@ -207,9 +275,15 @@ function M.setup(opts)
 
     vim.api.nvim_create_user_command('GTDList', M.show_todos, {})
     vim.api.nvim_create_user_command('GTDToggle', M.toggle_status, {})
+    vim.api.nvim_create_user_command(
+        'GTDFormat',
+        function(opts) M.format_todos(opts.line1, opts.line2) end,
+        { range = '%', desc = '格式化 GTD 标签对齐' }
+    )
 
     vim.keymap.set('n', M.config.mappings.show_todos, M.show_todos, { desc = 'Show Todos' })
     vim.keymap.set('n', M.config.mappings.toggle_status, M.toggle_status, { desc = 'Toggle Status' })
+    vim.keymap.set('n', M.config.mappings.format_todos, M.format_todos, { desc = 'Format Todos' })
 end
 
 return M
