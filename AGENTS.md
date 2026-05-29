@@ -10,7 +10,7 @@ Personal Neovim configuration for Neovim 0.12.
 nvim/
 ├── init.lua                  # Entry point: enables vim.loader, defines global Config
 ├── plugin/                   # All config files (auto-loaded by Neovim)
-│   ├── 10_options.lua        # Core options, Neovide, shell (nu), UI, diagnostics, grep
+│   ├── 10_options.lua        # Core options, Neovide, shell (nu), UI, diagnostics, grep, fold (treesitter expr)
 │   ├── 20_keymaps.lua        # All keymaps, Norman keyboard layout remaps
 │   ├── 30_autocmds.lua       # Autocommands: auto-save, terminal behavior, etc.
 │   ├── 40_commands.lua       # Custom commands (e.g., :Grep)
@@ -226,6 +226,7 @@ When a user reports an issue, start investigation here:
 - **Keymaps not working**: `20_keymaps.lua` (Norman remaps), plugin files (plugin-specific maps)
 - **Completion**: `30_blink.lua`
 - **LSP/formatting/diagnostics**: `50_lsp.lua`, `50_conform.lua`, `10_options.lua` (diagnostic config)
+- **Folding**: `10_options.lua` (foldmethod=expr via treesitter, foldcolumn, statuscolumn fold icons)
 - **Colors/appearance**: `10_deepwhite.lua`, `80_mini.statusline.lua`, `81_mini.tabline.lua`, `10_options.lua` (UI options)
 - **File operations/sessions**: `53_mini.sessions.lua`, `54_mini.visits.lua`, `41_oil.lua`
 - **GTD/tasks**: `60_gtd.lua` + `lua/plugins/gtd.lua`
