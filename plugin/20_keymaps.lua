@@ -162,8 +162,18 @@ vim.keymap.set('n', '<leader>wd', vim.diagnostic.open_float, { desc = 'Show diag
 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'Goto definition' })
 
 -- [[ Insert ]]
-vim.keymap.set('n', '<leader>id', [[<cmd>pu=strftime('%Y-%m-%d')<cr>]], { desc = 'Insert Date' })
-vim.keymap.set('n', '<leader>it', [[<cmd>pu=strftime('%Y-%m-%d %H:%M:%S')<cr>]], { desc = 'Insert Datetime' })
+vim.keymap.set(
+    'n',
+    '<leader>id',
+    function() vim.api.nvim_put({ os.date '%Y-%m-%d' }, 'c', true, true) end,
+    { desc = 'Insert Date' }
+)
+vim.keymap.set(
+    'n',
+    '<leader>it',
+    function() vim.api.nvim_put({ os.date '%Y-%m-%d %H:%M:%S' }, 'c', true, true) end,
+    { desc = 'Insert Datetime' }
+)
 
 -- [[ Others ]]
 -- 删除内置的增量选择快捷键
