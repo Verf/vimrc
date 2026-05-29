@@ -187,7 +187,6 @@ A self-contained task management plugin. Key conventions:
 Enabled via `vim.lsp.enable` in `21_lspconfig.lua`:
 - `ty` — Python type checker
 - `ruff` — Python linter
-- `biome` — JS/TS linter
 - `nushell` — Nushell IDE support
 
 ## Coding Guidelines

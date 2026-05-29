@@ -1,7 +1,7 @@
 vim.pack.add { 'https://github.com/neovim/nvim-lspconfig' }
 
 Config.now_if_args(function()
-    vim.lsp.enable { 'ty', 'ruff', 'biome', 'nushell' }
+    vim.lsp.enable { 'ty', 'ruff', 'nushell' }
 
     vim.api.nvim_create_autocmd('LspAttach', {
         group = _G.MyGroup,
