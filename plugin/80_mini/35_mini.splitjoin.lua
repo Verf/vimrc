@@ -1,4 +1,2 @@
 -- mini.splitjoin
-Config.later(function()
-    require('mini.splitjoin').setup {}
-end)
+Config.later(function() require('mini.splitjoin').setup {} end)

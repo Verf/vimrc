@@ -1,7 +1,5 @@
 -- mini.bufremove
-Config.later(function()
-    require('mini.bufremove').setup {}
-end)
+Config.later(function() require('mini.bufremove').setup {} end)
 
 vim.keymap.set(
     { 'n', 'x' },

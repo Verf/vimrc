@@ -1,4 +1,2 @@
 -- mini.diff
-Config.later(function()
-    require('mini.diff').setup { view = { style = 'number' } }
-end)
+Config.later(function() require('mini.diff').setup { view = { style = 'number' } } end)

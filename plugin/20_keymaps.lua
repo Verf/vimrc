@@ -156,7 +156,6 @@ vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { d
 -- [[ Diagnostic ]]
 vim.keymap.set('n', '<leader>wd', vim.diagnostic.open_float, { desc = 'Show diagnostics under the cursor' })
 
-
 -- [[ Insert ]]
 vim.keymap.set(
     'n',

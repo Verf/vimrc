@@ -14,7 +14,12 @@ Config.now(function()
         end, { desc = 'Clear all cursors' })
     end)
 
-    vim.keymap.set('x', 's', function() require('multicursor-nvim').matchCursors() end, { desc = 'Add cursor by regex' })
+    vim.keymap.set(
+        'x',
+        's',
+        function() require('multicursor-nvim').matchCursors() end,
+        { desc = 'Add cursor by regex' }
+    )
 
     vim.keymap.set(
         'x',

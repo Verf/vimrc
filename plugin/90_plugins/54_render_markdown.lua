@@ -7,7 +7,7 @@ Config.on_filetype(
             heading = {
                 sign = false,
                 position = 'inline',
-                icons = { '󰉫 ', '󰉬 ', '󰉭 ', '󰉮 ', '󰉯 ', '󰉰 ' }
+                icons = { '󰉫 ', '󰉬 ', '󰉭 ', '󰉮 ', '󰉯 ', '󰉰 ' },
             },
             code = { sign = false, width = 'block', right_pad = 1 },
         }
