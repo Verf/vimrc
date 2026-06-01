@@ -1,4 +1,2 @@
 -- mini.align
-Config.later(function()
-    require('mini.align').setup {}
-end)
+Config.later(function() require('mini.align').setup {} end)

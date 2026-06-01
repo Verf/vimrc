@@ -1,4 +1,2 @@
 -- mini.pairs
-Config.now(function()
-    require('mini.pairs').setup {}
-end)
+Config.now(function() require('mini.pairs').setup {} end)
