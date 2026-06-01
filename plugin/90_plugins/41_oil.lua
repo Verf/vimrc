@@ -1,6 +1,6 @@
 vim.pack.add { 'https://github.com/barrettruth/canola.nvim' }
 
-Config.later(
+Config.now_if_args(
     function()
         require('oil').setup {
             default_file_explorer = true,
