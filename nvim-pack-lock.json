@@ -62,7 +62,7 @@
       "src": "https://github.com/Aasim-A/scrollEOF.nvim"
     },
     "shapeim.nvim": {
-      "rev": "f95cfb744be99b1e85a8d692267632d70da028db",
+      "rev": "c9b6b16e279fca7983676f8988dd45999632fa69",
       "src": "https://github.com/Verf/shapeim.nvim"
     },
     "which-key.nvim": {
