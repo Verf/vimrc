@@ -3,7 +3,8 @@ vim.pack.add {
     'https://github.com/saghen/blink.cmp',
 }
 
-Config.on_event('InsertEnter', function()
+-- Config.on_event('InsertEnter', function()
+Config.now(function()
     require('blink.cmp').setup {
         keymap = {
             preset = 'none',
@@ -16,7 +17,17 @@ Config.on_event('InsertEnter', function()
         },
         fuzzy = { implementation = 'lua' },
         snippets = { preset = 'mini_snippets' },
-        sources = { default = { 'lsp', 'path', 'buffer' } },
+        sources = {
+            providers = {
+                shapeim = {
+                    name = 'shapeim',
+                    module = 'shapeim.source',
+                    score_offset = 100,
+                    min_keyword_length = 1,
+                },
+            },
+            default = { 'shapeim', 'lsp', 'path', 'buffer' },
+        },
         cmdline = { enabled = false },
         completion = {
             list = { selection = { preselect = false } },
