@@ -6,6 +6,12 @@ Config.now(function()
         compiler = 'zig',
         update_cadence = 'weekly',
         install_popular = false,
+        -- 禁用 arborist tree-sitter 缩进的语言列表
+        -- Python: arborist indent.lua 不支持 indent.immediate 标记，
+        -- 导致 if/def/for 等单行语句后换行不缩进，回退到内置 python#GetIndent
+        disable = {
+            indent = { 'python' },
+        },
         ensure_installed = {
             -- config
             'xml',
