@@ -25,6 +25,10 @@ if vim.g.neovide then
 
     vim.g.neovide_hide_mouse_when_typing = true -- 打字时隐藏鼠标
     vim.g.neovide_remember_window_size = true -- 记住窗口大小
+
+    vim.opt.winborder = 'solid' -- 仅添加 padding（Neovide 阴影已提供视觉边界）
+else
+    vim.opt.winborder = 'shadow' -- 终端下用内置阴影效果（FloatShadow 高亮组）
 end
 
 -- [[ 核心配置 ]]
@@ -58,8 +62,6 @@ vim.opt.showtabline = 2 -- 总是显示标签页栏
 vim.opt.title = true -- 终端/Neovide 窗口标题显示文件名
 vim.opt.titlestring = '%f%(%m%) – nvim' -- 标题格式：文件名(已修改) – nvim
 vim.opt.cmdheight = 0 -- 隐藏默认的命令行
-
-vim.opt.winborder = 'single' -- 为所有浮动窗口(LSP悬浮、诊断等)开启圆角
 
 vim.opt.mouse = 'a' -- 在所有模式下（普通、可视、插入等）启用鼠标支持
 vim.opt.splitkeep = 'cursor' -- 分屏时保持相对位置更稳定
@@ -148,7 +150,7 @@ vim.diagnostic.config {
     virtual_text = { source = 'always' },
     float = {
         source = 'always',
-        border = 'single',
+        border = vim.g.neovide and 'solid' or 'shadow',
         header = '',
     },
     severity_sort = true,
