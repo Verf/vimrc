@@ -155,6 +155,7 @@ vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { d
 
 -- [[ Diagnostic ]]
 vim.keymap.set('n', '<leader>wd', vim.diagnostic.open_float, { desc = 'Show diagnostics under the cursor' })
+vim.keymap.set('n', '<leader>ul', function() vim.opt.list = not vim.opt.list:get() end, { desc = 'Toggle listchars' })
 
 -- [[ Insert ]]
 vim.keymap.set(
