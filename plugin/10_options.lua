@@ -25,10 +25,6 @@ if vim.g.neovide then
 
     vim.g.neovide_hide_mouse_when_typing = true -- 打字时隐藏鼠标
     vim.g.neovide_remember_window_size = true -- 记住窗口大小
-
-    vim.opt.winborder = 'solid' -- 仅添加 padding（Neovide 阴影已提供视觉边界）
-else
-    vim.opt.winborder = 'shadow' -- 终端下用内置阴影效果（FloatShadow 高亮组）
 end
 
 -- [[ 核心配置 ]]
@@ -77,6 +73,8 @@ vim.opt.softtabstop = 4 -- 设置在编辑模式下，按 Tab 键插入的空格
 vim.opt.scrolloff = 999 -- 设置光标距离窗口顶部和底部的最小行数，999可以使光标始终保持在屏幕中央
 vim.opt.updatetime = 750 -- 设置更新交换文件和触发 CursorHold 事件的延迟时间（毫秒）
 
+vim.opt.winborder = 'solid' -- 浮动窗口边框样式
+vim.opt.pumborder = 'none' -- 补全菜单边框样式
 vim.opt.pumheight = 8 -- 补全菜单显示行数
 vim.opt.pumblend = 8 -- 补全菜单轻微透明，不遮挡代码
 
@@ -85,10 +83,9 @@ vim.opt.completeopt = {
     'noselect', -- 不自动选中补全项
     'menuone', -- 仅有一个补全项时仍显示补全菜单
     'popup', -- 选中补全项时显示额外信息
-    -- 'fuzzy', -- 补全支持模糊匹配
-    -- 'nosort', -- 关闭基于fuzzy的排序
+    'fuzzy', -- 补全支持模糊匹配
+    'nosort', -- 关闭基于fuzzy的排序
 }
-
 vim.opt.fileformats = 'unix,dos' -- 设置识别的文件格式，优先使用 unix 换行符 (\n)
 vim.opt.iskeyword = '@,48-57,_,192-255,-' -- 将-也视为word一部分
 

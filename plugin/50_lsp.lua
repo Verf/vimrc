@@ -41,6 +41,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- 禁用 semantic tokens，避免与 tree-sitter 高亮冲突
         client.server_capabilities.semanticTokensProvider = nil
 
+        -- 设置 omnifunc 为 mini.completion 的 LSP 补全函数
+        vim.bo[args.buf].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
+
         -- Buffer-local keymaps（仅在有 LSP 时生效）
         local buf = args.buf
         vim.keymap.set('n', 'gk', vim.lsp.buf.hover, { buffer = buf, desc = 'Show Doc' })
