@@ -218,6 +218,7 @@ Configured via `vim.lsp.config()` in `50_lsp.lua` (Neovim 0.11+ built-in API, no
 - Do NOT change the Norman keyboard layout remaps in `20_keymaps.lua` — they are intentional and affect all other keymaps
 - Do NOT change the shell config (nushell) without understanding the implications
 - Do NOT add plugins that conflict with existing mini.nvim modules
+- Do NOT use `2>nul` in shell commands — this project runs under msys2 bash, where `2>nul` creates a junk file named `nul` (a Windows reserved device name, hard to delete). Use `2>/dev/null` instead.
 
 ## File-Issue Mapping
 
