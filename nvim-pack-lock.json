@@ -5,7 +5,7 @@
       "src": "https://github.com/arborist-ts/arborist.nvim"
     },
     "blink.cmp": {
-      "rev": "43cb60895ee109161ae5cffa26444018cc07e570",
+      "rev": "d2c4d170ad51e5116da7b19f2426f3b6e318161d",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
@@ -30,11 +30,11 @@
       "version": "'dev'"
     },
     "faster.nvim": {
-      "rev": "2e7a50f659711854b9a7fdc76d943b59b30d7852",
+      "rev": "5e90351b52bfc29bfe448883d97f5ab1818c372a",
       "src": "https://github.com/pteroctopus/faster.nvim"
     },
     "mini.nvim": {
-      "rev": "232ceeb14f7f7e849056309b85cb2fed712db46f",
+      "rev": "cbae4fa396bbf9c802b3d2dc2e9c5362e8fb9468",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "multicursor.nvim": {
