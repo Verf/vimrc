@@ -162,6 +162,7 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `11_faster.lua` | (speed tweaks) | Performance |
 | `12_scrollEOF.lua` | scrollEOF | Scroll beyond EOF |
 | `13_scope.lua` | scope | Buffer scope |
+| `14_shapeim.lua` | shapeim.nvim | Input method (Rime) integration |
 | `20_treesitter.lua` | arborist.nvim | Manage tree-sitter parsers and queries |
 
 | `22_spider.lua` | nvim-spider | CamelCase/subword motion |
@@ -172,7 +173,6 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `50_conform.lua` | conform.nvim | Formatting (ruff, stylua, nufmt, oxfmt, etc.) |
 | `51_quicker.lua` | quicker.nvim | Quickfix enhancements |
 | `52_codediff.lua` | codediff | Code diff tools |
-| `53_kulala.lua` | kulala | HTTP client |
 | `54_render_markdown.lua` | render-markdown.nvim | Markdown preview |
 | `60_gtd.lua` | (custom GTD) | Loads `lua/plugins/gtd.lua` — personal task manager |
 
@@ -229,6 +229,7 @@ When a user reports an issue, start investigation here:
 - **Folding**: `10_options.lua` (foldmethod=expr via treesitter, foldcolumn, statuscolumn fold icons)
 - **Colors/appearance**: `10_deepwhite.lua`, `80_mini.statusline.lua`, `81_mini.tabline.lua`, `10_options.lua` (UI options)
 - **File operations/sessions**: `53_mini.sessions.lua`, `54_mini.visits.lua`, `41_oil.lua`
+- **Input method**: `14_shapeim.lua` (Rime toggle/config)
 - **GTD/tasks**: `60_gtd.lua` + `lua/plugins/gtd.lua`
 - **Quickfix**: `51_quicker.lua`, `40_commands.lua` (`:Grep`), `30_autocmds.lua` (auto-open)
 - **Terminal**: `30_autocmds.lua` (TermOpen/TermClose), `20_keymaps.lua` (terminal keymaps)

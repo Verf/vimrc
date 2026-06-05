@@ -50,13 +50,13 @@ Config.now(function()
 end)
 
 vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave', 'LspProgress' }, {
-    group = _G.GyGroup,
+    group = _G.MyGroup,
     callback = function() vim.cmd 'redrawstatus' end,
     desc = 'Update statusline on macro recording and LSP progress',
 })
 
 vim.api.nvim_create_autocmd('User', {
-    group = _G.GyGroup,
+    group = _G.MyGroup,
     pattern = 'ShapeimToggle',
     callback = function() vim.cmd 'redrawstatus' end,
     desc = 'Update statusline on shapeim toggle',
