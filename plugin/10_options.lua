@@ -85,6 +85,7 @@ vim.opt.splitright = true -- 竖向分屏时将新窗口放在右边
 vim.opt.switchbuf = 'usetab' -- 执行特定跳转时优先复用已有标签页，若没有则新建标签页打开
 vim.opt.virtualedit = 'block' -- 启用虚拟编辑，允许光标在块选择模式下移动到没有实际字符的列
 
+
 vim.opt.expandtab = true -- 将输入的 Tab 自动转换为空格
 vim.opt.tabstop = 4 -- 设置文件中一个 Tab 字符代表的空格数
 vim.opt.shiftwidth = 4 -- 设置自动缩进和手动缩进（如使用 >>）的空格数为 4
