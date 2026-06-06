@@ -9,4 +9,7 @@ Config.now(function()
         callback = function(args) path_lsp.start(args.buf) end,
         desc = 'Start path-lsp on buffer open',
     })
+
+    -- 启动时当前 buffer 可能已存在（未命名默认 buffer），手动触发
+    path_lsp.start(vim.api.nvim_get_current_buf())
 end)
