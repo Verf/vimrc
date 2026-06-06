@@ -4,14 +4,6 @@
       "rev": "fdeef56c2840c6772b9f68c5774ed87e9340ec7d",
       "src": "https://github.com/arborist-ts/arborist.nvim"
     },
-    "blink.cmp": {
-      "rev": "d2c4d170ad51e5116da7b19f2426f3b6e318161d",
-      "src": "https://github.com/saghen/blink.cmp"
-    },
-    "blink.lib": {
-      "rev": "c09dd66e9ad97e1a7777f3fa5f0504ca2e877231",
-      "src": "https://github.com/saghen/blink.lib"
-    },
     "canola.nvim": {
       "rev": "88af183e96724cca98a4602511061662cd5e88f3",
       "src": "https://github.com/barrettruth/canola.nvim"
@@ -25,16 +17,16 @@
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "deepwhite.nvim": {
-      "rev": "49d8d2566990f96fc45cb80f0e14cc113f9781c5",
+      "rev": "3d317c60774ac9a871a928347d8d22152e7210c8",
       "src": "https://github.com/Verf/deepwhite.nvim",
       "version": "'dev'"
     },
     "faster.nvim": {
-      "rev": "5e90351b52bfc29bfe448883d97f5ab1818c372a",
+      "rev": "6b7cb8b1a9628d4b87009c4849d510d1a3a14319",
       "src": "https://github.com/pteroctopus/faster.nvim"
     },
     "mini.nvim": {
-      "rev": "cbae4fa396bbf9c802b3d2dc2e9c5362e8fb9468",
+      "rev": "b2ac6522f7a54b475d9fad711b938eefc6d3d0a6",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "multicursor.nvim": {
