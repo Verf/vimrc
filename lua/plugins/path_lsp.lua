@@ -210,6 +210,10 @@ end
 function M.start(bufnr)
     bufnr = bufnr or vim.api.nvim_get_current_buf()
 
+    -- 不对未命名 buffer（如 :new / 启动默认 buffer）进行 attach
+    local bufpath = vim.api.nvim_buf_get_name(bufnr)
+    if bufpath == '' then return end
+
     -- 检查是否已附着
     for _, client in ipairs(vim.lsp.get_clients { bufnr = bufnr }) do
         if client.name == 'path-lsp' then return end
@@ -218,33 +222,16 @@ function M.start(bufnr)
     -- 确保当前 buffer 是目标 buffer（vim.lsp.start 会附着到当前 buffer）
     vim.api.nvim_set_current_buf(bufnr)
 
-    -- 确定 root_dir
-    -- 未命名 buffer 需要保证 root_dir 唯一，避免 vim.lsp.start 将 client
-    -- 自动附着到其他同 root_dir 的 buffer（导致所有 buffer 共享一个 client，
-    -- captured_bufnr 指向错误的 buffer）。
-    local bufpath = vim.api.nvim_buf_get_name(bufnr)
-    local root_dir
-    if bufpath ~= '' then
-        root_dir = vim.fs.root(bufnr, '.git') or vim.fs.dirname(bufpath) or vim.fn.getcwd()
-    else
-        -- 用 bufnr 做后缀，确保每个未命名 buffer 有独立的 root_dir
-        root_dir = vim.fn.getcwd() .. '/__path_lsp_' .. bufnr
-    end
+    -- 确定 root_dir：优先 .git 根目录，其次文件所在目录，最后 cwd
+    local root_dir = vim.fs.root(bufnr, '.git') or vim.fs.dirname(bufpath) or vim.fn.getcwd()
 
-    -- 创建函数式 LSP transport（无外部进程）
-    -- 捕获 bufnr 供闭包内使用，解决未命名 buffer 上
-    -- vim.uri_from_bufnr → vim.uri_to_bufnr 往返断裂的问题。
-    local captured_bufnr = bufnr
     ---@diagnostic disable-next-line: missing-parameter
     vim.lsp.start {
         name = 'path-lsp',
         root_dir = root_dir,
-        -- 禁止复用已有 client：每个 buffer 需要独立的 client 实例，
-        -- 因为 handler 通过闭包 captured_bufnr 定位 buffer，复用会导致
-        -- 所有 buffer 共享第一个 buffer 的 captured_bufnr。
-        reuse_client = function() return nil end,
         capabilities = vim.lsp.protocol.make_client_capabilities(),
-        cmd = function(_dispatchers)
+        cmd = function(dispatchers)
+            local closing = false
             return {
                 request = function(method, params, callback)
                     if method == 'initialize' then
@@ -268,9 +255,12 @@ function M.start(bufnr)
                             callback(nil, nil)
                             return
                         end
-                        -- 未命名 buffer 的 URI（file://）互相冲突，vim.uri_to_bufnr
-                        -- 不能可靠解析回原 buffer。直接用注册时捕获的 bufnr。
-                        local target_buf = captured_bufnr
+                        -- 从 URI 解析 bufnr
+                        local target_buf = uri and vim.uri_to_bufnr(uri)
+                        if not target_buf or not vim.api.nvim_buf_is_valid(target_buf) then
+                            callback(nil, nil)
+                            return
+                        end
                         -- 读取光标所在行
                         local lines = vim.api.nvim_buf_get_lines(target_buf, pos.line, pos.line + 1, false)
                         local line = lines[1] or ''
@@ -301,8 +291,12 @@ function M.start(bufnr)
                     end
                 end,
                 notify = function(_method, _params) end,
-                is_closing = function() return false end,
-                terminate = function() end,
+                is_closing = function() return closing end,
+                terminate = function()
+                    if closing then return end
+                    closing = true
+                    dispatchers.on_exit(0, 0)
+                end,
             }
         end,
     }

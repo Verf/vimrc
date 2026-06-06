@@ -19,7 +19,8 @@ nvim/
 │   └── 90_plugins/           # External plugins
 ├── lua/
 │   └── plugins/
-│       └── gtd.lua           # Custom GTD task management plugin
+│       ├── gtd.lua           # Custom GTD task management plugin
+│       └── path_lsp.lua      # In-process path completion LSP (function transport)
 ├── snippets/                 # Custom snippets (mini.snippets format)
 ├── stylua.toml               # Lua formatter config
 ├── nvim-pack-lock.json       # Plugin version lock (generated)
@@ -175,7 +176,7 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `51_quicker.lua` | quicker.nvim | Quickfix enhancements |
 | `52_codediff.lua` | codediff | Code diff tools |
 | `54_render_markdown.lua` | render-markdown.nvim | Markdown preview |
-| `55_path_lsp.lua` | (custom) path-lsp | In-process filesystem path completion LSP |
+| `55_path_lsp.lua` | (custom) path-lsp | In-process filesystem path completion LSP — 命名 buffer 按 root_dir 共享 client，未命名 buffer 独立 client + BufWipeout 自清理 |
 | `60_gtd.lua` | (custom GTD) | Loads `lua/plugins/gtd.lua` — personal task manager |
 
 ### Custom Plugin: GTD (`lua/plugins/gtd.lua`)
