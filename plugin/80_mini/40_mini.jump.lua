@@ -7,7 +7,7 @@ Config.now(
                 backward = 'T',
                 forward_till = 'k',
                 backward_till = 'K',
-                repeat_jump = 'h',
+                repeat_jump = '',
             },
         }
     end
