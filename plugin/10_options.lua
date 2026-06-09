@@ -35,7 +35,7 @@ if vim.g.neovide then
     vim.g.terminal_color_4 = '#0000A6'
     vim.g.terminal_color_5 = '#6F00A6'
     vim.g.terminal_color_6 = '#00A6A6'
-    vim.g.terminal_color_7 = '#FAFAFA'
+    vim.g.terminal_color_7 = '#595855'
     -- ANSI 8-15 (brights)
     vim.g.terminal_color_8 = '#1A1918'
     vim.g.terminal_color_9 = '#A60000'
@@ -44,7 +44,7 @@ if vim.g.neovide then
     vim.g.terminal_color_12 = '#0000A6'
     vim.g.terminal_color_13 = '#6F00A6'
     vim.g.terminal_color_14 = '#00A6A6'
-    vim.g.terminal_color_15 = '#FAFAFA'
+    vim.g.terminal_color_15 = '#595855'
 end
 
 -- [[ 核心配置 ]]
