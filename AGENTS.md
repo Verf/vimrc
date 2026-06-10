@@ -163,6 +163,7 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `12_scrollEOF.lua` | scrollEOF | Scroll beyond EOF |
 | `13_scope.lua` | scope | Buffer scope |
 | `14_shapeim.lua` | shapeim.nvim | Input method (Rime) integration |
+| `15_flatten.lua` | flatten.nvim | Open files from :term in current Neovim instance |
 | `20_treesitter.lua` | arborist.nvim | Manage tree-sitter parsers and queries |
 
 | `22_spider.lua` | nvim-spider | CamelCase/subword motion |
