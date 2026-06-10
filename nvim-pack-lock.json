@@ -25,6 +25,10 @@
       "rev": "6b7cb8b1a9628d4b87009c4849d510d1a3a14319",
       "src": "https://github.com/pteroctopus/faster.nvim"
     },
+    "flatten.nvim": {
+      "rev": "72527798e75b5e34757491947c2cb853ce21dc0e",
+      "src": "https://github.com/willothy/flatten.nvim"
+    },
     "mini.nvim": {
       "rev": "ff8b3580935818ef2f21bdd651f057a2ae071eab",
       "src": "https://github.com/echasnovski/mini.nvim"
