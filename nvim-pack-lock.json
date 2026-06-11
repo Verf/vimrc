@@ -9,7 +9,7 @@
       "src": "https://github.com/barrettruth/canola.nvim"
     },
     "codediff.nvim": {
-      "rev": "5d6aa753797a0ebda14dd769ed03d12a320d689b",
+      "rev": "7608f3b436ce1f84a4888f75e53079caa981a2e9",
       "src": "https://github.com/esmuellert/codediff.nvim"
     },
     "conform.nvim": {
