@@ -188,14 +188,10 @@ function M.toggle_status()
 end
 
 -- ============================================================
--- 格式化指定范围内的 GTD 行
--- DEADLINE 和 CLOSED 标签双列左对齐
+-- 纯函数: 对行数组进行格式化, 返回新行数组
+-- 非 GTD 行原样保留, GTD 行的 DEADLINE/CLOSED 标签双列左对齐
 -- ============================================================
-function M.format_todos(line1, line2)
-    line1 = line1 or 1
-    line2 = line2 or vim.api.nvim_buf_line_count(0)
-
-    local lines = vim.api.nvim_buf_get_lines(0, line1 - 1, line2, false)
+function M.format_lines(lines)
     local new_lines = {}
     for i, line in ipairs(lines) do
         new_lines[i] = line
@@ -225,7 +221,7 @@ function M.format_todos(line1, line2)
         end
     end
 
-    if next(entries) == nil then return end
+    if next(entries) == nil then return new_lines end
 
     -- 列位置 (0-indexed 长度)
     local deadline_col = max_prefix + 2
@@ -254,6 +250,19 @@ function M.format_todos(line1, line2)
         new_lines[i] = table.concat(parts, '')
     end
 
+    return new_lines
+end
+
+-- ============================================================
+-- 格式化指定范围内的 GTD 行
+-- DEADLINE 和 CLOSED 标签双列左对齐
+-- ============================================================
+function M.format_todos(line1, line2)
+    line1 = line1 or 1
+    line2 = line2 or vim.api.nvim_buf_line_count(0)
+
+    local lines = vim.api.nvim_buf_get_lines(0, line1 - 1, line2, false)
+    local new_lines = M.format_lines(lines)
     vim.api.nvim_buf_set_lines(0, line1 - 1, line2, false, new_lines)
 end
 
