@@ -291,9 +291,18 @@ function M.setup(opts)
         { range = '%', desc = '格式化 GTD 标签对齐' }
     )
 
-    vim.keymap.set('n', M.config.mappings.show_todos, M.show_todos, { desc = 'Show Todos' })
-    vim.keymap.set('n', M.config.mappings.toggle_status, M.toggle_status, { desc = 'Toggle Status' })
-    vim.keymap.set('n', M.config.mappings.format_todos, M.format_todos, { desc = 'Format Todos' })
+    local actions = {
+        show_todos = { action = M.show_todos, desc = 'Show Todos' },
+        toggle_status = { action = M.toggle_status, desc = 'Toggle Status' },
+        format_todos = { action = M.format_todos, desc = 'Format Todos' },
+    }
+
+    for name, keys in pairs(M.config.mappings) do
+        local act = actions[name]
+        if act and keys and keys ~= '' then
+            vim.keymap.set('n', keys, act.action, { desc = act.desc })
+        end
+    end
 end
 
 return M
