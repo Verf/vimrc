@@ -37,6 +37,10 @@
       "rev": "704b99f10a72cc05d370cfeb294ff83412a8ab55",
       "src": "https://github.com/jake-stewart/multicursor.nvim"
     },
+    "nvim-origami": {
+      "rev": "47be2209d09755c0202da1e22a8d67af8f5ae178",
+      "src": "https://github.com/chrisgrieser/nvim-origami"
+    },
     "nvim-spider": {
       "rev": "4fdd56a4f45bca13a607632e15a6f9f8d1b1f99e",
       "src": "https://github.com/chrisgrieser/nvim-spider"
