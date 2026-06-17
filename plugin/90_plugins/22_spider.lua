@@ -1,7 +1,21 @@
-vim.pack.add { 'https://github.com/chrisgrieser/nvim-spider' }
-
+-- nvim-spider 的自实现替代，见 lua/plugins/subword.lua
 Config.now(function()
-    vim.keymap.set({ 'n', 'o', 'x' }, 'w', function() require('spider').motion 'w' end)
-    vim.keymap.set({ 'n', 'o', 'x' }, 'd', function() require('spider').motion 'e' end)
-    vim.keymap.set({ 'n', 'o', 'x' }, 'b', function() require('spider').motion 'b' end)
+    vim.keymap.set(
+        { 'n', 'o', 'x' },
+        'w',
+        function() require('plugins.subword').motion 'w' end,
+        { desc = 'camelCase/subword forward' }
+    )
+    vim.keymap.set(
+        { 'n', 'o', 'x' },
+        'd',
+        function() require('plugins.subword').motion 'e' end,
+        { desc = 'camelCase/subword end' }
+    )
+    vim.keymap.set(
+        { 'n', 'o', 'x' },
+        'b',
+        function() require('plugins.subword').motion 'b' end,
+        { desc = 'camelCase/subword back' }
+    )
 end)

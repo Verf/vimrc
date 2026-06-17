@@ -122,7 +122,7 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `h` | `;` | repeat f/t |
 | `;` | `p` | paste |
 
-**When adding new keymaps**, use the physical key positions (Norman layer). For example, `<leader>j` does system copy because `j` → `y` (yank). Motion keys `w`, `d` (→`e`), `b` are remapped through `nvim-spider`.
+**When adding new keymaps**, use the physical key positions (Norman layer). For example, `<leader>j` does system copy because `j` → `y` (yank). Motion keys `w`, `d` (→`e`), `b` are remapped through custom subword (`lua/plugins/subword.lua`).
 
 ## Plugin Catalog
 
@@ -163,18 +163,18 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `10_deepwhite.lua` | deepwhite.nvim | Colorscheme |
 | `11_faster.lua` | (custom faster) | Big-file/long-line/macro perf (see lua/plugins/faster.lua) |
 | `12_scrollEOF.lua` | scrollEOF | Scroll beyond EOF |
-| `13_scope.lua` | scope | Buffer scope |
+| `13_scope.lua` | (custom tab_scope) | Tab-scoped buffer listing (see lua/plugins/tab_scope.lua) |
 | `14_shapeim.lua` | shapeim.nvim | Input method (Rime) integration |
 | `15_flatten.lua` | flatten.nvim | Open files from :term in current Neovim instance |
 | `20_treesitter.lua` | arborist.nvim | Manage tree-sitter parsers and queries |
 
-| `22_spider.lua` | nvim-spider | CamelCase/subword motion |
+| `22_spider.lua` | (custom subword) | CamelCase/subword motion (see lua/plugins/subword.lua) |
 | `23_multicursor.lua` | multicursor.nvim | Multi-cursor editing |
 | `30_blink.lua` | blink.cmp | Completion engine (uses mini_snippets preset) |
 | `40_whichkey.lua` | which-key.nvim | Keymap hints |
 | `41_oil.lua` | oil.nvim | File explorer/buffer |
 | `50_conform.lua` | conform.nvim | Formatting (ruff, stylua, nufmt, oxfmt, etc.) |
-| `51_quicker.lua` | quicker.nvim | Quickfix enhancements |
+| `51_quicker.lua` | (custom quickfix) | Quickfix context expand/collapse (see lua/plugins/quickfix.lua) |
 | `52_codediff.lua` | codediff | Code diff tools |
 | `54_render_markdown.lua` | render-markdown.nvim | Markdown preview |
 | `55_path_lsp.lua` | (custom) path-lsp | In-process filesystem path completion LSP — 命名 buffer 按 root_dir 共享 client，未命名 buffer 独立 client + BufWipeout 自清理 |
@@ -187,6 +187,33 @@ Replaces the external `pteroctopus/faster.nvim` plugin. Self-contained performan
 - **Longline**: If `filesize/line_count > 250` bytes/line (minified JS/JSON), same feature disable
 - **Macro**: Overrides `@` keymap — sets `eventignore='all'` + `lazyredraw=true` during macro execution, restores on completion
 - Features use backup/restore per-buffer; macros use sentinel feedkeys + poll backstop
+
+### Custom Plugin: Subword (`lua/plugins/subword.lua`)
+
+Replaces the external `chrisgrieser/nvim-spider` plugin. Self-contained camelCase/snake_case subword motion:
+- **Patterns**: numbers (`%d+`), camelCase words (`%u?%l+`/`%l+%u?`), UPPER_CASE words, single uppercase with frontier
+- **Punctuation**: skips insignificant punctuation (spaces around punctuation marks)
+- **Motions**: `w` (next subword start), `e` (next subword end), `b` (previous subword start)
+- Supports `vim.v.count1` for count-prefixed jumps (e.g., `3w`)
+- Handles operator-pending mode (inclusive for `e`, column correction for end-of-line)
+
+### Custom Plugin: Tab Scope (`lua/plugins/tab_scope.lua`)
+
+Replaces the external `tiagovla/scope.nvim` plugin. Tab-isolated buffer listing:
+- **TabLeave**: saves current tab's listed buffers to cache, unlists them
+- **TabEnter**: restores target tab's cached buffers as listed
+- **TabClosed**: clears cache for the closed tab
+- Ensures each tab only shows its own buffers in `:ls`/`:buffers`
+
+### Custom Plugin: Quickfix (`lua/plugins/quickfix.lua`)
+
+Replaces the external `stevearc/quicker.nvim` plugin. Quickfix context expand/collapse:
+- **expand()**: Surrounds each quickfix entry with configurable before/after context lines
+- **collapse()**: Strips context lines, keeping only valid items
+- **toggle()**: Open/close quickfix window
+- **quickfixtextfunc**: File path + line number + source line display
+- Overlapping context between adjacent items in the same file is deduplicated
+- Expand state (before/after counts) stored in quickfix context for incremental expansion
 
 ### Custom Plugin: GTD (`lua/plugins/gtd.lua`)
 
@@ -236,14 +263,14 @@ Configured via `vim.lsp.config()` in `50_lsp.lua` (Neovim 0.11+ built-in API, no
 
 When a user reports an issue, start investigation here:
 - **Startup/performance**: `init.lua`, `10_options.lua` (shada settings), `11_faster.lua`
-- **Keymaps not working**: `20_keymaps.lua` (Norman remaps), plugin files (plugin-specific maps)
+- **Keymaps not working**: `20_keymaps.lua` (Norman remaps), plugin files (plugin-specific maps), `22_spider.lua` + `lua/plugins/subword.lua` (subword motions)
 - **Completion**: `30_blink.lua`
 - **LSP/formatting/diagnostics**: `50_lsp.lua`, `50_conform.lua`, `10_options.lua` (diagnostic config)
 - **Folding**: `10_options.lua` (foldmethod=expr via treesitter, foldminlines=2, foldnestmax=4, custom foldtext with treesitter highlighting + right-aligned line count `󰈉 N lines`, per-buffer cache invalidated on text change)
 - **Colors/appearance**: `10_deepwhite.lua`, `80_mini.statusline.lua`, `81_mini.tabline.lua`, `10_options.lua` (UI options)
-- **File operations/sessions**: `53_mini.sessions.lua`, `54_mini.visits.lua`, `41_oil.lua`
+- **File operations/sessions**: `53_mini.sessions.lua`, `54_mini.visits.lua`, `41_oil.lua`, `13_scope.lua` + `lua/plugins/tab_scope.lua` (tab buffer isolation)
 - **Input method**: `14_shapeim.lua` (Rime toggle/config)
 - **GTD/tasks**: `60_gtd.lua` + `lua/plugins/gtd.lua`
 - **Path completion**: `55_path_lsp.lua` + `lua/plugins/path_lsp.lua`
-- **Quickfix**: `51_quicker.lua`, `40_commands.lua` (`:Grep`), `30_autocmds.lua` (auto-open)
+- **Quickfix**: `51_quicker.lua` + `lua/plugins/quickfix.lua`, `40_commands.lua` (`:Grep`), `30_autocmds.lua` (auto-open)
 - **Terminal**: `30_autocmds.lua` (TermOpen/TermClose), `20_keymaps.lua` (terminal keymaps)
