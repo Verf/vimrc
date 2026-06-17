@@ -90,14 +90,15 @@ Sub-files use the same scheme: `20_mini.hipatterns.lua`, `20_treesitter.lua`, et
 - Which-key groups defined in `plugin/90_plugins/40_whichkey.lua`
 
 ### Autocommands
-- Always assign to `_G.MyGroup` (defined in `plugin/30_autocmds.lua`)
+- `plugin/` 配置文件中的 autocommand 统一使用 `_G.MyGroup`（在 `init.lua` 中定义）
+- `lua/plugins/` 模块中的 autocommand 使用自己的 augroup，不依赖 `_G.MyGroup`
 - Group is cleared on reload (`clear = true`)
 
 ### Plugin Config Style
 - Plugin setup functions wrapped in `Config.now()` / `Config.later()` / etc.
 - Keymaps for a plugin are set in the same file as its config
 - Prefer `require('plugin').setup {}` pattern
-- Never use `nvim_create_autocmd` without assigning to `_G.MyGroup`
+- `plugin/` 中的 autocommand 必须使用 `_G.MyGroup`；`lua/plugins/` 模块使用自己的 augroup
 
 ## Norman Keyboard Layout
 
@@ -217,14 +218,14 @@ Configured via `vim.lsp.config()` in `50_lsp.lua` (Neovim 0.11+ built-in API, no
 ### When Modifying Existing Config
 - **Keymaps**: Edit `20_keymaps.lua` for global keymaps, or the plugin file for plugin-specific ones
 - **Options**: Edit `10_options.lua`
-- **Autocommands**: Edit `30_autocmds.lua`, always use `_G.MyGroup`
+- **Autocommands**: Edit `30_autocmds.lua`（全局）, always use `_G.MyGroup`；`lua/plugins/*.lua` 模块使用各自 augroup
 - **Commands**: Edit `40_commands.lua`
 - **Formatting**: Run `stylua` on any changed Lua files (or rely on conform.nvim)
 - **Finally** Update the `AGENTS.md`.
 
 ### Do Not
 - Do NOT introduce `lazy.nvim`, `packer`, or any alternative plugin manager — stick with `vim.pack`
-- Do NOT create autocommands without `group = _G.MyGroup`
+- Do NOT create autocommands in `plugin/` without `group = _G.MyGroup`；`lua/plugins/` 使用自己的 augroup
 - Do NOT add keymaps without a `desc` field
 - Do NOT change the Norman keyboard layout remaps in `20_keymaps.lua` — they are intentional and affect all other keymaps
 - Do NOT change the shell config (nushell) without understanding the implications

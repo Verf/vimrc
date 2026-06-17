@@ -134,7 +134,7 @@ function M.setup()
 
     -- 缓冲内容变更时清除对应 buffer 的 foldtext 缓存
     vim.api.nvim_create_autocmd({ 'TextChanged', 'TextChangedI', 'TextChangedP' }, {
-        group = _G.MyGroup,
+        group = vim.api.nvim_create_augroup('fold', { clear = true }),
         callback = function(args) M.clear_cache(args.buf) end,
     })
 end

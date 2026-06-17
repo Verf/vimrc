@@ -21,10 +21,6 @@
       "src": "https://github.com/Verf/deepwhite.nvim",
       "version": "'dev'"
     },
-    "faster.nvim": {
-      "rev": "6b7cb8b1a9628d4b87009c4849d510d1a3a14319",
-      "src": "https://github.com/pteroctopus/faster.nvim"
-    },
     "flatten.nvim": {
       "rev": "72527798e75b5e34757491947c2cb853ce21dc0e",
       "src": "https://github.com/willothy/flatten.nvim"
@@ -36,10 +32,6 @@
     "multicursor.nvim": {
       "rev": "704b99f10a72cc05d370cfeb294ff83412a8ab55",
       "src": "https://github.com/jake-stewart/multicursor.nvim"
-    },
-    "nvim-origami": {
-      "rev": "47be2209d09755c0202da1e22a8d67af8f5ae178",
-      "src": "https://github.com/chrisgrieser/nvim-origami"
     },
     "nvim-spider": {
       "rev": "4fdd56a4f45bca13a607632e15a6f9f8d1b1f99e",
@@ -56,10 +48,6 @@
     "scope.nvim": {
       "rev": "228aabdb1b9cc74f0c0ccec88e79873857236e49",
       "src": "https://github.com/tiagovla/scope.nvim"
-    },
-    "scrollEOF.nvim": {
-      "rev": "e462b9a07b8166c3e8011f1dcbc6bf68b67cd8d7",
-      "src": "https://github.com/Aasim-A/scrollEOF.nvim"
     },
     "shapeim.nvim": {
       "rev": "c9b6b16e279fca7983676f8988dd45999632fa69",
