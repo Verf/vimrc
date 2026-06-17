@@ -85,7 +85,6 @@ vim.opt.splitright = true -- 竖向分屏时将新窗口放在右边
 vim.opt.switchbuf = 'usetab' -- 执行特定跳转时优先复用已有标签页，若没有则新建标签页打开
 vim.opt.virtualedit = 'block' -- 启用虚拟编辑，允许光标在块选择模式下移动到没有实际字符的列
 
-
 vim.opt.expandtab = true -- 将输入的 Tab 自动转换为空格
 vim.opt.tabstop = 4 -- 设置文件中一个 Tab 字符代表的空格数
 vim.opt.shiftwidth = 4 -- 设置自动缩进和手动缩进（如使用 >>）的空格数为 4
@@ -121,36 +120,7 @@ vim.opt.sessionoptions = {
     'skiprtp', -- 不保存 runtimepath，防止插件更新或增删后，旧 session 加载导致报错
 }
 
-vim.opt.fillchars:append { diff = '╱', foldopen = '', foldclose = '', foldsep = ' ', fold = ' ' }
-
--- [[ fold ]]
--- vim.opt.foldmethod = 'expr'
--- vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
--- vim.opt.foldtext = ''
-vim.opt.foldcolumn = '1' -- 在左侧显示折叠层级指示器 (0 为隐藏)
-vim.opt.foldlevel = 99 -- 默认不折叠任何代码
-vim.opt.foldlevelstart = 99 -- 打开文件时默认全展开
-vim.opt.foldenable = true -- 启用折叠
-
--- 全局函数用于精准计算每一行应该显示的折叠图标
-_G.custom_fold_icon = function()
-    local lnum = vim.v.lnum
-    local fold_closed = vim.fn.foldclosed(lnum)
-    local fcs = vim.opt.fillchars:get()
-
-    -- 1. 已闭合的折叠：永远显示合上的图标
-    if fold_closed == lnum then return (fcs.foldclose or '') .. ' ' end
-    -- 2. 若光标所在行是折叠起点时，显示展开的图标
-    if lnum == vim.fn.line '.' then
-        local fold_level = vim.fn.foldlevel(lnum)
-        local fold_level_before = lnum == 1 and 0 or vim.fn.foldlevel(lnum - 1)
-        -- 如果当前行的折叠层级大于上一行，说明这里是代码块/函数的起点
-        if fold_level > fold_level_before then return (fcs.foldopen or '') .. ' ' end
-    end
-    -- 3. 其他所有行留白
-    return '  '
-end
-vim.opt.statuscolumn = '%s%=%l %#FoldColumn#%{v:lua.custom_fold_icon()}%*'
+vim.opt.fillchars:append { diff = '╱' }
 
 -- shada
 -- 限制 ShaDa 文件大小以加速启动

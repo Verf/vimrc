@@ -230,7 +230,7 @@ When a user reports an issue, start investigation here:
 - **Keymaps not working**: `20_keymaps.lua` (Norman remaps), plugin files (plugin-specific maps)
 - **Completion**: `30_blink.lua`
 - **LSP/formatting/diagnostics**: `50_lsp.lua`, `50_conform.lua`, `10_options.lua` (diagnostic config)
-- **Folding**: `10_options.lua` (foldmethod=expr via treesitter, foldcolumn, statuscolumn fold icons)
+- **Folding**: `10_options.lua` (foldmethod=expr via treesitter, foldminlines=2, foldnestmax=4, custom foldtext with treesitter highlighting + right-aligned line count `󰈉 N lines`, per-buffer cache invalidated on text change)
 - **Colors/appearance**: `10_deepwhite.lua`, `80_mini.statusline.lua`, `81_mini.tabline.lua`, `10_options.lua` (UI options)
 - **File operations/sessions**: `53_mini.sessions.lua`, `54_mini.visits.lua`, `41_oil.lua`
 - **Input method**: `14_shapeim.lua` (Rime toggle/config)
