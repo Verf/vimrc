@@ -160,7 +160,7 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | File | Plugin | Purpose |
 |------|--------|---------|
 | `10_deepwhite.lua` | deepwhite.nvim | Colorscheme |
-| `11_faster.lua` | (speed tweaks) | Performance |
+| `11_faster.lua` | (custom faster) | Big-file/long-line/macro perf (see lua/plugins/faster.lua) |
 | `12_scrollEOF.lua` | scrollEOF | Scroll beyond EOF |
 | `13_scope.lua` | scope | Buffer scope |
 | `14_shapeim.lua` | shapeim.nvim | Input method (Rime) integration |
@@ -178,6 +178,14 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `54_render_markdown.lua` | render-markdown.nvim | Markdown preview |
 | `55_path_lsp.lua` | (custom) path-lsp | In-process filesystem path completion LSP — 命名 buffer 按 root_dir 共享 client，未命名 buffer 独立 client + BufWipeout 自清理 |
 | `60_gtd.lua` | (custom GTD) | Loads `lua/plugins/gtd.lua` — personal task manager |
+
+### Custom Plugin: Faster (`lua/plugins/faster.lua`)
+
+Replaces the external `pteroctopus/faster.nvim` plugin. Self-contained performance module that:
+- **Bigfile**: On `BufReadPost`, if file > 2 MiB, disables treesitter/LSP/syntax/filetype/vimopts/matchparen
+- **Longline**: If `filesize/line_count > 250` bytes/line (minified JS/JSON), same feature disable
+- **Macro**: Overrides `@` keymap — sets `eventignore='all'` + `lazyredraw=true` during macro execution, restores on completion
+- Features use backup/restore per-buffer; macros use sentinel feedkeys + poll backstop
 
 ### Custom Plugin: GTD (`lua/plugins/gtd.lua`)
 
