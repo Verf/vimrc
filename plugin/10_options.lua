@@ -183,12 +183,12 @@ require('vim._core.ui2').enable {
     enable = true,
     msg = {
         targets = {
-            [''] = 'msg', -- 普通消息：进入独立的右下角消息提示浮窗
+            [''] = 'pager', -- 普通消息：进入独立的右下角消息提示浮窗
             empty = 'cmd', -- 空消息：直接丢入命令行，防止屏幕闪烁
             bufwrite = 'msg', -- 文件保存消息 (如 "file.txt" written)：消息提示
             confirm = 'cmd', -- 确认提示 (如 [Y/n])：在命令行展示，防止覆盖视野
             emsg = 'pager', -- 错误消息 (Error)：强制进入 Pager (全功能 Buffer)，方便阅读报错日志
-            echo = 'msg', -- 普通的 lua print 或 echo 输出
+            echo = 'pager', -- 普通的 lua print 或 echo 输出
         },
     },
 }

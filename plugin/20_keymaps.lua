@@ -85,14 +85,16 @@ vim.keymap.set('n', '<leader>x', '<cmd>x<cr>', { desc = 'Write Quite' })
 vim.keymap.set({ 'n', 'x' }, '<leader>X', function()
     local current_buf = vim.api.nvim_get_current_buf()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-        if buf ~= current_buf and vim.bo[buf].buflisted then
-            if vim.bo[buf].modified then
-                local buf_name = vim.api.nvim_buf_get_name(buf)
-                -- 只有在有文件名的情况下才尝试保存
-                if buf_name ~= '' then vim.api.nvim_buf_call(buf, function() vim.cmd 'silent! update' end) end
+        if buf == current_buf or not vim.bo[buf].buflisted then goto continue end
+        if vim.bo[buf].modified then
+            local name = vim.api.nvim_buf_get_name(buf)
+            if name ~= '' then
+                vim.api.nvim_buf_call(buf, function() vim.cmd 'silent! update' end)
             end
-            vim.api.nvim_buf_delete(buf, { force = true })
+            if vim.bo[buf].modified then goto continue end
         end
+        vim.api.nvim_buf_delete(buf, { force = true })
+        ::continue::
     end
 end, { desc = 'Buffer Only' })
 
