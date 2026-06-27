@@ -26,7 +26,7 @@
       "src": "https://github.com/willothy/flatten.nvim"
     },
     "mini.nvim": {
-      "rev": "1345d191bb3da9c7b0e977f4387c5761f9bff68d",
+      "rev": "1599a473aa6f5290a5d740b1144846e6f0c3963d",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "multicursor.nvim": {
