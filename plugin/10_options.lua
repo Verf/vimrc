@@ -66,7 +66,6 @@ vim.opt.number = true -- 显示行号
 vim.opt.relativenumber = true -- 显示相对行号
 vim.opt.signcolumn = 'yes:2' -- 固定 signcolumn 宽度，防止 LSP/git 标记出现时文本水平抖动
 vim.opt.showmatch = true -- 高亮显示匹配的括号，比如 ()、[]、{}
-vim.opt.conceallevel = 2 -- 隐藏 markdown/JSON 中的语法标记字符
 vim.opt.concealcursor = 'nc' -- 插入模式显示被隐藏字符，防止编辑混淆
 vim.opt.showmode = false -- 不显示当前模式（如 -- INSERT --）
 vim.opt.guicursor = 'n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20' -- 不同模式光标形状区分
