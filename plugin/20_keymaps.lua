@@ -12,8 +12,7 @@ vim.keymap.set({ 'n', 'o', 'x' }, 'n', 'j')
 vim.keymap.set({ 'n', 'o', 'x' }, 'i', 'k')
 vim.keymap.set({ 'n', 'o', 'x' }, 'o', 'l')
 vim.keymap.set({ 'n', 'o', 'x' }, 'p', 'n')
-vim.keymap.set({ 'n', 'o', 'x' }, 'h', ';')
-vim.keymap.set({ 'n', 'o', 'x' }, ';', 'p')
+vim.keymap.set({ 'n', 'o', 'x' }, 'h', 'p')
 vim.keymap.set({ 'n', 'o', 'x' }, 'D', 'E')
 vim.keymap.set({ 'n', 'o', 'x' }, 'F', 'R')
 vim.keymap.set({ 'n', 'o', 'x' }, 'K', 'T')
@@ -27,8 +26,7 @@ vim.keymap.set({ 'n', 'o', 'x' }, 'N', 'J')
 vim.keymap.set({ 'n', 'o', 'x' }, 'I', 'K')
 vim.keymap.set({ 'n', 'o', 'x' }, 'O', 'L')
 vim.keymap.set({ 'n', 'o', 'x' }, 'P', 'N')
-vim.keymap.set({ 'n', 'o', 'x' }, 'H', ':')
-vim.keymap.set({ 'n', 'o', 'x' }, ':', 'P')
+vim.keymap.set({ 'n', 'o', 'x' }, 'H', 'P')
 
 -- [[ Edit ]]
 -- 全局模糊搜索
@@ -74,7 +72,7 @@ end, { expr = true })
 
 -- [[ Copy & Paste]]
 vim.keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = 'System Copy' })
-vim.keymap.set({ 'n', 'v' }, '<leader>;', '"*p', { desc = 'System Paste' })
+vim.keymap.set({ 'n', 'v' }, '<leader>h', '"*p', { desc = 'System Paste' })
 
 -- [[ Buffer ]]
 
