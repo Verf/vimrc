@@ -10,10 +10,10 @@ Config.later(function()
             markdown = { 'gtd_format' },
             toml = { 'taplo' },
             yaml = { 'yamlfmt' },
-            json = { 'oxfmt' },
-            javascript = { 'oxfmt' },
-            typescript = { 'oxfmt' },
-            vue = { 'oxfmt' },
+            json = { 'prettier' },
+            javascript = { 'prettier' },
+            typescript = { 'prettier' },
+            vue = { 'prettier' },
         },
         formatters = {
             gtd_format = {
