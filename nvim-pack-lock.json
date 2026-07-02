@@ -1,9 +1,5 @@
 {
   "plugins": {
-    "arborist.nvim": {
-      "rev": "fdeef56c2840c6772b9f68c5774ed87e9340ec7d",
-      "src": "https://github.com/arborist-ts/arborist.nvim"
-    },
     "canola.nvim": {
       "rev": "b6e41f866ae01a1f14e73fd1f57317a15020987a",
       "src": "https://github.com/barrettruth/canola.nvim"
@@ -26,12 +22,22 @@
       "src": "https://github.com/willothy/flatten.nvim"
     },
     "mini.nvim": {
-      "rev": "1599a473aa6f5290a5d740b1144846e6f0c3963d",
+      "rev": "dc8a9918c3b1bc18a5fcd04d39b6d658074c0886",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "multicursor.nvim": {
       "rev": "704b99f10a72cc05d370cfeb294ff83412a8ab55",
       "src": "https://github.com/jake-stewart/multicursor.nvim"
+    },
+    "nvim-treesitter": {
+      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter",
+      "version": "'main'"
+    },
+    "nvim-treesitter-textobjects": {
+      "rev": "851e865342e5a4cb1ae23d31caf6e991e1c99f1e",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+      "version": "'main'"
     },
     "render-markdown.nvim": {
       "rev": "f422cb5c6855f150e2ddcfaf44e7157b98b34f6a",
