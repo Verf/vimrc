@@ -173,7 +173,7 @@ This config uses a custom Norman-inspired keymap that remaps the home row. **All
 | `30_blink.lua` | blink.cmp | Completion engine (uses mini_snippets preset) |
 | `40_whichkey.lua` | which-key.nvim | Keymap hints |
 | `41_oil.lua` | oil.nvim | File explorer/buffer |
-| `50_conform.lua` | conform.nvim | Formatting (ruff, stylua, nufmt, oxfmt, etc.) |
+| `50_conform.lua` | conform.nvim | Formatting (ruff, stylua, nufmt, prettier, etc.) |
 | `51_quicker.lua` | (custom quickfix) | Quickfix context expand/collapse (see lua/plugins/quickfix.lua) |
 | `52_codediff.lua` | codediff | Code diff tools |
 | `54_render_markdown.lua` | render-markdown.nvim | Markdown preview |
