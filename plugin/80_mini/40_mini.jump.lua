@@ -3,10 +3,10 @@ Config.now(
     function()
         require('mini.jump').setup {
             mappings = {
-                forward = 't',
-                backward = 'T',
-                forward_till = 'k',
-                backward_till = 'K',
+                forward = 's',
+                backward = 'S',
+                forward_till = 'v',
+                backward_till = 'V',
                 repeat_jump = '',
             },
         }

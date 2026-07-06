@@ -1,4 +1,4 @@
--- [[ Gullium Keyboard Layout ]]
+-- [[ Gallium Keyboard Layout ]]
 vim.keymap.set({ 'n', 'o', 'x' }, 'b', 'q')
 vim.keymap.set({ 'n', 'o', 'x' }, 'l', 'w')
 vim.keymap.set({ 'n', 'o', 'x' }, 'd', 'e')
