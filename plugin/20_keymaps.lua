@@ -1,61 +1,8 @@
--- [[ Gallium Keyboard Layout ]]
-vim.keymap.set({ 'n', 'o', 'x' }, 'b', 'q')
-vim.keymap.set({ 'n', 'o', 'x' }, 'l', 'w')
-vim.keymap.set({ 'n', 'o', 'x' }, 'd', 'e')
-vim.keymap.set({ 'n', 'o', 'x' }, 'c', 'r')
-vim.keymap.set({ 'n', 'o', 'x' }, 'v', 't')
-vim.keymap.set({ 'n', 'o', 'x' }, 'j', 'y')
-vim.keymap.set({ 'n', 'o', 'x' }, 'y', 'u')
-vim.keymap.set({ 'n', 'o', 'x' }, 'o', 'i')
-vim.keymap.set({ 'n', 'o', 'x' }, 'u', 'o')
-vim.keymap.set({ 'n', 'o', 'x' }, 'i', 'p')
-vim.keymap.set({ 'n', 'o', 'x' }, 'n', 'a')
-vim.keymap.set({ 'n', 'o', 'x' }, 'r', 's')
-vim.keymap.set({ 'n', 'o', 'x' }, 't', 'd')
-vim.keymap.set({ 'n', 'o', 'x' }, 's', 'f')
-vim.keymap.set({ 'n', 'o', 'x' }, 'p', 'h')
-vim.keymap.set({ 'n', 'o', 'x' }, 'h', 'j')
-vim.keymap.set({ 'n', 'o', 'x' }, 'a', 'k')
-vim.keymap.set({ 'n', 'o', 'x' }, 'e', 'l')
-vim.keymap.set({ 'n', 'o', 'x' }, 'x', 'z')
-vim.keymap.set({ 'n', 'o', 'x' }, 'q', 'x')
-vim.keymap.set({ 'n', 'o', 'x' }, 'm', 'c')
-vim.keymap.set({ 'n', 'o', 'x' }, 'w', 'v')
-vim.keymap.set({ 'n', 'o', 'x' }, 'z', 'b')
-vim.keymap.set({ 'n', 'o', 'x' }, 'k', 'n')
-vim.keymap.set({ 'n', 'o', 'x' }, 'f', 'm')
-vim.keymap.set({ 'n', 'o', 'x' }, 'B', 'Q')
-vim.keymap.set({ 'n', 'o', 'x' }, 'L', 'W')
-vim.keymap.set({ 'n', 'o', 'x' }, 'D', 'E')
-vim.keymap.set({ 'n', 'o', 'x' }, 'C', 'R')
-vim.keymap.set({ 'n', 'o', 'x' }, 'V', 'T')
-vim.keymap.set({ 'n', 'o', 'x' }, 'J', 'Y')
-vim.keymap.set({ 'n', 'o', 'x' }, 'Y', 'U')
-vim.keymap.set({ 'n', 'o', 'x' }, 'O', 'I')
-vim.keymap.set({ 'n', 'o', 'x' }, 'U', 'O')
-vim.keymap.set({ 'n', 'o', 'x' }, 'I', 'P')
-vim.keymap.set({ 'n', 'o', 'x' }, 'N', 'A')
-vim.keymap.set({ 'n', 'o', 'x' }, 'R', 'S')
-vim.keymap.set({ 'n', 'o', 'x' }, 'T', 'D')
-vim.keymap.set({ 'n', 'o', 'x' }, 'S', 'F')
-vim.keymap.set({ 'n', 'o', 'x' }, 'P', 'H')
-vim.keymap.set({ 'n', 'o', 'x' }, 'H', 'J')
-vim.keymap.set({ 'n', 'o', 'x' }, 'A', 'K')
-vim.keymap.set({ 'n', 'o', 'x' }, 'E', 'L')
-vim.keymap.set({ 'n', 'o', 'x' }, 'X', 'Z')
-vim.keymap.set({ 'n', 'o', 'x' }, 'Q', 'X')
-vim.keymap.set({ 'n', 'o', 'x' }, 'M', 'C')
-vim.keymap.set({ 'n', 'o', 'x' }, 'W', 'V')
-vim.keymap.set({ 'n', 'o', 'x' }, 'Z', 'B')
-vim.keymap.set({ 'n', 'o', 'x' }, 'K', 'N')
-vim.keymap.set({ 'n', 'o', 'x' }, 'F', 'M')
-
--- [[ Edit ]]
 -- 全局模糊搜索
 vim.keymap.set('n', '<leader>/', ':Grep ', { desc = 'Grep' })
 -- 修改时不记录寄存器中
-vim.keymap.set({ 'n', 'v' }, 'm', '"_c')
-vim.keymap.set({ 'n', 'v' }, 'M', '"_C')
+vim.keymap.set({ 'n', 'v' }, 'c', '"_c')
+vim.keymap.set({ 'n', 'v' }, 'C', '"_C')
 
 -- 替换并记录当前内容，支持按.自动替换下一个
 vim.keymap.set('n', '<C-s>', 'g*Ncgn', { desc = 'Search & Replace' })
@@ -73,7 +20,7 @@ vim.keymap.set('x', '<C-s>', function()
 end, { desc = 'Search & Replace' })
 
 -- 删除的空行不记录寄存器中
-vim.keymap.set('n', 'tt', function()
+vim.keymap.set('n', 'dd', function()
     -- 获取将要删除的行数（如果没有输入数字如 3ee，则默认为 1）
     local count = vim.v.count1
     -- 获取当前光标所在的行号 (Neovim API 行号从 0 开始，所以要减 1)
@@ -92,17 +39,11 @@ vim.keymap.set('n', 'tt', function()
     return '"_dd'
 end, { expr = true })
 
--- [[ Copy & Paste]]
-vim.keymap.set({ 'n', 'v' }, '<leader>j', '"*y', { desc = 'System Copy' })
-vim.keymap.set({ 'n', 'v' }, '<leader>h', '"*p', { desc = 'System Paste' })
-
 -- [[ Buffer ]]
-
 vim.keymap.set({ 'n', 'x' }, '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
 vim.keymap.set({ 'n', 'x' }, '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
 vim.keymap.set({ 'n', 'x' }, '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
-vim.keymap.set('n', '<leader>x', '<cmd>x<cr>', { desc = 'Write Quite' })
-vim.keymap.set({ 'n', 'x' }, '<leader>X', function()
+vim.keymap.set({ 'n', 'x' }, '<leader>Q', function()
     local current_buf = vim.api.nvim_get_current_buf()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         if buf == current_buf or not vim.bo[buf].buflisted then goto continue end
@@ -145,18 +86,22 @@ local function smart_win_move(dir)
         vim.cmd('wincmd ' .. dir) -- 再次切换
     end
 end
-vim.keymap.set('n', '<leader>wc', '<C-w>o', { desc = 'Window Only' })
-vim.keymap.set('n', '<leader>wq', '<C-w>c', { desc = 'Window Close' })
+vim.keymap.set('n', '<leader>wo', '<C-w>o', { desc = 'Window Only' })
+vim.keymap.set('n', '<leader>wc', '<C-w>c', { desc = 'Window Close' })
 vim.keymap.set('n', '<leader>ws', '<C-w>s', { desc = 'Window Split' })
 vim.keymap.set('n', '<leader>wv', '<C-w>v', { desc = 'Window VSplit' })
-vim.keymap.set('n', '<leader>wp', function() smart_win_move 'h' end, { desc = 'Switch to Left' })
-vim.keymap.set('n', '<leader>wh', function() smart_win_move 'j' end, { desc = 'Switch to Bottom' })
-vim.keymap.set('n', '<leader>wa', function() smart_win_move 'k' end, { desc = 'Switch to Up' })
-vim.keymap.set('n', '<leader>we', function() smart_win_move 'l' end, { desc = 'Switch to Right' })
-vim.keymap.set('n', '<leader>wP', '<C-w>H', { desc = 'Window to Left' })
-vim.keymap.set('n', '<leader>wH', '<C-w>J', { desc = 'Window to Bottom' })
-vim.keymap.set('n', '<leader>wA', '<C-w>K', { desc = 'Window to Up' })
-vim.keymap.set('n', '<leader>wE', '<C-w>L', { desc = 'Window to Right' })
+vim.keymap.set('n', '<leader>wh', function() smart_win_move 'h' end, { desc = 'Switch to Left' })
+vim.keymap.set('n', '<leader>wj', function() smart_win_move 'j' end, { desc = 'Switch to Bottom' })
+vim.keymap.set('n', '<leader>wk', function() smart_win_move 'k' end, { desc = 'Switch to Up' })
+vim.keymap.set('n', '<leader>wl', function() smart_win_move 'l' end, { desc = 'Switch to Right' })
+vim.keymap.set('n', '<leader>w<left>', function() smart_win_move 'h' end, { desc = 'Switch to Left' })
+vim.keymap.set('n', '<leader>w<down>', function() smart_win_move 'j' end, { desc = 'Switch to Bottom' })
+vim.keymap.set('n', '<leader>w<up>', function() smart_win_move 'k' end, { desc = 'Switch to Up' })
+vim.keymap.set('n', '<leader>w<right>', function() smart_win_move 'l' end, { desc = 'Switch to Right' })
+vim.keymap.set('n', '<leader>wH', '<C-w>H', { desc = 'Window to Left' })
+vim.keymap.set('n', '<leader>wJ', '<C-w>J', { desc = 'Window to Bottom' })
+vim.keymap.set('n', '<leader>wK', '<C-w>K', { desc = 'Window to Up' })
+vim.keymap.set('n', '<leader>wL', '<C-w>L', { desc = 'Window to Right' })
 
 for i = 1, 4 do
     local lhs = '<leader>' .. i
@@ -172,8 +117,7 @@ vim.keymap.set('n', '<leader>tv', function() vim.cmd 'vsplit | terminal' end, { 
 vim.keymap.set('n', '<leader>th', function() vim.cmd 'split | terminal' end, { desc = 'Horizontal split Terminal' })
 
 -- [[ Diagnostic ]]
-vim.keymap.set('n', '<leader>wd', vim.diagnostic.open_float, { desc = 'Show diagnostics under the cursor' })
-vim.keymap.set('n', '<leader>ul', function() vim.opt.list = not vim.opt.list:get() end, { desc = 'Toggle listchars' })
+vim.keymap.set('n', '<leader>D', vim.diagnostic.open_float, { desc = 'Show diagnostics under the cursor' })
 
 -- [[ Insert ]]
 vim.keymap.set(

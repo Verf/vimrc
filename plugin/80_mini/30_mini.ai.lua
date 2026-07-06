@@ -3,11 +3,6 @@ Config.now(function()
     local spec_treesitter = require('mini.ai').gen_spec.treesitter
     require('mini.ai').setup {
         n_lines = 200,
-        mappings = {
-            inside = 'r',
-            inside_next = '',
-            inside_last = '',
-        },
         custom_textobjects = {
             d = { '%f[%d]%d+' },
             s = {
@@ -24,7 +19,3 @@ Config.now(function()
         },
     }
 end)
-
--- mini.ai接管r映射后无法fallback到原始的定义，因此重新映射
-vim.keymap.set({ 'x', 'o' }, 'rw', 'iw')
-vim.keymap.set({ 'x', 'o' }, 'rW', 'iW')

@@ -5,11 +5,6 @@ Config.now_if_args(
         require('oil').setup {
             default_file_explorer = true,
             skip_confirm_for_simple_edits = false,
-            keymaps = {
-                ['b'] = { 'actions.close', mode = 'n' },
-                ['<bs>'] = { 'actions.parent', mode = 'n' },
-                ['jk'] = { 'actions.yank_entry', mode = 'n' },
-            },
         }
     end
 )

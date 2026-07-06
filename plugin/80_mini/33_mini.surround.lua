@@ -4,7 +4,7 @@ Config.now(
         require('mini.surround').setup {
             mappings = {
                 add = 'ma',
-                delete = 'me',
+                delete = 'md',
                 find = '',
                 find_left = '',
                 highlight = '',
