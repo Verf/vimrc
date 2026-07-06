@@ -6,9 +6,9 @@ Config.now_if_args(
             default_file_explorer = true,
             skip_confirm_for_simple_edits = false,
             keymaps = {
-                ['q'] = { 'actions.close', mode = 'n' },
+                ['b'] = { 'actions.close', mode = 'n' },
                 ['<bs>'] = { 'actions.parent', mode = 'n' },
-                ['jp'] = { 'actions.yank_entry', mode = 'n' },
+                ['jk'] = { 'actions.yank_entry', mode = 'n' },
             },
         }
     end

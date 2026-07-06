@@ -2,7 +2,7 @@
 Config.now(function()
     vim.keymap.set(
         { 'n', 'o', 'x' },
-        'w',
+        'l',
         function() require('plugins.subword').motion 'w' end,
         { desc = 'camelCase/subword forward' }
     )
@@ -14,7 +14,7 @@ Config.now(function()
     )
     vim.keymap.set(
         { 'n', 'o', 'x' },
-        'b',
+        'z',
         function() require('plugins.subword').motion 'b' end,
         { desc = 'camelCase/subword back' }
     )
