@@ -11,7 +11,7 @@ nvim/
 ├── init.lua                  # Entry point: enables vim.loader, defines global Config
 ├── plugin/                   # All config files (auto-loaded by Neovim)
 │   ├── 10_options.lua        # Core options, Neovide, shell (nu), UI, diagnostics, grep, fold (treesitter expr)
-│   ├── 20_keymaps.lua        # All keymaps, Gallium keyboard layout remaps
+│   ├── 20_keymaps.lua        # All keymaps
 │   ├── 30_autocmds.lua       # Autocommands: auto-save, terminal behavior, etc.
 │   ├── 40_commands.lua       # Custom commands (e.g., :Grep)
 │   ├── 50_lsp.lua            # LSP config (built-in vim.lsp.config API)
@@ -85,7 +85,6 @@ Sub-files use the same scheme: `20_mini.hipatterns.lua`, `20_treesitter.lua`, et
 
 ### Keymap Rules
 - **All keymaps must have `desc`** — this feeds which-key.nvim
-- Using Gallium keyboard layout (Rowstag), `plugin/20_keymaps.lua` remap all normal mode key to remain the same position as qwerty layout.
 - remap is always `false` (the default in vim.keymap.set)
 - Which-key groups defined in `plugin/90_plugins/40_whichkey.lua`
 
@@ -100,43 +99,8 @@ Sub-files use the same scheme: `20_mini.hipatterns.lua`, `20_treesitter.lua`, et
 - Prefer `require('plugin').setup {}` pattern
 - `plugin/` 中的 autocommand 必须使用 `_G.MyGroup`；`lua/plugins/` 模块使用自己的 augroup
 
-## Gallium Keyboard Layout
-
-This config uses the Gallium Rowstag keyboard layout by Bryson James. `plugin/20_keymaps.lua` remaps all normal mode keys so that physical key positions behave like QWERTY vim.
-
-| Physical Key | Logical Vim Key | Effect |
-|-------------|-----------------|--------|
-| `b` | `q` | record macro |
-| `l` | `w` | word forward |
-| `d` | `e` | end of word |
-| `c` | `r` | replace |
-| `v` | `t` | till |
-| `j` | `y` | yank |
-| `y` | `u` | undo |
-| `o` | `i` | insert |
-| `u` | `o` | open below |
-| `i` | `p` | paste |
-| `n` | `a` | append |
-| `r` | `s` | substitute |
-| `t` | `d` | delete |
-| `s` | `f` | find |
-| `p` | `h` | left |
-| `h` | `j` | down |
-| `a` | `k` | up |
-| `e` | `l` | right |
-| `x` | `z` | fold prefix |
-| `q` | `x` | delete char |
-| `m` | `c` | change |
-| `w` | `v` | visual mode |
-| `z` | `b` | word back |
-| `k` | `n` | next |
-| `f` | `m` | mark |
-
 ### Keymap Rules
-- Normal/operator-pending/visual mode: physical key positions map to QWERTY vim actions (via remap layer)
 - `g` prefix keymaps: use physical key positions, no remapping
-- `<leader>` prefix keymaps: use physical key positions, no remapping
-- Plugin keymaps (mini.ai, mini.jump, subword, etc.) override the remap layer for their specific keys
 - Motion keys `w`, `e`, `b` are remapped through custom subword (`lua/plugins/subword.lua`)
 
 ## Plugin Catalog
@@ -269,7 +233,6 @@ Configured via `vim.lsp.config()` in `50_lsp.lua` (Neovim 0.11+ built-in API, no
 - Do NOT introduce `lazy.nvim`, `packer`, or any alternative plugin manager — stick with `vim.pack`
 - Do NOT create autocommands in `plugin/` without `group = _G.MyGroup`；`lua/plugins/` 使用自己的 augroup
 - Do NOT add keymaps without a `desc` field
-- Do NOT change the Gallium keyboard layout remaps in `20_keymaps.lua` — they are intentional and affect all other keymaps
 - Do NOT change the shell config (nushell) without understanding the implications
 - Do NOT add plugins that conflict with existing mini.nvim modules
 - Do NOT use `2>nul` in shell commands — this project runs under msys2 bash, where `2>nul` creates a junk file named `nul` (a Windows reserved device name, hard to delete). Use `2>/dev/null` instead.
@@ -278,7 +241,7 @@ Configured via `vim.lsp.config()` in `50_lsp.lua` (Neovim 0.11+ built-in API, no
 
 When a user reports an issue, start investigation here:
 - **Startup/performance**: `init.lua`, `10_options.lua` (shada settings), `11_faster.lua`
-- **Keymaps not working**: `20_keymaps.lua` (Gallium remaps), plugin files (plugin-specific maps), `22_spider.lua` + `lua/plugins/subword.lua` (subword motions)
+- **Keymaps not working**: `20_keymaps.lua` , plugin files (plugin-specific maps), `22_spider.lua` + `lua/plugins/subword.lua` (subword motions)
 - **Completion**: `30_blink.lua`
 - **LSP/formatting/diagnostics**: `50_lsp.lua`, `50_conform.lua`, `10_options.lua` (diagnostic config)
 - **Folding**: `10_options.lua` (foldmethod=expr via treesitter, foldminlines=2, foldnestmax=4, custom foldtext with treesitter highlighting + right-aligned line count `󰈉 N lines`, per-buffer cache invalidated on text change)
