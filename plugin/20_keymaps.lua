@@ -50,8 +50,6 @@ vim.keymap.set({ 'n', 'o', 'x' }, 'Z', 'B')
 vim.keymap.set({ 'n', 'o', 'x' }, 'K', 'N')
 vim.keymap.set({ 'n', 'o', 'x' }, 'F', 'M')
 
-
-
 -- [[ Edit ]]
 -- 全局模糊搜索
 vim.keymap.set('n', '<leader>/', ':Grep ', { desc = 'Grep' })
