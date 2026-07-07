@@ -43,7 +43,8 @@ end, { expr = true })
 vim.keymap.set({ 'n', 'x' }, '<tab>', '<cmd>bn<cr>', { desc = 'Next Buffer' })
 vim.keymap.set({ 'n', 'x' }, '<s-tab>', '<cmd>bp<cr>', { desc = 'Previous Buffer' })
 vim.keymap.set({ 'n', 'x' }, '<leader><tab>', '<cmd>b#<cr>', { desc = 'Swith Buffer' })
-vim.keymap.set({ 'n', 'x' }, '<leader>Q', function()
+vim.keymap.set({ 'n', 'x' }, '<leader>q', '<cmd>q<cr>', { desc = 'Quit' })
+vim.keymap.set({ 'n', 'x' }, '<leader>X', function()
     local current_buf = vim.api.nvim_get_current_buf()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
         if buf == current_buf or not vim.bo[buf].buflisted then goto continue end
