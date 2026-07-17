@@ -35,37 +35,60 @@ local feature_list = {
         end,
     },
     {
-        -- vimopts: 按 buffer 备份/恢复 swapfile, foldmethod, undolevels, undoreload, list, spell
+        -- vimopts: 按 buffer 备份/恢复 swapfile, undolevels, spell
+        -- undoreload 是 global 选项，统一存储
+        -- foldmethod/list 是 window-local 选项，按窗口分别处理
         defer = true,
         backup = {},
+        _global_backup = nil,
         disable = function(self, bufnr)
             if not self.backup[bufnr] then
                 self.backup[bufnr] = {
                     swapfile = vim.bo[bufnr].swapfile,
-                    foldmethod = vim.bo[bufnr].foldmethod,
                     undolevels = vim.bo[bufnr].undolevels,
-                    undoreload = vim.bo[bufnr].undoreload,
-                    list = vim.bo[bufnr].list,
                     spell = vim.bo[bufnr].spell,
+                    window_opts = {},
                 }
+                -- 遍历所有显示该 buffer 的窗口，备份/设置 window-local 选项
+                for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+                    if vim.api.nvim_win_get_buf(win) == bufnr then
+                        self.backup[bufnr].window_opts[win] = {
+                            foldmethod = vim.wo[win].foldmethod,
+                            list = vim.wo[win].list,
+                        }
+                        vim.wo[win].foldmethod = 'manual'
+                        vim.wo[win].list = false
+                    end
+                end
+                -- global 选项只备份一次
+                if self._global_backup == nil then
+                    self._global_backup = { undoreload = vim.o.undoreload }
+                    vim.o.undoreload = 0
+                end
             end
             vim.bo[bufnr].swapfile = false
-            vim.bo[bufnr].foldmethod = 'manual'
             vim.bo[bufnr].undolevels = -1
-            vim.bo[bufnr].undoreload = 0
-            vim.bo[bufnr].list = false
             vim.bo[bufnr].spell = false
         end,
         enable = function(self, bufnr)
             local bak = self.backup[bufnr]
             if not bak then return end
             vim.bo[bufnr].swapfile = bak.swapfile
-            vim.bo[bufnr].foldmethod = bak.foldmethod
             vim.bo[bufnr].undolevels = bak.undolevels
-            vim.bo[bufnr].undoreload = bak.undoreload
-            vim.bo[bufnr].list = bak.list
             vim.bo[bufnr].spell = bak.spell
+            -- 恢复每个窗口的 window-local 选项
+            for win, opts in pairs(bak.window_opts) do
+                if vim.api.nvim_win_is_valid(win) and vim.api.nvim_win_get_buf(win) == bufnr then
+                    vim.wo[win].foldmethod = opts.foldmethod
+                    vim.wo[win].list = opts.list
+                end
+            end
             self.backup[bufnr] = nil
+            -- 恢复 global 选项
+            if self._global_backup then
+                vim.o.undoreload = self._global_backup.undoreload
+                self._global_backup = nil
+            end
         end,
     },
     {
