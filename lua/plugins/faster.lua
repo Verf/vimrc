@@ -35,9 +35,9 @@ local feature_list = {
         end,
     },
     {
-        -- vimopts: 按 buffer 备份/恢复 swapfile, undolevels, spell
+        -- vimopts: 按 buffer 备份/恢复 swapfile, undolevels
+        -- spell/foldmethod/list 是 window-local 选项，按窗口分别处理
         -- undoreload 是 global 选项，统一存储
-        -- foldmethod/list 是 window-local 选项，按窗口分别处理
         defer = true,
         backup = {},
         _global_backup = nil,
@@ -46,7 +46,6 @@ local feature_list = {
                 self.backup[bufnr] = {
                     swapfile = vim.bo[bufnr].swapfile,
                     undolevels = vim.bo[bufnr].undolevels,
-                    spell = vim.bo[bufnr].spell,
                     window_opts = {},
                 }
                 -- 遍历所有显示该 buffer 的窗口，备份/设置 window-local 选项
@@ -55,9 +54,11 @@ local feature_list = {
                         self.backup[bufnr].window_opts[win] = {
                             foldmethod = vim.wo[win].foldmethod,
                             list = vim.wo[win].list,
+                            spell = vim.wo[win].spell,
                         }
                         vim.wo[win].foldmethod = 'manual'
                         vim.wo[win].list = false
+                        vim.wo[win].spell = false
                     end
                 end
                 -- global 选项只备份一次
@@ -68,19 +69,18 @@ local feature_list = {
             end
             vim.bo[bufnr].swapfile = false
             vim.bo[bufnr].undolevels = -1
-            vim.bo[bufnr].spell = false
         end,
         enable = function(self, bufnr)
             local bak = self.backup[bufnr]
             if not bak then return end
             vim.bo[bufnr].swapfile = bak.swapfile
             vim.bo[bufnr].undolevels = bak.undolevels
-            vim.bo[bufnr].spell = bak.spell
             -- 恢复每个窗口的 window-local 选项
             for win, opts in pairs(bak.window_opts) do
                 if vim.api.nvim_win_is_valid(win) and vim.api.nvim_win_get_buf(win) == bufnr then
                     vim.wo[win].foldmethod = opts.foldmethod
                     vim.wo[win].list = opts.list
+                    vim.wo[win].spell = opts.spell
                 end
             end
             self.backup[bufnr] = nil

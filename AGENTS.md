@@ -168,7 +168,7 @@ Replaces the external `pteroctopus/faster.nvim` plugin. Self-contained performan
 - Features use backup/restore per-buffer; macros use sentinel feedkeys + poll backstop
 
 > **⚠️ 选项作用域警示**：在 `faster.lua` 中备份/恢复 Neovim 选项时，必须先确认每个选项的作用域：
-> - **buffer-local**（`vim.bo[bufnr]`）：`swapfile`、`undolevels`、`spell`、`syntax`、`filetype`
+> - **buffer-local**（`vim.bo[bufnr]`）：`swapfile`、`undolevels`、`syntax`、`filetype`
 > - **window-local**（`vim.wo[win]`）：`foldmethod`、`list` — 不能通过 `vim.bo[bufnr]` 访问，需遍历显示该 buffer 的所有窗口分别设置
 > - **global**（`vim.o`）：`undoreload` — 不能通过 `vim.bo[bufnr]` 访问，需统一备份一次
 > 用到 `:help option-name` 确认作用域后再编码，避免 `'buf' cannot be passed for {scope} option` 错误。
