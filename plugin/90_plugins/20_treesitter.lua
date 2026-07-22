@@ -4,6 +4,16 @@ vim.pack.add {
 }
 
 Config.now(function()
+    -- 确保 Neovim 内置 parser（vim、vimdoc、lua、c 等）可被发现
+    -- Neovim 0.12 将内置 parser 安装在与标准 runtimepath 不同的路径下
+    do
+        local base = vim.fn.fnamemodify(vim.env.VIM, ':h:h')
+        local parser_dir = base .. '/lib/nvim/parser'
+        if vim.fn.isdirectory(parser_dir) == 1 then
+            vim.opt.rtp:prepend(vim.fn.fnamemodify(parser_dir, ':h'))
+        end
+    end
+
     local languages = {
         -- config
         'xml',
