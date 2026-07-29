@@ -79,7 +79,7 @@ vim.opt.titlestring = '%f%(%m%) – nvim' -- 标题格式：文件名(已修改)
 vim.opt.cmdheight = 0 -- 隐藏默认的命令行
 
 vim.opt.mouse = 'a' -- 在所有模式下（普通、可视、插入等）启用鼠标支持
-vim.opt.clipboard = 'unnamedplus' -- 使用系统剪贴板（+ 寄存器），yank/delete 同步到系统剪贴板
+
 vim.opt.splitkeep = 'cursor' -- 分屏时保持相对位置更稳定
 vim.opt.splitright = true -- 竖向分屏时将新窗口放在右边
 vim.opt.switchbuf = 'usetab' -- 执行特定跳转时优先复用已有标签页，若没有则新建标签页打开
