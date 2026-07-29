@@ -122,6 +122,15 @@ vim.opt.sessionoptions = {
 
 vim.opt.fillchars:append { diff = '╱' }
 
+-- 持久化撤销历史：关闭文件后仍可撤销
+vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath('cache') .. '/undo'
+vim.fn.mkdir(vim.o.undodir, 'p')
+
+-- swapfile 集中存放，避免项目目录污染
+vim.opt.directory = vim.fn.stdpath('cache') .. '/swap'
+vim.fn.mkdir(vim.o.directory, 'p')
+
 -- shada
 -- 限制 ShaDa 文件大小以加速启动
 -- '100  : 文件标记（file marks）最多保存 100 个

@@ -181,9 +181,9 @@ local function _bigfile_check(bufnr, threshold_mib)
         if not vim.api.nvim_buf_is_valid(bufnr) then return end
         local size_mib = _get_file_size(bufnr)
         if not size_mib or size_mib < threshold_mib then return end
-        local ok = pcall(vim.api.nvim_buf_get_var, bufnr, 'faster_bigfile_done')
+        local ok, _ = pcall(function() return vim.b[bufnr].faster_bigfile_done end)
         if ok then return end
-        pcall(vim.api.nvim_buf_set_var, bufnr, 'faster_bigfile_done', true)
+        pcall(function() vim.b[bufnr].faster_bigfile_done = true end)
         _heavy_disable(bufnr)
     end)
 end
@@ -213,9 +213,9 @@ local function _longline_check(bufnr, min_mib, avg_threshold)
         local line_count = vim.api.nvim_buf_line_count(bufnr)
         if line_count == 0 then return end
         if size_bytes / line_count <= avg_threshold then return end
-        local ok = pcall(vim.api.nvim_buf_get_var, bufnr, 'faster_longline_done')
+        local ok, _ = pcall(function() return vim.b[bufnr].faster_longline_done end)
         if ok then return end
-        pcall(vim.api.nvim_buf_set_var, bufnr, 'faster_longline_done', true)
+        pcall(function() vim.b[bufnr].faster_longline_done = true end)
         _heavy_disable(bufnr)
     end)
 end

@@ -10,7 +10,7 @@ Config.later(function()
                     for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
                         if
                             vim.api.nvim_buf_get_name(bufnr) == ''
-                            and vim.api.nvim_buf_get_option(bufnr, 'buftype') == ''
+                            and vim.bo[bufnr].buftype == ''
                         then
                             pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
                         end

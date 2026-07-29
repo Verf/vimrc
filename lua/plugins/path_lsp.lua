@@ -215,24 +215,24 @@ function M.start(bufnr)
     if bufpath == '' then return end
 
     -- 快速路径：用 buffer variable 跳过已附着的 buffer，避免每次遍历 vim.lsp.get_clients
-    if pcall(vim.api.nvim_buf_get_var, bufnr, 'path_lsp_attached') then return end
+    local ok, _ = pcall(function() return vim.b[bufnr].path_lsp_attached end)
+    if ok then return end
 
     -- 检查是否已附着（防御性检查，正常情况下快速路径已捕获）
     for _, client in ipairs(vim.lsp.get_clients { bufnr = bufnr }) do
         if client.name == 'path-lsp' then
-            pcall(vim.api.nvim_buf_set_var, bufnr, 'path_lsp_attached', true)
+            pcall(function() vim.b[bufnr].path_lsp_attached = true end)
             return
         end
     end
 
-    -- 确保当前 buffer 是目标 buffer（vim.lsp.start 会附着到当前 buffer）
-    vim.api.nvim_set_current_buf(bufnr)
-
     -- 确定 root_dir：优先 .git 根目录，其次文件所在目录，最后 cwd
     local root_dir = vim.fs.root(bufnr, '.git') or vim.fs.dirname(bufpath) or vim.fn.getcwd()
 
-    ---@diagnostic disable-next-line: missing-parameter
-    vim.lsp.start {
+    -- 在目标 buffer 上下文中启动 LSP，避免切换当前 buffer 的副作用
+    vim.api.nvim_buf_call(bufnr, function()
+        ---@diagnostic disable-next-line: missing-parameter
+        vim.lsp.start {
         name = 'path-lsp',
         root_dir = root_dir,
         capabilities = vim.lsp.protocol.make_client_capabilities(),
@@ -305,9 +305,10 @@ function M.start(bufnr)
                 end,
             }
         end,
-    }
+        }
+    end)
     -- 标记 buffer 已附着，后续调用通过快速路径跳过
-    pcall(vim.api.nvim_buf_set_var, bufnr, 'path_lsp_attached', true)
+    pcall(function() vim.b[bufnr].path_lsp_attached = true end)
 end
 
 return M

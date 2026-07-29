@@ -21,6 +21,24 @@ vim.lsp.config('nushell', {
     root_markers = { '.git' },
 })
 
+-- Lua: lua_ls（Lua Language Server）
+vim.lsp.config('lua_ls', {
+    cmd = { 'lua-language-server' },
+    filetypes = { 'lua' },
+    root_markers = { '.luarc.json', '.luarc.jsonc', '.git' },
+    settings = {
+        Lua = {
+            runtime = { version = 'LuaJIT' },
+            diagnostics = { globals = { 'vim' } },
+            workspace = {
+                library = vim.api.nvim_get_runtime_file('', true),
+                checkThirdParty = false,
+            },
+            telemetry = { enable = false },
+        },
+    },
+})
+
 -- Vue2: vls（Vetur Language Server，仅兼容 Node ≤16）
 vim.lsp.config('vls', {
     cmd = { 'vls' },
@@ -29,7 +47,7 @@ vim.lsp.config('vls', {
 })
 
 -- 启用所有服务器（按文件类型自动启动）
-vim.lsp.enable { 'ruff', 'ty', 'nushell', 'vls' }
+vim.lsp.enable { 'lua_ls', 'ruff', 'ty', 'nushell', 'vls' }
 
 -- LSP 附加回调
 vim.api.nvim_create_autocmd('LspAttach', {
