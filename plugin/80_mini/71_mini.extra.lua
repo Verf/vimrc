@@ -18,19 +18,24 @@ vim.keymap.set('n', '<leader>z', function()
                 if item == nil then return end
                 local full_path = vim.fn.fnamemodify(item, ':p')
                 vim.schedule(function()
-                    -- 与 <leader>f 一致的逻辑：选中目录后进一步在该目录下浏览文件
-                    if vim.fn.executable 'rg' == 1 then
-                        MiniPick.builtin.cli({ command = { 'rg', '--files', '-j', '1', '--color=never' } }, {
-                            source = {
-                                name = 'Files (rg)',
-                                cwd = full_path,
-                                show = function(buf_id, items, query)
-                                    MiniPick.default_show(buf_id, items, query, { show_icons = true })
-                                end,
-                            },
-                        })
+                    -- 复用 _files_picker：git 仓库走 git ls-files，否则 fallback rg
+                    if _G._files_picker then
+                        _G._files_picker(full_path)
                     else
-                        MiniPick.builtin.files({}, { source = { cwd = full_path } })
+                        -- 防御：如果 70_mini.pick.lua 没加载（极端情况），回退 rg
+                        if vim.fn.executable 'rg' == 1 then
+                            MiniPick.builtin.cli({ command = { 'rg', '--files', '-j', '1', '--color=never' } }, {
+                                source = {
+                                    name = 'Files (rg)',
+                                    cwd = full_path,
+                                    show = function(buf_id, items, query)
+                                        MiniPick.default_show(buf_id, items, query, { show_icons = true })
+                                    end,
+                                },
+                            })
+                        else
+                            MiniPick.builtin.files({}, { source = { cwd = full_path } })
+                        end
                     end
                 end)
             end,

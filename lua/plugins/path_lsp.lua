@@ -214,9 +214,15 @@ function M.start(bufnr)
     local bufpath = vim.api.nvim_buf_get_name(bufnr)
     if bufpath == '' then return end
 
-    -- 检查是否已附着
+    -- 快速路径：用 buffer variable 跳过已附着的 buffer，避免每次遍历 vim.lsp.get_clients
+    if pcall(vim.api.nvim_buf_get_var, bufnr, 'path_lsp_attached') then return end
+
+    -- 检查是否已附着（防御性检查，正常情况下快速路径已捕获）
     for _, client in ipairs(vim.lsp.get_clients { bufnr = bufnr }) do
-        if client.name == 'path-lsp' then return end
+        if client.name == 'path-lsp' then
+            pcall(vim.api.nvim_buf_set_var, bufnr, 'path_lsp_attached', true)
+            return
+        end
     end
 
     -- 确保当前 buffer 是目标 buffer（vim.lsp.start 会附着到当前 buffer）
@@ -300,6 +306,8 @@ function M.start(bufnr)
             }
         end,
     }
+    -- 标记 buffer 已附着，后续调用通过快速路径跳过
+    pcall(vim.api.nvim_buf_set_var, bufnr, 'path_lsp_attached', true)
 end
 
 return M

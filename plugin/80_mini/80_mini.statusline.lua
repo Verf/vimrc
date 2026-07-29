@@ -16,11 +16,9 @@ Config.now(function()
 
                 local rec_reg = vim.fn.reg_recording()
                 local recording = rec_reg ~= '' and (' REC @' .. rec_reg) or ''
-                local ok, im = pcall(require, 'shapeim')
-                local im_status = ok and (' ' .. im.status()) or ''
 
                 return MiniStatusline.combine_groups {
-                    { hl = mode_hl, strings = { mode .. im_status .. recording } },
+                    { hl = mode_hl, strings = { mode .. recording } },
                     { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
                     '%<', -- 截断点
                     { hl = 'MiniStatuslineFilename', strings = { filename } },
@@ -53,11 +51,4 @@ vim.api.nvim_create_autocmd({ 'RecordingEnter', 'RecordingLeave', 'LspProgress' 
     group = _G.MyGroup,
     callback = function() vim.cmd 'redrawstatus' end,
     desc = 'Update statusline on macro recording and LSP progress',
-})
-
-vim.api.nvim_create_autocmd('User', {
-    group = _G.MyGroup,
-    pattern = 'ShapeimToggle',
-    callback = function() vim.cmd 'redrawstatus' end,
-    desc = 'Update statusline on shapeim toggle',
 })

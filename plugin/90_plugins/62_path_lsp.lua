@@ -3,8 +3,9 @@
 Config.now(function()
     local path_lsp = require 'plugins.path_lsp'
 
-    -- 在所有打开的 buffer 上启动路径补全 LSP
-    vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile', 'BufWinEnter', 'BufEnter' }, {
+    -- 仅在 buffer 首次获得文件名时启动（BufNewFile 覆盖新文件，BufReadPost 覆盖首次读取），
+    -- 去掉 BufWinEnter/BufEnter 避免每次切换 buffer 都重复遍历 LSP client 列表和 .git 查找
+    vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufNewFile' }, {
         group = _G.MyGroup,
         callback = function(args) path_lsp.start(args.buf) end,
         desc = 'Start path-lsp on buffer open',
