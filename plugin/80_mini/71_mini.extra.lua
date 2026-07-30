@@ -99,7 +99,6 @@ vim.keymap.set(
     { desc = 'Goto type_definition' }
 )
 -- Windows 上 Neovim 的 ~ 展开到 MSYS2 $HOME，而非 %USERPROFILE%。
--- ~/Syncthing/Notes 实际在 C:\Users\vo4f\Syncthing\Notes，不在 MSYS2 目录树下。
 local function expand_dir(path)
     if vim.fn.has 'win32' == 1 and path:sub(1, 1) == '~' then
         local win_home = os.getenv 'USERPROFILE'
