@@ -98,13 +98,23 @@ vim.keymap.set(
     function() MiniExtra.pickers.lsp { scope = 'type_definition' } end,
     { desc = 'Goto type_definition' }
 )
+-- Windows 上 Neovim 的 ~ 展开到 MSYS2 $HOME，而非 %USERPROFILE%。
+-- ~/Syncthing/Notes 实际在 C:\Users\vo4f\Syncthing\Notes，不在 MSYS2 目录树下。
+local function expand_dir(path)
+    if vim.fn.has 'win32' == 1 and path:sub(1, 1) == '~' then
+        local win_home = os.getenv 'USERPROFILE'
+        if win_home then return win_home:gsub('\\', '/') .. path:sub(2) end
+    end
+    return vim.fn.expand(path)
+end
+
 vim.keymap.set('n', '<leader>nf', function()
     local dir = vim.env.NOTE_TAKING_DIR
     if not dir or dir == '' then
         vim.notify('NOTE_TAKING_DIR is not set', vim.log.levels.WARN)
         return
     end
-    dir = vim.fn.expand(dir)
+    dir = expand_dir(dir)
     if vim.fn.isdirectory(dir) == 0 then
         vim.notify('NOTE_TAKING_DIR does not exist: ' .. dir, vim.log.levels.WARN)
         return

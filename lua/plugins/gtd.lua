@@ -280,8 +280,13 @@ function M.setup(opts)
         return
     end
 
-    -- 展开路径中的 ~
-    M.config.todo_dir = vim.fn.expand(M.config.todo_dir)
+    -- 展开路径中的 ~（Windows 上用 USERPROFILE 替代 MSYS2 $HOME）
+    if vim.fn.has 'win32' == 1 and M.config.todo_dir:sub(1, 1) == '~' then
+        local win_home = os.getenv 'USERPROFILE'
+        if win_home then M.config.todo_dir = win_home:gsub('\\', '/') .. M.config.todo_dir:sub(2) end
+    else
+        M.config.todo_dir = vim.fn.expand(M.config.todo_dir)
+    end
 
     vim.api.nvim_create_user_command('GTDList', M.show_todos, {})
     vim.api.nvim_create_user_command('GTDToggle', M.toggle_status, {})
@@ -299,9 +304,7 @@ function M.setup(opts)
 
     for name, keys in pairs(M.config.mappings) do
         local act = actions[name]
-        if act and keys and keys ~= '' then
-            vim.keymap.set('n', keys, act.action, { desc = act.desc })
-        end
+        if act and keys and keys ~= '' then vim.keymap.set('n', keys, act.action, { desc = act.desc }) end
     end
 end
 
