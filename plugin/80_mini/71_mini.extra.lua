@@ -98,9 +98,16 @@ vim.keymap.set(
     function() MiniExtra.pickers.lsp { scope = 'type_definition' } end,
     { desc = 'Goto type_definition' }
 )
-vim.keymap.set(
-    'n',
-    '<leader>nf',
-    function() MiniPick.builtin.files({}, { source = { cwd = vim.fn.expand(vim.env.NOTE_TAKING_DIR) } }) end,
-    { desc = 'Find Notes' }
-)
+vim.keymap.set('n', '<leader>nf', function()
+    local dir = vim.env.NOTE_TAKING_DIR
+    if not dir or dir == '' then
+        vim.notify('NOTE_TAKING_DIR is not set', vim.log.levels.WARN)
+        return
+    end
+    dir = vim.fn.expand(dir)
+    if vim.fn.isdirectory(dir) == 0 then
+        vim.notify('NOTE_TAKING_DIR does not exist: ' .. dir, vim.log.levels.WARN)
+        return
+    end
+    MiniPick.builtin.files({}, { source = { cwd = dir } })
+end, { desc = 'Find Notes' })
