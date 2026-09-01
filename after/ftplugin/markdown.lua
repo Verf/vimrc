@@ -13,7 +13,3 @@ vim.bo.formatoptions = 'tcqlnj'
 
 -- 不显示 colorcolumn，避免干扰阅读
 vim.wo.colorcolumn = ''
-
--- 默认折叠到标题
-vim.wo.foldlevel = 0
-vim.wo.foldnestmax = 1
