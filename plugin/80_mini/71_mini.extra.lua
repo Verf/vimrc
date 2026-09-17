@@ -120,3 +120,18 @@ vim.keymap.set('n', '<leader>nf', function()
     end
     MiniPick.builtin.files({}, { source = { cwd = dir } })
 end, { desc = 'Find Notes' })
+
+vim.keymap.set('n', '<leader>nd', function()
+    local dir = vim.env.NOTE_TAKING_DIR
+    if not dir or dir == '' then
+        vim.notify('NOTE_TAKING_DIR is not set', vim.log.levels.WARN)
+        return
+    end
+    local daily = expand_dir(dir) .. '/daily'
+    if vim.fn.isdirectory(daily) == 0 and vim.fn.mkdir(daily, 'p') == 0 then
+        vim.notify('Failed to create directory: ' .. daily, vim.log.levels.ERROR)
+        return
+    end
+    local file = string.format('%s/%s.md', daily, os.date '%Y-%m-%d')
+    vim.cmd.edit(vim.fn.fnameescape(file))
+end, { desc = 'Daily Note' })
