@@ -1,0 +1,16 @@
+{
+    "daily note": {
+        "prefix": "#d",
+        "body": [
+            "# $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+            "",
+            "## Today",
+            "$0",
+            "",
+            "## Notes",
+            "",
+            "",
+            "## Waiting"
+        ]
+    }
+}
