@@ -12,5 +12,9 @@
             "",
             "## Waiting"
         ]
+    },
+    "todo": {
+        "prefix": "td",
+        "body": "- [ ] $0"
     }
 }
