@@ -7,25 +7,12 @@ Config.later(function()
             python = { 'ruff_format', 'ruff_organize_imports' },
             lua = { 'stylua' },
             nu = { 'nufmt' },
-            markdown = { 'gtd_format' },
             toml = { 'taplo' },
             yaml = { 'yamlfmt' },
             json = { 'prettier' },
             javascript = { 'prettier' },
             typescript = { 'prettier' },
             vue = { 'prettier' },
-        },
-        formatters = {
-            gtd_format = {
-                format = function(self, ctx, lines, callback)
-                    local ok, result = pcall(require('plugins.gtd').format_lines, lines)
-                    if ok then
-                        callback(nil, result)
-                    else
-                        callback(result, nil)
-                    end
-                end,
-            },
         },
     }
 end)

@@ -129,7 +129,6 @@ end)
 | `52_codediff.lua` | codediff.nvim | Code diff tools |
 | `54_render_markdown.lua` | render-markdown.nvim | Markdown preview |
 | `60_fold.lua` | custom → `lua/plugins/fold.lua` | Treesitter foldtext + foldcolumn icons |
-| `61_gtd.lua` | custom → `lua/plugins/gtd.lua` | GTD task manager |
 | `62_path_lsp.lua` | custom → `lua/plugins/path_lsp.lua` | In-process file path completion LSP |
 
 ### Custom Modules (`lua/plugins/`)
@@ -143,7 +142,6 @@ end)
 | `fold.lua` | — | TS-highlighted foldtext + foldcolumn icons; per-buffer cache |
 | `scroll_eof.lua` | — | Scroll beyond last line |
 | `path_lsp.lua` | — | Function-transport LSP for file path completion |
-| `gtd.lua` | — | `# TODO`/`# DONE` task manager; DEADLINE/CLOSED tags |
 
 ### LSP Servers
 Configured in `50_lsp.lua` via `vim.lsp.config()` (Neovim built-in API):
@@ -167,7 +165,7 @@ git commit -m "<scope>: <brief description>"
 Use conventional commit scopes matching the area changed:
 - `options`, `keymaps`, `autocmds`, `commands`, `lsp`
 - `mini.<name>` (e.g., `mini.pick`, `mini.statusline`)
-- `plugins.<name>` (e.g., `plugins.faster`, `plugins.gtd`)
+- `plugins.<name>` (e.g., `plugins.faster`, `plugins.fold`)
 - `perf` for performance-only changes
 - `audit` for audit/cleanup work
 
