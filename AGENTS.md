@@ -15,7 +15,9 @@ nvim/
 │   ├── 50_lsp.lua            # LSP config (vim.lsp.config built-in API, no nvim-lspconfig)
 │   ├── 80_mini/              # mini.nvim ecosystem (00–81)
 │   └── 90_plugins/           # External plugins (10–62)
-├── lua/plugins/              # Custom Lua modules
+├── lua/plugins/              # Custom Lua modules (files/ is the buffer file manager)
+├── doc/                      # Local help (:help files-manager)
+├── tests/files/              # Headless file-manager tests
 ├── snippets/                 # mini.snippets snippets
 ├── after/ftplugin/           # Filetype-specific overrides
 ├── stylua.toml
@@ -118,6 +120,7 @@ end)
 | `11_faster.lua` | custom → `lua/plugins/faster.lua` | Big-file/long-line/macro perf degrade |
 | `12_scrollEOF.lua` | custom → `lua/plugins/scroll_eof.lua` | Scroll beyond EOF |
 | `13_scope.lua` | custom → `lua/plugins/tab_scope.lua` | Tab-isolated buffer listing |
+| `14_files.lua` | custom → `lua/plugins/files/` | Editable directory buffers, confirmed writes, staged deletion |
 | `15_flatten.lua` | flatten.nvim | Open external files in current Neovim |
 | `20_treesitter.lua` | nvim-treesitter | Parser install + textobjects |
 | `22_spider.lua` | custom → `lua/plugins/subword.lua` | CamelCase/subword w/e/b |
@@ -141,6 +144,17 @@ end)
 | `fold.lua` | — | TS-highlighted foldtext + foldcolumn icons; per-buffer cache |
 | `scroll_eof.lua` | — | Scroll beyond last line |
 | `path_lsp.lua` | — | Function-transport LSP for file path completion |
+| `files/` | Oil-like local subset | `:Files`, `-`, ID-based edits, safe planning, journal/trash, buffer rename sync |
+
+### File Manager
+- Startup registration via `Config.now`; takes over directory buffers and disables netrw.
+- `acwrite` buffers: filesystem writes only through confirmed `BufWriteCmd`, never autosave.
+- Modules: `init`, `view`, `state`, `planner` (includes parsing), `executor`, `fs`, `trash`.
+- `.nvim-files-trash/` contains local transaction logs and staged deletions; never auto-clean it.
+- `:FilesRestore` restores completed deletions; `:FilesClean` permanently clears a completed transaction.
+- Cross-buffer paste and cross-device moves are intentionally unsupported in the first version.
+- Tests: `nvim --headless -u NONE -l tests/files/run.lua`.
+- Help: `doc/files-manager.txt`; regenerate `doc/tags` with `:helptags doc` after changing tags.
 
 ### LSP Servers
 Configured in `50_lsp.lua` via `vim.lsp.config()` (Neovim built-in API):

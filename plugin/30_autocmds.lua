@@ -40,10 +40,10 @@ vim.api.nvim_create_autocmd({ 'FocusLost', 'BufLeave' }, {
 vim.api.nvim_create_autocmd('BufWritePre', {
     group = _G.MyGroup,
     callback = function(ev)
+        -- 专用 URI（如文件管理器）不能作为普通文件路径创建目录。
+        if vim.bo[ev.buf].buftype ~= '' then return end
         local dir = vim.fn.fnamemodify(ev.file, ':h')
-        if vim.fn.isdirectory(dir) == 0 then
-            vim.fn.mkdir(dir, 'p')
-        end
+        if vim.fn.isdirectory(dir) == 0 then vim.fn.mkdir(dir, 'p') end
     end,
     desc = 'Auto-create parent directories on save',
 })

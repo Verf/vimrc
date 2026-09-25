@@ -1,0 +1,5 @@
+files-manager	files-manager.txt	/*files-manager*
+files-manager-dev	files-manager.txt	/*files-manager-dev*
+files-manager-edit	files-manager.txt	/*files-manager-edit*
+files-manager-safety	files-manager.txt	/*files-manager-safety*
+files-manager.txt	files-manager.txt	/*files-manager.txt*
