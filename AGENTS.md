@@ -123,7 +123,6 @@ end)
 | `22_spider.lua` | custom → `lua/plugins/subword.lua` | CamelCase/subword w/e/b |
 | `23_multicursor.lua` | multicursor.nvim | Multi-cursor editing |
 | `40_whichkey.lua` | which-key.nvim | Keymap hints |
-| `41_oil.lua` | oil.nvim | File explorer (`-`) |
 | `50_conform.lua` | conform.nvim | Formatting (ruff, stylua, prettier, etc.) |
 | `51_quicker.lua` | custom → `lua/plugins/quickfix.lua` | Quickfix expand/collapse/toggle |
 | `52_codediff.lua` | codediff.nvim | Code diff tools |
