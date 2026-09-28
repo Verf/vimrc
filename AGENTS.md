@@ -129,7 +129,7 @@ end)
 | `50_conform.lua` | conform.nvim | Formatting (ruff, stylua, prettier, etc.) |
 | `51_quicker.lua` | custom → `lua/plugins/quickfix.lua` | Quickfix expand/collapse/toggle |
 | `52_codediff.lua` | codediff.nvim | Code diff tools |
-| `54_render_markdown.lua` | render-markdown.nvim | Markdown preview |
+| `54_render_markdown.lua` | render-markdown.nvim | Markdown rendering; preserves code fences, Setext underline rows, comments, and raw math |
 | `60_fold.lua` | custom → `lua/plugins/fold.lua` | Treesitter foldtext + foldcolumn icons |
 | `62_path_lsp.lua` | custom → `lua/plugins/path_lsp.lua` | In-process file path completion LSP |
 
