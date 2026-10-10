@@ -8,7 +8,7 @@ Personal Neovim configuration for Neovim 0.12.
 nvim/
 ├── init.lua                  # Entry point, enables vim.loader, defines _G.MyGroup augroup
 ├── plugin/                   # Auto-loaded config (alphanumeric order)
-│   ├── 10_options.lua        # Core options, Neovide, shell (nu), UI, diagnostics, grep
+│   ├── 10_options.lua        # Core options, Neovide, shell (Windows: pwsh; Linux: fish), UI, diagnostics, grep
 │   ├── 20_keymaps.lua        # Global keymaps
 │   ├── 30_autocmds.lua       # Global autocommands (auto-save, terminal, etc.)
 │   ├── 40_commands.lua       # Custom commands (:Grep)
@@ -55,7 +55,7 @@ Files in `plugin/` load alphanumerically:
 | Quotes | Single quotes preferred |
 | Comments | Chinese |
 | Line endings | Unix (`\n`) |
-| Shell | nushell (`nu`) when available, else default |
+| Shell | Windows: `pwsh`; Linux: `fish`; when unavailable, keep default |
 | Mouse | Enabled in all modes |
 | Clipboard | `unnamedplus` (system clipboard) |
 
@@ -195,5 +195,5 @@ git commit -m "audit: remove deprecated shapeim references"
 - ❌ **Do NOT** add keymaps without a `desc` field
 - ❌ **Do NOT** use `2>nul` in shell commands — use `2>/dev/null` (this runs under msys2 bash)
 - ❌ **Do NOT** add plugins that conflict with existing mini.nvim modules
-- ❌ **Do NOT** change shell config (nushell) without understanding implications
+- ❌ **Do NOT** change shell config (pwsh/fish) without understanding implications
 - ❌ **Do NOT** forget to update this file when adding/removing plugins

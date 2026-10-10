@@ -124,11 +124,11 @@ vim.opt.fillchars:append { diff = '╱' }
 
 -- 持久化撤销历史：关闭文件后仍可撤销
 vim.opt.undofile = true
-vim.opt.undodir = vim.fn.stdpath('cache') .. '/undo'
+vim.opt.undodir = vim.fn.stdpath 'cache' .. '/undo'
 vim.fn.mkdir(vim.o.undodir, 'p')
 
 -- swapfile 集中存放，避免项目目录污染
-vim.opt.directory = vim.fn.stdpath('cache') .. '/swap'
+vim.opt.directory = vim.fn.stdpath 'cache' .. '/swap'
 vim.fn.mkdir(vim.o.directory, 'p')
 
 -- shada
@@ -154,15 +154,28 @@ vim.diagnostic.config {
 }
 
 -- [[ shell ]]
-if vim.fn.executable 'nu' == 1 then
-    vim.opt.shell = 'nu'
-    vim.opt.shellcmdflag = '--login --stdin --no-newline -c'
-    vim.opt.shellredir = 'out+err> %s'
-    vim.opt.shellpipe = '| save --force %s'
+-- 按系统选择 shell，未安装时保留默认配置。
+if vim.fn.has 'win32' == 1 and vim.fn.executable 'pwsh' == 1 then
+    vim.opt.shell = 'pwsh'
+    vim.opt.shellcmdflag = '-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command '
+        .. '[Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.UTF8Encoding]::new();'
+        .. "$PSDefaultParameterValues['Out-File:Encoding']='utf8';"
+        .. "$PSStyle.OutputRendering='PlainText';"
+    vim.opt.shellredir = '> %s 2>&1'
+    vim.opt.shellpipe = '> %s 2>&1'
     vim.opt.shellquote = ''
     vim.opt.shellxquote = ''
     vim.opt.shellxescape = ''
     vim.opt.shelltemp = false
+elseif vim.uv.os_uname().sysname == 'Linux' and vim.fn.executable 'fish' == 1 then
+    vim.opt.shell = 'fish'
+    vim.opt.shellcmdflag = '-c'
+    vim.opt.shellredir = '> %s 2>&1'
+    vim.opt.shellpipe = '> %s 2>&1'
+    vim.opt.shellquote = ''
+    vim.opt.shellxquote = ''
+    vim.opt.shellxescape = ''
+    vim.opt.shelltemp = true
 end
 
 -- [[ grep ]]
