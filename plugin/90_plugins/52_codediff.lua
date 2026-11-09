@@ -18,13 +18,6 @@ Config.later(
                     stage_hunk = false,
                     unstage_hunk = false,
                     discard_hunk = false,
-                    hunk_textobject = 'rh',
-                },
-                explorer = {
-                    toggle_view_mode = '.',
-                },
-                history = {
-                    toggle_view_mode = '.',
                 },
                 conflict = {
                     accept_incoming = '<leader>ct',
