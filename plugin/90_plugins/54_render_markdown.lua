@@ -2,6 +2,8 @@ vim.pack.add { 'https://github.com/meanderingprogrammer/render-markdown.nvim' }
 
 Config.now(function()
     require('render-markdown').setup {
+        -- 关闭所有符号列标记（标题、代码块语言图标）。
+        sign = { enabled = false },
         -- 保留代码块首尾围栏和语言原文，不隐藏整行，也不以虚拟标题覆盖。
         code = {
             conceal_delimiters = false,
