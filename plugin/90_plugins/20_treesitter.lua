@@ -43,7 +43,6 @@ Config.now(function()
         -- shell & sql
         'nu',
         'bash',
-        'sql',
     }
 
     -- 确保parser均已安装
