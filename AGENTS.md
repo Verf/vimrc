@@ -168,21 +168,9 @@ Configured in `50_lsp.lua` via `vim.lsp.config()` (Neovim built-in API):
 ### Making Changes
 1. Edit the relevant file(s) — see inventory above for which file controls what
 2. Run `stylua` on changed Lua files (or rely on conform.nvim's auto-format)
-3. **After every change, auto-commit**:
+3. **After every change, auto-commit**, and then push.
 
-```bash
-git add -A
-git commit -m "<scope>: <brief description>"
-```
-
-Use conventional commit scopes matching the area changed:
-- `options`, `keymaps`, `autocmds`, `commands`, `lsp`
-- `mini.<name>` (e.g., `mini.pick`, `mini.statusline`)
-- `plugins.<name>` (e.g., `plugins.faster`, `plugins.fold`)
-- `perf` for performance-only changes
-- `audit` for audit/cleanup work
-
-Examples:
+Use conventional commit scopes matching the area changed. Examples:
 ```
 git commit -m "mini.pick: use git ls-files to bypass security software I/O hooks"
 git commit -m "perf: remove BufEnter from path_lsp autocmd to reduce trigger frequency"
