@@ -7,7 +7,7 @@ Config.later(function()
             python = { 'ruff_format', 'ruff_organize_imports' },
             lua = { 'stylua' },
             nu = { 'nufmt' },
-            toml = { 'taplo' },
+            toml = { 'tombi' },
             yaml = { 'yamlfmt' },
             json = { 'prettier' },
             javascript = { 'prettier' },
