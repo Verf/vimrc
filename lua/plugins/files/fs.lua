@@ -2,12 +2,17 @@
 local M = {}
 local uv = vim.uv
 M.windows = uv.os_uname().sysname == 'Windows_NT'
-M.reserved = '.nvim-files-trash'
+M.stage_prefix = '.nvim-files-stage-'
 
 function M.join(a, b) return vim.fs.joinpath(a, b) end
 function M.key(path)
     path = vim.fs.normalize(path)
     return M.windows and path:lower() or path
+end
+function M.is_reserved(name)
+    local key = M.key(name)
+    -- 旧版回收数据保留，不纳入目录编辑。
+    return key == '.nvim-files-trash' or vim.startswith(key, M.stage_prefix)
 end
 function M.inside(path, parent)
     path, parent = M.key(path), M.key(parent)
@@ -50,7 +55,7 @@ function M.validate_name(name)
     assert(not name:match '^/' and not name:match '^%a:', '只允许相对路径')
     assert(not name:find('//', 1, true) and name:sub(-1) ~= '/', '路径含空组件')
     for part in name:gmatch '[^/]+' do
-        assert(part ~= '.' and part ~= '..' and M.key(part) ~= M.key(M.reserved), '路径包含保留组件: ' .. part)
+        assert(part ~= '.' and part ~= '..' and not M.is_reserved(part), '路径包含保留组件: ' .. part)
         if M.windows then
             assert(not part:find '[<>:"|?*]' and not part:match '[ .]$', 'Windows 不支持此名称')
             local stem = (part:match '^[^.]+' or ''):upper()
@@ -94,7 +99,7 @@ function M.read(path)
     local fd = M.must(uv.fs_open(path, 'r', 0))
     local ok, content = pcall(function()
         local size = M.must(uv.fs_fstat(fd)).size
-        assert(size < 16 * 1024 * 1024, '日志过大')
+        assert(size < 16 * 1024 * 1024, '文件过大')
         return M.must(uv.fs_read(fd, size, 0))
     end)
     uv.fs_close(fd)

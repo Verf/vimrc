@@ -120,7 +120,7 @@ end)
 | `11_faster.lua` | custom → `lua/plugins/faster.lua` | Big-file/long-line/macro perf degrade |
 | `12_scrollEOF.lua` | custom → `lua/plugins/scroll_eof.lua` | Scroll beyond EOF |
 | `13_scope.lua` | custom → `lua/plugins/tab_scope.lua` | Tab-isolated buffer listing |
-| `14_files.lua` | custom → `lua/plugins/files/` | Editable directory buffers, confirmed writes, staged deletion |
+| `14_files.lua` | custom → `lua/plugins/files/` | Editable directory buffers, confirmed writes, OS trash |
 | `15_flatten.lua` | flatten.nvim | Open external files in current Neovim |
 | `20_treesitter.lua` | nvim-treesitter | Parser install + textobjects |
 | `22_spider.lua` | custom → `lua/plugins/subword.lua` | CamelCase/subword w/e/b |
@@ -144,14 +144,14 @@ end)
 | `fold.lua` | — | TS-highlighted foldtext + foldcolumn icons; per-buffer cache |
 | `scroll_eof.lua` | — | Scroll beyond last line |
 | `path_lsp.lua` | — | Function-transport LSP for file path completion |
-| `files/` | Oil-like local subset | `:Files`, `-`, ID-based edits, safe planning, journal/trash, buffer rename sync |
+| `files/` | Oil-like local subset | `:Files`, `-`, ID-based edits, safe planning, OS trash, buffer rename sync |
 
 ### File Manager
 - Startup registration via `Config.now`; takes over directory buffers and disables netrw.
 - `acwrite` buffers: filesystem writes only through confirmed `BufWriteCmd`, never autosave.
-- Modules: `init`, `view`, `state`, `planner` (includes parsing), `executor`, `fs`, `trash`.
-- `.nvim-files-trash/` contains local transaction logs and staged deletions; never auto-clean it.
-- `:FilesRestore` restores completed deletions; `:FilesClean` permanently clears a completed transaction.
+- Modules: `init`, `view`, `state`, `planner` (includes parsing), `executor`, `fs`, `deletion`.
+- Delete from the original path: Windows Recycle Bin; on Linux `trash-put`, then `gio trash`, or permanent deletion (shown in confirmation) if neither is installed. Never fall back after a tool error.
+- Preserve legacy `.nvim-files-trash/` data. `.nvim-files-stage-*` is temporary rename staging only; clean up only when empty.
 - Cross-buffer paste and cross-device moves are intentionally unsupported in the first version.
 - Tests: `nvim --headless -u NONE -l tests/files/run.lua`.
 - Help: `doc/files-manager.txt`; regenerate `doc/tags` with `:helptags doc` after changing tags.

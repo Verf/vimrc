@@ -9,7 +9,7 @@ function M.scan(root, hidden)
     assert(stat.type == 'directory', '不是目录: ' .. root)
     local snapshot = { root = root, dev = stat.dev, ino = stat.ino, entries = {}, ordered = {} }
     for _, name in ipairs(fs.list(root)) do
-        if fs.key(name) ~= fs.key(fs.reserved) and (hidden or name:sub(1, 1) ~= '.') then
+        if not fs.is_reserved(name) and (hidden or name:sub(1, 1) ~= '.') then
             local path = fs.join(root, name)
             local s = assert(fs.stat(path), '扫描期间条目消失，请刷新: ' .. name)
             M.next_id = M.next_id + 1

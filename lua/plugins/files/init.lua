@@ -2,7 +2,6 @@
 local fs = require 'plugins.files.fs'
 local state = require 'plugins.files.state'
 local view = require 'plugins.files.view'
-local trash = require 'plugins.files.trash'
 local M = {}
 local group
 
@@ -70,45 +69,6 @@ local function takeover(args)
     end
 end
 
-local function trash_action(clean)
-    local s = view.current()
-    assert(not vim.bo[s.buf].modified and not s.failed, '请先提交或刷新当前目录编辑')
-    local choices = trash.list(s.root)
-    assert(#choices > 0, '当前目录没有暂存日志')
-    vim.ui.select(
-        choices,
-        {
-            prompt = clean and '永久清理事务（不能撤销）' or '恢复事务中的删除条目',
-            format_item = function(tx)
-                return ('%s %s %s (%d deleted)'):format(
-                    vim.fs.basename(tx.path),
-                    tx.data.time,
-                    tx.data.status,
-                    #tx.data.deleted
-                )
-            end,
-        },
-        view.guard(function(tx)
-            if not tx then return end
-            assert(vim.api.nvim_buf_is_valid(s.buf) and not vim.bo[s.buf].modified, '目录编辑状态已变化')
-            assert(
-                vim.fn.confirm(
-                    (clean and '永久删除暂存内容及日志？\n' or '恢复删除条目？\n') .. tx.path,
-                    '&Yes\n&Cancel',
-                    2
-                ) == 1,
-                '已取消'
-            )
-            if clean then
-                trash.clean(tx)
-            else
-                trash.restore(tx)
-            end
-            view.render(s)
-        end)
-    )
-end
-
 function M.setup()
     if group then return end
     vim.g.loaded_netrw = 1
@@ -118,12 +78,6 @@ function M.setup()
         nargs = '?',
         complete = 'dir',
         desc = 'Open editable directory buffer',
-    })
-    vim.api.nvim_create_user_command('FilesRestore', view.guard(function() trash_action(false) end), {
-        desc = 'Restore staged deletions in current directory',
-    })
-    vim.api.nvim_create_user_command('FilesClean', view.guard(function() trash_action(true) end), {
-        desc = 'Permanently remove a completed transaction and its trash',
     })
     vim.api.nvim_create_autocmd('BufReadCmd', {
         group = group,

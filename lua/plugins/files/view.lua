@@ -112,7 +112,7 @@ function M.refresh(s, hidden)
     end
 end
 
-function M.confirm(lines, title)
+function M.confirm(lines, title, deletion_note)
     local buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
     vim.bo[buf].modifiable = false
@@ -130,7 +130,7 @@ function M.confirm(lines, title)
     vim.cmd 'redraw'
     local ok, choice = pcall(
         vim.fn.confirm,
-        table.concat(lines, '\n') .. '\n\n执行以上操作？删除将暂存。',
+        table.concat(lines, '\n') .. '\n\n执行以上操作？' .. (deletion_note and '\n' .. deletion_note or ''),
         '&Apply\n&Cancel',
         2
     )
@@ -140,7 +140,7 @@ function M.confirm(lines, title)
 end
 function M.write(buf)
     local s = assert(state.buffers[buf])
-    assert(not s.failed, '上次提交失败，请查看日志并使用 gr 重新扫描后再编辑')
+    assert(not s.failed, '上次提交失败，请检查磁盘并使用 gr 重新扫描后再编辑')
     assert(not s.snapshot.readonly, '此目录视图只读')
     local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
     local plan = planner.build(lines, s.snapshot)
@@ -149,13 +149,14 @@ function M.write(buf)
         return
     end
     local expected = executor.prepare(plan)
-    if not M.confirm(planner.describe(plan), ' Files: operation plan ') then
+    local deletion_note = expected.deletion and expected.deletion.description
+    if not M.confirm(planner.describe(plan), ' Files: operation plan ', deletion_note) then
         error '已取消，目录编辑仍保留'
     end
     assert(vim.deep_equal(lines, vim.api.nvim_buf_get_lines(buf, 0, -1, false)), '确认期间 buffer 发生变化')
     local ok, message = executor.execute(plan, expected)
     if not ok then
-        -- 保留失败计划而不是伪装成全部成功；强制用户检查日志、刷新。
+        -- 保留失败计划而不是伪装成全部成功；强制用户检查结果、刷新。
         s.failed = true
         vim.bo[buf].modifiable = false
         error(message)

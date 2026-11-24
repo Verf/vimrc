@@ -4,12 +4,16 @@ local fs = require 'plugins.files.fs'
 local state = require 'plugins.files.state'
 local planner = require 'plugins.files.planner'
 local executor = require 'plugins.files.executor'
-local trash = require 'plugins.files.trash'
+local deletion = require 'plugins.files.deletion'
+local select_deletion = deletion.select
+-- 不污染运行测试的用户回收站。
+deletion.select = function() return { description = '测试：永久删除。', remove = fs.remove } end
 local view = require 'plugins.files.view'
 local files = require 'plugins.files'
 files.setup()
 local sandbox = vim.fn.tempname()
 vim.fn.mkdir(sandbox, 'p')
+sandbox = fs.canonical(sandbox)
 local count = 0
 local function eq(a, b) assert(vim.deep_equal(a, b), vim.inspect(a) .. ' ~= ' .. vim.inspect(b)) end
 local function rejects(fn, pattern)
@@ -45,9 +49,8 @@ local function line(s, original, target)
 end
 local function apply(s, lines)
     local p = planner.build(lines, s)
-    local ok, msg, tx = executor.execute(p, executor.prepare(p))
+    local ok, msg = executor.execute(p, executor.prepare(p))
     assert(ok, msg)
-    return tx
 end
 
 test('create nested files and explicit directories independent of order', function(root)
@@ -74,18 +77,48 @@ test('cyclic rename and copy before moved targets', function(root)
     eq(fs.read(fs.join(root, 'a')), 'BBB')
     eq(fs.read(fs.join(root, 'b')), 'AAA')
 end)
-test('directory copy, recursive delete, restore and clean', function(root)
+test('directory copy and recursive deletion leave no private trash', function(root)
     put(root, 'folder/nested/a', 'payload')
     local s = snapshot(root)
     apply(s, { line(s, 'folder'), line(s, 'folder', 'copy') })
     eq(fs.read(fs.join(root, 'copy/nested/a')), 'payload')
     s = snapshot(root)
-    local tx = apply(s, { line(s, 'folder') })
-    eq(fs.stat(fs.join(root, 'copy')), nil)
-    trash.restore(tx)
-    eq(fs.read(fs.join(root, 'copy/nested/a')), 'payload')
-    trash.clean(tx)
-    eq(fs.stat(tx.path), nil)
+    apply(s, { line(s, 'folder') })
+    eq(fs.list(root), { 'folder' })
+end)
+test('legacy trash stays untouched and hidden', function(root)
+    local old = put(root, '.nvim-files-trash/txn-old/source-1', 'old')
+    put(root, 'a')
+    apply(snapshot(root), {})
+    eq(fs.list(root), { '.nvim-files-trash' })
+    eq(fs.read(old), 'old')
+    eq(vim.fn.exists ':FilesRestore', 0)
+    eq(vim.fn.exists ':FilesClean', 0)
+end)
+test('deletion backend picks a tool, passes literal paths and does not fall back on failure', function(root)
+    local original_exepath, system, windows = vim.fn.exepath, vim.system, fs.windows
+    local source = put(root, "-path with spaces & 'quotes'")
+    local available = {}
+    fs.windows = false
+    vim.fn.exepath = function(tool) return available[tool] or '' end
+    eq(select_deletion().remove, fs.remove)
+    assert(select_deletion().description:find('永久', 1, true))
+    fs.windows = true
+    assert(select_deletion().description:find('Windows', 1, true))
+    fs.windows = false
+    available = { gio = '/bin/gio', ['trash-put'] = '/bin/trash-put' }
+    local args
+    vim.system = function(argv)
+        args = argv
+        return { wait = function() return { code = 1, stderr = 'trash unavailable' } end }
+    end
+    rejects(function() select_deletion().remove(source) end, 'trash unavailable')
+    eq(args, { '/bin/trash-put', '--', source })
+    available['trash-put'] = nil
+    rejects(function() select_deletion().remove(source) end, 'trash unavailable')
+    eq(args, { '/bin/gio', 'trash', '--', source })
+    vim.fn.exepath, vim.system, fs.windows = original_exepath, system, windows
+    assert(fs.stat(source))
 end)
 test('hidden entries are not inferred as deletions', function(root)
     put(root, '.secret', 'safe')
@@ -113,7 +146,9 @@ end)
 test('unsafe paths and nested source/target conflicts', function(root)
     put(root, 'folder/a')
     local s = snapshot(root)
-    for _, name in ipairs { '../escape', '/absolute', 'a/../b', 'a//b', 'a\\b', '.nvim-files-trash/x', 'a\nb' } do
+    local invalid =
+        { '../escape', '/absolute', 'a/../b', 'a//b', 'a\\b', '.nvim-files-trash/x', '.nvim-files-stage-abc/x', 'a\nb' }
+    for _, name in ipairs(invalid) do
         rejects(function() planner.build({ line(s, 'folder'), name }, s) end)
     end
     rejects(function() planner.build({ line(s, 'folder'), line(s, 'folder', 'folder/copy') }, s) end, '自身内部')
@@ -142,6 +177,7 @@ test('changes during confirmation are detected recursively', function(root)
     assert(fs.stat(fs.join(root, 'folder')))
 end)
 test('symlink copy/delete operates on link, destination parents cannot be links', function(root)
+    if fs.windows then return end
     local outside = fs.join(sandbox, 'outside')
     vim.fn.mkdir(outside, 'p')
     put(outside, 'safe', 'untouched')
@@ -175,31 +211,57 @@ test('loaded buffers follow directory moves and cyclic renames', function(root)
     vim.api.nvim_buf_delete(ba, { force = false })
     vim.api.nvim_buf_delete(bb, { force = false })
 end)
-test('failure rolls back staged moves and retains journal', function(root)
+test('failure rolls back staged moves and skips deletion', function(root)
     put(root, 'a')
     put(root, 'b')
+    put(root, 'will-not-delete')
     local s = snapshot(root)
     local p = planner.build({ line(s, 'a', 'renamed'), line(s, 'b'), line(s, 'b', 'copy') }, s)
     local expected = executor.prepare(p)
     local copy = fs.copy
     fs.copy = function() error 'injected failure' end
-    local ok, msg, tx = executor.execute(p, expected)
+    local ok, msg = executor.execute(p, expected)
     fs.copy = copy
     eq(ok, false)
     assert(msg:find('injected failure', 1, true))
     eq(fs.read(fs.join(root, 'a')), 'a')
-    eq(fs.stat(fs.join(root, 'renamed')), nil)
-    eq(tx.data.status, 'failed')
-    assert(fs.stat(fs.join(tx.path, 'journal.json')))
-    rejects(function() trash.clean(tx) end, '不能清理')
+    eq(fs.list(root), { 'a', 'b', 'will-not-delete' })
 end)
-test('restore refuses occupied paths without overwriting', function(root)
-    put(root, 'a', 'old')
-    local tx = apply(snapshot(root), {})
-    put(root, 'a', 'new')
-    rejects(function() trash.restore(tx) end, '恢复目标已存在')
-    eq(fs.read(fs.join(root, 'a')), 'new')
-    eq(fs.read(fs.join(tx.path, tx.data.deleted[1].slot)), 'old')
+test('deletion uses original path before moving a replacement into place', function(root)
+    local a = put(root, 'a', 'old')
+    local b = put(root, 'b', 'new')
+    local ba, bb = vim.fn.bufadd(a), vim.fn.bufadd(b)
+    vim.fn.bufload(ba)
+    vim.fn.bufload(bb)
+    local s = snapshot(root)
+    local p = planner.build({ line(s, 'b', 'a') }, s)
+    local expected = executor.prepare(p)
+    expected.deletion.remove = function(path)
+        eq(path, a)
+        eq(fs.read(path), 'old')
+        fs.remove(path)
+    end
+    local ok, msg = executor.execute(p, expected)
+    assert(ok, msg)
+    eq(vim.api.nvim_buf_is_valid(ba), false)
+    eq(vim.api.nvim_buf_get_name(bb), a)
+    eq(fs.read(a), 'new')
+    eq(fs.list(root), { 'a' })
+    vim.api.nvim_buf_delete(bb, { force = false })
+end)
+test('partial deletion failure reports completed deletes and rolls back other changes', function(root)
+    local a, b = put(root, 'a'), put(root, 'b')
+    local s = snapshot(root)
+    local p = planner.build({ 'new' }, s)
+    local expected = executor.prepare(p)
+    expected.deletion.remove = function(path)
+        if path == b then error 'trash failure' end
+        fs.remove(path)
+    end
+    local ok, msg = executor.execute(p, expected)
+    eq(ok, false)
+    assert(msg:find('trash failure', 1, true) and msg:find('已删除，未回滚:\n' .. a, 1, true), msg)
+    eq(fs.list(root), { 'b' })
 end)
 test('directory buffer setup, canceled save, commit and undo boundary', function(root)
     put(root, 'a')
@@ -238,6 +300,7 @@ test('directory :edit takeover and window option restoration', function(root)
     vim.api.nvim_buf_delete(buf, { force = false })
 end)
 test('unsupported filenames produce a read-only directory', function(root)
+    if fs.windows then return end
     put(root, 'newline\nname')
     local buf = files.open(root)
     eq(vim.bo[buf].modifiable, false)
@@ -310,12 +373,13 @@ test('partial copy failure preserves evidence and original sources', function(ro
         fs.write(dst, 'partial data', true)
         error 'partial copy failure'
     end
-    local ok, _, tx = executor.execute(p, expected)
+    local ok, msg = executor.execute(p, expected)
     fs.copy = original
     eq(ok, false)
     eq(fs.read(fs.join(root, 'a')), 'a')
     eq(fs.read(fs.join(root, 'partial')), 'partial data')
-    eq(vim.json.decode(fs.read(fs.join(tx.path, 'journal.json'))).status, 'failed')
+    assert(msg:find('partial copy failure', 1, true))
+    eq(fs.list(root), { 'a', 'b', 'partial' })
 end)
 test('failed commit locks the view until explicit refresh', function(root)
     put(root, 'a')
@@ -351,25 +415,28 @@ test('file types, Windows names and root containment', function(root)
     eq(fs.key 'A.txt', fs.key 'a.txt')
     fs.windows = windows
 end)
-test('restoring deletion refuses unsaved buffers at the original path', function(root)
-    local path = put(root, 'a', 'original')
-    local tx = apply(snapshot(root), {})
-    local buf = vim.fn.bufadd(path)
-    vim.fn.bufload(buf)
-    vim.api.nvim_buf_set_lines(buf, 0, -1, false, { 'unsaved replacement' })
-    rejects(function() trash.restore(tx) end, '先关闭')
-    eq(fs.stat(path), nil)
+test('delete confirmation describes the chosen backend', function(root)
+    local path = put(root, 'a')
+    local buf = files.open(root)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, {})
+    local confirm = view.confirm
+    view.confirm = function(_, _, note)
+        eq(note, '测试：永久删除。')
+        return false
+    end
+    rejects(function() view.write(buf) end, '已取消')
+    view.confirm = confirm
+    eq(fs.read(path), 'a')
     vim.api.nvim_buf_delete(buf, { force = true })
-    trash.restore(tx)
-    eq(fs.read(path), 'original')
 end)
 test('unwritable staging area does not delete the source', function(root)
-    if vim.uv.getuid() == 0 or fs.windows then return end
+    if fs.windows or vim.uv.getuid() == 0 then return end
     put(root, 'a')
-    local p = planner.build({}, snapshot(root))
+    local s = snapshot(root)
+    local p = planner.build({ line(s, 'a', 'moved') }, s)
     local expected = executor.prepare(p)
     fs.must(vim.uv.fs_chmod(root, 365))
-    local ok, err = pcall(executor.execute, p, expected)
+    local ok, err = executor.execute(p, expected)
     fs.must(vim.uv.fs_chmod(root, 493))
     assert(not ok and tostring(err):find('EACCES', 1, true), tostring(err))
     eq(fs.read(fs.join(root, 'a')), 'a')
